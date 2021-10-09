@@ -34,8 +34,8 @@ const checkJwt = async (next, req, res) => {
 
     const user = await checkIfUserExist(email);
 
-    if (!user || !tokenValidate(authorization)) {
-      return next(new ApiError('Expired or invalid token', 401));
+    if (!user) {
+      return next(new ApiError('User does not exsit', 404));
     }
 
     req.user = user;

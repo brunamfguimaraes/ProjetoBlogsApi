@@ -1,6 +1,6 @@
 const rescue = require('express-rescue');
 
-const { createUserService, getUsers } = require('../service/userService');
+const { createUserService, getUsers, getUserById } = require('../service/userService');
 
 const createUser = rescue(async (req, res, _next) => {
   const { token } = req;
@@ -13,7 +13,14 @@ const getAllUsers = rescue(async (req, res) => {
   return res.status(200).json(users);
 });
 
+const getUser = rescue(async (req, res) => {
+  const { id } = req.params;
+  const user = await getUserById(id);
+  res.status(200).json(user);
+});
+
 module.exports = {
   createUser,
   getAllUsers,
+  getUser,
 };
