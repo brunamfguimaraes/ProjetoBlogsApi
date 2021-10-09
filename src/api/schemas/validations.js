@@ -69,4 +69,9 @@ const loginValidate = async ({ email, password }) => {
   return {};
 };
 
-module.exports = { userValidate, loginValidate };
+const tokenValidate = (token) => {
+  const patternToken = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
+  return token.match(patternToken);
+};
+
+module.exports = { userValidate, loginValidate, tokenValidate };

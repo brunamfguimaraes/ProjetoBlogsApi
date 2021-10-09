@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { ApiError } = require('../utils/ApiError');
-const { userValidate, loginValidate } = require('../schemas/validations');
+const { userValidate, loginValidate, tokenValidate } = require('../schemas/validations');
 const { User } = require('../../models');
 const { tokenGenerator } = require('../utils/createToken');
 
@@ -12,15 +12,9 @@ const sendToken = async (req, next) => {
   next();
 };
 
-const checkIfUserExist = async (req, next) => {
-  const { email } = req.body;
-  console.log(email);
+const checkIfUserExist = async (email, _next) => {
   const user = await User.findOne({ where: { email } });
-
-  if (!user) {
-    return next(new ApiError('Invalid fields', 400));
-  }
-  return sendToken(req, next);
+  return user;
 };
 
 const validateUser = async (req, res, next) => {
@@ -31,17 +25,17 @@ const validateUser = async (req, res, next) => {
   return sendToken(req, next);
 };
 
-const verifyToken = async (req, res, next) => {
+const checkJwt = async (next, req, res) => {
   const { authorization } = req.headers;
+
   try {
     const decoded = jwt.verify(authorization, secret);
     const { email } = decoded;
 
     const user = await checkIfUserExist(email);
 
-    if (!user) {
-      // return next(new ApiError(errorUser.message, errorUser.code));
-      // return res.status(401).json({ message: 'jwt malformed' });
+    if (!user || !tokenValidate(authorization)) {
+      return next(new ApiError('Expired or invalid token', 401));
     }
 
     req.user = user;
@@ -51,13 +45,30 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+const verifyToken = async (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return next(new ApiError('Token not found', 401));
+  }
+
+  if (!tokenValidate(authorization)) {
+    return next(new ApiError('Expired or invalid token', 401));
+  }
+
+  return checkJwt(next, req, res);
+};
+
 const validateLogin = async (req, res, next) => {
   const loginData = await loginValidate(req.body);
   if (loginData.message) {
     return next(new ApiError(loginData.message, loginData.code));
   }
 
-  await checkIfUserExist(req, next);
+  const user = await checkIfUserExist(req.body.email, next);
+  if (!user) {
+    return next(new ApiError('Invalid fields', 400));
+  }
+  return sendToken(req, next);
 };
 
 module.exports = {
