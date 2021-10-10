@@ -10,10 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/user', userRoute);
 app.use('/login', loginRoute);
 
-app.get('/', (request, response) => {
-  response.send();
-});
-
 app.use(ErrorMiddleware.resError);
 
 module.exports = app;
