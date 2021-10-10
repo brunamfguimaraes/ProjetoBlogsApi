@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'BlogPosts',
-          key: 'post_id',
+          key: 'id',
         },
       },
       categoryId: {
@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Categories',
-          key: 'category_id',
+          key: 'id',
         },
       },
     });
