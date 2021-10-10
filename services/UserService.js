@@ -1,9 +1,11 @@
 class UserService {
-  constructor(model, authService, statusCode, errorMessage) {
+  constructor(model, authService, constants) {
+    const { statusCode, errorMessage } = constants;
     this.model = model;
     this.authService = authService;
     this.statusCode = statusCode;
     this.errorMessage = errorMessage;
+    
     this.createUser = this.createUser.bind(this);
   }
 

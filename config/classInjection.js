@@ -7,13 +7,11 @@ const { UserMiddleware } = require('../middleware');
 const { JoiValidation, BaseError, Jwt } = require('../utils');
 
 const userMiddleware = new 
-  UserMiddleware(JoiValidation.userSchema, Constants.statusCode, Constants.errorMessage, BaseError);
+  UserMiddleware(JoiValidation.userSchema, Constants, BaseError);
 
 const authService = new AuthService(jsonWebToken, Jwt.config, process.env.JWT_SECRET);
 
-const userService = new 
-  UserService(User, authService, Constants.statusCode, Constants.errorMessage);
-const userController = new 
-  UserController(userService, Constants.statusCode, Constants.errorMessage);
+const userService = new UserService(User, authService, Constants);
+const userController = new UserController(userService, Constants);
 
 module.exports = { userController, userMiddleware };

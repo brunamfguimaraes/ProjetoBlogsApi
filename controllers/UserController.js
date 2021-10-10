@@ -1,8 +1,10 @@
 class UserController {
-  constructor(service, statusCode, errorMessage) {
+  constructor(service, constants) {
+    const { statusCode, errorMessage, sequelizeCodes } = constants;
     this.service = service;
     this.statusCode = statusCode;
     this.errorMessage = errorMessage;
+    this.sequelizeCodes = sequelizeCodes;
     this.createUser = this.createUser.bind(this);
   }
 
@@ -12,10 +14,10 @@ class UserController {
         const result = await this.service.createUser({ displayName, email, password, image });
         res.status(this.statusCode.CREATED).json({ token: result });
       } catch (error) {
-        if (error.parent && error.parent.code === this.statusCode.ER_DUP_ENTRY) {
+        if (error.parent && error.parent.code === this.sequelizeCodes.ER_DUP_ENTRY) {
           res.status(this.statusCode.CONFLICT).json({ message: this.errorMessage.USER_CONFLICT });
         }
-        
+    
         res.status(500).json({ message: error.message });
       }
     }

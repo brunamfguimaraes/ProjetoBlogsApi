@@ -1,22 +1,29 @@
 class UserMiddleware {
-  constructor(validSchema, statusCode, messages, errorHandler) {
+  constructor(validSchema, constants, errorHandler) {
+    const { statusCode, errorMessage, joiErrors } = constants;
     this.validSchema = validSchema();
-    this.errorMessages = messages;
+    this.errorMessages = errorMessage;
+    this.joiErrors = joiErrors;
     this.statusCode = statusCode;
     this.BadRequest = errorHandler;
 
     this.validateUser = this.validateUser.bind(this);
+    this.validateResult = this.validateResult.bind(this);
+    this.getErrorMessage = this.getErrorMessage.bind(this);
+  }
+
+  getErrorMessage(errorObj) {
+    const { type } = errorObj;
+
+    const errorInput = errorObj.path[0];
+
+    return this.joiErrors[type][errorInput];
   }
 
   validateResult(result) {
-    console.log(result.error);
     if (result.error) {
-      const { message } = result.error.details[0];
-      const { type } = result.error.details[0];
-      if (type === 'string.regex.base') {
-        throw new this.BadRequest(this.errorMessages.INVALID_EMAIL, this.statusCode.BAD_REQUEST);
-      }
-      throw new this.BadRequest(message, this.statusCode.BAD_REQUEST);
+      const errorMessage = this.getErrorMessage(result.error.details[0]);
+      throw new this.BadRequest(errorMessage, this.statusCode.BAD_REQUEST);
     }
   }
 

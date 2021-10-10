@@ -6,7 +6,6 @@ class StatusCode {
       BAD_REQUEST: '400',
       FORBIDDEN: '403',
       CONFLICT: '409',
-      ER_DUP_ENTRY: 'ER_DUP_ENTRY',
     };
   }
 }

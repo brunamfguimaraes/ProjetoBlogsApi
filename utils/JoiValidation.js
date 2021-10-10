@@ -1,4 +1,5 @@
 const Joi = require('joi');
+
 const { Constants } = require('../constants');
 
 class JoiValidation {
