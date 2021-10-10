@@ -4,6 +4,8 @@ const { categoryController, authMiddleware, categoryMiddleware } = require('../c
 const categoryRoute = express.Router();
 
 categoryRoute.use(authMiddleware.checkCredentials);
+
+categoryRoute.get('/', categoryController.listCategories);
 categoryRoute.post('/', categoryMiddleware.validateCategory, categoryController.createCategory);
 
 module.exports = categoryRoute;
