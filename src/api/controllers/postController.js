@@ -4,6 +4,8 @@ const {
   createPostService,
   getAllPostsService,
   updatePostService,
+  deletePostService,
+  createByQueryService,
 } = require('../service/postService');
 const { ApiError } = require('../utils/ApiError');
 
@@ -37,9 +39,24 @@ const updatePost = rescue(async (req, res) => {
   return res.status(200).json(posts);
 });
 
+const deletePost = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { user } = req;
+  await deletePostService(id, user);
+  res.status(204).end();
+});
+
+const createPostByQuery = rescue(async (req, res) => {
+  const { q } = req.query;
+  const posts = await createByQueryService(q);
+  return res.status(200).json(posts);
+});
+
 module.exports = {
   createPost,
   getAllPosts,
   getPost,
   updatePost,
+  deletePost,
+  createPostByQuery,
 };

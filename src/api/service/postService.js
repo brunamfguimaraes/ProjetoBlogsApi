@@ -1,5 +1,12 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostsCategory, User, Category } = require('../../models');
 const { ApiError } = require('../utils/ApiError');
+
+const checkIfOwns = (userId, user) => {
+  if (userId !== user) {
+    throw new ApiError('Unauthorized user', 401);
+  }
+};
 
 const createPostService = async (body) => {
   const { categoryIds, title, content, userId } = body;
@@ -53,13 +60,44 @@ const updatePostService = async (body, id, user) => {
   }
   const post = await BlogPost.findByPk(id);
 
-  if (post.userId !== user.id) {
-    throw new ApiError('Unauthorized user', 401);
-  }
+  checkIfOwns(post.userId, user.id);
 
   await BlogPost.update({ ...body }, { where: { id } });
   return BlogPost.findByPk(id, {
     include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+};
+
+const deletePostService = async (id, user) => {
+  const post = await BlogPost.findByPk(id);
+
+  if (!post) {
+    throw new ApiError('Post does not exist', 404);
+  }
+
+  checkIfOwns(post.userId, user.id);
+
+  return BlogPost.destroy({
+    where: { id },
+  });
+};
+
+const createByQueryService = async (query) => {
+  if (!query) return getAllPostsService();
+
+  // Based on https://stackoverflow.com/a/42352244/14362230
+
+  return BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${query}%` } },
+        { content: { [Op.like]: `%${query}%` } },
+      ],
+    },
+    include: [
+      { model: User, as: 'user' },
       { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
@@ -70,4 +108,6 @@ module.exports = {
   getAllPostsService,
   getPostService,
   updatePostService,
+  deletePostService,
+  createByQueryService,
 };

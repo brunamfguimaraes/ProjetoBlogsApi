@@ -4,6 +4,8 @@ const {
   getAllPosts,
   getPost,
   updatePost,
+  deletePost,
+  createPostByQuery,
 } = require('../controllers/postController');
 const {
   validatePostData,
@@ -13,6 +15,8 @@ const { verifyToken } = require('../middlewares/validateUser');
 
 const router = express.Router();
 
+router.route('/search').get(verifyToken, createPostByQuery);
+
 router
   .route('/')
   .post(validatePostData, verifyToken, checkCategories, createPost)
@@ -21,6 +25,7 @@ router
 router
   .route('/:id')
   .get(verifyToken, getPost)
-  .put(verifyToken, validatePostData, updatePost);
+  .put(verifyToken, validatePostData, updatePost)
+  .delete(verifyToken, deletePost);
 
 module.exports = router;
