@@ -1,18 +1,20 @@
 const express = require('express');
-const { create, 
-  validateDisplayName,
-  validateEmail,
-  validatePassword,
-} = require('../../controllers/userController');
+const { create } = require('../../controllers/userController');
 
 const generateToken = require('../../middlewares/generateToken');
 
-const router = express.Router();
-
-router.post('/', 
+const { 
   validateDisplayName,
   validateEmail,
-  validatePassword,
+  validatePassword, 
+} = require('../../middlewares/userMiddlewares');
+
+const router = express.Router();
+
+router.post('/',
+  validateDisplayName,
+  validateEmail,
+  validatePassword, 
   generateToken,
   create);
 
