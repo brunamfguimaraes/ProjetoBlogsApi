@@ -18,6 +18,12 @@ class JoiValidation {
       password: Joi.string().min(Constants.PASSWORD_MIN_CHARACTERS).required().empty(),
     });
   }
+
+  static categorySchema() {
+    return Joi.object({
+      name: Joi.string().required().empty(),
+    });
+  }
 }
 
 module.exports = JoiValidation;

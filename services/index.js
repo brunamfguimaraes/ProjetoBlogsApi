@@ -1,5 +1,6 @@
 const AuthService = require('./AuthService');
+const CategoryService = require('./CategoryService');
 const LoginService = require('./LoginService');
 const UserService = require('./UserService');
 
-module.exports = { UserService, AuthService, LoginService };
+module.exports = { UserService, AuthService, LoginService, CategoryService };

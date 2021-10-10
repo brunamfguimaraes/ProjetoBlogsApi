@@ -7,6 +7,7 @@ class JoiErrors {
           password: errorMessages.REQUIRED_PASSWORD,
           displayName: errorMessages.REQUIRED_DISPLAY_NAME,
           email: errorMessages.REQUIRED_EMAIL,
+          name: '"name" is required',
         },
         'string.min': {
           password: errorMessages.INVALID_PASSWORD,

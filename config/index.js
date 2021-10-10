@@ -4,6 +4,8 @@ const {
   loginController, 
   loginMiddleware, 
   authMiddleware,
+  categoryController,
+  categoryMiddleware,
 } = require('./classInjection');
 
 module.exports = { 
@@ -12,4 +14,6 @@ module.exports = {
   loginController,
   loginMiddleware,
   authMiddleware, 
+  categoryController,
+  categoryMiddleware,
 };

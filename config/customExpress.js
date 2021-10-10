@@ -1,6 +1,6 @@
 const express = require('express');
 const { ErrorMiddleware } = require('../middleware');
-const { userRoute, loginRoute } = require('../routes');
+const { userRoute, loginRoute, categoryRoute } = require('../routes');
 
 const app = express();
 
@@ -13,6 +13,7 @@ app.get('/', (request, response) => {
 
 app.use('/user', userRoute);
 app.use('/login', loginRoute);
+app.use('/categories', categoryRoute);
 
 app.use(ErrorMiddleware.resError);
 
