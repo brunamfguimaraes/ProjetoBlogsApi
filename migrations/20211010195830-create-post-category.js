@@ -1,30 +1,32 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('PostCategories', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
+    await queryInterface.createTable('PostsCategories', {
       postId: {
-        type: Sequelize.INTEGER
+        field: 'post_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'BlogPosts',
+          key: 'post_id',
+        },
       },
       categoryId: {
-        type: Sequelize.INTEGER
+        field: 'category_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Categories',
+          key: 'category_id',
+        },
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('PostCategories');
+    await queryInterface.dropTable('PostsCategories');
   }
 };
