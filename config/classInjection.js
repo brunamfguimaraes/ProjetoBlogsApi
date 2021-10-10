@@ -19,7 +19,7 @@ const userMiddleware = new UserMiddleware(JoiValidation.userSchema, Constants, B
 const loginMiddleware = new LoginMiddleware(JoiValidation.loginSchema, Constants, BaseError);
 const authMiddleware = new AuthMiddleware(authService, Constants);
 
-const userService = new UserService(User, authService, Constants);
+const userService = new UserService(User, authService, Constants, BaseError);
 const loginService = new LoginService(User, authService, Constants);
 
 const userController = new UserController(userService, Constants);

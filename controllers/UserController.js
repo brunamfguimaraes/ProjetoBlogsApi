@@ -8,6 +8,7 @@ class UserController {
     
     this.createUser = this.createUser.bind(this);
     this.listUsers = this.listUsers.bind(this);
+    this.getUser = this.getUser.bind(this);
   }
 
   async createUser(req, res) {
@@ -30,6 +31,16 @@ class UserController {
       res.status(this.statusCode.OK).json(users);
     } catch (error) {
       res.status(this.statusCode.SERVER_ERROR).json({ message: error.message });
+    }
+  }
+
+  async getUser(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await this.service.getUser(id);
+      res.status(this.statusCode.OK).json(user);
+    } catch (e) {
+      res.status(e.statusCode).json({ message: e.message });
     }
   }
 }
