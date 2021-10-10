@@ -19,9 +19,9 @@ class UserController {
       } catch (error) {
         if (error.parent && error.parent.code === this.sequelizeCodes.ER_DUP_ENTRY) {
           res.status(this.statusCode.CONFLICT).json({ message: this.errorMessage.USER_CONFLICT });
+        } else {
+          res.status(500).json({ message: error.message });
         }
-    
-        res.status(500).json({ message: error.message });
       }
     }
 
