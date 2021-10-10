@@ -1,5 +1,11 @@
 const rescue = require('express-rescue');
-const { createPostService } = require('../service/postService');
+const {
+  getPostService,
+  createPostService,
+  getAllPostsService,
+  updatePostService,
+} = require('../service/postService');
+const { ApiError } = require('../utils/ApiError');
 
 const createPost = rescue(async (req, res) => {
   const { id: userId } = req.user;
@@ -10,6 +16,30 @@ const createPost = rescue(async (req, res) => {
     .json({ id: posts.id, userId, title: posts.title, content: posts.content });
 });
 
+const getAllPosts = rescue(async (req, res) => {
+  const posts = await getAllPostsService();
+  return res.status(200).json(posts);
+});
+
+const getPost = rescue(async (req, res) => {
+  const { id } = req.params;
+  const post = await getPostService(id);
+  if (!post) {
+    throw new ApiError('Post does not exist', 404);
+  }
+  return res.status(200).json(post);
+});
+
+const updatePost = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { user } = req;
+  const posts = await updatePostService(req.body, id, user);
+  return res.status(200).json(posts);
+});
+
 module.exports = {
   createPost,
+  getAllPosts,
+  getPost,
+  updatePost,
 };

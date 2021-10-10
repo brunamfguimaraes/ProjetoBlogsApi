@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 const { ApiError } = require('../utils/ApiError');
-const { userValidate, loginValidate, tokenValidate } = require('../schemas/validations');
+const {
+  userValidate,
+  loginValidate,
+  tokenValidate,
+} = require('../schemas/validations');
 const { User } = require('../../models');
 const { tokenGenerator } = require('../utils/createToken');
 

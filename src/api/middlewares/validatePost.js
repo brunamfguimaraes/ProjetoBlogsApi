@@ -21,7 +21,6 @@ const checkCategories = async (req, res, next) => {
 
 const validatePostData = (req, res, next) => {
   const { title, content, categoryIds } = req.body;
-
   if (!title) {
     return next(new ApiError('"title" is required', 400));
   }
@@ -30,7 +29,7 @@ const validatePostData = (req, res, next) => {
     return next(new ApiError('"content" is required', 400));
   }
 
-  if (!categoryIds) {
+  if (!categoryIds && req.method !== 'PUT') {
     return next(new ApiError('"categoryIds" is required', 400));
   }
 
