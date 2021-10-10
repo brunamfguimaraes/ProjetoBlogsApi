@@ -32,6 +32,7 @@ class ErrorMessage {
       ...this.message,
       EMPTY_PASSWORD: '"password" is not allowed to be empty',
       EMPTY_EMAIL: '"email" is not allowed to be empty',
+      EMPTY_CATEGORY_NAME: '"name" is not allowed to be empty',
       EMPTY_TOKEN: 'Token not found',
     };
   }

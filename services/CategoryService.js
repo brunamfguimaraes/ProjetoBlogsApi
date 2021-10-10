@@ -5,7 +5,7 @@ class CategoryService {
   }
 
   async createCategory(category) {
-    const result = await this.model.create(category);
+    const result = await this.model.create({ name: category });
     return result;
   }
 }

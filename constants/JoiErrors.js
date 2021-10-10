@@ -46,6 +46,7 @@ class JoiErrors {
       'any.empty': {
         password: this.msg.EMPTY_PASSWORD,
         email: this.msg.EMPTY_EMAIL,
+        name: this.msg.EMPTY_CATEGORY_NAME,
       },
     };
   }
