@@ -7,9 +7,19 @@ class AuthService {
     this.statusCode = statusCode;
     this.errorMessage = errorMessage;
     this.BAD_REQUEST = errorHandler;
+    this.UNAUTHORIZED = errorHandler;
 
     this.sign = this.sign.bind(this);
     this.authenticateUser = this.authenticateUser.bind(this);
+    this.checkCredentials = this.checkCredentials.bind(this);
+  }
+
+  checkCredentials(token) {
+    if (!token) { 
+      throw new this.UNAUTHORIZED(this.errorMessage.EMPTY_TOKEN, this.statusCode.UNAUTHORIZED); 
+    } else {
+     this.jwt.verify(token, this.secret);
+    }
   }
 
   authenticateUser(databaseValue, reqValue) {

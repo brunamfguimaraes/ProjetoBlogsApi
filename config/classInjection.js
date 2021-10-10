@@ -3,11 +3,8 @@ const { Constants } = require('../constants');
 const { User } = require('../models');
 const { UserController, LoginController } = require('../controllers');
 const { UserService, AuthService, LoginService } = require('../services');
-const { UserMiddleware, LoginMiddleware } = require('../middleware');
+const { UserMiddleware, LoginMiddleware, AuthMiddleware } = require('../middleware');
 const { JoiValidation, BaseError, Jwt } = require('../utils');
-
-const userMiddleware = new UserMiddleware(JoiValidation.userSchema, Constants, BaseError);
-const loginMiddleware = new LoginMiddleware(JoiValidation.loginSchema, Constants, BaseError);
 
 const authService = new 
   AuthService({ 
@@ -17,6 +14,10 @@ const authService = new
     constants: Constants, 
     errorHandler: BaseError, 
   });
+
+const userMiddleware = new UserMiddleware(JoiValidation.userSchema, Constants, BaseError);
+const loginMiddleware = new LoginMiddleware(JoiValidation.loginSchema, Constants, BaseError);
+const authMiddleware = new AuthMiddleware(authService, Constants);
 
 const userService = new UserService(User, authService, Constants);
 const loginService = new LoginService(User, authService, Constants);
@@ -29,4 +30,5 @@ module.exports = {
   loginController, 
   userMiddleware, 
   loginMiddleware,
+  authMiddleware,
 };

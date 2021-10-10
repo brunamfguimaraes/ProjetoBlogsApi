@@ -7,6 +7,7 @@ class UserController {
     this.sequelizeCodes = sequelizeCodes;
     
     this.createUser = this.createUser.bind(this);
+    this.listUsers = this.listUsers.bind(this);
   }
 
   async createUser(req, res) {
@@ -22,6 +23,15 @@ class UserController {
         res.status(500).json({ message: error.message });
       }
     }
+
+  async listUsers(_req, res) {
+    try {
+      const users = await this.service.listUsers();
+      res.status(this.statusCode.OK).json(users);
+    } catch (error) {
+      res.status(this.statusCode.SERVER_ERROR).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = UserController;

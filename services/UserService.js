@@ -7,6 +7,7 @@ class UserService {
     this.errorMessage = errorMessage;
     
     this.createUser = this.createUser.bind(this);
+    this.listUsers = this.listUsers.bind(this);
   }
 
   async createUser({ displayName, email, password, image }) {
@@ -17,6 +18,11 @@ class UserService {
     const token = this.authService.sign(payload);
     
     return token;
+  }
+
+  async listUsers() {
+    const users = await this.model.findAll();
+    return users;
   }
 }
 
