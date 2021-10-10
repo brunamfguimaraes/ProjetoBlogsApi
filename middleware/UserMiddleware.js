@@ -1,42 +1,20 @@
-class UserMiddleware {
+const BaseMiddleware = require('./BaseMiddleware');
+
+class UserMiddleware extends BaseMiddleware {
   constructor(validSchema, constants, errorHandler) {
-    const { statusCode, errorMessage, joiErrors } = constants;
-    this.validSchema = validSchema();
-    this.errorMessages = errorMessage;
-    this.joiErrors = joiErrors;
-    this.statusCode = statusCode;
-    this.BadRequest = errorHandler;
+    super(validSchema, constants, errorHandler);
+
+    this.middleware = 'UserMiddleware';
 
     this.validateUser = this.validateUser.bind(this);
-    this.validateResult = this.validateResult.bind(this);
-    this.getErrorMessage = this.getErrorMessage.bind(this);
   }
 
-  getErrorMessage(errorObj) {
-    const { type } = errorObj;
-
-    const errorInput = errorObj.path[0];
-
-    return this.joiErrors[type][errorInput];
-  }
-
-  validateResult(result) {
-    if (result.error) {
-      const errorMessage = this.getErrorMessage(result.error.details[0]);
-      throw new this.BadRequest(errorMessage, this.statusCode.BAD_REQUEST);
-    }
-  }
-
-  validateUser(req, _res, next) {
+  validateUser(req, res, next) {
     try {
-      const { body } = req;
-      const result = this.validSchema.validate(body);
-
-      this.validateResult(result);
-
+      this.validate(req, res, next);
       next();
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 }
