@@ -2,16 +2,14 @@ class Constants {
   constructor() {
     this.DISPLAY_NAME_MIN_CHARACTERS = 8;
     this.PASSWORD_MIN_CHARACTERS = 6;
-
     this.statusCode = {
       OK: '200',
       CREATED: '201',
       BAD_REQUEST: '400',
       FORBIDDEN: '403',
-      NOT_FOUND: '404',
       CONFLICT: '409',
+      ER_DUP_ENTRY: 'ER_DUP_ENTRY',
     };
-
     this.errorMessage = {
       INVALID_DISPLAY_NAME: 
       `"displayName" length must be at least ${this.DISPLAY_NAME_MIN_CHARACTERS} characters long`,

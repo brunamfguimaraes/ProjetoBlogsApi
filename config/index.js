@@ -1,3 +1,3 @@
-const { userController } = require('./classInjection');
+const { userController, userMiddleware } = require('./classInjection');
 
-module.exports = { userController };
+module.exports = { userController, userMiddleware };

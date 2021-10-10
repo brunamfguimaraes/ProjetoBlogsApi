@@ -6,12 +6,17 @@ class UserController {
     this.createUser = this.createUser.bind(this);
   }
 
-  createUser(req, res) {
+  async createUser(req, res) {
       try {
         const { displayName, email, password, image } = req.body;
-        res.status(this.statusCode.CREATED).json({ message: 'ok' });
+        const result = await this.service.createUser({ displayName, email, password, image });
+        res.status(this.statusCode.CREATED).json({ token: result });
       } catch (error) {
-        console.log(error);
+        if (error.parent && error.parent.code === this.statusCode.ER_DUP_ENTRY) {
+          res.status(this.statusCode.CONFLICT).json({ message: this.errorMessage.USER_CONFLICT });
+        }
+        
+        res.status(500).json({ message: error.message });
       }
     }
 }

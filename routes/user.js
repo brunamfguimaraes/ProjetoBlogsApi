@@ -1,8 +1,8 @@
 const express = require('express');
-const { userController } = require('../config');
+const { userController, userMiddleware } = require('../config');
 
 const userRoute = express.Router();
 
-userRoute.post('/', userController.createUser);
+userRoute.post('/', userMiddleware.validateUser, userController.createUser);
 
 module.exports = userRoute;
