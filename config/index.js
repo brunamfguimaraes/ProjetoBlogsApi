@@ -1,3 +1,8 @@
-const { userController, userMiddleware } = require('./classInjection');
+const {
+  userController,
+  userMiddleware,
+  loginController, 
+  loginMiddleware, 
+} = require('./classInjection');
 
-module.exports = { userController, userMiddleware };
+module.exports = { userController, userMiddleware, loginController, loginMiddleware };

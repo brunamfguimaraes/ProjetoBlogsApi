@@ -11,6 +11,13 @@ class JoiValidation {
       image: Joi.optional(),
     });
   }
+
+  static loginSchema() {
+    return Joi.object({
+      email: Joi.string().regex(/^[A-Z0-9+_.-]+@[A-Z0-9.-]+$/i).required().empty(),
+      password: Joi.string().min(Constants.PASSWORD_MIN_CHARACTERS).required().empty(),
+    });
+  }
 }
 
 module.exports = JoiValidation;

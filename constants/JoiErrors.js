@@ -15,6 +15,10 @@ class JoiErrors {
         'string.regex.base': {
           email: errorMessages.INVALID_EMAIL,
         },
+        'any.empty': {
+          password: errorMessages.EMPTY_PASSWORD,
+          email: errorMessages.EMPTY_EMAIL,
+        },
     };
   }
 }
