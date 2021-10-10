@@ -1,24 +1,13 @@
+const ErrorMessages = require('./ErrorMessages');
+const StatusCode = require('./StatusCode');
+
 class Constants {
-  constructor() {
+  constructor(statusCode, errorMessage) {
     this.DISPLAY_NAME_MIN_CHARACTERS = 8;
     this.PASSWORD_MIN_CHARACTERS = 6;
-    this.statusCode = {
-      OK: '200',
-      CREATED: '201',
-      BAD_REQUEST: '400',
-      FORBIDDEN: '403',
-      CONFLICT: '409',
-      ER_DUP_ENTRY: 'ER_DUP_ENTRY',
-    };
-    this.errorMessage = {
-      INVALID_DISPLAY_NAME: 
-      `"displayName" length must be at least ${this.DISPLAY_NAME_MIN_CHARACTERS} characters long`,
-      INVALID_EMAIL: '"email" must be a valid email',
-      INVALID_PASSWORD: `"password" length must be ${this.PASSWORD_MIN_CHARACTERS} characters long`,
-      REQUIRED_EMAIL: '"email" is required',
-      USER_CONFLICT: 'User already registered',
-    };
+    this.statusCode = statusCode;
+    this.errorMessage = errorMessage;
   }
 }
 
-module.exports = new Constants();
+module.exports = new Constants(StatusCode.codes, ErrorMessages.message);

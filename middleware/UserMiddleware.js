@@ -9,6 +9,7 @@ class UserMiddleware {
   }
 
   validateResult(result) {
+    console.log(result.error);
     if (result.error) {
       const { message } = result.error.details[0];
       const { type } = result.error.details[0];
