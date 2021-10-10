@@ -11,4 +11,10 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use(route);
+app.post('/user', async (req, res) => {
+  /* const { email } = req.body;
+  console.log(email); */
+  res.status(201).json('oddi');
+});
+
+/* app.use(route); */
