@@ -9,10 +9,8 @@ const validationNewUser = async (req, _res, next) => {
     image: Joi.string(),
   }).validate(req.body);
   if (error) {
-    console.log('error :', error);
     return next(error);
   }
-  console.log('saindo');
   next();
 };
 

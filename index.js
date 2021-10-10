@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const error = require('./src/middleware/error/error');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,3 +15,5 @@ app.get('/', (request, response) => {
 });
 
 app.use(route);
+
+app.use(error);
