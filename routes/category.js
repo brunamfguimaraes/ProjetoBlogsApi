@@ -1,5 +1,5 @@
 const express = require('express');
-const { categoryController, userMiddleware, authMiddleware, categoryMiddleware } = require('../config');
+const { categoryController, authMiddleware, categoryMiddleware } = require('../config');
 
 const categoryRoute = express.Router();
 

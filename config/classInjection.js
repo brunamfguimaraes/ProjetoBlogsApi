@@ -3,8 +3,13 @@ const { Constants } = require('../constants');
 const { User, Category } = require('../models');
 const { UserController, LoginController, CategoryController } = require('../controllers');
 const { UserService, AuthService, LoginService, CategoryService } = require('../services');
-const { UserMiddleware, LoginMiddleware, AuthMiddleware, CategoryMiddleware } = require('../middleware');
 const { JoiValidation, BaseError, Jwt } = require('../utils');
+const { 
+  UserMiddleware, 
+  LoginMiddleware, 
+  AuthMiddleware, 
+  CategoryMiddleware, 
+} = require('../middleware');
 
 const authService = new 
   AuthService({ 
