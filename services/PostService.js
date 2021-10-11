@@ -1,18 +1,23 @@
 class PostService {
   constructor(
-    { BlogPost, postCategoryService, categoryService, authService, Constants, BaseError },
+    { Post, User, Categ, postCategoryService, categoryService, authService, Constants, BaseError },
   ) {
     const { statusCode, errorMessage } = Constants;
-    this.model = BlogPost;
+    this.model = Post;
+    this.userModel = User;
+    this.categoryModel = Categ;
+
     this.postCategoryService = postCategoryService;
     this.categoryService = categoryService;
     this.authService = authService;
+    
     this.statusCode = statusCode;
     this.errorMessage = errorMessage;
     this.BAD_REQUEST = BaseError;
 
     this.createPost = this.createPost.bind(this);
     this.verifyCategories = this.verifyCategories.bind(this);
+    this.listPosts = this.listPosts.bind(this);
   }
 
   async verifyCategories(categoryIds) {
@@ -20,6 +25,16 @@ class PostService {
     if (categoryList.length !== categoryIds.length) {
       throw new this.BAD_REQUEST(this.errorMessage.NOT_FOUND_IDS, this.statusCode.BAD_REQUEST);
     }
+  }
+
+  async listPosts() {
+    const posts = await this.model.findAll({
+      include: [
+        { model: this.userModel, as: 'user' },
+        { model: this.categoryModel, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    return posts;
   }
 
   async createPost({ title, content, categoryIds, token }) {

@@ -5,7 +5,9 @@ class PostController {
       // this.sequelize = sequelize;
       this.statusCode = statusCode;
       this.errorMessage = errorMessage;
+
       this.createPost = this.createPost.bind(this);
+      this.listAllPosts = this.listAllPosts.bind(this);
   }
 
   async createPost(req, res) {
@@ -24,6 +26,15 @@ class PostController {
         ).json({ message: error.message });
     }
   }
+
+  async listAllPosts(_req, res) {
+    try {
+      const list = await this.service.listPosts();
+      res.status(this.statusCode.OK).json(list);
+    } catch (error) {
+      res.status(this.statusCode.SERVER_ERROR).json({ message: error.message });
+    }
+  } 
 }
 
 module.exports = PostController;

@@ -50,7 +50,9 @@ const loginService = new LoginService(User, authService, Constants);
 const categoryService = new CategoryService(Category, authService);
 const postCategoryService = new PostCategoryService(PostsCategory);
 const postService = new PostService({ 
-  BlogPost, 
+  Post: BlogPost, 
+  User,
+  Categ: Category,
   postCategoryService,
   categoryService,
   authService,
