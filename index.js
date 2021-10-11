@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 
-const route = require('./src/api/route/route');
+const routerUser = require('./src/api/route/routeUser');
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,6 +17,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use(route);
+app.use('/user', routerUser);
 
 app.use(error);
