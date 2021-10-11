@@ -1,5 +1,6 @@
 const express = require('express');
 const { User } = require('../models');
+const { validateUser } = require('../helpers/validate');
 
 const SERVER_ERROR_MESSAGE = 'Internal Server Error';
 
@@ -7,7 +8,7 @@ const router = express.Router();
 
 router.get('/', async (_req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({ attributes: { exclude: ['password'] } });
 
     return res.status(200).json(users);
   } catch (e) {
@@ -47,9 +48,13 @@ router.get('/search/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { displayName, email, password, image } = req.body;
+  const user = await User.findOne({ where: { email: req.body.email } });
+  if (user) return res.status(409).json({ message: 'User already registered' });
+  const message = validateUser(req.body);
+  if (message) return res.status(400).json({ message });
+
   try {
-    const newUser = await User.create({ displayName, email, password, image });
+    const newUser = await User.create(req.body);
 
     return res.status(201).json(newUser);
   } catch (e) {
@@ -58,7 +63,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Este endpoint usa o método update do Sequelize para alterar um usuário no banco.
 router.put('/:id', async (req, res) => {
   const { displayName, email, password, image } = req.body;
   try {
