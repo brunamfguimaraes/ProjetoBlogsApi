@@ -33,20 +33,20 @@ router.get('/:id', validateJWT, async (req, res) => {
 });
 
 // URL a ser utilizada para o exemplo http://localhost:3000/user/search/1?email=aqui-o-email
-router.get('/search/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { email } = req.query;
-    const user = await User.findOne({ where: { id, email } });
+// router.get('/search/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { email } = req.query;
+//     const user = await User.findOne({ where: { id, email } });
 
-    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+//     if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
 
-    return res.status(200).json(user);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: SERVER_ERROR_MESSAGE });
-  }
-});
+//     return res.status(200).json(user);
+//   } catch (e) {
+//     console.log(e.message);
+//     res.status(500).json({ message: SERVER_ERROR_MESSAGE });
+//   }
+// });
 
 router.post('/', async (req, res) => {
   const message = validateUser(req.body);

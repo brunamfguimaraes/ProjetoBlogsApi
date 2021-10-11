@@ -10,7 +10,6 @@ const router = express.Router();
 router.get('/', validateJWT, async (_req, res) => {
   try {
     const categories = await Category.findAll();
-    // const users = await Category.findAll({ attributes: { exclude: ['password'] } });
 
     return res.status(200).json(categories);
   } catch (e) {
@@ -49,11 +48,11 @@ router.get('/:id', validateJWT, async (req, res) => {
 //   }
 // });
 
-router.post('/', async (req, res) => {
+router.post('/', validateJWT, async (req, res) => {
   const message = validateCategory(req.body);
   if (message) return res.status(400).json({ message });
-  const category = await Category.findOne({ where: { name: req.body.name } });
-  if (category) return res.status(409).json({ message: 'Category already registered' });
+  // const category = await Category.findOne({ where: { name: req.body.name } });
+  // if (category) return res.status(409).json({ message: 'Category already registered' });
 
   try {
     const newCategory = await Category.create(req.body);
