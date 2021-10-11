@@ -1,12 +1,13 @@
 const express = require('express');
 const { User } = require('../models');
 const { validateUser } = require('../helpers/validate');
+const validateJWT = require('../helpers/validateJWT');
 
 const SERVER_ERROR_MESSAGE = 'Internal Server Error';
 
 const router = express.Router();
 
-router.get('/', async (_req, res) => {
+router.get('/', validateJWT, async (_req, res) => {
   try {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
 
@@ -17,12 +18,12 @@ router.get('/', async (_req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
 
-    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+    if (!user) return res.status(404).json({ message: 'User does not exist' });
 
     return res.status(200).json(user);
   } catch (e) {
