@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const { badRequest } = require('../helpres/error');
 
 const validateUser = (req, _res, next) => {
 console.log('validade');
@@ -17,8 +16,8 @@ console.log('validade');
     image: Joi.string(),
   }).validate(req.body);
  
-  if (error) return next(badRequest(error.message));
-  console.log('aqui2');
+  if (error) return next(error);
+
   next();
 };
 
