@@ -16,9 +16,9 @@ console.log('validade');
       }),
     image: Joi.string(),
   }).validate(req.body);
-
+ 
   if (error) return next(badRequest(error.message));
-
+  console.log('aqui2');
   next();
 };
 
