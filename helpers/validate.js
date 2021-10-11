@@ -22,6 +22,10 @@ const validatePassword = (password) => {
   }
 };
 
+const validateName = (name) => {
+  if (!name) return '"name" is required';
+};
+
 const validateUser = ({ displayName, email, password }) => {
   const displayNameIsValid = validateDisplayName(displayName);
   if (displayNameIsValid) return displayNameIsValid;
@@ -39,7 +43,10 @@ const validateLogin = ({ email, password }) => {
   return validatePassword(password);
 };
 
+const validateCategory = ({ name }) => validateName(name);
+
 module.exports = {
   validateUser,
   validateLogin,
+  validateCategory,
 };
