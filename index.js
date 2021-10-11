@@ -1,6 +1,7 @@
 const express = require('express');
 const handleErrors = require('./middlewares/handleErrors');
 const userRoutes = require('./User/userRoutes');
+const userController = require('./User/userController');
 
 const app = express();
 app.use(express.json());
@@ -11,6 +12,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user', userRoutes);
+app.post('/login', userController.login);
 
 app.use(handleErrors);
 
