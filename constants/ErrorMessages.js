@@ -25,6 +25,7 @@ class ErrorMessage {
       INVALID_PASSWORD: `"password" length must be ${this.PASSWORD_MIN_CHARACTERS} characters long`,
       INVALID_FIELDS: 'Invalid fields',
       INVALID_TOKEN: 'Expired or invalid token',
+      INVALID_USER: 'Unauthorized user',
     };
   }
 
@@ -64,6 +65,7 @@ class ErrorMessage {
     this.message = {
       ...this.message, 
       NOT_FOUND_IDS: '"categoryIds" not found',
+      NOT_FOUND_POST: 'Post does not exist',
     };
   }
 

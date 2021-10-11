@@ -16,6 +16,7 @@ class UserService {
     const data = { displayName, email, password, image };
 
     const result = await this.model.create(data);
+    console.log(result);
     const payload = {
       id: result.id, 
       displayName: result.displayName, 

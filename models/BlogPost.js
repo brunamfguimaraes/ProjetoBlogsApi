@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   BlogPost.init({
+    id: { type: DataTypes.INTEGER, primaryKey: true },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     userId: DataTypes.INTEGER,
@@ -16,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     updated: DataTypes.DATE,
   }, {
     sequelize,
-    modelName: 'BlogPost',
+    tableName: 'BlogPosts',
     timestamps: false,
   });
   return BlogPost;

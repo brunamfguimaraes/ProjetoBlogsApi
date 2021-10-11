@@ -7,5 +7,7 @@ postRoute.use(authMiddleware.checkCredentials);
 
 postRoute.post('/', postMiddleware.validatePost, postController.createPost);
 postRoute.get('/', postController.listAllPosts);
+postRoute.get('/:id', postController.findById);
+postRoute.put('/:id', postController.updatePost);
 
 module.exports = postRoute;

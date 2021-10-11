@@ -7,7 +7,7 @@ class PostsCategory extends Model {
     models.Category.belongsToMany(models.BlogPost, {
       as: 'blogposts',
       through: PostsCategory,
-      foreignKey: 'postId',
+      foreignKey: 'id',
       otherKey: 'categoryId',
     });
 
@@ -22,12 +22,13 @@ class PostsCategory extends Model {
 
 module.exports = (sequelize, DataTypes) => {
   PostsCategory.init({
+    id: { type: DataTypes.INTEGER, primaryKey: true },
     postId: DataTypes.INTEGER, 
     categoryId: DataTypes.INTEGER, 
   }, {
     sequelize,
+    tableName: 'PostsCategories',
     timestamps: false,
-    modelName: 'PostsCategory',
   });
   return PostsCategory;
 };
