@@ -10,7 +10,7 @@ const jwtConfig = {
 const jwt = require('jsonwebtoken');
 const { User } = require('./models');
 const { verifyName, verifyEmail, 
-  verifyPassword, verifyEmpty, verifyDbUser } = require('./middlewares/userMid');
+  verifyPassword, verifyEmpty, verifyDbUser, findById } = require('./middlewares/userMid');
 const { validateJWT } = require('./middlewares/tokenVerify');
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
@@ -31,6 +31,12 @@ app.post('/login', verifyEmpty, verifyDbUser, async (req, res) => {
   const { email, password } = req.body;
   const token = jwt.sign({ email, password }, secret, jwtConfig);
   return res.status(200).json({ token });
+});
+
+app.get('/user/:id', validateJWT, findById, async (req, res) => {
+  const { id } = req.params;
+  const db = await User.findOne({ where: { id } });
+  return res.status(200).json(db);
 });
 
 app.get('/user', validateJWT, async (_req, res) => {

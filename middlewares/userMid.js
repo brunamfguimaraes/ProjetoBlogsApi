@@ -51,10 +51,20 @@ const verifyDbUser = async (req, res, next) => {
   next();
 };
 
+// procurar pelo id
+
+const findById = async (req, res, next) => {
+  const { id } = req.params;
+  const db = await User.findOne({ where: { id } });
+  if (!db) return res.status(404).json({ message: 'User does not exist' });
+  next();
+};
+
 module.exports = { 
   verifyName, 
   verifyEmail, 
   verifyPassword, 
   verifyEmpty, 
-  verifyDbUser, 
+  verifyDbUser,
+  findById,
 };
