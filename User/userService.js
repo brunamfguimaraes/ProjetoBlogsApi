@@ -48,7 +48,7 @@ const create = async ({ displayName, email, password, image }) => {
   minLengthValidationName({ displayName, minLength: 8 });
   minLengthValidationPassword({ password, minLength: 6 });
   const { id } = await User.create({ displayName, email, password, image });
-  const newToken = createToken({ id, displayName, email, password, image });
+  const newToken = createToken({ id, displayName, email });
   return newToken;
 };
 
