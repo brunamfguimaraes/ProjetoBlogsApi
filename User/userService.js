@@ -71,7 +71,16 @@ const login = async ({ email, password }) => {
   return newToken;
 };
 
+const findById = async (id) => {
+  const user = await User.findByPk(id);
+
+  if (!user) throw new RequestError('notFound', 'User does not exist');
+
+  return user;
+};
+
 module.exports = {
   create,
   login,
+  findById,
 };
