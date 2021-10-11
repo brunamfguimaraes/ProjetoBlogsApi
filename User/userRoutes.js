@@ -8,4 +8,6 @@ router.route('/')
   .post(controller.create)
   .get(validateJWT, controller.getAll);
 
+router.route('/:id').get(validateJWT, controller.findById);
+
 module.exports = router;
