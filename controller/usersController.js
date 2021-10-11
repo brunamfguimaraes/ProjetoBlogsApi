@@ -36,20 +36,34 @@ const getAllUsers = async (req, res) => {
   const token = req.headers.authorization;
 
   const getAll = await usersService.getAllUsers(token);
-  
-  if (getAll === 'tokenNotFound') {
-    return res.status(401).json({ message: 'Token not found' });
-  }
 
-  if (getAll === 'invalidToken') {
-    return res.status(401).json({ message: 'Expired or invalid token' });
+  if (getAll.status) {
+    return res.status(401).json(getAll.message);
   }
 
   return res.status(200).json(getAll);
+};
+
+const getUserById = async (req, res) => {
+  const token = req.headers.authorization;
+  const { id } = req.params;
+  
+  const getById = await usersService.getUserById(token, id);
+
+  if (!getById) {
+    return res.status(404).json({ message: 'User does not exist' });
+  }
+
+  if (getById.status) {
+    return res.status(401).json(getById.message);
+  }
+
+  return res.status(200).json(getById);
 };
 
 module.exports = {
   createUser,
   loginUser,
   getAllUsers,
+  getUserById,
 };

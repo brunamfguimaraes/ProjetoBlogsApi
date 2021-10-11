@@ -1,15 +1,7 @@
 const Joi = require('joi');
-const jwt = require('jsonwebtoken');
+const jwt = require('../auth/jwt');
+
 const { User } = require('../models');
-
-require('dotenv').config();
-
-const secret = process.env.JWT_SECRET;
-
-const jwtConfig = {
-  expiresIn: '7d',
-  algorithm: 'HS256',
-};
 
 const validCreatUser = (body) => {
   const { displayName, email, password, image } = body;
@@ -22,11 +14,6 @@ const validCreatUser = (body) => {
   return error;
 };
 
-const creatToken = (displayName, email) => {
-  const token = jwt.sign({ displayName, email }, secret, jwtConfig);
-  return token;
-};
-
 const createUser = async (body) => {
   const { displayName, email, password, image } = body;
 
@@ -36,24 +23,13 @@ const createUser = async (body) => {
   const emailExits = await User.findOne({ where: { email } });
   if (emailExits) return 'emailExists';
   
-  const token = creatToken(displayName, email);
+  const token = jwt.creatToken(displayName, email);
 
   await User.create({
     displayName, email, password, image,
   });
   
   return token;
-};
-
-const validateJwt = (token) => {
-  if (!token) return 'missing auth token';
-
-  try {
-    const validToken = jwt.verify(token, secret);
-    return validToken;
-  } catch (error) {
-    return 'jwt malformed';
-  }
 };
 
 const loginUser = async (body) => {
@@ -69,25 +45,32 @@ const loginUser = async (body) => {
   const login = await User.findOne({ where: { email, password } });
   if (!login) return 'invalidData';
 
-  const token = creatToken(login.displayName, email);
+  const token = jwt.creatToken(login.displayName, email);
 
   return token;  
 };
 
 const getAllUsers = async (token) => {
-  if (!token) return 'tokenNotFound';
-
-  const validToken = validateJwt(token);
-
-  if (validToken === 'jwt malformed') return 'invalidToken';
+  const isValidToken = jwt.validateJwt(token);
+  if (isValidToken.status) return isValidToken;
 
   const getAll = await User.findAll();
 
   return getAll;  
 };
 
+const getUserById = async (token, id) => {
+  const isValidToken = jwt.validateJwt(token);
+  if (isValidToken.status) return isValidToken;
+
+  const getById = await User.findOne({ where: { id } });
+
+  return getById;
+};
+
 module.exports = {
   createUser,
   loginUser,
   getAllUsers,
+  getUserById,
 };
