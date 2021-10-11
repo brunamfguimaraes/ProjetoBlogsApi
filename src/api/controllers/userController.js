@@ -5,15 +5,14 @@ const { createUser } = require('../services/userService');
 
 console.log('controller');
 
-const post = rescue(async (req, res, next) => {
+const post = rescue(async (req, res) => {
   console.log('post');
   console.log(req.body);
   const { password, ...payload } = req.body;
   const user = await createUser(req.body);
 
   if (user.isError) {
-    console.log('if');
-    return next(user);
+    return res.status(409).json({ message: user.message });
   }
 
   const token = jtw.sign(payload, process.env.SECRET, { expiresIn: '45m' });

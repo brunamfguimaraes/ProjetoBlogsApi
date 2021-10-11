@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const validateUser = (req, _res, next) => {
+const validateUser = (req, res, next) => {
 console.log('validade');
 
   const { error } = Joi.object({
@@ -16,7 +16,7 @@ console.log('validade');
     image: Joi.string(),
   }).validate(req.body);
  
-  if (error) return next(error);
+  if (error) return res.status(400).json({ message: error.message });
 
   next();
 };
