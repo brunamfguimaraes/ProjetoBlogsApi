@@ -29,9 +29,14 @@ class AuthService {
         throw new this.BAD_REQUEST(this.errorMessage.INVALID_FIELDS, this.statusCode.BAD_REQUEST);
     }
 
-    const { displayName, email } = databaseValue;
+    const { id, displayName, email } = databaseValue;
 
-    return this.sign({ displayName, email });
+    return this.sign({ id, displayName, email });
+  }
+
+  decode(token) {
+    const decodedToken = this.jwt.verify(token, this.secret);
+    return decodedToken;
   }
 
   sign(data) {

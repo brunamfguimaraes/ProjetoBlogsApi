@@ -20,6 +20,9 @@ class JoiErrors {
       displayName: this.msg.REQUIRED_DISPLAY_NAME,
       email: this.msg.REQUIRED_EMAIL,
       name: this.msg.REQUIRED_CATEGORY_NAME,
+      title: this.msg.REQUIRED_TITLE,
+      content: this.msg.REQUIRED_CONTENT,
+      categoryIds: this.msg.REQUIRED_CATEGORY_IDS,
      }, 
     };
   }
@@ -47,6 +50,7 @@ class JoiErrors {
         password: this.msg.EMPTY_PASSWORD,
         email: this.msg.EMPTY_EMAIL,
         name: this.msg.EMPTY_CATEGORY_NAME,
+        title: this.msg.EMPTY_TITLE,
       },
     };
   }

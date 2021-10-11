@@ -24,6 +24,14 @@ class JoiValidation {
       name: Joi.string().required().empty(),
     });
   }
+
+  static postSchema() {
+     return Joi.object({
+       title: Joi.string().required().empty(),
+       content: Joi.string().required(),
+       categoryIds: Joi.array().required(),
+     });
+  }
 }
 
 module.exports = JoiValidation;

@@ -16,6 +16,15 @@ class CategoryService {
     const result = await this.model.findAll();
     return result;
   }
+
+  async findByCategories(ids) {
+    const result = await this.model.findAll({
+      where: {
+        id: ids,
+      },
+    });
+    return result;
+  }
 }
 
 module.exports = CategoryService;

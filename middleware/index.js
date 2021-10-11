@@ -2,6 +2,7 @@ const AuthMiddleware = require('./AuthMiddleware');
 const CategoryMiddleware = require('./CategoryMiddleware');
 const ErrorMiddleware = require('./ErrorMiddleware');
 const LoginMiddleware = require('./LoginMiddleware');
+const PostMiddleware = require('./PostMiddleware');
 const UserMiddleware = require('./UserMiddleware');
 
 module.exports = {
@@ -10,4 +11,5 @@ module.exports = {
   LoginMiddleware,
   AuthMiddleware,
   CategoryMiddleware,
+  PostMiddleware,
 };

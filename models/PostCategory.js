@@ -2,18 +2,18 @@ const {
   Model,
 } = require('sequelize');
 
-class PostCategory extends Model {
+class PostsCategory extends Model {
   static associate(models) {
     models.Category.belongsToMany(models.BlogPost, {
       as: 'blogposts',
-      through: PostCategory,
+      through: PostsCategory,
       foreignKey: 'postId',
       otherKey: 'categoryId',
     });
 
     models.BlogPost.belongsToMany(models.Category, {
       as: 'categories',
-      through: PostCategory,
+      through: PostsCategory,
       foreignKey: 'categoryId',
       otherKey: 'postId',
     });
@@ -21,13 +21,13 @@ class PostCategory extends Model {
 }
 
 module.exports = (sequelize, DataTypes) => {
-  PostCategory.init({
+  PostsCategory.init({
     postId: DataTypes.INTEGER, 
     categoryId: DataTypes.INTEGER, 
   }, {
     sequelize,
     timestamps: false,
-    underscored: true,
+    modelName: 'PostsCategory',
   });
-  return PostCategory;
+  return PostsCategory;
 };

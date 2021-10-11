@@ -14,9 +14,14 @@ class UserService {
 
   async createUser({ displayName, email, password, image }) {
     const data = { displayName, email, password, image };
-    const payload = { displayName, email };
 
-    await this.model.create(data);
+    const result = await this.model.create(data);
+    const payload = {
+      id: result.id, 
+      displayName: result.displayName, 
+      email: result.email, 
+    };
+    
     const token = this.authService.sign(payload);
     
     return token;

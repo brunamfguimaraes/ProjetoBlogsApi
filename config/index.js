@@ -6,7 +6,9 @@ const {
   authMiddleware,
   categoryController,
   categoryMiddleware,
-} = require('./classInjection');
+  postController,
+  postMiddleware,
+} = require('./dependecyInjection');
 
 module.exports = { 
   userController, 
@@ -16,4 +18,6 @@ module.exports = {
   authMiddleware, 
   categoryController,
   categoryMiddleware,
+  postController,
+  postMiddleware,
 };

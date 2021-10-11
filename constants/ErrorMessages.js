@@ -11,6 +11,7 @@ class ErrorMessage {
     this.getEmptyMessages = this.getEmptyMessages.bind(this);
     this.getRequiredMessages = this.getRequiredMessages.bind(this);
     this.getUserMessages = this.getUserMessages.bind(this);
+    this.getNotFound = this.getNotFound.bind(this);
 
     this.getMessages();
   }
@@ -34,6 +35,7 @@ class ErrorMessage {
       EMPTY_EMAIL: '"email" is not allowed to be empty',
       EMPTY_CATEGORY_NAME: '"name" is not allowed to be empty',
       EMPTY_TOKEN: 'Token not found',
+      EMPTY_TITLE: '"title" is not allowed to be empty',
     };
   }
 
@@ -44,6 +46,9 @@ class ErrorMessage {
       REQUIRED_PASSWORD: '"password" is required',
       REQUIRED_DISPLAY_NAME: '"displayName" is required',
       REQUIRED_CATEGORY_NAME: '"name" is required',
+      REQUIRED_TITLE: '"title" is required',
+      REQUIRED_CONTENT: '"content" is required',
+      REQUIRED_CATEGORY_IDS: '"categoryIds" is required',
     };
   }
 
@@ -55,11 +60,19 @@ class ErrorMessage {
     };
   }
 
+  getNotFound() {
+    this.message = {
+      ...this.message, 
+      NOT_FOUND_IDS: '"categoryIds" not found',
+    };
+  }
+
   getMessages() {
     this.getInvalidMessages();
     this.getEmptyMessages();
     this.getRequiredMessages();
     this.getUserMessages();
+    this.getNotFound();
   }
 }
 
