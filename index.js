@@ -8,10 +8,14 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 const jwt = require('jsonwebtoken');
-const { User } = require('./models');
+const { User, Categorie } = require('./models');
+
+// middlewares
 const { verifyName, verifyEmail, 
   verifyPassword, verifyEmpty, verifyDbUser, findById } = require('./middlewares/userMid');
+const { verifyNameCateg } = require('./middlewares/categMid');
 const { validateJWT } = require('./middlewares/tokenVerify');
+// middlewares
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
@@ -43,4 +47,10 @@ app.get('/user', validateJWT, async (_req, res) => {
   User.findAll().then((users) => {
     res.status(200).json(users);
   });
+});
+
+app.post('/categories', validateJWT, verifyNameCateg, async (req, res) => {
+  const { name } = req.body;
+  const { id } = await Categorie.bulkCreate([{ name }]);
+  return res.status(201).json({ id, name });
 });
