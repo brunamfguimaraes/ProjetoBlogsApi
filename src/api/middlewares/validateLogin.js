@@ -8,7 +8,7 @@ const validateLogin = (req, res, next) => {
     password: Joi.string().not().empty().required(),
   }).validate(req.body);
 
-  if (error) return res.status(400).json({ message: error.message });
+  if (error) next(error);
 
   next();
 };
