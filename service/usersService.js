@@ -45,6 +45,17 @@ const createUser = async (body) => {
   return token;
 };
 
+const validateJwt = (token) => {
+  if (!token) return 'missing auth token';
+
+  try {
+    const validToken = jwt.verify(token, secret);
+    return validToken;
+  } catch (error) {
+    return 'jwt malformed';
+  }
+};
+
 const loginUser = async (body) => {
   const { email, password } = body;
 
@@ -63,7 +74,20 @@ const loginUser = async (body) => {
   return token;  
 };
 
+const getAllUsers = async (token) => {
+  if (!token) return 'tokenNotFound';
+
+  const validToken = validateJwt(token);
+
+  if (validToken === 'jwt malformed') return 'invalidToken';
+
+  const getAll = await User.findAll();
+
+  return getAll;  
+};
+
 module.exports = {
   createUser,
   loginUser,
+  getAllUsers,
 };
