@@ -6,6 +6,7 @@ const validationNewUser = (req, _res, next) => {
     .required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).not().empty()
+    .required()
     .messages({ 'string.min': '"password" length must be 6 characters long' }),
     image: Joi.string(),
   }).validate(req.body);
