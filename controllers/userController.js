@@ -48,10 +48,10 @@ router.get('/search/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const user = await User.findOne({ where: { email: req.body.email } });
-  if (user) return res.status(409).json({ message: 'User already registered' });
   const message = validateUser(req.body);
   if (message) return res.status(400).json({ message });
+  const user = await User.findOne({ where: { email: req.body.email } });
+  if (user) return res.status(409).json({ message: 'User already registered' });
 
   try {
     const newUser = await User.create(req.body);
