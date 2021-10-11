@@ -4,8 +4,8 @@ async function create(req, res) {
   try {
     const { body } = req;
     const { token } = req;
-    const newUser = await userService.create(body);
 
+    const newUser = await userService.create(body);
     if (!newUser) {
       return res.status(409).json({ message: 'User already registered' });
     }
