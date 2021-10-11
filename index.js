@@ -10,7 +10,7 @@ const userRouter = require('./routers/userRouter');
 const loginRouter = require('./routers/loginRouter');
 const categoriesRouter = require('./routers/categoriesRouter');
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

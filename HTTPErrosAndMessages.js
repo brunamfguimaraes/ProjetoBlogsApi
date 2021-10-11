@@ -24,6 +24,7 @@ const message = {
     PASSWORD_EMPTY: '"password" is not allowed to be empty',
     TOKEN_NOT_EXISTS: 'Token not found',
     INVALID_TOKEN: 'Expired or invalid token',
+    NAME_NOT_EXISTS: '"name" is required',
 };
 
 module.exports = {

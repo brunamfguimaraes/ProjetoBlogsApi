@@ -18,7 +18,6 @@ const getAllUser = async (req, res) => {
 };
 
 // Falta apenas Listar o usuário pelo ID Se ele não existir um 404
-
 const getUserById = async (req, res) => {
     const nada = 'sasdsd';
     // console.log(req.body);

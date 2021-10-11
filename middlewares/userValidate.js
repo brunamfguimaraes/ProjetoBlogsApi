@@ -60,7 +60,6 @@ const WrongToken = (req, res, next) => {
     } catch (error) {
      return res.status(statusCode.TOKEN_INVALID).json({ message: message.INVALID_TOKEN });
     }
-    next();
 };
 
 module.exports = {
