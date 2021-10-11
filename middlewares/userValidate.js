@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 
 const HTTP_REST = require('../HTTPErrosAndMessages');
@@ -45,8 +48,24 @@ const WrongPassword = (req, res, next) => {
     next();
 };
 
+const WrongToken = (req, res, next) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+     return res.status(statusCode.TOKEN_INVALID).json({ message: message.TOKEN_NOT_EXISTS });
+    }
+    try {
+     jwt.verify(token, process.env.JWT_SECRET);
+     next(); 
+    } catch (error) {
+     return res.status(statusCode.TOKEN_INVALID).json({ message: message.INVALID_TOKEN });
+    }
+    next();
+};
+
 module.exports = {
     WrongdisplayName,
     WrongEmail,
     WrongPassword,
+    WrongToken,
 };

@@ -22,6 +22,8 @@ const message = {
     USER_REGISTERED: 'User already registered',
     EMAIL_EMPTY: '"email" is not allowed to be empty',
     PASSWORD_EMPTY: '"password" is not allowed to be empty',
+    TOKEN_NOT_EXISTS: 'Token not found',
+    INVALID_TOKEN: 'Expired or invalid token',
 };
 
 module.exports = {
