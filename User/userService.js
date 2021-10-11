@@ -60,6 +60,18 @@ const create = async ({ displayName, email, password, image }) => {
   return newToken;
 };
 
+const login = async ({ email, password }) => {
+  requiredValidation({ email, password });
+  blankFieldsValidation({ email, password });
+  const user = await User.findOne({ where: { email, password } });
+
+  if (!user) throw new RequestError('badRequest', 'Invalid fields');
+
+  const newToken = createToken({ displayName: user.displayName, email });
+  return newToken;
+};
+
 module.exports = {
   create,
+  login,
 };
