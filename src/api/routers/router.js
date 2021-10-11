@@ -4,7 +4,7 @@ const validateUser = require('../middlewares/validateUser');
 
 const router = express.Router();
 console.log('router');
-router.post('/users',
+router.post('/user',
 validateUser,
 userController.post);
 
