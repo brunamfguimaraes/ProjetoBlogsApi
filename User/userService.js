@@ -42,6 +42,14 @@ const minLengthValidationPassword = (field = { fieldName: '', minLength: 0 }) =>
   }
 };
 
+const blankFieldsValidation = (fields = {}) => {
+  const fieldsKeys = Object.keys(fields);
+  const blankField = fieldsKeys.find((fieldKey) => fields[fieldKey] === '');
+  if (blankField) {
+    throw new RequestError('badRequest', `"${blankField}" is not allowed to be empty`);
+  }
+};
+
 const create = async ({ displayName, email, password, image }) => {
   requiredValidation({ displayName, email, password });
   validateEmail(email);
