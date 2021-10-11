@@ -1,8 +1,6 @@
 const Joi = require('joi');
 
 const validateUser = (req, res, next) => {
-console.log('validade');
-
   const { error } = Joi.object({
     displayName: Joi.string().min(8).not().empty()
       .required(),
