@@ -7,7 +7,6 @@ const {
   deletePostService,
   createByQueryService,
 } = require('../service/postService');
-const { ApiError } = require('../utils/ApiError');
 
 const createPost = rescue(async (req, res) => {
   const { id: userId } = req.user;
@@ -26,9 +25,6 @@ const getAllPosts = rescue(async (req, res) => {
 const getPost = rescue(async (req, res) => {
   const { id } = req.params;
   const post = await getPostService(id);
-  if (!post) {
-    throw new ApiError('Post does not exist', 404);
-  }
   return res.status(200).json(post);
 });
 

@@ -6,10 +6,11 @@ const {
   getUserById,
   deleteUserService,
 } = require('../service/userService');
+const { tokenGenerator } = require('../utils/createToken');
 
 const createUser = rescue(async (req, res, _next) => {
-  const { token } = req;
   await createUserService(req.body);
+  const token = tokenGenerator(req.body);
   return res.status(201).json({ token });
 });
 

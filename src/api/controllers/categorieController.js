@@ -1,5 +1,8 @@
 const rescue = require('express-rescue');
-const { createCatService, getAllCategories } = require('../service/categoriesService');
+const {
+  createCatService,
+  getAllCategories,
+} = require('../service/categoriesService');
 
 const createCategory = rescue(async (req, res) => {
   const { name } = req.body;

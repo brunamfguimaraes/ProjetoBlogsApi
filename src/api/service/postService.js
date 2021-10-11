@@ -1,6 +1,11 @@
 const { Op } = require('sequelize');
 const { BlogPost, PostsCategory, User, Category } = require('../../models');
 const { ApiError } = require('../utils/ApiError');
+const {
+  validatePostData,
+  validatePostUpdate,
+  checkCategories,
+} = require('../schemas/validatePost');
 
 const checkIfOwns = (userId, user) => {
   if (userId !== user) {
@@ -8,8 +13,10 @@ const checkIfOwns = (userId, user) => {
   }
 };
 
-const createPostService = async (body) => {
-  const { categoryIds, title, content, userId } = body;
+const createPostService = async ({ categoryIds, title, content, userId }) => {
+  await validatePostData({ categoryIds, title, content });
+  await checkCategories(categoryIds);
+
   const post = await BlogPost.create({
     title,
     content,
@@ -18,21 +25,12 @@ const createPostService = async (body) => {
     updated: Date.now(),
   });
 
-  // for (let i = 0; i < categoryIds.length; i += 1) {
-  //   PostCategory.create({ postId: post.id, categoryIds[i].id });
-  // }
-
   categoryIds.forEach((categoryId) => {
     PostsCategory.create({ postId: post.id, categoryId });
   });
 
   return post;
 };
-
-// const user = await User.findOne({
-// where: { userId: id },
-// include: [{ model: Book, as: 'books', through: { attributes: [] } }],
-// });
 
 const getAllPostsService = async () => {
   const posts = await BlogPost.findAll({
@@ -51,18 +49,27 @@ const getPostService = async (id) => {
       { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
+
+  if (!post) {
+    throw new ApiError('Post does not exist', 404);
+  }
   return post;
 };
 
 const updatePostService = async (body, id, user) => {
-  if (body.categoryIds) {
+  const { title, content, categoryIds } = body;
+  await validatePostUpdate({ title, content });
+
+  if (categoryIds) {
     throw new ApiError('Categories cannot be edited', 400);
   }
+
   const post = await BlogPost.findByPk(id);
 
   checkIfOwns(post.userId, user.id);
 
   await BlogPost.update({ ...body }, { where: { id } });
+
   return BlogPost.findByPk(id, {
     include: [
       { model: Category, as: 'categories', through: { attributes: [] } },
