@@ -20,6 +20,8 @@ const message = {
     PASSWORD_TOO_SHORT: '"password" length must be 6 characters long',
     PASSWORD_NOT_EXISTS: '"password" is required',
     USER_REGISTERED: 'User already registered',
+    EMAIL_EMPTY: '"email" is not allowed to be empty',
+    PASSWORD_EMPTY: '"password" is not allowed to be empty',
 };
 
 module.exports = {

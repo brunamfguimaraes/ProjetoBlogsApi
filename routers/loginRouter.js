@@ -4,6 +4,12 @@ const router = express.Router();
 
 const loginController = require('../controllers/loginController');
 
-router.post('/', loginController.loginUser); 
+const { 
+    LoginEmailIsWrong,
+    LoginPasswordIsWrong,
+   
+     } = require('../middlewares/loginValidate');
+     
+router.post('/', LoginEmailIsWrong, LoginPasswordIsWrong, loginController.loginUser); 
 
 module.exports = router;
