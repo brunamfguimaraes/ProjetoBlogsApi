@@ -16,6 +16,23 @@ const createUser = async (req, res) => {
   return res.status(201).json({ token: user });
 };
 
+const loginUser = async (req, res) => {
+  const { body } = req;
+
+  const login = await usersService.loginUser(body);
+
+  if (login.details) {
+    return res.status(400).json({ message: login.details[0].message });
+  }
+
+  if (login === 'invalidData') {
+    return res.status(400).json({ message: 'Invalid fields' });
+  }
+
+  return res.status(200).json({ token: login });
+};
+
 module.exports = {
   createUser,
+  loginUser,
 };

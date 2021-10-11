@@ -45,6 +45,25 @@ const createUser = async (body) => {
   return token;
 };
 
+const loginUser = async (body) => {
+  const { email, password } = body;
+
+  const { error } = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().length(6).required(),
+  }).validate({ email, password });
+
+  if (error) return error;
+
+  const login = await User.findOne({ where: { email, password } });
+  if (!login) return 'invalidData';
+
+  const token = creatToken(login.displayName, email);
+
+  return token;  
+};
+
 module.exports = {
   createUser,
+  loginUser,
 };

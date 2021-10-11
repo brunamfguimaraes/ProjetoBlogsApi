@@ -7,6 +7,7 @@ app.use(bodyParser.json());
 const usersController = require('./controller/usersController');
 
 app.post('/user', usersController.createUser);
+app.post('/login', usersController.loginUser);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
