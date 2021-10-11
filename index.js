@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const error = require('./src/middleware/error/error');
+const error = require('./src/api/middleware/error/error');
 
 const app = express();
 app.use(bodyParser.json());
 
-const route = require('./src/route/route');
+const route = require('./src/api/route/route');
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 

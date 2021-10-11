@@ -1,11 +1,12 @@
 const Joi = require('joi');
 
-const validationNewUser = async (req, _res, next) => {
+const validationNewUser = (req, _res, next) => {
   const { error } = Joi.object().keys({
     displayName: Joi.string().min(8).max(50)
     .required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).max(80).required(),
+    password: Joi.string().min(6).not().empty()
+    .messages({ 'string.min': '"password" length must be 6 characters long' }),
     image: Joi.string(),
   }).validate(req.body);
   if (error) {
