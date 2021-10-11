@@ -54,3 +54,9 @@ app.post('/categories', validateJWT, verifyNameCateg, async (req, res) => {
   const { id } = await Categorie.bulkCreate([{ name }]);
   return res.status(201).json({ id, name });
 });
+
+app.get('/categories', validateJWT, async (_req, res) => {
+  Categorie.findAll().then((categ) => {
+    res.status(200).json(categ);
+  });
+});
