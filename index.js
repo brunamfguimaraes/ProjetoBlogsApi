@@ -8,13 +8,14 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 const jwt = require('jsonwebtoken');
-const { User, Categorie } = require('./models');
+const { User, Categorie, BlogPost } = require('./models');
 
 // middlewares
 const { verifyName, verifyEmail, 
   verifyPassword, verifyEmpty, verifyDbUser, findById } = require('./middlewares/userMid');
 const { verifyNameCateg } = require('./middlewares/categMid');
 const { validateJWT } = require('./middlewares/tokenVerify');
+const { VerifyTitle, VerifyContent } = require('./middlewares/blogMid');
 // middlewares
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
@@ -59,4 +60,18 @@ app.get('/categories', validateJWT, async (_req, res) => {
   Categorie.findAll().then((categ) => {
     res.status(200).json(categ);
   });
+});
+
+app.post('/post', validateJWT, VerifyTitle, VerifyContent, async (req, res) => {
+  const { title, categoryIds, content } = req.body;
+  const userId = req.user;
+  const date = new Date().toISOString();
+  const { id } = await BlogPost.bulkCreate([{ 
+    userId, 
+    title, 
+    categoryIds, 
+    content, 
+    published: date, 
+    updated: date }]);
+  return res.status(201).json({ id, userId, title, content });
 });
