@@ -8,6 +8,7 @@ const {
   categoryMiddleware,
   postController,
   postMiddleware,
+  updatePostMiddleware,
 } = require('./dependecyInjection');
 
 module.exports = { 
@@ -20,4 +21,5 @@ module.exports = {
   categoryMiddleware,
   postController,
   postMiddleware,
+  updatePostMiddleware,
 };

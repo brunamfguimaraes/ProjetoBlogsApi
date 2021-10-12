@@ -12,6 +12,7 @@ class ErrorMessage {
     this.getRequiredMessages = this.getRequiredMessages.bind(this);
     this.getUserMessages = this.getUserMessages.bind(this);
     this.getNotFound = this.getNotFound.bind(this);
+    this.getUnallowed = this.getUnallowed.bind(this);
 
     this.getMessages();
   }
@@ -69,12 +70,20 @@ class ErrorMessage {
     };
   }
 
+  getUnallowed() {
+    this.message = {
+      ...this.message,
+      UNALLOWED_CONTENT: 'Categories cannot be edited',
+    };
+  }
+
   getMessages() {
     this.getInvalidMessages();
     this.getEmptyMessages();
     this.getRequiredMessages();
     this.getUserMessages();
     this.getNotFound();
+    this.getUnallowed();
   }
 }
 

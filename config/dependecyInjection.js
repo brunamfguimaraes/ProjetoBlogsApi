@@ -1,6 +1,6 @@
 const jsonWebToken = require('jsonwebtoken');
-// const Sequelize = require('sequelize');
-// const config = require('./config');
+const Sequelize = require('sequelize');
+const config = require('./config');
 const { Constants } = require('../constants');
 const { User, Category, BlogPost, PostsCategory } = require('../models');
 const { 
@@ -27,7 +27,7 @@ const {
   PostMiddleware,
 } = require('../middleware');
 
-// const sequelize = new Sequelize(config.development);
+const sequelize = new Sequelize(config.development);
 
 const authService = new 
   AuthService({ 
@@ -44,6 +44,8 @@ const authMiddleware = new AuthMiddleware(authService, Constants);
 const categoryMiddleware = new 
   CategoryMiddleware(JoiValidation.categorySchema, Constants, BaseError);
 const postMiddleware = new PostMiddleware(JoiValidation.postSchema, Constants, BaseError);
+const updatePostMiddleware = new 
+  PostMiddleware(JoiValidation.updatePostSchema, Constants, BaseError);
 
 const userService = new UserService(User, authService, Constants, BaseError);
 const loginService = new LoginService(User, authService, Constants);
@@ -63,7 +65,7 @@ const postService = new PostService({
 const userController = new UserController(userService, Constants);
 const loginController = new LoginController(loginService, Constants);
 const categoryController = new CategoryController(categoryService, Constants);
-const postController = new PostController(postService, Constants);
+const postController = new PostController(postService, Constants, sequelize);
 
 module.exports = { 
   userController, 
@@ -75,4 +77,5 @@ module.exports = {
   authMiddleware,
   categoryMiddleware,
   postMiddleware,
+  updatePostMiddleware,
 };

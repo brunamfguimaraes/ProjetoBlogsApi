@@ -32,6 +32,13 @@ class JoiValidation {
        categoryIds: Joi.array().required(),
      });
   }
+
+  static updatePostSchema() {
+    return Joi.object({
+      title: Joi.string().required().empty(),
+      content: Joi.string().required(),
+    });
+ }
 }
 
 module.exports = JoiValidation;

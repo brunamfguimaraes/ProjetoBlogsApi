@@ -1,8 +1,8 @@
 class PostController {
-  constructor(service, constants) {
+  constructor(service, constants, sequelize) {
     const { statusCode, errorMessage } = constants;
       this.service = service;
-      // this.sequelize = sequelize;
+      this.sequelize = sequelize;
       this.statusCode = statusCode;
       this.errorMessage = errorMessage;
 
@@ -13,16 +13,20 @@ class PostController {
   }
 
   async createPost(req, res) {
-    // const t = await this.sequelize.transaction();
+    const t = await this.sequelize.transaction();
+    
     try {
       const { title, categoryIds, content } = req.body;
       const token = req.headers.authorization;
       const payload = { title, content, categoryIds, token };
-      const result = await this.service.createPost(payload);
+      const transaction = { transaction: t };
 
+      const result = await this.service.createPost(payload, transaction);
+
+      t.commit();
       res.status(this.statusCode.CREATED).json(result);
     } catch (error) {
-      // t.rollback();
+      t.rollback();
       res.status(
         error.statusCode || this.statusCode.SERVER_ERROR,
         ).json({ message: error.message });
@@ -44,7 +48,7 @@ class PostController {
       const list = await this.service.listPosts();
       res.status(this.statusCode.OK).json(list);
     } catch (error) {
-      res.status(this.statusCode.SERVER_ERROR).json({ message: error.message });
+      res.status(error.statusCode || this.statusCode.SERVER_ERROR).json({ message: error.message });
     }
   } 
 
@@ -56,7 +60,7 @@ class PostController {
       const result = await this.service.updatePost({ title, content }, token, id);
       res.status(200).json(result);
     } catch (error) {
-      res.status(this.statusCode.SERVER_ERROR).json({ message: error.message });
+      res.status(error.statusCode || this.statusCode.SERVER_ERROR).json({ message: error.message });
     }
   }
 }

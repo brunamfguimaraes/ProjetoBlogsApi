@@ -22,18 +22,22 @@ class PostService {
   }
 
   async checkCredentials(postId, token) {
-    const post = await this.findById(postId);
+    const post = await this.model.findByPk(postId);
+
     const { id } = this.authService.decode(token);
+
     if (!post || id !== post.userId) {
       throw new this.ERROR(this.errorMessage.INVALID_USER, this.statusCode.UNAUTHORIZED);
     }
   }
 
-  getAssociation() {
-    return [
-      { model: this.categoryModel, as: 'categories', through: { attributes: [] } },
-      { model: this.userModel, as: 'user' },
-    ];
+  getAssociation(type = 'all') {
+    const associationModels = {
+      user: { model: this.userModel, as: 'user' },
+      categories: { model: this.categoryModel, as: 'categories', through: { attributes: [] } },
+    };
+     if (type === 'all') return [associationModels.user, associationModels.categories];
+     return associationModels[type];
   }
 
   async verifyCategories(categoryIds) {
@@ -43,11 +47,18 @@ class PostService {
     }
   }
 
-  async findById(id) {
-    const post = await this.model.findOne({
-      where: { id },
+  async findById(id, opts) {
+    const config = opts || {
       include: this.getAssociation(),
-    });
+    };
+
+    const options = {
+      where: { id },
+      ...config,
+    };
+
+    const post = await this.model.findOne(options);
+
     if (!post) { 
       throw new this.ERROR(this.errorMessage.NOT_FOUND_POST, this.statusCode.NOT_FOUND);
     }
@@ -61,25 +72,30 @@ class PostService {
     return posts;
   }
 
-  async createPost({ title, content, categoryIds, token }) {
+  async createPost({ title, content, categoryIds, token }, t) {
     await this.verifyCategories(categoryIds);
     const { id } = this.authService.decode(token);
-    // const transaction = { transaction: t };
     const date = new Date();
     const data = { title, content, userId: id, published: date, updated: date };
-    const result = await this.model.create(data);
-    await this.postCategoryService.insertPostIds(result.id, categoryIds);
+    
+    const result = await this.model.create(data, t);
+    await this.postCategoryService.insertPostIds(result.id, categoryIds, t);
     
     return { id: result.id, userId: result.userId, title: result.title, content: result.content };
   }
 
   async updatePost({ title, content }, token, postId) {
-    this.checkCredentials(postId, token);
-    const [updatedPost] = await this.model.update(
+    await this.checkCredentials(postId, token);
+    await this.model.update(
       { title, content },
       { where: { id: postId } },
     );
-    const result = await this.findById(postId);
+
+    const result = await this.findById(postId, {
+      include: this.getAssociation('categories'),
+      attributes: { exclude: ['published', 'updated'] },
+    });
+
     return result;
   }
 }

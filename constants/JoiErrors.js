@@ -9,8 +9,19 @@ class JoiErrors {
     this.min = this.min.bind(this);
     this.regex = this.regex.bind(this);
     this.empty = this.empty.bind(this);
+    this.unnalowed = this.unnalowed.bind(this);
     this.init = this.init.bind(this);
+    
     this.init(errorMessages);
+  }
+
+  unnalowed() {
+    this.error = {
+      ...this.error,
+      'object.allowUnknown': {
+        categoryIds: this.msg.UNALLOWED_CONTENT,
+      },
+    };
   }
 
   required() {
@@ -60,6 +71,7 @@ class JoiErrors {
     this.min();
     this.regex();
     this.empty();
+    this.unnalowed();
   }
 }
 

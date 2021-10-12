@@ -1,33 +1,26 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 class PostsCategory extends Model {
   static associate(models) {
     models.Category.belongsToMany(models.BlogPost, {
       as: 'blogposts',
       through: PostsCategory,
-      foreignKey: 'id',
-      otherKey: 'categoryId',
+      foreignKey: 'categoryId',
+      otherKey: 'postId',
     });
 
     models.BlogPost.belongsToMany(models.Category, {
       as: 'categories',
       through: PostsCategory,
-      foreignKey: 'categoryId',
-      otherKey: 'postId',
+      foreignKey: 'postId',
+      otherKey: 'categoryId',
     });
   }
 }
 
-module.exports = (sequelize, DataTypes) => {
-  PostsCategory.init({
-    id: { type: DataTypes.INTEGER, primaryKey: true },
-    postId: DataTypes.INTEGER, 
-    categoryId: DataTypes.INTEGER, 
-  }, {
+module.exports = (sequelize, _DataTypes) => {
+  PostsCategory.init({}, {
     sequelize,
-    tableName: 'PostsCategories',
     timestamps: false,
   });
   return PostsCategory;
