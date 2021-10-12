@@ -8,6 +8,9 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/user', routers.userRouter);
+
+app.use(middlewares.errorMiddleware);
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
