@@ -44,9 +44,16 @@ async function create(body) {
   return newUser;
 }
 
+async function getAllUsers() {
+  const users = await User.findAll();
+
+  return users;
+}
+
 module.exports = {
   validateDisplayName,
   validateEmail,
   validatePassword,
   create,
+  getAllUsers,
 };
