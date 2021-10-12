@@ -9,13 +9,19 @@ function validateName(name) {
 }
 
 async function create(body) {
-  console.log(body);
   const newCategory = await Category.create(body);
 
   return newCategory;
 }
 
+async function getAllCategories() {
+  const categories = await Category.findAll();
+
+  return categories;
+}
+
 module.exports = { 
   create,
   validateName,
+  getAllCategories,
 };
