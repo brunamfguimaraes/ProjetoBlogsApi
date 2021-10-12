@@ -1,7 +1,8 @@
 const express = require('express');
-const { create } = require('../../controllers/userController');
+const { create, getAllUsers } = require('../../controllers/userController');
 
 const generateToken = require('../../middlewares/generateToken');
+const validateToken = require('../../middlewares/validateToken');
 
 const { 
   validateDisplayName,
@@ -17,5 +18,9 @@ router.post('/',
   validatePassword, 
   generateToken,
   create);
+
+router.get('/', 
+  validateToken,
+  getAllUsers);
 
 module.exports = router;
