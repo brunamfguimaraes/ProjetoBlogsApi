@@ -1,7 +1,7 @@
 const rescue = require('express-rescue');
 require('dotenv').config();
 const jtw = require('jsonwebtoken');
-const { createUser } = require('../services/userService');
+const { createUser, getAll } = require('../services/userService');
 
 const post = rescue(async (req, res, next) => {
   const { password, ...payload } = req.body;
@@ -16,6 +16,12 @@ const post = rescue(async (req, res, next) => {
   return res.status(201).json({ token });
 });
 
+const get = async (_req, res) => {
+  const users = await getAll();
+  return res.status(200).json(users);
+};
+
 module.exports = {
   post,
+  get,
 };

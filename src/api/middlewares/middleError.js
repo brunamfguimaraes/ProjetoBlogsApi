@@ -8,7 +8,7 @@ const errorMiddleware = (err, _req, res, _next) => {
     return res.status(err.code)
     .json({ message: err.message });
   }
-  return res.status(200).json({ message: 'internal error' });
+  return res.status(401).json({ message: 'Expired or invalid token' });
 };
 
 module.exports = errorMiddleware;

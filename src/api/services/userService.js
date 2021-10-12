@@ -1,5 +1,5 @@
 const { conflict } = require('../helpres/error');
-const { postNewUser } = require('../model/userModel');
+const { postNewUser, getAll } = require('../model/userModel');
 
 const createUser = async (user) => {
   const newUser = await postNewUser(user);
@@ -11,4 +11,5 @@ const createUser = async (user) => {
 
 module.exports = {
   createUser,
+  getAll,
 };
