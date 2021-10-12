@@ -5,7 +5,6 @@ function validateEmail(req, res, next) {
     const { email } = req.body;
     
     const login = loginService.validateEmail(email);
-    console.log(login);
     if (login === null) {
       return res.status(400)
         .json({ message: '"email" is required' });
@@ -28,7 +27,6 @@ function validatePassword(req, res, next) {
     const { password } = req.body;
 
     const login = loginService.validatePassword(password);
-
     if (login === null) {
       return res.status(400)
       .json({ message: '"password" is required' });
@@ -36,7 +34,7 @@ function validatePassword(req, res, next) {
 
     if (!login) {
       return res.status(400)
-      .json({ message: '"email" is not allowed to be empty' });
+      .json({ message: '"password" is not allowed to be empty' });
     }
 
     next();
