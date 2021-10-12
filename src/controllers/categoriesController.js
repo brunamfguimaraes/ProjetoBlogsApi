@@ -13,6 +13,18 @@ async function create(req, res) {
   }
 }
 
+async function getAllCategories(_req, res) {
+  try {
+    const categories = await categoriesService.getAllCategories();
+
+    return res.status(200).json(categories);
+  } catch (error) {
+    console.log(`An unknown error has occurred: ${error}`);
+    return res.status(500).json({ message: 'An unknown error has occurred' });
+  }
+}
+
 module.exports = {
   create,
+  getAllCategories,
 };
