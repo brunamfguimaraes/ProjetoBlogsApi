@@ -6,6 +6,7 @@ const routes = require('./src/api/routers/router');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 // app.use(middleError);
