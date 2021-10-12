@@ -1,10 +1,10 @@
 class PostService {
   constructor(
-    { Post, User, Categ, postCategoryService, categoryService, authService, Constants, BaseError },
+    { Post, User, Cat, h, postCategoryService, categoryService, authService, Constants, BaseError },
   ) {
     this.model = Post;
     this.userModel = User;
-    this.categoryModel = Categ;
+    this.categoryModel = Cat;
 
     this.postCategoryService = postCategoryService;
     this.categoryService = categoryService;
@@ -13,6 +13,7 @@ class PostService {
     this.statusCode = Constants.statusCode;
     this.errorMessage = Constants.errorMessage;
     this.ERROR = BaseError;
+    this.helper = h;
 
     this.createPost = this.createPost.bind(this);
     this.verifyCategories = this.verifyCategories.bind(this);
@@ -65,10 +66,14 @@ class PostService {
     return post;
   }
 
-  async listPosts() {
+  async listPosts(query) {
     const posts = await this.model.findAll({
       include: this.getAssociation(),
     });
+    if (query) {
+      const filteredPosts = this.helper.filterBy(query, posts);
+      return filteredPosts;
+    } 
     return posts;
   }
 

@@ -1,6 +1,6 @@
 const jsonWebToken = require('jsonwebtoken');
 const Sequelize = require('sequelize');
-const config = require('./config');
+const config = require('../sequelize/config/config');
 const { Constants } = require('../constants');
 const { User, Category, BlogPost, PostsCategory } = require('../models');
 const { 
@@ -18,7 +18,7 @@ const {
    PostCategoryService,
 } = require('../services');
 
-const { JoiValidation, BaseError, Jwt } = require('../utils');
+const { JoiValidation, BaseError, Jwt, FilterObject } = require('../utils');
 const { 
   UserMiddleware, 
   LoginMiddleware, 
@@ -54,7 +54,8 @@ const postCategoryService = new PostCategoryService(PostsCategory);
 const postService = new PostService({ 
   Post: BlogPost, 
   User,
-  Categ: Category,
+  Cat: Category,
+  h: FilterObject,
   postCategoryService,
   categoryService,
   authService,

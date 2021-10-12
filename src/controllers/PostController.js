@@ -44,9 +44,10 @@ class PostController {
     }
   }
 
-  async listAllPosts(_req, res) {
+  async listAllPosts(req, res) {
     try {
-      const list = await this.service.listPosts();
+      const query = req.query.q;
+      const list = await this.service.listPosts(query);
       res.status(this.statusCode.OK).json(list);
     } catch (error) {
       res.status(error.statusCode || this.statusCode.SERVER_ERROR).json({ message: error.message });
