@@ -15,7 +15,7 @@ const validateToken = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    next(error);  
+    return res.status(401).json({ message: 'Expired or invalid token' });  
   }
 };
 
