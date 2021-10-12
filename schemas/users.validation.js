@@ -22,6 +22,11 @@ const verifyDisplayName = (displayName) => {
   return true;
 };
 const verifyEmail = (email) => {
+  if (!email) {
+    const error = new Error('"email" is required');
+    error.code = 400;
+    throw error;
+  }
   const emailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
   if (!emailRegex.test(email)) {
     const error = new Error('"email" must be a valid email');
@@ -30,22 +35,12 @@ const verifyEmail = (email) => {
   }
 };
 
-const isEmailEmpty = (email) => {
-  if (!email) {
-    const error = new Error('"email" is required');
-    error.code = 400;
-    throw error;
-  }
-};
-const isPasswordEmpty = (password) => {
+const verifyPassword = (password) => {
   if (!password) {
     const error = new Error('"password" is required');
     error.code = 400;
     throw error;
   }
-};
-
-const verifyPassword = (password) => {
   if (password.length !== 6) {
     const error = new Error('"password" length must be 6 characters long');
     error.code = 400;
@@ -67,7 +62,4 @@ module.exports = {
   verifyDisplayName,
   verifyEmail,
   verifyPassword,
-  isEmailEmpty,
-  isPasswordEmpty,
-  /*  validateEmptyFields */
 };
