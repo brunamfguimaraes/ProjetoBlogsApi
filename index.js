@@ -9,7 +9,7 @@ app.use(express.json());
 
 const PORT = 3000;
 
-app.listen(PORT, () => console.log(`ouvindo porta ${PORT}`));
+app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
 
 app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
