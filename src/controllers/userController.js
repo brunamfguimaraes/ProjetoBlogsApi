@@ -17,6 +17,18 @@ async function create(req, res) {
   }
 }
 
+async function getAllUsers(_req, res) {
+  try {
+    const users = await userService.getAllUsers();
+
+    return res.status(200).json(users);
+  } catch (error) {
+    console.log(`An unknown error has occurred: ${error}`);
+    return res.status(500).json({ message: 'An unknown error has occurred' });
+  }
+}
+
 module.exports = {
   create,
+  getAllUsers,
 };
