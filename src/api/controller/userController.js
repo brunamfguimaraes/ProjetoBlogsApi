@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const secret = process.env.SECRET;
+const secret = process.env.JWT_SECRET;
 
 const validationUser = require('../middleware/validations/validationNewUser');
 const { createUser } = require('../service/userService');
