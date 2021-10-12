@@ -19,7 +19,13 @@ const getAll = async () => {
   return users; 
 };
 
+const byId = async (id) => {
+  const userId = await Users.findOne({ where: { id } });
+  return userId;
+};
+
 module.exports = {
   postNewUser,
   getAll,
+  byId,
 };
