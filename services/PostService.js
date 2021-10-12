@@ -24,7 +24,6 @@ class PostService {
 
   async checkCredentials(postId, token) {
     const post = await this.findById(postId, {});
-    console.log(post.userId);
     const { id } = this.authService.decode(token);
 
     if (id !== post.userId) {

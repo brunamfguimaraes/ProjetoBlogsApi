@@ -9,6 +9,7 @@ class UserController {
     this.createUser = this.createUser.bind(this);
     this.listUsers = this.listUsers.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
 
   async createUser(req, res) {
@@ -20,7 +21,7 @@ class UserController {
         if (error.parent && error.parent.code === this.sequelizeCodes.ER_DUP_ENTRY) {
           res.status(this.statusCode.CONFLICT).json({ message: this.errorMessage.USER_CONFLICT });
         } else {
-          res.status(500).json({ message: error.message });
+          res.status(this.statusCode.SERVER_ERROR).json({ message: error.message });
         }
       }
     }
@@ -40,7 +41,17 @@ class UserController {
       const user = await this.service.getUser(id);
       res.status(this.statusCode.OK).json(user);
     } catch (e) {
-      res.status(e.statusCode).json({ message: e.message });
+      res.status(e.statusCode || this.statusCode.SERVER_ERROR).json({ message: e.message });
+    }
+  }
+
+  async deleteUser(req, res) {
+    try {
+      const token = req.headers.authorization;
+      await this.service.deleteUser(token);
+      res.status(this.statusCode.DELETED).json();
+    } catch (e) {
+      res.status(e.statusCode || this.statusCode.SERVER_ERROR).json({ message: e.message });
     }
   }
 }

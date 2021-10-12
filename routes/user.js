@@ -9,5 +9,6 @@ userRoute.use(authMiddleware.checkCredentials);
 
 userRoute.get('/', userController.listUsers);
 userRoute.get('/:id', userController.getUser);
+userRoute.delete('/me', userController.deleteUser);
 
 module.exports = userRoute;

@@ -15,8 +15,6 @@ class BaseMiddleware {
     const { type } = errorObj;
 
     const errorInput = errorObj.path[0];
-    console.log(type);
-    console.log(errorInput);
     return this.joiErrors[type][errorInput];
   }
 
