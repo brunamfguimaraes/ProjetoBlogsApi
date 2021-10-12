@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 const validateUser = (req, res, next) => {
+  console.log('validate user');
   const { error } = Joi.object({
     displayName: Joi.string().min(8).not().empty()
       .required(),
@@ -13,9 +14,9 @@ const validateUser = (req, res, next) => {
       }),
     image: Joi.string(),
   }).validate(req.body);
- 
-  if (error) return res.status(400).json({ message: error.details[0].message });
-
+  console.log('antes if');
+  if (error) return res.status(400).json({ message: error.details[0].message }); 
+  console.log('depois do if ');
   next();
 };
 

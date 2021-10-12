@@ -17,7 +17,10 @@ const post = async (req, res, _next) => {
 };
 
 const get = async (_req, res) => {
+  console.log('get');
+
   const users = await getAll();
+  console.log('depois do get ');
   return res.status(200).json(users);
 };
 
