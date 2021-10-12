@@ -9,7 +9,6 @@ const { verifyEmail,
 const { User } = require('../models');
 
 const createUser = async (req, res) => {
-  console.log(req.body);
   await User.create(req.body);
   const { id, displayName, email, image } = User;
   const newToken = jwt.sign(
