@@ -50,10 +50,17 @@ async function getAllUsers() {
   return users;
 }
 
+async function getUserByID(id) {
+  const user = await User.findOne({ where: { id } });
+
+  return user;
+}
+
 module.exports = {
   validateDisplayName,
   validateEmail,
   validatePassword,
   create,
   getAllUsers,
+  getUserByID,
 };
