@@ -13,7 +13,7 @@ const { User, Categorie, BlogPost } = require('./models');
 // middlewares
 const { verifyName, verifyEmail, 
   verifyPassword, verifyEmpty, verifyDbUser, findById } = require('./middlewares/userMid');
-const { verifyNameCateg } = require('./middlewares/categMid');
+const { verifyNameCateg, foundCateg } = require('./middlewares/categMid');
 const { validateJWT } = require('./middlewares/tokenVerify');
 const { VerifyTitle, VerifyContent } = require('./middlewares/blogMid');
 // middlewares
@@ -62,16 +62,22 @@ app.get('/categories', validateJWT, async (_req, res) => {
   });
 });
 
-app.post('/post', validateJWT, VerifyTitle, VerifyContent, async (req, res) => {
+app.post('/post', validateJWT, VerifyTitle, VerifyContent, foundCateg, async (req, res) => {
   const { title, categoryIds, content } = req.body;
   const userId = req.user;
   const date = new Date().toISOString();
-  const { id } = await BlogPost.bulkCreate([{ 
+  const { id } = await BlogPost.create({ 
     userId, 
     title, 
     categoryIds, 
     content, 
     published: date, 
-    updated: date }]);
+    updated: date });
   return res.status(201).json({ id, userId, title, content });
+});
+
+app.get('/post', validateJWT, async (_req, res) => {
+  BlogPost.findAll().then((categ) => {
+    res.status(200).json(categ);
+  });
 });
