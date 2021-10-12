@@ -11,7 +11,12 @@ module.exports = rescue(async (req, res, next) => {
     throw new RequestError('unauthorized', 'Token not found');
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, _decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (decoded) {
+      const { id } = decoded;
+      req.userId = id;
+    }
+
     if (err) throw new RequestError('unauthorized', 'Expired or invalid token');
   });
   next();
