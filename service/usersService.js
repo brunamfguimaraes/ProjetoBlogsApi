@@ -52,7 +52,7 @@ const loginUser = async (body) => {
 
 const getAllUsers = async (token) => {
   const isValidToken = jwt.validateJwt(token);
-  if (isValidToken.status) return isValidToken;
+  if (isValidToken.validToken) return isValidToken;
 
   const getAll = await User.findAll();
 
@@ -61,7 +61,7 @@ const getAllUsers = async (token) => {
 
 const getUserById = async (token, id) => {
   const isValidToken = jwt.validateJwt(token);
-  if (isValidToken.status) return isValidToken;
+  if (isValidToken.validToken) return isValidToken;
 
   const getById = await User.findOne({ where: { id } });
 
