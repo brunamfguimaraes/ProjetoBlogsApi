@@ -28,32 +28,14 @@ const getAllCategories = async (req, res) => {
 
   const getAll = await categoriesService.getAllCategories(token);
 
-  if (getAll.status) {
+  if (getAll.validToken) {
     return res.status(401).json(getAll.message);
   }
 
   return res.status(200).json(getAll);
 };
 
-const getCategorieById = async (req, res) => {
-  const token = req.headers.authorization;
-  const { id } = req.params;
-  
-  const getById = await categoriesService.getCategorieById(token, id);
-  
-  if (!getById) {
-    return res.status(404).json({ message: 'User does not exist' });
-  }
-  
-  if (getById.status) {
-    return res.status(401).json(getById.message);
-  }
-  
-  return res.status(200).json(getById);
-};
-
 module.exports = {
   createCategorie,
   getAllCategories,
-  getCategorieById,
 };

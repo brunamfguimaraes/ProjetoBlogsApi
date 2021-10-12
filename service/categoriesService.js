@@ -34,24 +34,14 @@ const createCategorie = async (token, body) => {
 
 const getAllCategories = async (token) => {
   const isValidToken = jwt.validateJwt(token);
-  if (isValidToken.status) return isValidToken;
+  if (isValidToken.validToken) return isValidToken;
 
   const getAll = await Categorie.findAll();
 
   return getAll;  
 };
 
-const getCategorieById = async (token, id) => {
-  const isValidToken = jwt.validateJwt(token);
-  if (isValidToken.status) return isValidToken;
-
-  const getById = await Categorie.findOne({ where: { id } });
-
-  return getById;
-};
-
 module.exports = {
   createCategorie,
   getAllCategories,
-  getCategorieById,
 };
