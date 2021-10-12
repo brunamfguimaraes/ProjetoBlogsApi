@@ -10,6 +10,7 @@ class PostController {
       this.listAllPosts = this.listAllPosts.bind(this);
       this.findById = this.findById.bind(this);
       this.updatePost = this.updatePost.bind(this);
+      this.deletePost = this.deletePost.bind(this);
   }
 
   async createPost(req, res) {
@@ -57,8 +58,19 @@ class PostController {
       const { id } = req.params;
       const token = req.headers.authorization;
       const { title, content } = req.body;
-      const result = await this.service.updatePost({ title, content }, token, id);
+      const result = await this.service.updatePost({ title, content }, id, token);
       res.status(200).json(result);
+    } catch (error) {
+      res.status(error.statusCode || this.statusCode.SERVER_ERROR).json({ message: error.message });
+    }
+  }
+
+  async deletePost(req, res) {
+    try {
+      const { id } = req.params;
+      const token = req.headers.authorization;
+      await this.service.deletePost(id, token);
+      res.status(this.statusCode.DELETED).json();
     } catch (error) {
       res.status(error.statusCode || this.statusCode.SERVER_ERROR).json({ message: error.message });
     }

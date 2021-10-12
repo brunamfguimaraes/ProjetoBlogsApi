@@ -1,5 +1,10 @@
 const express = require('express');
-const { postController, authMiddleware, postMiddleware, updatePostMiddleware } = require('../config');
+const { 
+  postController, 
+  authMiddleware, 
+  postMiddleware, 
+  updatePostMiddleware, 
+} = require('../config');
 
 const postRoute = express.Router();
 
@@ -9,5 +14,6 @@ postRoute.post('/', postMiddleware.validatePost, postController.createPost);
 postRoute.get('/', postController.listAllPosts);
 postRoute.get('/:id', postController.findById);
 postRoute.put('/:id', updatePostMiddleware.validatePost, postController.updatePost);
+postRoute.delete('/:id', postController.deletePost);
 
 module.exports = postRoute;

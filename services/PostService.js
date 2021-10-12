@@ -19,14 +19,15 @@ class PostService {
     this.listPosts = this.listPosts.bind(this);
     this.findById = this.findById.bind(this);
     this.updatePost = this.updatePost.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   async checkCredentials(postId, token) {
-    const post = await this.model.findByPk(postId);
-
+    const post = await this.findById(postId, {});
+    console.log(post.userId);
     const { id } = this.authService.decode(token);
 
-    if (!post || id !== post.userId) {
+    if (id !== post.userId) {
       throw new this.ERROR(this.errorMessage.INVALID_USER, this.statusCode.UNAUTHORIZED);
     }
   }
@@ -84,7 +85,7 @@ class PostService {
     return { id: result.id, userId: result.userId, title: result.title, content: result.content };
   }
 
-  async updatePost({ title, content }, token, postId) {
+  async updatePost({ title, content }, postId, token) {
     await this.checkCredentials(postId, token);
     await this.model.update(
       { title, content },
@@ -97,6 +98,13 @@ class PostService {
     });
 
     return result;
+  }
+
+  async deletePost(postId, token) {
+    await this.checkCredentials(postId, token);
+    await this.model.destroy(
+      { where: { id: postId } },
+    );
   }
 }
 
