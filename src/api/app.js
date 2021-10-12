@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const error = require('./middleware/error/error');
 require('dotenv').config();
 
-const routerUser = require('./route/routeUser');
+const routes = require('./route/index');
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/user', routerUser);
+app.use(routes);
 
 app.use(error);
 

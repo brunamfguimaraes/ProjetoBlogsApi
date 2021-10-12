@@ -22,6 +22,4 @@ routeUser.post('/', validationUser, async (req, res, next) => {
   return res.status(201).json({ token });
 });
 
-routeUser.get('/');
-
 module.exports = routeUser;
