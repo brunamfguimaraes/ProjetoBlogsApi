@@ -11,7 +11,7 @@ const post = async (req, res, _next) => {
     return res.status(user.code).json({ message: user.message });
   }
 
-  const token = jtw.sign(payload, process.env.SECRET, { expiresIn: '45m' });
+  const token = jtw.sign(payload, process.env.JWT_SECRET, { expiresIn: '45m' });
 
   return res.status(201).json({ token });
 };

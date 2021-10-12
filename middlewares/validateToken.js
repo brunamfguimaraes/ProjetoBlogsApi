@@ -9,7 +9,7 @@ const validateToken = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: 'Token not found' });
     }
-    const payload = jwt.verify(token, process.env.SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
 
     req.payload = payload;
 
