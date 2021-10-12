@@ -1,5 +1,5 @@
 const express = require('express');
-const { create, getAllUsers } = require('../../controllers/userController');
+const { create, getAllUsers, getUserByID } = require('../../controllers/userController');
 
 const generateToken = require('../../middlewares/generateToken');
 const validateToken = require('../../middlewares/validateToken');
@@ -22,5 +22,9 @@ router.post('/',
 router.get('/', 
   validateToken,
   getAllUsers);
+
+router.get('/:id', 
+  validateToken, 
+  getUserByID);
 
 module.exports = router;
