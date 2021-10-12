@@ -23,11 +23,12 @@ const createUser = async (body) => {
   const emailExits = await User.findOne({ where: { email } });
   if (emailExits) return 'emailExists';
   
-  const token = jwt.creatToken(displayName, email);
-
-  await User.create({
+  const { id } = await User.create({
     displayName, email, password, image,
   });
+  const userId = id;
+
+  const token = jwt.creatToken(userId, displayName, email);
   
   return token;
 };
@@ -45,7 +46,9 @@ const loginUser = async (body) => {
   const login = await User.findOne({ where: { email, password } });
   if (!login) return 'invalidData';
 
-  const token = jwt.creatToken(login.displayName, email);
+  const userId = login.id;
+
+  const token = jwt.creatToken(userId, login.displayName, email);
 
   return token;  
 };
