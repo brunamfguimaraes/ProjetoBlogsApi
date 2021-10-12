@@ -67,7 +67,8 @@ const login = async ({ email, password }) => {
 
   if (!user) throw new RequestError('badRequest', 'Invalid fields');
 
-  const newToken = createToken({ displayName: user.displayName, email });
+  const { displayName, id } = user;
+  const newToken = createToken({ id, displayName, email });
   return newToken;
 };
 
