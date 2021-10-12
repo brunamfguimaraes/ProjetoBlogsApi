@@ -1,5 +1,5 @@
 const express = require('express');
-const { create } = require('../../controllers/categoriesController');
+const { create, getAllCategories } = require('../../controllers/categoriesController');
 
  const validateToken = require('../../middlewares/validateToken');
 
@@ -11,5 +11,9 @@ router.post('/',
   validateToken,
   validateName, 
   create);
+
+router.get('/',
+  validateToken,
+  getAllCategories);
 
 module.exports = router;
