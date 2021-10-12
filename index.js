@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const userRoute = require('./src/api/routes/userRoute');
 const loginRoute = require('./src/api/routes/loginRoute');
 const categoriesRoute = require('./src/api/routes/categoriesRoute');
+const postRoute = require('./src/api/routes/postRoute');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,5 +19,6 @@ app.get('/', (_request, response) => {
 app.use('/user', userRoute);
 app.use('/login', loginRoute);
 app.use('/categories', categoriesRoute);
+app.use('/post', postRoute);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
