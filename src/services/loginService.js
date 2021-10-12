@@ -1,7 +1,7 @@
 const { User } = require('../models');
 
 function validateEmail(email) {
-  if (!email) {
+  if (email === undefined) {
     return null;
   }
 
@@ -13,7 +13,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-  if (!password) {
+  if (password === undefined) {
     return null;
   }
   
