@@ -30,7 +30,7 @@ const createUser = async (req, res) => {
 const checkEmail = (req, res, next) => {
   const emailIsValid = verifyEmail({ email: req.body.email });
   if (emailIsValid.message !== 'ok') {
-   return res.status(400).json({ message: emailIsValid });
+   return res.status(400).json(emailIsValid);
   }
   next();
 };
@@ -38,7 +38,7 @@ const checkEmail = (req, res, next) => {
 const checkName = (req, res, next) => {
   const nameIsValid = verifyName({ displayName: req.body.displayName }).message;
   if (nameIsValid !== 'ok') {
-    return res.status(400).json({ message: nameIsValid });
+    return res.status(400).json(nameIsValid);
   }
   next();
 };
