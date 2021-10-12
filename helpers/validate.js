@@ -35,7 +35,7 @@ const validateContent = (content) => {
 };
 
 const validateCategoryIds = (categoryIds) => {
-  if (!categoryIds) return '"categoryId" is required';
+  if (!categoryIds) return '"categoryIds" is required';
 };
 
 const validateUser = ({ displayName, email, password }) => {
