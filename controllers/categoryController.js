@@ -1,13 +1,12 @@
 const express = require('express');
 const { Category } = require('../models');
 const { validateCategory } = require('../helpers/validate');
-const validateJWT = require('../helpers/validateJWT');
 
 const SERVER_ERROR_MESSAGE = 'Internal Server Error';
 
 const router = express.Router();
 
-router.get('/', validateJWT, async (_req, res) => {
+router.get('/', async (_req, res) => {
   try {
     const categories = await Category.findAll();
 
@@ -18,7 +17,7 @@ router.get('/', validateJWT, async (_req, res) => {
   }
 });
 
-router.get('/:id', validateJWT, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const category = await Category.findByPk(id);
@@ -48,7 +47,7 @@ router.get('/:id', validateJWT, async (req, res) => {
 //   }
 // });
 
-router.post('/', validateJWT, async (req, res) => {
+router.post('/', async (req, res) => {
   const message = validateCategory(req.body);
   if (message) return res.status(400).json({ message });
   // const category = await Category.findOne({ where: { name: req.body.name } });

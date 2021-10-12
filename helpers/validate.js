@@ -26,21 +26,42 @@ const validateName = (name) => {
   if (!name) return '"name" is required';
 };
 
-const validateUser = ({ displayName, email, password }) => {
-  const displayNameIsValid = validateDisplayName(displayName);
-  if (displayNameIsValid) return displayNameIsValid;
+const validateTitle = (title) => {
+  if (!title) return '"title" is required';
+};
 
-  const emailIsValid = validateEmail(email);
-  if (emailIsValid) return emailIsValid;
+const validateContent = (content) => {
+  if (!content) return '"content" is required';
+};
+
+const validateCategoryIds = (categoryIds) => {
+  if (!categoryIds) return '"categoryId" is required';
+};
+
+const validateUser = ({ displayName, email, password }) => {
+  const invalidDisplayName = validateDisplayName(displayName);
+  if (invalidDisplayName) return invalidDisplayName;
+
+  const invalidEmail = validateEmail(email);
+  if (invalidEmail) return invalidEmail;
 
   return validatePassword(password);
 };
 
 const validateLogin = ({ email, password }) => {
-  const emailIsValid = validateEmail(email);
-  if (emailIsValid) return emailIsValid;
+  const invalidEmail = validateEmail(email);
+  if (invalidEmail) return invalidEmail;
   
   return validatePassword(password);
+};
+
+const validatePost = ({ title, content, categoryIds }) => {
+  const invalidTitle = validateTitle(title);
+  if (invalidTitle) return invalidTitle;
+  const invalidContent = validateContent(content);
+  if (invalidContent) return invalidContent;
+  
+  return validateCategoryIds(categoryIds);
 };
 
 const validateCategory = ({ name }) => validateName(name);
@@ -49,4 +70,5 @@ module.exports = {
   validateUser,
   validateLogin,
   validateCategory,
+  validatePost,
 };
