@@ -26,6 +26,8 @@ const login = async ({ email, password }) => {
   return newToken;
 };
 
+const getAll = async () => User.findAll({ attributes: { exclude: ['password'] } });
+
 const findById = async (id) => {
   const user = await User.findByPk(id);
 
@@ -37,5 +39,6 @@ const findById = async (id) => {
 module.exports = {
   create,
   login,
+  getAll,
   findById,
 };
