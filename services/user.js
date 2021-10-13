@@ -26,6 +26,20 @@ const authToken = (user) => {
   return newToken;
 };
 
+const validaToken = async (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Expired or invalid token' });    
+  }
+};
+
 const createUser = async (req, res) => {
   const newUser = await User.create(req.body);
   
@@ -40,6 +54,11 @@ const checkEmail = (req, res, next) => {
    return res.status(400).json(emailIsValid);
   }
   next();
+};
+
+const getAllUsers = async (req, res) => {
+  const allUsers = await User.findAll();
+  res.status(200).json(allUsers);
 };
 
 const checkName = (req, res, next) => {
@@ -106,4 +125,6 @@ module.exports = { checkEmailExists,
   testeEmptyEmail,
   testeEmptyPassword,
   userLogin,
+  validaToken,
+  getAllUsers,
 };
