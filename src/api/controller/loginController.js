@@ -18,7 +18,7 @@ routeLogin.post('/', validationLogin, async (req, res, next) => {
     return next(result);
   }
   const tempo = {
-    expiresIn: '1d',
+    expiresIn: '10d',
   };
   const token = jwt.sign({ email }, secret, tempo);
   return res.status(200).json({ token });

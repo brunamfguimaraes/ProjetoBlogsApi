@@ -6,7 +6,7 @@ const secret = process.env.JWT_SECRET;
 
 const validationUser = require('../middleware/validations/validationNewUser');
 const validationToken = require('../middleware/validations/validationToken');
-const { createUser, getAll } = require('../service/userService');
+const { createUser, getAll, serviceGetId } = require('../service/userService');
 
 const routeUser = express.Router();
 
@@ -26,6 +26,14 @@ routeUser.post('/', validationUser, async (req, res, next) => {
 routeUser.get('/', validationToken, async (_req, res) => {
   const result = await getAll();
   return res.status(200).json(result);
+});
+
+routeUser.get('/:id', validationToken, async (req, res, next) => {
+  const resultId = await serviceGetId(req.params.id);
+  if (resultId.isError) {
+    return next(resultId);
+  }
+  return res.status(200).json(resultId);
 });
 
 module.exports = routeUser;

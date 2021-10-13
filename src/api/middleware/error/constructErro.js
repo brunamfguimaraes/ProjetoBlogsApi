@@ -8,4 +8,5 @@ module.exports = {
   errorNewUser: (message) => error(409, message),
   badRequest: (message) => error(400, message),
   errorToken: (message) => error(401, message),
+  errorById: (message) => error(404, message),
 };
