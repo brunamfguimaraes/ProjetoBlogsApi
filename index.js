@@ -9,7 +9,7 @@ const { verifyCategory,
 
 const { verifyCategoryId, verifyContent,
   verifyTitle, verifyCategoryIdExists, 
-  createBlogPost } = require('./services/post.js');
+  createBlogPost, getAllPosts } = require('./services/post.js');
 
 const app = express();
 
@@ -29,5 +29,6 @@ app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
 app.get('/user', validaToken, getAllUsers);
 app.get('/user/:id', validaToken, getUser);
 app.get('/categories', validaToken, getAllCategories);
+app.get('/post', validaToken, getAllPosts);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
