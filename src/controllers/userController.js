@@ -1,4 +1,4 @@
-const { CREATED, INTERNAL_SERVER_ERROR, BAD_REQUEST } = require('http-status');
+const { CREATED, INTERNAL_SERVER_ERROR, BAD_REQUEST, CONFLICT } = require('http-status');
 
 const userService = require('../services/userService');
 
@@ -9,6 +9,7 @@ const createUser = async (req, res) => {
 
     const result = await userService.createUser(userData);
 
+    if (result.message && result.conflict) return res.status(CONFLICT).json(result);
     if (result.message) return res.status(BAD_REQUEST).json(result);
 
     return res.status(CREATED).json(result);

@@ -6,6 +6,10 @@ const createUser = async (userData) => {
 
   if (entries.message) return entries;
 
+  const isConflict = await User.findOne({ where: { email: userData.email } });
+
+  if (isConflict) return { message: 'User already registered', conflict: true };
+
   return User.create(userData);
 };
 
