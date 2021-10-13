@@ -19,4 +19,6 @@ const createCategory = async (categoryInfo) => {
   return category;
 };
 
-module.exports = { createCategory };
+const findCategories = async () => Categories.findAll();
+
+module.exports = { createCategory, findCategories };

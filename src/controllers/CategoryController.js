@@ -10,6 +10,15 @@ const newCategory = rescue(async (req, res, next) => {
   res.status(201).json(category);
 });
 
+const listCategories = rescue(async (req, res, next) => {
+  const categories = await CategoryService.findCategories();
+
+  if (categories.error) return next(categories.error);
+
+  res.status(200).json(categories);
+});
+
 module.exports = {
   newCategory,
+  listCategories,
 };

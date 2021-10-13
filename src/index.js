@@ -26,4 +26,6 @@ app.post('/login', UserController.login);
 app.use(userErrorMiddleware);
 
 app.post('/categories', JWTMiddleware, CategoryController.newCategory);
+app.get('/categories', JWTMiddleware, CategoryController.listCategories);
+
 app.use(categoryErrorMiddleware);
