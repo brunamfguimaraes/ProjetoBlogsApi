@@ -9,12 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       displayName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       image: {

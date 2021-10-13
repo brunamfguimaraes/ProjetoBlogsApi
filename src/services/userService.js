@@ -11,16 +11,14 @@ const jwtConfig = {
 
 const createUser = async (userData) => {
   const entries = userDataEntries(userData);
-
   if (entries.message) return entries;
 
   const isConflict = await User.findOne({ where: { email: userData.email } });
-
   if (isConflict) return { message: 'User already registered', conflict: true };
 
   const { id, displayName, email, image } = await User.create(userData);
- 
   const payload = { id, displayName, email, image };
+
   const token = jwt.sign(payload, secret, jwtConfig);
 
   return token;

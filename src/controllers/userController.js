@@ -12,10 +12,10 @@ const createUser = async (req, res) => {
     if (result.message && result.conflict) return res.status(CONFLICT).json(result);
     if (result.message) return res.status(BAD_REQUEST).json(result);
 
-    return res.status(CREATED).json(result);
+    return res.status(CREATED).json({ token: result });
   } catch (error) {
     console.log(error);
-    res.status(INTERNAL_SERVER_ERROR).json({ message: error });
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
 
