@@ -8,6 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/user', routers.userRouter);
+app.use('/login', routers.loginRouter);
 
 app.use(middlewares.errorMiddleware);
 
