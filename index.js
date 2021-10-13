@@ -8,7 +8,7 @@ const error = require('./middlewares/error');
 
 app.use(express.json());
 
-const { PORT } = process.env;
+const PORT = process.env || 3000;
 
 app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
 
