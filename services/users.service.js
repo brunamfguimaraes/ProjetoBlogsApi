@@ -20,5 +20,13 @@ const createUser = async (displayName, email, password, image) => {
     return error;
   }
 };
+const getAllUsers = async () => {
+  try {
+    const allUsers = await User.findAll({});
+    return allUsers;
+  } catch (error) {
+    return error;
+  }
+};
 
-module.exports = { createUser };
+module.exports = { createUser, getAllUsers };
