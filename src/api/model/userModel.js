@@ -14,6 +14,12 @@ const postNewUser = async (userData) => {
   return newUser;
 };
 
+const getAll = async () => {
+  const userAll = await Users.findAll();
+  return userAll;
+};
+
 module.exports = {
   postNewUser,
+  getAll,
 };
