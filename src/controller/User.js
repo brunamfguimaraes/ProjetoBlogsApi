@@ -14,6 +14,19 @@ const {
 const userService = require('../service/User');
 const httpStatus = require('../httpStatus');
 
+route.get('/:id',
+verifyToken,
+  async (req, res) => {
+    const { id } = req.params;
+    const user = await userService.findOneUser(id);
+    if (!user) {
+      return res.status(httpStatus.notFound).json({
+        message: 'User does not exist',
+      });
+    }
+    res.status(httpStatus.ok).json(user);
+});
+
 route.get('/',
   verifyToken,
   async (req, res) => {
