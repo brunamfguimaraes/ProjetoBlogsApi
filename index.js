@@ -1,5 +1,5 @@
 const express = require('express');
-const { userRoute, loginRoute } = require('./src/routes');
+const { userRoute, loginRoute, categoriesRoute } = require('./src/routes');
 
 const app = express();
 app.use(express.json());
@@ -8,6 +8,7 @@ app.listen(3000, () => console.log('Online at port 3000!'));
 
 app.use('/user', userRoute);
 app.use('/login', loginRoute);
+app.use('/categories', categoriesRoute);
 
 // do not remove this endpoint, it is for the evaluator to work correctly
 app.get('/', (request, response) => {
