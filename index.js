@@ -1,3 +1,4 @@
+require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { checkEmailExists, testeEmptyEmail, userLogin,
@@ -31,4 +32,4 @@ app.get('/user/:id', validaToken, getUser);
 app.get('/categories', validaToken, getAllCategories);
 app.get('/post', validaToken, getAllPosts);
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+app.listen(process.env.PORT, () => console.log('ouvindo porta 3000!'));
