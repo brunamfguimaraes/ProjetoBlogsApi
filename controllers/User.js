@@ -2,7 +2,8 @@ const express = require('express');
 
 const User = require('../services/User');
 const userValidator = require('../middlewares/userValidator');
-const { CREATED } = require('../utils/statusCode');
+const tokenValidator = require('../middlewares/tokenValidator');
+const { SUCCESS, CREATED } = require('../utils/statusCode');
 
 const router = express.Router();
 
@@ -15,6 +16,14 @@ router.post('/',
     const user = await User.create(req.body);
 
     return res.status(CREATED).json(user);
+  });
+
+router.get('/',
+  tokenValidator.validateToken,
+  async (_req, res) => {
+    const users = await User.findAll();
+
+    return res.status(SUCCESS).json(users);
   });
 
 module.exports = router;

@@ -11,9 +11,9 @@ router.post('/',
   loginValidator.validatePassword,
   loginValidator.validateUserExists,
   async (req, res) => {
-    const token = await Login(req.body);
+    const accessToken = await Login(req.body);
 
-    return res.status(SUCCESS).json(token);
+    return res.status(SUCCESS).json({ token: accessToken });
   });
 
 module.exports = router;

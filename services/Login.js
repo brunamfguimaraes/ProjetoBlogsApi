@@ -4,8 +4,7 @@ const JWT = require('jsonwebtoken');
 const { User } = require('../models');
 
 const tokenGenerate = (payload) => {
-  const TOKEN_SETTINGS = { algorithm: 'HS256', expiresIn: '1h' };
-  const token = JWT.sign(payload, process.env.SECRET, TOKEN_SETTINGS);
+  const token = JWT.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
 
   return token;
 };

@@ -8,6 +8,15 @@ const create = async (user) => {
   }
 };
 
+const findAll = async () => {
+  try {
+    return await User.findAll({});
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   create,
+  findAll,
 };
