@@ -9,5 +9,10 @@ categoryRoute.post(
   rescue(validateToken),
   rescue(CategoryController.createCategory),
 );
+categoryRoute.get(
+  '/',
+  rescue(validateToken),
+  rescue(CategoryController.getAllCategories),
+);
 
 module.exports = categoryRoute;

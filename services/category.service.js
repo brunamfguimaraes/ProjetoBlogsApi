@@ -12,4 +12,13 @@ const createCategory = async (name) => {
   }
 };
 
-module.exports = { createCategory };
+const getAllCategories = async () => {
+  try {
+    const allCategories = await Category.findAll({});
+    return allCategories;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { createCategory, getAllCategories };
