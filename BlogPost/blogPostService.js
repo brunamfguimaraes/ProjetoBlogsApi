@@ -7,12 +7,6 @@ const config = require('../config/config')[env];
 
 const sequelize = new Sequelize(config);
 
-const requiredValidation = (fields = {}) => {
-  const fieldsKeys = Object.keys(fields);
-  const invalidField = fieldsKeys.find((fieldKey) => fields[fieldKey] === undefined);
-  if (invalidField) throw new RequestError('badRequest', `"${invalidField}" is required`);
-};
-
 const categoriesValidation = async (categoriesArr) => {
   const findOnePromises = categoriesArr.map((id) => Category.findOne({ where: { id } }));
   const promisesResults = await Promise.all(findOnePromises);
