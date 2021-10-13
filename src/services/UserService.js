@@ -28,13 +28,13 @@ const validateLoginInfo = (loginInfo) => {
 const userAlreadyRegistered = (email) =>
   Users.findOne({
     where: { email },
-    attributes: ['id', 'displayName', 'email', 'password', 'image'],
+    attributes: [],
   });
 
 const verifyLogin = (loginInfo) =>
   Users.findOne({
     where: loginInfo,
-    attributes: ['id', 'displayName', 'email', 'password', 'image'],
+    attributes: ['id', 'displayName', 'email', 'image'],
   });
 
 const createUser = async (userInfo) => {
@@ -62,13 +62,15 @@ const loginUser = async (loginInfo) => {
 
   const loginVerified = await verifyLogin(loginInfo);
 
-  if (!loginVerified) { return { error: { invalidFields: true, message: 'Invalid fields' } }; }
+  if (!loginVerified) {
+    return { error: { invalidFields: true, message: 'Invalid fields' } };
+  }
 
-  return true;
+  return loginVerified.dataValues;
 };
 
 const findUsers = async () =>
-  Users.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
+  Users.findAll();
 // const exemple =  () => {};
 
 module.exports = {

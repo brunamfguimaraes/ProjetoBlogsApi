@@ -10,8 +10,7 @@ const jwtConfig = {
 };
 
 const createJWT = (info) => {
-  const { email, password } = info;
-  const newToken = jwt.sign({ email, password }, jwtSecret, jwtConfig);
+  const newToken = jwt.sign(info, jwtSecret, jwtConfig);
 
   return newToken;
 };
@@ -33,8 +32,8 @@ const login = rescue(async (req, res, next) => {
   const response = await UserService.loginUser(loginInfo);
 
   if (response.error) return next(response.error);
-  
-  const token = createJWT(loginInfo);
+
+  const token = createJWT({ ...response });
   
   res.status(200).json({ token });
 });
