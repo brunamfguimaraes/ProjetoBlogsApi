@@ -14,6 +14,7 @@ const validateToken = async (req, res, next) => {
       user = await User.findOne({ where: { email: decoded.data } });
     }
     if (user) {
+      req.email = decoded.data;
       next();
     }
   } catch (_e) {

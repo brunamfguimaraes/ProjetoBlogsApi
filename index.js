@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const userController = require('./controllers/users');
 const loginController = require('./controllers/login');
 const categoryController = require('./controllers/categories');
+const postsController = require('./controllers/blogPosts');
 
 const {
   validateBoth,
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use('/user', userController);
 app.use('/login', validateBoth, validateEmpty, loginController);
 app.use('/categories', validateToken, categoryController);
+app.use('/post', postsController);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
