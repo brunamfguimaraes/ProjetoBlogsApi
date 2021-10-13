@@ -14,4 +14,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/users', userRouter);
+app.use('/user', userRouter);
