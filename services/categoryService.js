@@ -8,4 +8,6 @@ const postCategoryService = async (name) => {
   return Category.create({ name });
 };
 
-module.exports = { postCategoryService };
+const getCategoriesService = () => Category.findAll();
+
+module.exports = { postCategoryService, getCategoriesService };
