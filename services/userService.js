@@ -19,4 +19,14 @@ const postUserService = async (displayName, email, password, image) => {
 
 const getUsersService = () => User.findAll();
 
-module.exports = { postUserService, getUsersService };
+const getUserByIdService = async (id) => {
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    return { code: 'NOT_FOUND', message: 'User does not exist' }; 
+  }
+
+  return user;
+};
+
+module.exports = { postUserService, getUsersService, getUserByIdService };
