@@ -13,8 +13,8 @@ const postUserService = async (displayName, email, password, image) => {
   if (await User.findOne({ where: { email } })) {
     return { code: 'CONFLICT', message: 'User already registered' }; 
   }
-
-  await User.create(userData);
+  
+  return User.create(userData);
 };
 
 const getUsersService = () => User.findAll();
