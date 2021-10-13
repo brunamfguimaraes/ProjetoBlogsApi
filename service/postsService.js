@@ -3,7 +3,7 @@ const jwt = require('../auth/jwt');
 
 const categoriesService = require('./categoriesService');
 
-const { BlogPost, PostsCategorie } = require('../models');
+const { BlogPost, PostsCategorie, User, Categorie } = require('../models');
 
 const validForms = (body) => {
   const { title, content, categoryIds } = body;
@@ -58,7 +58,23 @@ const getAllPost = async (token) => {
   return getAll;  
 };
 
+const getPostById = async (token, id) => {
+  const isValidToken = jwt.validateJwt(token);
+  if (isValidToken.validToken) return isValidToken;
+
+  const getById = await BlogPost.findOne({ 
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
+    ],
+   });
+
+  return getById;  
+};
+
 module.exports = {
   createPost,
   getAllPost,
+  getPostById,
 };
