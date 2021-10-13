@@ -6,16 +6,18 @@ const { postUserService, getUsersService, getUserByIdService } = require('../ser
 const postUserController = async (req, res, next) => { 
   const { displayName, email, password, image } = req.body;
   
-  const errorOnPostUser = await postUserService(displayName, email, password, image);
-  if (errorOnPostUser) {
-    return next(errorOnPostUser);
+  const postUser = await postUserService(displayName, email, password, image);
+  if (postUser.message) {
+    return next(postUser);
   }
+
+  const { id } = postUser;
 
   const jwtConfig = {
     expiresIn: '1d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({}, process.env.JWT_SECRET, jwtConfig);
+  const token = jwt.sign({ data: { id } }, process.env.JWT_SECRET, jwtConfig);
 
   res.status(StatusCodes.CREATED).json({ token });
 };
