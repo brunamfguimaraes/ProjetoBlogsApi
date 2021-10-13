@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 function validateTitle(title) {
   if (!title) {
@@ -39,9 +39,31 @@ async function create(answer) {
   return newPost;
 }
 
+// referência da "query" https://stackoverflow.com/questions/43419514/sequelize-join-models-include-many-to-many
+async function getAllPosts() {
+  const posts = await BlogPost.findAll(
+    {
+      include: [{
+        model: User,
+        as: 'user',
+        
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+    },
+);
+
+  return posts;
+}
+
 module.exports = {
   validateTitle,
   validateContent,
   validateContegoryIds,
   create,
+  getAllPosts,
 };
