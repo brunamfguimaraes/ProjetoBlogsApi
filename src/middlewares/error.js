@@ -6,11 +6,12 @@ const checkErrorType = (error) => {
       return { code: 409, message: error.message };
 
     default:
-      return { code: 500, message: 'Server error' };
+      return { code: 500, message: error };
   }
 };
 
 module.exports = (err, _req, res, next) => {
+  console.log(err);
   const { code, message } = checkErrorType(err);
 
   res.status(code).json({ message });
