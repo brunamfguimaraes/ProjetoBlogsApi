@@ -15,6 +15,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/', userValidations, userControllers.createUser);
+app.post('/user', userValidations, userControllers.createUser);
 
 app.use(error);

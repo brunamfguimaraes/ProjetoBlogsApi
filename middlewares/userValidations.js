@@ -2,6 +2,7 @@ const Joi = require('joi');
 
 const validateName = (name) => {
   const validation = Joi.string().min(8).required().validate(name);
+  console.log(validation);
   if (validation.error) { 
     return ({ message: '"displayName" length must be at least 8 characters long' });
   }
@@ -18,6 +19,8 @@ const validateEmail = (email) => {
 };
 
 const validatePassword = (password) => {
+  console.log(password);
+  if (password === undefined) return ({ message: '"password" is required' });
   const validation = Joi.string().min(6).required().validate(password);
   if (validation.error) { 
     return ({ message: '"password" length must be 6 characters long' });
@@ -26,7 +29,7 @@ const validatePassword = (password) => {
 };
 
 const validations = (req, _res, next) => {
-  const { displayName, email, password } = req;
+  const { displayName, email, password } = req.body;
   const invalidName = validateName(displayName);
   const invalidEmail = validateEmail(email);
   const invalidPassword = validatePassword(password);

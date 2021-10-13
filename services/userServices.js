@@ -8,7 +8,7 @@ const createUser = async (newUser) => {
   try {
     const { id } = await User.create(newUser);
     const token = generateToken({ id, displayName, email });
-    return (token);
+    return token;
   } catch (e) { return { message: '...Something is wrong' }; }
 };
 

@@ -23,7 +23,8 @@ module.exports = {
         onDelete: 'CASCADE',
         primaryKey: true,
       },
-    });
+    },
+    { timestamp: false });
   },
 
   down: async (queryInterface, _Sequelize) => {

@@ -12,9 +12,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-    },
-      { timestamp: false }
-    );
+    });
   },
   down: async (queryInterface) => {
     await queryInterface.dropTable('Categories');
