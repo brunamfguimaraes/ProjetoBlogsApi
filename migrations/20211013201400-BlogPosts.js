@@ -2,26 +2,30 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const UsersTable = queryInterface.createTable('Users', {
+    const BlogPostsTable = queryInterface.createTable('BlogPosts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      displayName: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
+      content: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      password: {
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      published: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      image: {
+      updated: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -35,10 +39,10 @@ module.exports = {
       }
     })
 
-    return UsersTable;
+    return BlogPostsTable;
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users')
+    await queryInterface.dropTable('BlogPosts')
   }
 };

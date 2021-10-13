@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-   await queryInterface.createTable('Categories', {
+   const CategoriesTable = queryInterface.createTable('Categories', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -13,7 +13,17 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    createdAt: {
+      allowNull: false,
+      type: Sequelize.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: Sequelize.DATE
+    }
    })
+
+   return CategoriesTable;
   },
 
   down: async (queryInterface, Sequelize) => {
