@@ -17,4 +17,6 @@ const postUserService = async (displayName, email, password, image) => {
   await User.create(userData);
 };
 
-module.exports = { postUserService };
+const getUsersService = () => User.findAll();
+
+module.exports = { postUserService, getUsersService };
