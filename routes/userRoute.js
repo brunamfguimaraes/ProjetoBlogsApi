@@ -1,9 +1,14 @@
 const express = require('express');
 
-const { createUser, verifyFields, verifyEmail } = require('../controllers/userController');
+const {
+  createUser,
+  verifyFieldsLength,
+  verifyEmail,
+  verifyFieldsEmpty,
+} = require('../controllers/userController');
 
 const router = express.Router();
 
-router.post('/', verifyFields, verifyEmail, createUser);
+router.post('/', verifyFieldsEmpty, verifyFieldsLength, verifyEmail, createUser);
 
 module.exports = router;

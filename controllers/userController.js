@@ -1,19 +1,32 @@
 // const { User } = require('../models');
 const {
   createNewUser,
-   validateFields,
-   validateEmail,
+  fieldLength,
+  validateEmail,
+  verifyEmptyFields,
 } = require('../services/userService');
 
-const verifyFields = async (req, res, next) => {
+const verifyFieldsEmpty = async (req, res, next) => {
   try {
-    const { displayName, password } = req.body;
-    const DISPLAY_LENGTH = 8;
-    const PASSWORD_LENGTH = 6;
-    await validateFields(displayName, password, DISPLAY_LENGTH, PASSWORD_LENGTH);
+    const { email, password } = req.body;
+    if (!password) verifyEmptyFields('password');
+    if (!email)verifyEmptyFields('email');
     next();
   } catch (e) {
-    if (e.name === 'displayError') {
+    if (e.name === 'emptyError') {
+      const response = e.message;
+      return res.status(400).json(response);
+    }
+  }
+};
+
+const verifyFieldsLength = async (req, res, next) => {
+  try {
+    const { displayName, password } = req.body;
+    await fieldLength(displayName, password);
+    next();
+  } catch (e) {
+    if (e.name === 'lengthError') {
       const response = e.message;
       return res.status(400).json(response);
       }
@@ -23,7 +36,8 @@ const verifyFields = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
   try {
     const { email } = req.body;
-    validateEmail(email);
+    await validateEmail(email);
+    next();
   } catch (e) {
     if (e.name === 'emailError') {
       const response = e.message;
@@ -38,8 +52,9 @@ const createUser = async (req, res) => {
   return res.status(201).json(response.message);
 };
 
-module.exports = { 
+module.exports = {
   createUser,
-  verifyFields,
+  verifyFieldsLength,
   verifyEmail,
+  verifyFieldsEmpty,
 };
