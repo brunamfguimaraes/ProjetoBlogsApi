@@ -2,7 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const UserController = require('./controllers/UserController');
-const ErrorMiddleware = require('./middlewares/error');
+const CategoryController = require('./controllers/CategoryController');
+const userErrorMiddleware = require('./middlewares/UserError');
+const categoryErrorMiddleware = require('./middlewares/CategoryError');
 const JWTMiddleware = require('./middlewares/jwtAuth');
 
 const app = express();
@@ -21,4 +23,7 @@ app.get('/user/:id', JWTMiddleware, UserController.findUser);
 app.post('/user', UserController.newUser);
 app.post('/login', UserController.login);
 
-app.use(ErrorMiddleware);
+app.use(userErrorMiddleware);
+
+app.post('/categories', JWTMiddleware, CategoryController.newCategory);
+app.use(categoryErrorMiddleware);

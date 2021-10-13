@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const rescue = require('express-rescue');
-const UserService = require('../services/UserService.js');
+const UserService = require('../services/UserService');
 
 const jwtSecret = process.env.JWT_SECRET || 'test';
 
