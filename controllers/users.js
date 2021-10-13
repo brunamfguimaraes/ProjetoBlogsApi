@@ -6,6 +6,7 @@ const {
   validateDisplayName,
   validateEmail,
   validatePassword } = require('../middlewares/validateNewUser');
+const validateToken = require('../middlewares/validateToken');
 
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
@@ -14,9 +15,16 @@ const jwtConfig = {
 };
 const router = express.Router();
 
-router.get('/', async (_req, res) => {
+router.get('/', validateToken, async (_req, res) => {
   const users = await User.findAll();
   return res.status(200).json(users);
+});
+
+router.get('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ where: { id } });
+  if (!user) return res.status(404).json({ message: 'User does not exist' });
+  return res.status(200).json(user);
 });
 
 router.post('/', validateDisplayName, validateEmail, validatePassword, async (req, res) => {
