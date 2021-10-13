@@ -4,9 +4,7 @@ const { userRoute, loginRoute } = require('./src/routes');
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log(`Online at port ${PORT}!`));
+app.listen(3000, () => console.log('Online at port 3000!'));
 
 // do not remove this endpoint, it is for the evaluator to work correctly
 app.get('/', (request, response) => {
