@@ -10,14 +10,11 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-const ok = (_req, res) => res.status(200).send('funcionando biiiIIIIto esse trem');
-
 const createUser = async (req, res, next) => {
   try {
-    const user = req.body;
+    const userData = req.body;
 
-    await UserService.createUser(user);
-    // if (error) return next(error);
+    const user = await UserService.createUser(userData);
 
     const token = generateToken(user, jwtConfig, secret);
 
@@ -27,7 +24,22 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  try {
+    const loginData = req.body;
+
+    const user = await UserService.login(loginData);
+
+    const token = generateToken(user, jwtConfig, secret);
+
+    return res.status(codes.ok).json({ token });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 module.exports = {
-  ok,
   createUser,
+  login,
 };

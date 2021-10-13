@@ -10,7 +10,9 @@ const rightEmailFormat = (email) => {
 };
 
 const validateDisplayName = (displayName, min) => {
-  if (displayName.length < min) throw new AppError(codes.badRequest, messages.shortDisplayName);
+  if (displayName.length < min) {
+    throw new AppError(codes.badRequest, messages.shortDisplayName);
+  }
 };
 
 const emailConflict = async (email) => {
@@ -18,13 +20,16 @@ const emailConflict = async (email) => {
   return user;
 };
 
-const validateEmail = async (email) => {
+const validateEmail = (email) => {
+  if (email === '') throw new AppError(codes.badRequest, messages.emptyEmail);
   if (!email) throw new AppError(codes.badRequest, messages.missingEmail);
-  if (!rightEmailFormat(email)) throw new AppError(codes.badRequest, messages.wrongEmailFormat);
-  if (await emailConflict(email)) throw new AppError(codes.conflict, messages.emailConflict);
+  if (!rightEmailFormat(email)) {
+    throw new AppError(codes.badRequest, messages.wrongEmailFormat);
+  }
 };
 
 const validatePassword = (password, min) => {
+  if (password === '') throw new AppError(codes.badRequest, messages.emptyPassword);
   if (!password) throw new AppError(codes.badRequest, messages.missingPassword);
   if (password.length < min) throw new AppError(codes.badRequest, messages.shortPassword);
 };
@@ -32,9 +37,22 @@ const validatePassword = (password, min) => {
 const verifyCreateUserData = async (displayName, email, password) => {
   validateDisplayName(displayName, 8);
   validatePassword(password, 6);
-  await validateEmail(email);
+  validateEmail(email);
+  if (await emailConflict(email)) throw new AppError(codes.conflict, messages.emailConflict);
+};
+
+const verifyLoginData = async (email, password) => {
+  validateEmail(email);
+  validatePassword(password);
+
+  const user = await UserModel.findOne({ where: { email } });
+
+  if (!user || user.password !== password) {
+    throw new AppError(codes.badRequest, messages.invalidFields);
+  }
 };
 
 module.exports = {
   verifyCreateUserData,
+  verifyLoginData,
 };
