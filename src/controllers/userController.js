@@ -7,7 +7,7 @@ const createUser = async (req, res) => {
     const { displayName, email, password, image } = req.body;
     const userData = { displayName, email, password, image };
 
-    const result = userService.createUser(userData);
+    const result = await userService.createUser(userData);
 
     if (result.message) return res.status(BAD_REQUEST).json(result);
 
