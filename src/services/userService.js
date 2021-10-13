@@ -29,9 +29,7 @@ const createUser = async (newUser) => {
   if (emailExists) { throw ERROR_USER_EXISTS; }
   const { password, ...user } = await User.create(newUser);
   await User.findOne({ where: { email, password } });
-  // const token = generateToken(user);
   return generateToken(user);
-  // return user;
 };
 
 const login = async ({ email, password }) => {
