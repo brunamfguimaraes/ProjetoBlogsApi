@@ -19,11 +19,11 @@ const postUserController = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json({ token });
 };
 
-const getUsersController = async (req, res, next) => { 
-  try {
-    const { authorization } = req.headers;
+const getUsersController = async (_req, res, _next) => { 
+    const allUsers = await getUsersService();
 
     return res.status(StatusCodes.OK).json(allUsers);
+};
     
     jwt.verify(authorization, process.env.JWT_SECRET);
     
