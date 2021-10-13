@@ -47,6 +47,7 @@ const registeredEmail = async (email) => {
     message: 'User already registered' };
     throw err;
   }
+  return user;
 };
 
 const createNewUser = async (displayName, email, password, image) => {

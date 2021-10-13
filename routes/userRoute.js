@@ -8,9 +8,11 @@ const {
   verifyRegisteredUser,
 } = require('../controllers/userController');
 
+const generateJWT = require('../middlewares/tokenJwt');
+
 const router = express.Router();
 
 router.post('/', verifyFieldsEmpty,
-  verifyFieldsLength, verifyEmail, verifyRegisteredUser, createUser);
+  verifyFieldsLength, verifyEmail, verifyRegisteredUser, createUser, generateJWT);
 
 module.exports = router;

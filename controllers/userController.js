@@ -60,10 +60,10 @@ const verifyRegisteredUser = async (req, res, next) => {
     }
 };
 
-const createUser = async (req, res) => {
+const createUser = async (req, _res, next) => {
   const { displayName, email, password, image } = req.body;
-  const response = await createNewUser(displayName, email, password, image);
-  return res.status(201).json(response.message);
+  await createNewUser(displayName, email, password, image);
+  next();
 };
 
 module.exports = {
