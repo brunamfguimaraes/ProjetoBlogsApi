@@ -12,9 +12,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      email:{
+      email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       password: {
         allowNull: false,
@@ -23,7 +23,7 @@ module.exports = {
       image: {
         allowNull: false,
         type: Sequelize.STRING,
-      }
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
