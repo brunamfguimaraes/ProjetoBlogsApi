@@ -1,5 +1,7 @@
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 const httpStatus = require('../httpStatus');
+require('dotenv').config();
 
 const validateNameSignUp = (req, res, next) => {
   const { displayName } = req.body;
@@ -43,8 +45,26 @@ const validatePasswordSignUp = (req, res, next) => {
   next();
 };
 
+const verifyToken = (req, res, next) => {
+  // https://github.com/tryber/sd-010-b-cookmaster/pull/90/files
+  // :D
+  try {
+    if (!req.headers.authorization) {
+      return res.status(httpStatus.unauthorized).json({ message: 'Token not found' });
+    }
+    const { authorization } = req.headers;
+    jwt.verify(authorization, process.env.JWT_SECRET);
+    next();
+  } catch (e) {
+    return res.status(httpStatus.unauthorized).json({
+      message: 'Expired or invalid token',
+    });
+  }
+};
+
 module.exports = {
   validateNameSignUp,
   validateEmailSignUp,
   validatePasswordSignUp,
+  verifyToken,
 };

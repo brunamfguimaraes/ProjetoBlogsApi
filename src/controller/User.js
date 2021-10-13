@@ -8,10 +8,18 @@ const {
   validateNameSignUp,
   validateEmailSignUp,
   validatePasswordSignUp,
+  verifyToken,
 } = require('../middlewares/User');
 
 const userService = require('../service/User');
 const httpStatus = require('../httpStatus');
+
+route.get('/',
+  verifyToken,
+  async (req, res) => {
+    const allUsers = await userService.getAllUsers();
+    res.status(httpStatus.ok).json(allUsers);
+});
 
 route.post('/',
   validateNameSignUp,
