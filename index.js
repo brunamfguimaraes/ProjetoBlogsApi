@@ -8,3 +8,7 @@ app.listen(3000, () => console.log('ouvindo porta 3000!'));
 app.get('/', (request, response) => {
   response.send();
 });
+
+const PORT = 3000;
+
+app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
