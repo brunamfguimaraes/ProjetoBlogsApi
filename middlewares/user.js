@@ -1,11 +1,12 @@
 const { User } = require('../models');
 
 const verifyEmail = ({ email }) => {
+  const isValid = /\w+@\w+/g.test(email);
   try {
     if (!email) {
       return { message: '"email" is required' };
     }
-    if (!email.includes('@') || !email.includes('.com')) {
+    if (!isValid) {
       return { message: '"email" must be a valid email' };
     }
     return { message: 'ok' };
@@ -24,7 +25,7 @@ const verifyName = ({ displayName }) => {
     }
     return { message: 'ok' };
   } catch (error) {
-    return { message: '"DisplayName" is required' };
+    return { message: '"displayName" length must be at least 8 characters long' };
   }
 };
 
