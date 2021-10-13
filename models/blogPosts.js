@@ -3,11 +3,11 @@ const BlogPost = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
+    categoryIds: DataTypes.STRING, // Array ou string ???
     userId: DataTypes.INTEGER,
     published: DataTypes.DATE,
     updated: DataTypes.DATE,
-  },
-  {
+  }, {
     timestamps: false,
     tableName: 'BlogPosts',
     underscored: false,
