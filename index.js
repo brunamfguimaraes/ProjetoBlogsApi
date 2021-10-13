@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { checkEmailExists, 
-  checkPassword, checkName, checkEmail, createUser } = require('./services/user.js');
+const { checkEmailExists, testeEmptyEmail, userLogin,
+  checkPassword, checkName, checkEmail, createUser,
+  testeEmptyPassword } = require('./services/user.js');
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
+app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
