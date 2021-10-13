@@ -4,6 +4,7 @@ const {
   fieldLength,
   validateEmail,
   verifyEmptyFields,
+  registeredEmail,
 } = require('../services/userService');
 
 const verifyFieldsEmpty = async (req, res, next) => {
@@ -46,6 +47,19 @@ const verifyEmail = async (req, res, next) => {
     }
 };
 
+const verifyRegisteredUser = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    await registeredEmail(email);
+    next();
+  } catch (e) {
+    if (e.name === 'registeredUser') {
+      const response = e.message;
+      return res.status(409).json(response);
+      }
+    }
+};
+
 const createUser = async (req, res) => {
   const { displayName, email, password, image } = req.body;
   const response = await createNewUser(displayName, email, password, image);
@@ -57,4 +71,5 @@ module.exports = {
   verifyFieldsLength,
   verifyEmail,
   verifyFieldsEmpty,
+  verifyRegisteredUser,
 };

@@ -40,6 +40,15 @@ const validateEmail = (email) => {
   }
 };
 
+const registeredEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  if (user) {
+    const err = { name: 'registeredUser',
+    message: 'User already registered' };
+    throw err;
+  }
+};
+
 const createNewUser = async (displayName, email, password, image) => {
     const created = await User.create({ displayName, email, password, image });
     const response = { status: 'created', message: created };
@@ -51,4 +60,5 @@ module.exports = {
   fieldLength,
   validateEmail,
   verifyEmptyFields,
+  registeredEmail,
 };
