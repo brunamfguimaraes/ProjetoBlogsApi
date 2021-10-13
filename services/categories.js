@@ -27,4 +27,7 @@ const getAllCategories = async (req, res) => {
   res.status(200).json(allCategories);
 };
 
-module.exports = { verifyCategory, createCategory, getAllCategories };
+module.exports = { verifyCategory,
+  createCategory,
+  getAllCategories,
+};
