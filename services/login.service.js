@@ -1,5 +1,6 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 
 const LoginValidation = require('../schemas/login.validation');
 
@@ -13,10 +14,13 @@ const jwtConfig = {
 const login = async (userEmail, password) => {
   LoginValidation.verifyEmail(userEmail);
   LoginValidation.verifyPassword(password);
-  const { id, displayName, email } = await LoginValidation.userExists(
-    userEmail,
-    password,
-  );
+  const user = await User.findOne({ where: { email: userEmail, password } });
+  if (!user) {
+    const error = new Error('Invalid fields');
+    error.code = 400;
+    throw error;
+  }
+  const { id, displayName, email } = user;
   const payload = { id, displayName, email };
   const token = jwt.sign(payload, SECRET, jwtConfig);
   return token;
