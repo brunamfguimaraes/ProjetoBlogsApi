@@ -1,6 +1,14 @@
 const express = require('express');
+require('dotenv').config();
+const bodyParser = require('body-parser');
+const { createUser } = require('./controllers/user_controller');
+const { NameValidation,
+  PasswordValidation,
+  EmailExist,
+  EmailValidation } = require('./middlewares/user_middleware');
 
 const app = express();
+app.use(bodyParser.json());
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
@@ -9,4 +17,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-console.log('oi camila');
+app.post('/user', NameValidation, PasswordValidation, EmailExist, EmailValidation, createUser);
