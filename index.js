@@ -3,13 +3,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const UserRouter = require('./src/routers/UserRouter');
+const errorMiddleware = require('./src/middlewares/errorMiddleware');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use(UserRouter);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${3000}!`));
 

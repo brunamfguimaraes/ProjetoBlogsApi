@@ -13,14 +13,18 @@ const jwtConfig = {
 const ok = (_req, res) => res.status(200).send('funcionando biiiIIIIto esse trem');
 
 const createUser = async (req, res, next) => {
-  const user = req.body;
+  try {
+    const user = req.body;
 
-  const { error } = await UserService.createUser(user);
-  if (error) next(error);
+    await UserService.createUser(user);
+    // if (error) return next(error);
 
-  const token = generateToken(user, jwtConfig, secret);
+    const token = generateToken(user, jwtConfig, secret);
 
-  return res.status(codes.created).json({ token });
+    return res.status(codes.created).json({ token });
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = {
