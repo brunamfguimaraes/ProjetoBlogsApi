@@ -1,4 +1,5 @@
 const express = require('express');
+const LoginRouter = require('./controllers/LoginController');
 const UserRouter = require('./controllers/UserController');
 
 const app = express();
@@ -11,5 +12,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user', UserRouter);
+app.use('/login', LoginRouter);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
