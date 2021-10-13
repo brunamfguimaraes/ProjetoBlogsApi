@@ -43,6 +43,16 @@ const listUsers = rescue(async (req, res, _next) => {
 
   res.status(200).json(response);
 });
+const findUser = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  
+  const response = await UserService.findUser(id);
+  
+  if (response.error) return next(response.error);
+  
+  res.status(200).json(response);
+});
+
 // const exemple = rescue(async (req, res, next) => {});
 
-module.exports = { newUser, login, listUsers };
+module.exports = { newUser, login, listUsers, findUser };

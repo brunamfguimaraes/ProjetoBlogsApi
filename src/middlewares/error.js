@@ -1,5 +1,4 @@
 const checkErrorType = (error) => {
-  console.log(error);
   switch (true) {
     case error.isJoi:
       return { code: 400, message: error.details[0].message };
@@ -7,6 +6,8 @@ const checkErrorType = (error) => {
       return { code: 409, message: error.message };
     case error.invalidFields:
       return { code: 400, message: error.message };
+    case error.userNotFound:
+      return { code: 404, message: error.message };
 
     default:
       return { code: 500, message: error };

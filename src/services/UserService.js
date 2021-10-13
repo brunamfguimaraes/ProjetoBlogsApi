@@ -65,7 +65,21 @@ const loginUser = async (loginInfo) => {
   return loginVerified.dataValues;
 };
 
-const findUsers = async () => Users.findAll();
+const findUsers = () => Users.findAll();
+
+const findUser = async (id) => {
+  const user = await Users.findOne({
+    where: { id },
+    attributes: { exclude: 'password' },
+  });
+
+  if (!user) {
+    return { error: { userNotFound: true, message: 'User does not exist' } };
+  }
+
+  return user;
+};
+
 // const exemple =  () => {};
 
 module.exports = {
@@ -73,4 +87,5 @@ module.exports = {
   createUser,
   loginUser,
   findUsers,
+  findUser,
 };

@@ -17,6 +17,7 @@ app.get('/', (request, response) => {
 });
 
 app.get('/user', JWTMiddleware, UserController.listUsers);
+app.get('/user/:id', JWTMiddleware, UserController.findUser);
 app.post('/user', UserController.newUser);
 app.post('/login', UserController.login);
 
