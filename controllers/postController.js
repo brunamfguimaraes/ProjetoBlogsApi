@@ -1,5 +1,5 @@
 const express = require('express');
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 const { validatePost } = require('../helpers/validate');
 
 const SERVER_ERROR_MESSAGE = 'Internal Server Error';
@@ -8,7 +8,11 @@ const router = express.Router();
 
 router.get('/', async (_req, res) => {
   try {
-    const posts = await BlogPost.findAll();
+    const posts = await BlogPost.findAll({
+      attributes: { exclude: ['password'] },
+      include: [{ model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'users', through: { attributes: [] } }],
+    });
 
     return res.status(200).json(posts);
   } catch (e) {
@@ -59,7 +63,7 @@ router.post('/', async (req, res) => {
   if (invalidCategory) return res.status(400).json({ message: '"categoryIds" not found' });
 
   try {
-    const newPost = await BlogPost.create(data);
+    const newPost = await BlogPost.create({ ...data });
     // .then(({ id: postId }) => categoryIds.forEach((categoryId) => {
     //   PostCategory.create({ postId, categoryId });
     // }));
