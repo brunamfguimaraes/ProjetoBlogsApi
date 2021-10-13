@@ -94,8 +94,8 @@ router.put('/:id', async (req, res) => {
     const updatedPost = await BlogPost.findByPk(id, {
       attributes: { include: ['title', 'content', 'userId'] },
       include: [{ model: Category, as: 'categories', through: { attributes: [] } }] });
-    console.log('updatedPost:', updatedPost);
-    // if (!updatedPost) return res.status(404).json({ message: 'Post does not exist' });
+    // console.log('updatedPost:', updatedPost);
+    if (!updatedPost) return res.status(404).json({ message: 'Post does not exist' });
 
     return res.status(200).json(updatedPost);
   } catch (e) {
