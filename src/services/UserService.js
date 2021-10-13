@@ -25,16 +25,12 @@ const validateLoginInfo = (loginInfo) => {
   return error;
 };
 
-const userAlreadyRegistered = (email) =>
-  Users.findOne({
-    where: { email },
-    attributes: [],
-  });
+const userAlreadyRegistered = (email) => Users.findOne({ where: { email } });
 
 const verifyLogin = (loginInfo) =>
   Users.findOne({
     where: loginInfo,
-    attributes: ['id', 'displayName', 'email', 'image'],
+    attributes: { exclude: 'password' },
   });
 
 const createUser = async (userInfo) => {
@@ -69,8 +65,7 @@ const loginUser = async (loginInfo) => {
   return loginVerified.dataValues;
 };
 
-const findUsers = async () =>
-  Users.findAll();
+const findUsers = async () => Users.findAll();
 // const exemple =  () => {};
 
 module.exports = {
