@@ -1,12 +1,4 @@
-const userService = require('../services/userService');
-
-const { 
-  validateDisplayName, 
-  emailValidate, 
-  validatePassword,
- } = require('../helpers/UserValidation');
-
-const userValidate = async (req, res, next) => {
+const loginValidate = async (req, res, next) => {
   const { displayName, email, password } = req.body;
 
   const userName = validateDisplayName(displayName);
@@ -25,7 +17,7 @@ const userValidate = async (req, res, next) => {
     return res.status(400).json({ message: passordValidation.message });
   }
   
-  const emailExists = await userService.checkEmailUser(email);
+  // const emailExists = await userService.checkEmailUser(email);
   
   if (emailExists.fieldError) {
     return res.status(409).json({ message: emailExists.message });
@@ -34,4 +26,4 @@ const userValidate = async (req, res, next) => {
   next();
 };
 
-module.exports = userValidate;
+module.exports = loginValidate;

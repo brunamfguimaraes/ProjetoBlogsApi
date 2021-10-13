@@ -10,8 +10,8 @@ const JWT_CONFIG = {
 
 const authJWT = async (req, res, next) => {
   try {
-    const { email, displayName } = req.body;
-    const user = { email, displayName };
+    const { email, password } = req.body;
+    const user = { email, password };
 
     const token = jwt.sign(user, secretPassword, JWT_CONFIG);   
 
