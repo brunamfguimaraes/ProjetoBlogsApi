@@ -8,17 +8,17 @@ const jwtConfig = {
   expiresIn: '2h',
   algorithm: 'HS256',
 };
+
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  const { displayName, email, password, image } = req.body;
+  const { email, password } = req.body;
 
-  const exists = await User.findOne({ where: { email } });
-  if (exists) return res.status(409).json({ message: 'User already registered' });
+  const exists = await User.findOne({ where: { email, password } });
+  if (!exists) return res.status(400).json({ message: 'Invalid fields' });
 
-  await User.create({ displayName, email, password, image });
   const token = jwt.sign({ data: email }, secret, jwtConfig);
-  return res.status(201).json({ token });
+  return res.status(200).json({ token });
 });
 
 module.exports = router;
