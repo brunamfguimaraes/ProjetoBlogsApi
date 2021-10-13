@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const middlewares = require('../middlewares');
-const { createCategory } = require('../controllers/categoriesController');
+const { createCategory, getCategories } = require('../controllers/categoriesController');
 
 router.post('/', middlewares.validateJWT, createCategory);
-// router.get('/', getCategories);
+router.get('/', middlewares.validateJWT, getCategories);
 
 module.exports = router;
