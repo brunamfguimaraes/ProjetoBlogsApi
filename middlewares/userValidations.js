@@ -20,7 +20,15 @@ if (findEmail) { return next({ status: 409, message: 'User already registered' }
 next();
 });
 
+const idExists = rescue(async (req, res, next) => {
+  const { id } = req.params;
+const findId = await User.findOne({ where: { id } });
+if (!findId) { return next({ status: 404, message: 'User does not exist' }); }
+next();
+});
+
 module.exports = {
   validUser,
   uniqueEmail,
+  idExists,
 };
