@@ -5,7 +5,6 @@ const userValidator = require('../middlewares/userValidator');
 const { CREATED } = require('../utils/statusCode');
 
 const router = express.Router();
-router.use(express.json());
 
 router.post('/',
   userValidator.validateDisplayName,
