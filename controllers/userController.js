@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { StatusCodes } = require('http-status-codes');
+const { postUserService, getUsersService, getUserByIdService } = require('../services');
 
 const postUserController = async (req, res, next) => { 
   const { displayName, email, password, image } = req.body;
@@ -21,19 +22,20 @@ const postUserController = async (req, res, next) => {
 
 const getUsersController = async (_req, res, _next) => { 
     const allUsers = await getUsersService();
-
+  
     return res.status(StatusCodes.OK).json(allUsers);
 };
-    
-    jwt.verify(authorization, process.env.JWT_SECRET);
-    
-    const allUsers = await getUsersService();
-  
-    return res.status(200).json(allUsers);
-  } catch (_err) {
-      return next({ code: 'UNAUTHORIZED', message: 'Expired or invalid token' });
+
+const getUserByIdController = async (req, res, next) => { 
+  const { id } = req.params;
+
+  const user = await getUserByIdService(id);
+
+  if (user.message) {
+    return next(user);
   }
+
   return res.status(StatusCodes.OK).json(user);
 };
 
-module.exports = { postUserController, getUsersController };
+module.exports = { postUserController, getUsersController, getUserByIdController };
