@@ -1,6 +1,10 @@
+const { newToken } = require('../auth/createToken');
+
 const login = async (req, res) => {
   const { body } = req;
-  res.status(200).json({ body });
+  const id = req.infos;
+  const token = await newToken({ ...body, id });
+  res.status(200).json({ token });
 };
 
 module.exports = {

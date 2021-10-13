@@ -11,14 +11,15 @@ const validLogin = rescue(async (req, _res, next) => {
   return next();
 });
 
-const findEmail = rescue(async (req, res, next) => {
-const { email } = req.body;
-const emailDB = await User.findOne({ where: { email } });
-if (!emailDB) { return next({ status: 400, message: 'Invalid fields' }); }
+const validUserDB = rescue(async (req, res, next) => {
+const { email, password } = req.body;
+const { id } = await User.findOne({ where: { email, password } });
+if (!id) { return next({ status: 400, message: 'Invalid fields' }); }
+req.infos = id;
 next();
 });
 
 module.exports = {
   validLogin,
-  findEmail,
+  validUserDB,
 };
