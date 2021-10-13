@@ -17,7 +17,7 @@ app.use('/categories', categoryRoutes);
 app.use('/post', postRoutes);
 app.use(error);
 
-app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
+app.listen(3000, () => console.log(`ouvindo na porta ${PORT}`));
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
