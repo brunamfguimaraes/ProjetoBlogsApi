@@ -61,6 +61,13 @@ const getAllUsers = async (req, res) => {
   res.status(200).json(allUsers);
 };
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ where: { id } });
+  if (!user) return res.status(404).json({ message: 'User does not exist' });
+  res.status(200).json(user);
+};
+
 const checkName = (req, res, next) => {
   const nameIsValid = verifyName({ displayName: req.body.displayName });
   if (nameIsValid.message !== 'ok') {
@@ -127,4 +134,5 @@ module.exports = { checkEmailExists,
   userLogin,
   validaToken,
   getAllUsers,
+  getUser,
 };
