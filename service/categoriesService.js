@@ -41,7 +41,18 @@ const getAllCategories = async (token) => {
   return getAll;  
 };
 
+const findCategories = async (categoryIds) => {
+  const findAll = await Categorie.count({
+    where: {
+      id: categoryIds,
+      },
+  });
+
+  return findAll;
+};
+
 module.exports = {
+  findCategories,
   createCategorie,
   getAllCategories,
 };

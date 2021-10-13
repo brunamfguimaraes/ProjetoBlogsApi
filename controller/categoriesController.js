@@ -6,8 +6,6 @@ const createCategorie = async (req, res) => {
 
   const categorie = await categoriesService.createCategorie(token, body);
 
-  console.log(categorie);
-  
   if (categorie.validToken) {
     return res.status(401).json(categorie.message);
   }

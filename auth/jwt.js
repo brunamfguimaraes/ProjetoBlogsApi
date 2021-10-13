@@ -9,8 +9,8 @@ const jwtConfig = {
 
 const secret = process.env.JWT_SECRET;
 
-const creatToken = (displayName, email) => {
-  const token = jwt.sign({ displayName, email }, secret, jwtConfig);
+const creatToken = (userId, displayName, email) => {
+  const token = jwt.sign({ userId, displayName, email }, secret, jwtConfig);
   return token;
 };
 
@@ -18,8 +18,8 @@ const validateJwt = (token) => {
   if (!token) return { validToken: true, message: { message: 'Token not found' } };
 
   try {
-    jwt.verify(token, secret);
-    return { validToken: false };
+    const result = jwt.verify(token, secret);
+    return { validToken: false, result };
   } catch (error) {
     return { validToken: true, message: { message: 'Expired or invalid token' } };
   }

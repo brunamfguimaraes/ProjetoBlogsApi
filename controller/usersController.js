@@ -37,7 +37,7 @@ const getAllUsers = async (req, res) => {
 
   const getAll = await usersService.getAllUsers(token);
 
-  if (getAll.status) {
+  if (getAll.validToken) {
     return res.status(401).json(getAll.message);
   }
 
@@ -54,7 +54,7 @@ const getUserById = async (req, res) => {
     return res.status(404).json({ message: 'User does not exist' });
   }
   
-  if (getById.status) {
+  if (getById.validToken) {
     return res.status(401).json(getById.message);
   }
   
