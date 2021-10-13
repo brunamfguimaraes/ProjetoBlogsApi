@@ -57,7 +57,7 @@ const getAllUsers = async (token) => {
   const isValidToken = jwt.validateJwt(token);
   if (isValidToken.validToken) return isValidToken;
 
-  const getAll = await User.findAll();
+  const getAll = await User.findAll({ attributes: { exclude: ['password'] } });
 
   return getAll;  
 };

@@ -49,16 +49,16 @@ const createPost = async (token, body) => {
   return { id, userId, title, content };
 };
 
-const getAllCategories = async (token) => {
+const getAllPost = async (token) => {
   const isValidToken = jwt.validateJwt(token);
   if (isValidToken.validToken) return isValidToken;
 
-  const getAll = await BlogPost.findAll();
+  const getAll = await BlogPost.findAll({ include: [{ all: true }] });
 
   return getAll;  
 };
 
 module.exports = {
   createPost,
-  getAllCategories,
+  getAllPost,
 };

@@ -25,10 +25,10 @@ const createPost = async (req, res) => {
   return res.status(201).json(post);
 };
 
-const getAllCategories = async (req, res) => {
+const getAllPost = async (req, res) => {
   const token = req.headers.authorization;
 
-  const getAll = await createPost.getAllCategories(token);
+  const getAll = await postsService.getAllPost(token);
 
   if (getAll.validToken) {
     return res.status(401).json(getAll.message);
@@ -39,5 +39,5 @@ const getAllCategories = async (req, res) => {
 
 module.exports = {
   createPost,
-  getAllCategories,
+  getAllPost,
 };
