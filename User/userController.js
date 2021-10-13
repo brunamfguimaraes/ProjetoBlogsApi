@@ -1,6 +1,5 @@
 const rescue = require('express-rescue');
 const service = require('./userService');
-const { User } = require('../models');
 
 const create = rescue(async (req, res) => {
   const { displayName, email, password, image } = req.body;
