@@ -1,14 +1,4 @@
-// const Joi = require('joi');
 const { User } = require('../models');
-
-/* const validateEmptyFields = (displayName, email, password) => {
-  const { error } = Joi.object({
-    displayName: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  }).validate({ displayName, email, password });
-  if (error) throw error;
-}; */
 
 const verifyDisplayName = (displayName) => {
   if (displayName.length < 8) {
