@@ -1,5 +1,3 @@
-// const express = require('express');
-
 const validateDisplayName = (displayName) => {
   const MIN_LENGTH = 8;
   if (!displayName || displayName.length < MIN_LENGTH) {
