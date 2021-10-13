@@ -36,8 +36,8 @@ const checkEmail = (req, res, next) => {
 };
 
 const checkName = (req, res, next) => {
-  const nameIsValid = verifyName({ displayName: req.body.displayName }).message;
-  if (nameIsValid !== 'ok') {
+  const nameIsValid = verifyName({ displayName: req.body.displayName });
+  if (nameIsValid.message !== 'ok') {
     return res.status(400).json(nameIsValid);
   }
   next();
@@ -54,7 +54,7 @@ const checkPassword = (req, res, next) => {
 const checkEmailExists = async (req, res, next) => {
   const hasEmail = await userExists({ email: req.body.email });
   if (hasEmail.message !== 'ok') {
-    return res.status(400).json(hasEmail);
+    return res.status(409).json(hasEmail);
   }
   next();
 };
