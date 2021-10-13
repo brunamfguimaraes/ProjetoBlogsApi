@@ -39,6 +39,26 @@ const createBlogPostTransaction = ({ title, content, userId, categoryIds }) =>
     return newBlogPost;
   });
 
+const updateBlogPostTransaction = async ({ title, content, id, userId }) => 
+  sequelize.transaction(async (t) => {
+    const [affectedRows] = await BlogPost.update(
+      { title, content, updated: Date.now() }, { where: { id, userId }, transaction: t },
+    );
+
+    if (affectedRows === 0) throw new RequestError('unauthorized', 'Unauthorized user');
+
+    const blogPostFound = await BlogPost.findByPk(
+      id,
+      { 
+        include: [
+          { model: Category, as: 'categories', through: { attributes: [] } },
+        ],
+        transaction: t, 
+      },
+    );
+    return blogPostFound.toJSON();
+  });
+
 const create = async ({ title, content, categoryIds, userId }) => {
   requiredFields({ title, content, categoryIds });
   const { id } = await createBlogPostTransaction({ title, content, userId, categoryIds });
@@ -69,8 +89,15 @@ const getById = async (id) => {
   return blogPostFound.toJSON();
 };
 
+const update = async ({ id, title, content, userId }) => {
+  requiredFields({ title, content });
+  const newBlogPost = await updateBlogPostTransaction({ title, content, id, userId });
+  return newBlogPost;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

@@ -19,8 +19,17 @@ const getById = rescue(async (req, res) => {
   res.status(200).json(blogPost);
 });
 
+const update = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const { userId } = req;
+  const blogPost = await service.update({ id, title, content, userId });
+  res.status(200).json(blogPost);
+});
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
