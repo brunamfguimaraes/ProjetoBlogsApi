@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const RequestError = require('../helper/customErrors');
-const { BlogPost, Category, PostCategory } = require('../models');
+const { BlogPost, Category, PostCategory, User } = require('../models');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
