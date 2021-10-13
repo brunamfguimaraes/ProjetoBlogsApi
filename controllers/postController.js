@@ -11,7 +11,7 @@ router.get('/', async (_req, res) => {
     const posts = await BlogPost.findAll({
       attributes: { exclude: ['password'] },
       include: [{ model: Category, as: 'categories', through: { attributes: [] } },
-      { model: User, as: 'users', through: { attributes: [] } }],
+      { model: User, as: 'user', through: { attributes: [] } }],
     });
 
     return res.status(200).json(posts);
@@ -24,7 +24,11 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await BlogPost.findByPk(id);
+    const post = await BlogPost.findByPk(id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'user', through: { attributes: [] } }],
+    });
 
     if (!post) return res.status(404).json({ message: 'Post does not exist' });
 
@@ -57,17 +61,14 @@ router.post('/', async (req, res) => {
   data.userId = id;
   const message = validatePost(req.body);
   if (message) return res.status(400).json({ message });
-  const invalidCategory = categoryIds.every(async (categoryId) => {
-    await Category.findByPk(categoryId);
-  });
-  if (invalidCategory) return res.status(400).json({ message: '"categoryIds" not found' });
 
   try {
-    const newPost = await BlogPost.create({ ...data });
-    // .then(({ id: postId }) => categoryIds.forEach((categoryId) => {
-    //   PostCategory.create({ postId, categoryId });
-    // }));
-    console.log(newPost);
+    const newPost = await BlogPost.create(data);
+    const categories = await Category.findAll({ where: { id: categoryIds } });
+    if (categories.length === 0) {
+      return res.status(400).json({ message: '"categoryIds" not found' });
+    }
+    await newPost.addCategories(categories);
     return res.status(201).json({ id: newPost.id, ...data });
   } catch (e) {
     console.log(e.message);
