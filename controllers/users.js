@@ -14,23 +14,9 @@ const jwtConfig = {
 };
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const { authorization } = req.headers;
-  let user;
-
-  if (!authorization) return res.status(401).json({ message: 'Token not found' });
-  try {
-    const decoded = jwt.verify(authorization, secret);
-    if (decoded.data) {
-      user = await User.findOne({ where: { email: decoded.data } });
-    }
-    if (user) {
-      const users = await User.findAll();
-      return res.status(200).json(users);
-    }
-  } catch (_e) {
-    return res.status(401).json({ message: 'Expired or invalid token' });
-  }
+router.get('/', async (_req, res) => {
+  const users = await User.findAll();
+  return res.status(200).json(users);
 });
 
 router.post('/', validateDisplayName, validateEmail, validatePassword, async (req, res) => {
