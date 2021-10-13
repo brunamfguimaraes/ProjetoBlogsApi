@@ -6,9 +6,11 @@ const postController = require('./controllers/postController');
 const loginController = require('./controllers/loginController');
 const validateJWT = require('./helpers/validateJWT');
 
-require('dotenv').config();
+// require('dotenv').config();
 
-const { PORT } = process.env;
+// const { PORT } = process.env;
+
+const PORT = 3000;
 
 const app = express();
 
