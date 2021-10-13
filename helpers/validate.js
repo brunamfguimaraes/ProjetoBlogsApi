@@ -38,6 +38,10 @@ const validateCategoryIds = (categoryIds) => {
   if (!categoryIds) return '"categoryIds" is required';
 };
 
+const validateCategoryIdsUpdate = (categoryIds) => {
+  if (categoryIds) return 'Categories cannot be edited';
+};
+
 const validateUser = ({ displayName, email, password }) => {
   const invalidDisplayName = validateDisplayName(displayName);
   if (invalidDisplayName) return invalidDisplayName;
@@ -64,6 +68,15 @@ const validatePost = ({ title, content, categoryIds }) => {
   return validateCategoryIds(categoryIds);
 };
 
+const validatePostUpdate = ({ title, content, categoryIds }) => {
+  const invalidTitle = validateTitle(title);
+  if (invalidTitle) return invalidTitle;
+  const invalidContent = validateContent(content);
+  if (invalidContent) return invalidContent;
+  
+  return validateCategoryIdsUpdate(categoryIds);
+};
+
 const validateCategory = ({ name }) => validateName(name);
 
 module.exports = {
@@ -71,4 +84,5 @@ module.exports = {
   validateLogin,
   validateCategory,
   validatePost,
+  validatePostUpdate,
 };
