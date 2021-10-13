@@ -13,7 +13,6 @@ router.get('/', async (_req, res) => {
         as: 'user',
         attributes: { exclude: ['password'] } },
         // through: { attributes: [] } },
-      { model: Category, as: 'categories' },
       { model: Category, as: 'categories', through: { attributes: [] } }],
     });
 
@@ -28,9 +27,11 @@ router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const post = await BlogPost.findByPk(id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Category, as: 'categories', through: { attributes: [] } },
-      { model: User, as: 'users', through: { attributes: [] } }],
+      include: [{ model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] } },
+        // through: { attributes: [] } },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
     });
 
     if (!post) return res.status(404).json({ message: 'Post does not exist' });
