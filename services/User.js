@@ -16,7 +16,16 @@ const findAll = async () => {
   }
 };
 
+const findByPk = async ({ id }) => {
+  try {
+    return await User.findByPk(id);
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   create,
   findAll,
+  findByPk,
 };
