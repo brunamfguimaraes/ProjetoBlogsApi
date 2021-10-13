@@ -11,7 +11,7 @@ const postUserController = async (req, res, next) => {
   }
 
   const jwtConfig = {
-    expiresIn: '7d',
+    expiresIn: '1d',
     algorithm: 'HS256',
   };
   const token = jwt.sign({}, process.env.JWT_SECRET, jwtConfig);
