@@ -7,8 +7,8 @@ const createUser = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     image: DataTypes.STRING,
   }, { timestamps: false, tableName: 'Users' });
-  User.associate = (_models) => {
-    User.hasMany('BlogPost', 
+  User.associate = (models) => {
+    User.hasMany(models.BlogPost, 
     {
       foreignKey: 'userId',
       as: 'BlogPostID',

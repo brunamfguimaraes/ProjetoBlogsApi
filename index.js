@@ -1,5 +1,6 @@
 const express = require('express');
-const userRouter = require('./routes/userRouter');
+const { userRouter } = require('./routes');
+const error = require('./middlewares/error');
 
 const app = express();
 
@@ -9,9 +10,11 @@ app.use(express.json());
 
 app.use('/user', userRouter);
 
-// app.use(middleErro);
+app.use(error);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
+
+// Agradecimento a Raphael Gumieri Turma 10 - Tribo B, Lucas Martins Turma 10 - Tribo B, Ederson Rodriges Turma 10 - Tribo B Pelo Auxilio na criação de tabelas e na estruturação de middlewares.
