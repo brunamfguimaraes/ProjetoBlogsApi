@@ -9,9 +9,12 @@ const router = express.Router();
 router.get('/', async (_req, res) => {
   try {
     const posts = await BlogPost.findAll({
-      attributes: { exclude: ['password'] },
-      include: [{ model: Category, as: 'categories', through: { attributes: [] } },
-      { model: User, as: 'user', through: { attributes: [] } }],
+      include: [{ model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] } },
+        // through: { attributes: [] } },
+      { model: Category, as: 'categories' },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
     });
 
     return res.status(200).json(posts);
@@ -27,7 +30,7 @@ router.get('/:id', async (req, res) => {
     const post = await BlogPost.findByPk(id, {
       attributes: { exclude: ['password'] },
       include: [{ model: Category, as: 'categories', through: { attributes: [] } },
-      { model: User, as: 'user', through: { attributes: [] } }],
+      { model: User, as: 'users', through: { attributes: [] } }],
     });
 
     if (!post) return res.status(404).json({ message: 'Post does not exist' });
