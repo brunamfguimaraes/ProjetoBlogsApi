@@ -15,3 +15,6 @@ module.exports = (sequelize, DataTypes) => {
   };
   return BlogPost;
 };
+
+// https://stackoverflow.com/questions/40694689/set-defaultvalue-to-todays-date-in-a-sequelize-migration
+// defaultValue para campos de data

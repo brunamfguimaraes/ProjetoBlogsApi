@@ -3,6 +3,7 @@ require('dotenv');
 const jwt = require('jsonwebtoken');
 const { BlogPost } = require('../models');
 const { Category } = require('../models');
+const { User } = require('../models');
 
 const verifyTitle = (req, res, next) => {
   try {
@@ -65,18 +66,22 @@ const getTokenData = (token) => {
 const createBlogPost = async (req, res) => {
   const usuario = getTokenData(req.headers.authorization);
   try {
-    console.log('req.body', req.body);
     const newBlogPost = await BlogPost.create(
       { title: req.body.title, content: req.body.content, userId: usuario },
     );
     const { id, title, content, userId } = newBlogPost;
-    console.log('newBlogPost', newBlogPost);
     
     return res.status(201).json({ id, userId, title, content });
   } catch (error) {
-    console.log('error', error);
     res.status(400).json({ message: 'erro' });
   }
+};
+const getAllPosts = async (_req, res) => {
+  const result = await BlogPost.findAll({ 
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  return res.status(200).json(result);
 };
 
 module.exports = { verifyCategoryId,
@@ -84,4 +89,5 @@ module.exports = { verifyCategoryId,
   verifyTitle,
   verifyCategoryIdExists,
   createBlogPost,
+  getAllPosts,
 };
