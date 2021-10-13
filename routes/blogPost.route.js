@@ -7,6 +7,7 @@ const BlogPostController = require('../controllers/blogPost.controller');
 BlogPostRoute.post('/', rescue(validateToken), rescue(BlogPostController.createPost));
 BlogPostRoute.get(
   '/',
+  rescue(validateToken),
   rescue(BlogPostController.getAllBlogPost),
 );
 

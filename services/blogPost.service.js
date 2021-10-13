@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { BlogPost, PostsCategory } = require('../models');
+const { BlogPost, PostsCategory, User, Category } = require('../models');
 const PostValidation = require('../schemas/blogPost.validation');
 const config = require('../config/config');
 
@@ -10,9 +10,7 @@ const createPost = async ({ title, content, categoryIds, userId }) => {
   await PostValidation.verifyCategoryIdExists(categoryIds);
   const t = await sequelize.transaction();
   try {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     const newPost = await BlogPost.create({ title, content, userId }, { transaction: t });
-    console.log(`aaaaaaaaaaaaaaaaaaaaaaaaaaa${newPost}`);
     await Promise.all(categoryIds.map((id) =>
       PostsCategory.create({ postId: newPost.id, categoryId: id }, { transaction: t })));
     await t.commit();
@@ -26,7 +24,10 @@ const createPost = async ({ title, content, categoryIds, userId }) => {
 
 const getAllBlogPost = async () => {
   try {
-    const allBlogPosts = await BlogPost.findAll({});
+    const allBlogPosts = await BlogPost.findAll({
+      include: [{ model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
+    });
     return allBlogPosts;
   } catch (error) {
     return error;
