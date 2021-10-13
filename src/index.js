@@ -16,5 +16,6 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', UserController.newUser);
+app.post('/login', UserController.login);
 
 app.use(ErrorMiddleware);

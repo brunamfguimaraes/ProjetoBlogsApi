@@ -12,19 +12,33 @@ const jwtConfig = {
 const createJWT = (info) => {
   const { email, password } = info;
   const newToken = jwt.sign({ email, password }, jwtSecret, jwtConfig);
-  
+
   return newToken;
 };
 
 const newUser = rescue(async (req, res, next) => {
   const userInfo = req.body;
-  const user = await UserService.createUser(userInfo);
-
-  if (user.error) return next(user.error);
-
+  const response = await UserService.createUser(userInfo);
+  
+  if (response.error) return next(response.error);
+  
   const token = createJWT(userInfo);
-
+  
   res.status(201).json({ token });
 });
 
-module.exports = { newUser };
+const login = rescue(async (req, res, next) => {
+  const loginInfo = req.body;
+
+  const response = await UserService.loginUser(loginInfo);
+
+  if (response.error) return next(response.error);
+  
+  const token = createJWT(loginInfo);
+  
+  res.status(200).json({ token });
+});
+
+// const exemple = rescue(async (req, res, next) => {});
+
+module.exports = { newUser, login };
