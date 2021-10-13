@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
+const middlewares = require('./middlewares');
 
 const app = express();
 app.use(bodyParser.json());
@@ -13,6 +14,7 @@ app.get('/', (request, response) => {
 
 app.use('/user', routes.users);
 
+app.use(middlewares.error);
 const PORT = 3000 || process.env.PORT;
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
