@@ -1,13 +1,15 @@
-const loginValidate = async (req, res, next) => {
-  const { displayName, email, password } = req.body;
+const loginService = require('../services/loginService');
 
-  const userName = validateDisplayName(displayName);
+const {    
+  emailValidate, 
+  validatePassword,
+ } = require('../helpers/LoginValidation');
+
+const loginValidate = async (req, res, next) => {
+  const { email, password } = req.body;
+
   const validEmail = emailValidate(email);
-  const passordValidation = validatePassword(password);
-  
-  if (userName.fieldError) {
-    return res.status(400).json({ message: userName.message });
-  }
+  const passordValidation = validatePassword(password); 
   
   if (validEmail.fieldError) {
     return res.status(400).json({ message: validEmail.message });
@@ -17,10 +19,10 @@ const loginValidate = async (req, res, next) => {
     return res.status(400).json({ message: passordValidation.message });
   }
   
-  // const emailExists = await userService.checkEmailUser(email);
+  const emailExists = await loginService.checkEmailUser(email);
   
   if (emailExists.fieldError) {
-    return res.status(409).json({ message: emailExists.message });
+    return res.status(400).json({ message: emailExists.message });
   }
 
   next();

@@ -1,10 +1,11 @@
 const express = require('express');
 
 const createToken = require('../middleware/createToken');
+const validateLogin = require('../middleware/loginValidate');
 
 const loginRouter = express.Router();
 
-loginRouter.post('/', createToken, async (req, res) => {
+loginRouter.post('/', validateLogin, createToken, async (req, res) => {
   try {
     const { token } = req;
 

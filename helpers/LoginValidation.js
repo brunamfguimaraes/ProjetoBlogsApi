@@ -13,7 +13,7 @@ const emailValidate = (email) => {
 
 const validatePassword = (password) => {
   if (password === '') {
-    return { fieldError: true, message: '"password" is is not allowed to be empty' };
+    return { fieldError: true, message: '"password" is not allowed to be empty' };
   }
 
   if (!password) {
