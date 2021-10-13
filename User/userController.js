@@ -14,7 +14,7 @@ const login = rescue(async (req, res) => {
 });
 
 const getAll = rescue(async (_req, res) => {
-  const users = await User.findAll();
+  const users = await service.getAll();
   res.status(200).json(users);
 });
 
