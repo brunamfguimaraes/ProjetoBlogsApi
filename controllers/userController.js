@@ -14,7 +14,7 @@ const postUserController = async (req, res, next) => {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ /* data: user */ }, process.env.JWT_SECRET, jwtConfig);
+  const token = jwt.sign({}, process.env.JWT_SECRET, jwtConfig);
 
   res.status(201).json({ token });
 };
