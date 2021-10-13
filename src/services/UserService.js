@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { Users } = require('../models');
 
-const validateUserInfo = (userInfo) => {
+const validateNewUserInfo = (userInfo) => {
   const { error } = Joi.object({
     displayName: Joi.string().min(8).not().empty()
 .required(),
@@ -22,13 +22,17 @@ const userAlreadyRegistered = (email) =>
   });
 
 const createUser = async (userInfo) => {
-  const invalid = validateUserInfo(userInfo);
+  const invalid = validateNewUserInfo(userInfo);
 
   if (invalid) return { error: invalid };
 
   const userRegistered = await userAlreadyRegistered(userInfo.email);
 
-  if (userRegistered) return { error: 'User already registered' };
+  if (userRegistered) {
+    return {
+      error: { userRegistered: true, message: 'User already registered' },
+    };
+  }
 
   const newUser = await Users.create(userInfo);
 
