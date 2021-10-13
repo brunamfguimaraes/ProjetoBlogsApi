@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const RequestError = require('../helper/customErrors');
 const { BlogPost, Category, PostCategory, User } = require('../models');
+const { requiredFields } = require('../validations');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
@@ -39,7 +40,7 @@ const createBlogPostTransaction = ({ title, content, userId, categoryIds }) =>
   });
 
 const create = async ({ title, content, categoryIds, userId }) => {
-  requiredValidation({ title, content, categoryIds });
+  requiredFields({ title, content, categoryIds });
   const { id } = await createBlogPostTransaction({ title, content, userId, categoryIds });
   return { id, userId, title, content };
 };
