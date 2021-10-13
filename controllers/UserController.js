@@ -3,6 +3,7 @@ const createJWT = require('../middlewares/token/createJWT');
 const validateJWT = require('../middlewares/token/validateJWT');
 const userValidate = require('../middlewares/userValidate');
 const { User } = require('../models');
+const UserService = require('../services/UserService');
 
 const UserRouter = express.Router();
 
@@ -27,6 +28,18 @@ UserRouter.get('/', validateJWT, async (_req, res) => {
   } catch (error) {
     return res.status(500).json({ error });
   }
+});
+
+UserRouter.get('/:id', validateJWT, async (req, res) => {
+  const { id } = req.params;
+
+  const user = await UserService.findById(id);
+
+  if (user.isError) {
+    return res.status(404).json({ message: user.message });
+  }
+
+  return res.status(200).json(user);
 });
 
 module.exports = UserRouter;

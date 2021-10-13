@@ -10,6 +10,17 @@ const userExists = async (email) => {
   return { isError: false, message: 'ok' };
 };
 
+const findById = async (id) => {
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    return { isError: true, message: 'User does not exist' };    
+  }
+
+  return user;
+};
+
 module.exports = {
   userExists,
+  findById,
 };
