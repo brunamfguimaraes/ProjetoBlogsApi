@@ -2,8 +2,7 @@ const { createUser: registerUser } = require('../services/usersService');
 const middlewares = require('../middlewares');
 
 const createUser = async (req, res, next) => {
-  const { error } = middlewares.validation(req.body);
-  
+  const { error } = middlewares.validationUser(req.body);
   if (error) return next(error);
 
   const token = await registerUser(req.body);

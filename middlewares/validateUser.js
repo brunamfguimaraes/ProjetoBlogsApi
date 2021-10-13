@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { User } = require('../models');
 
-const validation = (body) => 
+const validationUser = (body) => 
   Joi.object({
     displayName: Joi.string().min(8).required(),
     email: Joi.string().email().required(),
@@ -19,4 +19,4 @@ const verifyEmail = async (email) => {
   }
 };
 
-module.exports = { validation, verifyEmail };
+module.exports = { validationUser, verifyEmail };

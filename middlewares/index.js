@@ -1,14 +1,14 @@
 const error = require('./error');
-const { validation, verifyEmail } = require('./validateUser');
-// const isValidUser = require('./validationLogin');
+const { validationUser, verifyEmail } = require('./validateUser');
+const { validationLogin, existsUser } = require('./validateLogin');
 // const validateRecipe = require('./validationRecipe');
 // const validateJWT = require('./validateJWT');
 
 module.exports = {
   error,
-  validation,
+  validationUser,
   verifyEmail,
-  // isValidUser,
-  // validateRecipe,
+  validationLogin,
+  existsUser,
   // validateJWT,
 };
