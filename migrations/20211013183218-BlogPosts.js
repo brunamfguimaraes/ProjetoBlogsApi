@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: 'userId',
         references: {
-          model: 'Users',
+          model: 'User',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -41,7 +41,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('BlogPosts');
   }
 };
