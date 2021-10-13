@@ -6,9 +6,13 @@ const userRoute = require('./src/controller/User');
 
 const loginRoute = require('./src/controller/Login');
 
+const categoriesRoute = require('./src/controller/Categories');
+
 app.use('/user', userRoute);
 
 app.use('/login', loginRoute);
+
+app.use('/categories', categoriesRoute);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
