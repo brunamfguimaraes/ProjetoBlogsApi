@@ -1,24 +1,36 @@
-const { Post } = require('../models');
+const Sequelize = require('sequelize');
+const { BlogPost, PostsCategory } = require('../models');
 const PostValidation = require('../schemas/blogPost.validation');
+const config = require('../config/config');
 
-const createPost = async (name) => {
-  PostValidation.verifyPostName(name);
+const sequelize = new Sequelize(config.development);
 
+const createPost = async ({ title, content, categoryIds, userId }) => {
+  PostValidation.verifyBlogPostInformations(title, content, categoryIds);
+  await PostValidation.verifyCategoryIdExists(categoryIds);
+  const t = await sequelize.transaction();
   try {
-    const newPost = await Post.create({ name });
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    const newPost = await BlogPost.create({ title, content, userId }, { transaction: t });
+    console.log(`aaaaaaaaaaaaaaaaaaaaaaaaaaa${newPost}`);
+    await Promise.all(categoryIds.map((id) =>
+      PostsCategory.create({ postId: newPost.id, categoryId: id }, { transaction: t })));
+    await t.commit();
     return newPost;
   } catch (error) {
+    await t.rollback();
+    console.log(error.message);
     return error;
   }
 };
 
-const getAllCategories = async () => {
+const getAllBlogPost = async () => {
   try {
-    const allCategories = await Post.findAll({});
-    return allCategories;
+    const allBlogPosts = await BlogPost.findAll({});
+    return allBlogPosts;
   } catch (error) {
     return error;
   }
 };
 
-module.exports = { createPost, getAllCategories };
+module.exports = { createPost, getAllBlogPost };

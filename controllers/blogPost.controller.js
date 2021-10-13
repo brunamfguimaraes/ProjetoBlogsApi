@@ -1,14 +1,19 @@
-const PostService = require('../services/blogPost.service');
+const BlogPostService = require('../services/blogPost.service');
 
 const createPost = async (req, res) => {
-  const { name } = req.body;
-
-  const newPost = await PostService.createPost(name);
+  const { title, content, categoryIds } = req.body;
+  const { id } = req.user;
+  const newPost = await BlogPostService.createPost({
+    title,
+    content,
+    categoryIds,
+    userId: id,
+  });
   return res.status(201).json(newPost);
 };
-/* const getAllCategories = async (_req, res) => {
-  const allCategories = await PostService.getAllCategories();
-  return res.status(200).json(allCategories);
-}; */
+const getAllBlogPost = async (_req, res) => {
+  const allBlogPosts = await BlogPostService.getAllBlogPost();
+  return res.status(200).json(allBlogPosts);
+};
 
-module.exports = { createPost };
+module.exports = { createPost, getAllBlogPost };

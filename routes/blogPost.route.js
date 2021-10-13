@@ -1,14 +1,13 @@
-const postRoute = require('express').Router();
+const BlogPostRoute = require('express').Router();
 const rescue = require('express-rescue');
 const { validateToken } = require('../middlewares/validateToken');
 
-const PostController = require('../controllers/blogPost.controller');
+const BlogPostController = require('../controllers/blogPost.controller');
 
-postRoute.post('/', rescue(validateToken), rescue(PostController.createPost));
-/* postRoute.get(
+BlogPostRoute.post('/', rescue(validateToken), rescue(BlogPostController.createPost));
+BlogPostRoute.get(
   '/',
-  rescue(validateToken),
-  rescue(CategoryController.getAllCategories),
-); */
+  rescue(BlogPostController.getAllBlogPost),
+);
 
-module.exports = postRoute;
+module.exports = BlogPostRoute;
