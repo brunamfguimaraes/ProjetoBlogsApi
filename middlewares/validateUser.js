@@ -19,4 +19,20 @@ const verifyEmail = async (email) => {
   }
 };
 
-module.exports = { validationUser, verifyEmail };
+const verifyUserById = async (id) => {
+  const findUserById = await User.findOne({ where: { id } });
+  
+  if (!findUserById) {
+    const err = new Error('User does not exist');
+    err.statusCode = 404;
+    return err;
+  }
+
+  return findUserById;
+};
+
+module.exports = { 
+  validationUser, 
+  verifyEmail, 
+  verifyUserById,
+};

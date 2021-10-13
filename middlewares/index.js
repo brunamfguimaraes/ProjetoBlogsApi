@@ -1,8 +1,7 @@
 const error = require('./error');
-const { validationUser, verifyEmail } = require('./validateUser');
+const { validationUser, verifyEmail, verifyUserById } = require('./validateUser');
 const { validationLogin, existsUser } = require('./validateLogin');
 const validateJWT = require('./validateJWT');
-// const validateRecipe = require('./validationRecipe');
 
 module.exports = {
   error,
@@ -11,4 +10,5 @@ module.exports = {
   validationLogin,
   existsUser,
   validateJWT,
+  verifyUserById,
 };

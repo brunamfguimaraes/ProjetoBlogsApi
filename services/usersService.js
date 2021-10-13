@@ -14,7 +14,15 @@ const createUser = async (body) => {
 
 const getAllUsers = async () => User.findAll();
 
+const userById = async (id) => {
+  const verifyUser = await middlewares.verifyUserById(id);
+  if (verifyUser.message) return verifyUser;
+
+  return verifyUser;
+};
+
 module.exports = {
   createUser,
   getAllUsers,
+  userById,
 };
