@@ -1,6 +1,14 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const { userDataEntries } = require('../validations/userValidation');
 const { User } = require('../models');
- 
+
+const secret = process.env.SECRET || 'notSoSecret';
+const jwtConfig = {
+  expiresIn: '1d',
+  algorithm: 'HS256',
+};
+
 const createUser = async (userData) => {
   const entries = userDataEntries(userData);
 
@@ -10,7 +18,12 @@ const createUser = async (userData) => {
 
   if (isConflict) return { message: 'User already registered', conflict: true };
 
-  return User.create(userData);
+  const { id, displayName, email, image } = await User.create(userData);
+ 
+  const payload = { id, displayName, email, image };
+  const token = jwt.sign(payload, secret, jwtConfig);
+
+  return token;
 };
 
 module.exports = {
