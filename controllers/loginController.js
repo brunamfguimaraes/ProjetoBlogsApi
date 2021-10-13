@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const { validateLogin } = require('../helpers/validate');
 const { User } = require('../models');
 
-const secret = 'seusecretdetoken';
-// const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+// const secret = 'seusecretdetoken';
+const secret = process.env.JWT_SECRET;
 
 module.exports = async (req, res) => {
   const message = validateLogin(req.body);

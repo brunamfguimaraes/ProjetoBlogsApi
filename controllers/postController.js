@@ -109,16 +109,11 @@ router.delete('/:id', async (req, res) => {
   const post = await BlogPost.findByPk(id);
 
   if (!post) return res.status(404).json({ message: 'Post does not exist' });
-
   if (req.user.id !== post.userId) {
     return res.status(401).json({ message: 'Unauthorized user' });
   }
   try {
-    const deletePost = await BlogPost.destroy(
-      { where: { id } },
-    );
-
-    console.log(deletePost);
+    await BlogPost.destroy({ where: { id } });
 
     return res.status(200);
     // return res.status(200).json({ message: 'Post excluído com sucesso!' });
