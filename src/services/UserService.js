@@ -19,8 +19,7 @@ const validateLoginInfo = (loginInfo) => {
   const { error } = Joi.object({
     email: Joi.string().email().not().empty()
 .required(),
-    password: Joi.string().not().empty()
-.required(),
+    password: Joi.string().not().empty().required(),
   }).validate(loginInfo);
 
   return error;
@@ -32,7 +31,7 @@ const userAlreadyRegistered = (email) =>
     attributes: ['id', 'displayName', 'email', 'password', 'image'],
   });
 
-const verifyLogin = (loginInfo) => 
+const verifyLogin = (loginInfo) =>
   Users.findOne({
     where: loginInfo,
     attributes: ['id', 'displayName', 'email', 'password', 'image'],
@@ -60,17 +59,21 @@ const loginUser = async (loginInfo) => {
   const invalidInfo = validateLoginInfo(loginInfo);
 
   if (invalidInfo) return { error: invalidInfo };
-  
+
   const loginVerified = await verifyLogin(loginInfo);
 
-  if (!loginVerified) return { error: { invalidFields: true, message: 'Invalid fields' } };
+  if (!loginVerified) { return { error: { invalidFields: true, message: 'Invalid fields' } }; }
 
   return true;
 };
 
-// const exemple = rescue(async (req, res, next) => {});
+const findUsers = async () =>
+  Users.findAll({ attributes: ['id', 'displayName', 'email', 'image'] });
+// const exemple =  () => {};
 
 module.exports = {
+  verifyLogin,
   createUser,
   loginUser,
+  findUsers,
 };

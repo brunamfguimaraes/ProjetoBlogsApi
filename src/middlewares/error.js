@@ -1,4 +1,5 @@
 const checkErrorType = (error) => {
+  console.log(error);
   switch (true) {
     case error.isJoi:
       return { code: 400, message: error.details[0].message };
@@ -13,7 +14,6 @@ const checkErrorType = (error) => {
 };
 
 module.exports = (err, _req, res, next) => {
-  console.log(err);
   const { code, message } = checkErrorType(err);
 
   res.status(code).json({ message });
