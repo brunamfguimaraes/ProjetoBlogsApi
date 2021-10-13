@@ -4,7 +4,7 @@ const {
   getUserByIdController,
 } = require('./userController');
 const { postLoginController } = require('./LoginController');
-const { postCategoryController } = require('./categoryController');
+const { postCategoryController, getCategoriesController } = require('./categoryController');
 
 module.exports = {
   postUserController,
@@ -12,4 +12,5 @@ module.exports = {
   getUsersController,
   getUserByIdController,
   postCategoryController,
+  getCategoriesController,
 };
