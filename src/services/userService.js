@@ -1,22 +1,8 @@
-const jwt = require('jsonwebtoken');
+const generateToken = require('../middlewares/generateToken');
 const { User } = require('../models');
 require('dotenv').config();
 
-const { JWT_SECRET } = process.env || 'minhaSenhaBlog';
-
-const jwtConfig = {
-  expiresIn: '1h',
-  algorithm: 'HS256',
-};
-
-const ERROR_INVALID_FIELDS = { status: 400, message: 'Invalid fields' };
-const ERROR_USER_EXISTS = { status: 409, message: 'User already registered' };
-// const ERROR_USER_NOT_EXISTS = { status: 404, message: 'User does not exist' };
-
-const generateToken = (user) => {
-  const token = jwt.sign({ data: user }, JWT_SECRET, jwtConfig);
-  return { token };
-};
+const { ERROR_INVALID_FIELDS, ERROR_USER_EXISTS } = require('./msgErrors');
 
 const checkEmailExists = async (email) => {
   const emailExists = await User.findOne({ where: { email } });
@@ -24,22 +10,25 @@ const checkEmailExists = async (email) => {
 };
 
 const createUser = async (newUser) => {
-  const { email } = newUser;
-  const emailExists = await checkEmailExists(email);
+  const emailExists = await checkEmailExists(newUser.email);
   if (emailExists) { throw ERROR_USER_EXISTS; }
-  const { password, ...user } = await User.create(newUser);
-  await User.findOne({ where: { email, password } });
-  return generateToken(user);
+  await User.create(newUser);
+  return generateToken(newUser.email);
 };
 
-const login = async ({ email, password }) => {
+const login = async ({ email }) => {
   const userRegistered = await checkEmailExists(email);
   if (!userRegistered) { throw ERROR_INVALID_FIELDS; }
-  const { password: pwd, ...user } = await User.findOne({ where: { email, password } });
-  return generateToken(user);
+  return generateToken(email);
+};
+
+const getUsers = async () => {
+  const users = await User.findAll();
+  return users;
 };
 
 module.exports = {
   createUser,
   login,
+  getUsers,
 };

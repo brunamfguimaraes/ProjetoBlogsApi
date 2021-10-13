@@ -1,8 +1,5 @@
 const userService = require('../services/userService');
-
-const CREATED = 201;
-const OK = 200;
-// const NO_CONTENT = 204;
+const { CREATED, OK } = require('./msgStatus');
 
 const createUser = async (req, res) => {
   const newUser = req.body;
@@ -16,7 +13,13 @@ const login = async (req, res) => {
   return res.status(OK).json(token);
 };
 
+const getUsers = async (_req, res) => {
+  const users = await userService.getUsers();
+  return res.status(OK).json(users);
+};
+
 module.exports = {
   createUser,
   login,
+  getUsers,
 };
