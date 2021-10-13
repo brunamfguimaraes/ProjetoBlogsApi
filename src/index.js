@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const UserController = require('./controllers/UserController.js');
+const ErrorMiddleware = require('./middlewares/error.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,3 +16,5 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', UserController.newUser);
+
+app.use(ErrorMiddleware);
