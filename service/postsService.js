@@ -3,7 +3,7 @@ const jwt = require('../auth/jwt');
 
 const categoriesService = require('./categoriesService');
 
-const { BlogPost, PostCategorie } = require('../models');
+const { BlogPost, PostsCategorie } = require('../models');
 
 const validForms = (body) => {
   const { title, content, categoryIds } = body;
@@ -41,7 +41,7 @@ const createPost = async (token, body) => {
 
   const postId = id;
 
-  const promisses = categoryIds.map((categoryId) => PostCategorie.create({
+  const promisses = categoryIds.map((categoryId) => PostsCategorie.create({
     categoryId, postId,
   }));
   Promise.resolve(promisses);
