@@ -28,5 +28,13 @@ const getAllUsers = async () => {
     return error;
   }
 };
+const getUserById = async (id) => {
+  try {
+    const user = await User.findByPk(id);
+    return user;
+  } catch (error) {
+    return error;
+  }
+};
 
-module.exports = { createUser, getAllUsers };
+module.exports = { createUser, getAllUsers, getUserById };
