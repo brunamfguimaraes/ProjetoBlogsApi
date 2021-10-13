@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
-const { SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 
 const validateToken = (req, _res, next) => {
   const token = req.headers.authorization;
@@ -11,13 +11,13 @@ const validateToken = (req, _res, next) => {
     throw error;
   }
   try {
-    jwt.verify(token, SECRET);
+    jwt.verify(token, JWT_SECRET);
   } catch (error) {
     error.message = 'Expired or invalid token';
     error.code = 401;
     throw error;
   }
-  const payload = jwt.verify(token, SECRET);
+  const payload = jwt.verify(token, JWT_SECRET);
   req.user = payload;
   next();
 };

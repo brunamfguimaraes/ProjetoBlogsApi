@@ -4,7 +4,7 @@ const { User } = require('../models');
 
 const LoginValidation = require('../schemas/login.validation');
 
-const { SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 
 const jwtConfig = {
   algorithm: 'HS256',
@@ -22,7 +22,7 @@ const login = async (userEmail, password) => {
   }
   const { id, displayName, email } = user;
   const payload = { id, displayName, email };
-  const token = jwt.sign(payload, SECRET, jwtConfig);
+  const token = jwt.sign(payload, JWT_SECRET, jwtConfig);
   return token;
 };
 
