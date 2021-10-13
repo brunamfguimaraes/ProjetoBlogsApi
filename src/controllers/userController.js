@@ -23,7 +23,7 @@ const getAllUsers = async (req, res) => {
   try {
     const result = await userService.getAllUsers();
 
-    return res.status(OK).json({ token: result });
+    return res.status(OK).json(result);
   } catch (error) {
     console.log(error);
     res.status(INTERNAL_SERVER_ERROR).json({ message: error.message });
