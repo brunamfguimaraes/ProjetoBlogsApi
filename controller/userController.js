@@ -39,4 +39,14 @@ const createLogin = async (req, res) => {
   }
 };
 
-module.exports = { create, createLogin };
+const getUsers = async (_req, res) => {
+  try {
+      const users = await userService.getUsers();
+      return res.status(codes.ok).json(users);
+  } catch (error) {
+    const { code, message } = error;
+      return res.status(code).json({ message });
+  }
+};
+
+module.exports = { create, createLogin, getUsers };
