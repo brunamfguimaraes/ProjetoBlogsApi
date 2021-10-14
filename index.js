@@ -8,6 +8,9 @@ const { NameValidation,
   EmailValidation, emptyEmail,
   emptyPassword, tokenValidation } = require('./middlewares/user_middleware');
 
+const { createCategories } = require('./controllers/categorie_controller');
+const { nameValid } = require('./middlewares/categories_middleware');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -20,6 +23,7 @@ app.get('/', (request, response) => {
 
 app.post('/user', NameValidation, EmailValidation, PasswordValidation, EmailExist, createUser);
 app.post('/login', emptyEmail, emptyPassword, loginUser);
+app.post('/categories', tokenValidation, nameValid, createCategories);
 
 app.get('/user', tokenValidation, getAll);
 app.get('/user/:id', tokenValidation, getById);
