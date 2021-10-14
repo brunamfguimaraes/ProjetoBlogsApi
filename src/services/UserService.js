@@ -3,12 +3,10 @@ const { User } = require('../sequelize/models');
 const newUser = async (data) => {
   const { email } = data;
   const verifyRegisteredEmail = await User.findOne({ where: { email } });
-  // console.log('verificação email', verifyRegisteredEmail);
-  // console.log('model', User);
+  console.log('verificação email', verifyRegisteredEmail);
 
   if (verifyRegisteredEmail === null) {
-    const user = User.create(data);
-    // console.log('dentro do if');
+    const user = await User.create(data);
     return user;
   }
 

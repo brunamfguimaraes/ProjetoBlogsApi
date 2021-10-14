@@ -9,7 +9,7 @@ const postNewUser = async (req, res) => {
     const payload = { displayName, email, password, image };
     console.log('info user', payload);
 
-    const newUser = userService.newUser(payload);
+    const newUser = await userService.newUser(payload);
     console.log('novo usuario', newUser);
     
     if (newUser.error) {
