@@ -14,17 +14,18 @@ const createCategory = async (req, res, next) => {
   }
 };
 
-// const getUsers = async (_req, res, next) => {
-//   try {
-//     const users = await UserService.getUsers();
+const getCategories = async (_req, res, next) => {
+  try {
+    const categories = await CategoryService.getCategories();
 
-//     return res.status(codes.ok).json(users);
-//   } catch (error) {
-//     console.log(error);
-//     return next(error);
-//   }
-// };
+    return res.status(codes.ok).json(categories);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+};
 
 module.exports = {
   createCategory,
+  getCategories,
 };

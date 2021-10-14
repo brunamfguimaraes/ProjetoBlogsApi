@@ -14,14 +14,13 @@ const createCategory = async (name) => {
   return category;
 };
 
-// const getUsers = async () => {
-//   const users = await UserModel.findAll();
+const getCategories = async () => {
+  const categories = await CategoryModel.findAll();
 
-//   const usersWithoutPass = users.map((user) => removeUserPass(user));
-
-//   return usersWithoutPass;
-// };
+  return categories;
+};
 
 module.exports = {
   createCategory,
+  getCategories,
 };
