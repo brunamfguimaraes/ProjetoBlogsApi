@@ -24,13 +24,13 @@ app.get('/', (request, response) => {
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
 app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
-app.post('/categories', validaToken, verifyCategory, createCategory);
-app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
-  verifyCategoryIdExists, createBlogPost);
+// app.post('/categories', validaToken, verifyCategory, createCategory);
+// app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
+  // verifyCategoryIdExists, createBlogPost);
 
 app.get('/user', validaToken, getAllUsers);
 app.get('/user/:id', validaToken, getUser);
-app.get('/categories', validaToken, getAllCategories);
-app.get('/post', validaToken, getAllPosts);
+// app.get('/categories', validaToken, getAllCategories);
+// app.get('/post', validaToken, getAllPosts);
 
 app.listen(process.env.PORT, () => console.log(`ouvindo porta ${process.env.PORT}!`));
