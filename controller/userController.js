@@ -1,4 +1,5 @@
 const userService = require('../services/userServices');
+const { User } = require('../models');
 
 const JWTgenerate = require('../middlewares/JWTgenerate');
 
@@ -49,4 +50,16 @@ const getUsers = async (_req, res) => {
   }
 };
 
-module.exports = { create, createLogin, getUsers };
+const getById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await userService.getById(id);
+
+    res.status(codes.ok).json(user);
+  } catch (error) {
+    const { code, message } = error;
+      return res.status(code).json({ message });
+  }
+};
+
+module.exports = { create, createLogin, getUsers, getById };

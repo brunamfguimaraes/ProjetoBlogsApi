@@ -1,5 +1,7 @@
 const { User } = require('../models');
-
+const codes = require('../middlewares/codes');
+const Indexerror = require('../middlewares/Indexerror');
+const errorMessages = require('../middlewares/errorMessages');
 const verifyCreate = require('../middlewares/validations');
 
 const removeUserPass = require('../middlewares/removeUserPass');
@@ -26,4 +28,12 @@ const getUsers = async () => {
   return userWithoutPass;
 };
 
-module.exports = { create, createLogin, getUsers };
+const getById = async (id) => {
+  const user = await User.findByPk(id);
+  if (!user) {
+    throw new Indexerror(codes.notFound, errorMessages.doesntExist);
+  }
+  return user;
+};
+
+module.exports = { create, createLogin, getUsers, getById };
