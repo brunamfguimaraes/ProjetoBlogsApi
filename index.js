@@ -1,6 +1,7 @@
 const express = require('express');
 // require('dotenv').config();
 const userController = require('./controllers/userController');
+const loginController = require('./controllers/loginController');
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user', userController);
+app.use('/login', loginController);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
