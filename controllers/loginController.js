@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const { StatusCodes } = require('http-status-codes');
 const { postLoginService } = require('../services');
 
 const postLoginController = async (req, res, next) => { 
@@ -9,15 +10,16 @@ const postLoginController = async (req, res, next) => {
   if (postLogin.message) {
     return next(postLogin);
   }
+
   const { id } = postLogin;
 
   const jwtConfig = {
     expiresIn: '1d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ data: id }, process.env.JWT_SECRET, jwtConfig);
+  const token = jwt.sign({ data: { id } }, process.env.JWT_SECRET, jwtConfig);
 
-  res.status(200).json({ token });
+  res.status(StatusCodes.OK).json({ token });
 };
 
 module.exports = { postLoginController };
