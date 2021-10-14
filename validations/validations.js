@@ -14,5 +14,10 @@ const validPassword = (password) => {
     if (password.length >= 6) return true;
     return false;
 };
+const validLogin = (email, password, find) => {
+    console.log(find.email === email && find.password === password);
+    if (find.email === email && find.password === password) return true;
+    return false;
+};
 
-module.exports = { validName, validEmail, validPassword };
+module.exports = { validName, validEmail, validPassword, validLogin };

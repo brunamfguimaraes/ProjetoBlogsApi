@@ -24,7 +24,8 @@ const createUser = async (req, res) => {
         if (typeof (result) === 'string') {
             return res.status(400).json({ message: result });
         }
-        const generateToken = jwt.sign({ data: req.body }, secret, jwtConfig);
+        const { email, password } = req.body;
+        const generateToken = jwt.sign({ data: { email, password } }, secret, jwtConfig);
         return res.status(201).json({ token: generateToken });
     } catch (error) {
         console.log(error);
