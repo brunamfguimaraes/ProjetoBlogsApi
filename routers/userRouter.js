@@ -1,6 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
+const validateJWT = require('../middlewares/validateJWT');
 
 const userController = require('../controllers/userController');
 
@@ -12,11 +13,11 @@ userController.verifyUser,
 userController.addUser);
 
 router.get('/',
-userController.validToken,
+validateJWT,
 userController.getAllUsers);
 
 router.get('/:id',
-userController.validToken,
+validateJWT,
 userController.getUserById);
 
 module.exports = router;
