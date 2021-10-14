@@ -1,15 +1,17 @@
+const validateToken = require('./validateToken');
 const errorMiddleware = require('./errorMiddleware');
-const validatePasswordCreate = require('./validatePasswordCreate');
+const validateEmailLogin = require('./validateEmailLogin');
 const validateEmailCreate = require('./validateEmailCreate');
 const validatePasswordLogin = require('./validatePasswordLogin');
-const validateEmailLogin = require('./validateEmailLogin');
-const validateToken = require('./validateToken');
+const validatePasswordCreate = require('./validatePasswordCreate');
+const validateBlogPostContent = require('./validateBlogPostContent');
 
 module.exports = { 
+  validateToken,
   errorMiddleware,
-  validatePasswordCreate,
+  validateEmailLogin,
   validateEmailCreate,
   validatePasswordLogin,
-  validateEmailLogin,
-  validateToken,
+  validatePasswordCreate,
+  validateBlogPostContent,
  };
