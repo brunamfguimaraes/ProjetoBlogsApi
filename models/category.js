@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'Categories',
   });
 
-  Category.associate = (models) => {
-    Category.hasMany(models.Blogpost,
-      { foreignKey: 'userId', as: 'post' });
-  };
+  // Category.associate = (models) => {
+  //   Category.hasMany(models.PostsCategories,
+  //     { foreignKey: 'categoryId', as: 'category' });
+  // };
 
   return Category;
 };
