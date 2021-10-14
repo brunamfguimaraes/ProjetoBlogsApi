@@ -35,7 +35,6 @@ const validToken = rescue(async (req, _res, next) => {
   }
 
   jwt.verify(token, secret, (err, decoded) => {
-    console.log(err);
     if (err) next({ status: 401, message: 'Expired or invalid token' });
     req.payload = decoded;
   });
@@ -49,4 +48,12 @@ const validToken = rescue(async (req, _res, next) => {
   return next();
 });
 
-module.exports = { validUser, uniqueEmail, validToken };
+const validId = rescue(async (req, _res, next) => {
+  const findId = await User.findByPk(req.params.id);
+  if (!findId) {
+    next({ status: 404, message: 'User does not exist' });
+  }
+  next();
+});
+
+module.exports = { validUser, uniqueEmail, validToken, validId };

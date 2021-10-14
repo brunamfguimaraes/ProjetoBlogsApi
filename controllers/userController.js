@@ -16,4 +16,10 @@ const findAll = rescue(async (req, res) => {
   res.status(200).json(findUsers);
 });
 
-module.exports = { add, findAll };
+const findById = rescue(async (req, res) => {
+  console.log(req.params.id);
+  const findId = await User.findByPk(req.params.id);
+  res.status(200).json(findId);
+});
+
+module.exports = { add, findAll, findById };
