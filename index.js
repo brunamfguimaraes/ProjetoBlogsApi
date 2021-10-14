@@ -1,4 +1,6 @@
 const express = require('express');
+const user = require('./controller/userController');
+const login = require('./controller/userController');
 
 const app = express();
 
@@ -8,3 +10,9 @@ app.listen(3000, () => console.log('ouvindo porta 3000!'));
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+app.use('/user', user);
+app.use('/user', login);
