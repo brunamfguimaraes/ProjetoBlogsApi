@@ -1,10 +1,11 @@
 const express = require('express');
 const { BlogPost } = require('../models');
 const validateJWT = require('../middlewares/token/validateJWT');
+const postValidate = require('../middlewares/postValidate');
 
 const BlogPostRouter = express.Router();
 
-BlogPostRouter.post('/', validateJWT, async (req, res) => {
+BlogPostRouter.post('/', validateJWT, postValidate, async (req, res) => {
   const { title, content } = req.body;
   const { user } = req;
 
