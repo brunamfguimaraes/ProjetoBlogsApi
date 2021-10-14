@@ -54,7 +54,33 @@ const getPostById = async (req, res) => {
   return res.status(200).json(getById);
 };
 
+const editPosts = async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  const token = req.headers.authorization;
+
+  const editPost = await postsService.editPosts(token, id, body);
+
+  if (editPost.status) {
+    return res.status(editPost.status).json({ message: editPost.message });
+  }
+
+  // if (editPost.validCat) return res.status(400).json(editPost.message);
+  // if (editPost.permission) {
+  //   return res.status(401).json(editPost.message);
+  // }
+  // if (!editPost) {
+  //   return res.status(404).json({ message: 'Post does not exist' });
+  // }
+  // if (editPost.validToken) {
+  //   return res.status(401).json(editPost.message);
+  // }
+
+  return res.status(200).json(editPost);
+};
+
 module.exports = {
+  editPosts,
   createPost,
   getAllPost,
   getPostById,

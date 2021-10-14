@@ -15,6 +15,15 @@ const validForms = (body) => {
   return error;
 };
 
+const validFormEditPost = (body) => {
+  const { title, content } = body;
+  const { error } = Joi.object({
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+  }).validate({ title, content });
+  return error;
+};
+
 const findCat = async (categoryIds) => {
   const result = await categoriesService.findCategories(categoryIds);
   if (categoryIds.length !== result) {
@@ -23,6 +32,14 @@ const findCat = async (categoryIds) => {
 }
   return { isValidCat: false };
 };
+
+const getById = async (id) => BlogPost.findOne({ 
+  where: { id },
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Categorie, as: 'categories', through: { attributes: [] } },
+  ],
+ });
 
 const createPost = async (token, body) => {
   const { title, content, categoryIds } = body;
@@ -62,7 +79,7 @@ const getPostById = async (token, id) => {
   const isValidToken = jwt.validateJwt(token);
   if (isValidToken.validToken) return isValidToken;
 
-  const getById = await BlogPost.findOne({ 
+  const getPostId = await BlogPost.findOne({ 
     where: { id },
     include: [
       { model: User, as: 'user', attributes: { exclude: ['password'] } },
@@ -70,10 +87,36 @@ const getPostById = async (token, id) => {
     ],
    });
 
-  return getById;  
+  return getPostId;  
+};
+
+const editPosts = async (token, id, body) => {
+  const { title, content, categoryIds } = body;
+  const isValidToken = jwt.validateJwt(token);
+  if (isValidToken.validToken) return { status: 401, message: isValidToken.message.message };
+
+  const validForm = validFormEditPost(body);
+  if (validForm) return { status: 400, message: validForm.details[0].message };
+
+  const { userId } = await getById(id);
+
+  if (isValidToken.result.userId !== userId) {
+    return { status: 401, message: 'Unauthorized user' };
+  }
+
+  if (categoryIds) return { status: 400, message: 'Categories cannot be edited' };
+
+  await BlogPost.update({ title, content }, {
+    where: {
+      id,
+    },
+  });
+
+  return getById(id);
 };
 
 module.exports = {
+  editPosts,
   createPost,
   getAllPost,
   getPostById,
