@@ -53,7 +53,7 @@ const registeredEmail = async (email) => {
 
 const createNewUser = async (displayName, email, password, image) => {
     const created = await User.create({ displayName, email, password, image });
-    const response = { status: 'created', message: created };
+    const response = { message: created };
     return response;
 };
 
