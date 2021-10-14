@@ -58,17 +58,28 @@ const loginUp = async (req, res) => {
 };
 
 // verify
-
-const emptyEmailLogin = (req, res, next) => {
-  const { email } = req.body;
-  if (!email) return res.status(400).json({ message: '"email" is not allow to be empty' });
-  next();
+const emptyEmailLogin = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (email.length === 0) {
+      return res.status(400).json({ message: '"email" is not allowed to be empty' });
+    }
+    next();
+  } catch (error) {
+    return res.status(400).json({ message: '"email" is required' });
+  }
 };
 
 const emptyPasswordLogin = (req, res, next) => {
-  const { password } = req.body;
-  if (!password) return res.status(400).json({ message: '"password" is not allow to be empty' });
-  next();
+  try {
+    const { password } = req.body;
+    if (password.length === 0) {
+      return res.status(400).json({ message: '"password" is not allowed to be empty' }); 
+    }
+    next();
+  } catch (error) {
+    return res.status(400).json({ message: '"password" is required' });
+  }
 };
 
 const verifyEmail = (req, res, next) => {
