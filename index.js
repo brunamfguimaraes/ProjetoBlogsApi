@@ -1,16 +1,16 @@
 require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { checkEmailExists, testeEmptyEmail, userLogin,
-  checkPassword, checkName, checkEmail, createUser,
-  testeEmptyPassword, validaToken, getAllUsers, getUser } = require('./services/user.js');
+const { checkEmailExists, 
+  checkPassword, checkName, checkEmail, createUser } = require('./services/user.js');
+  // testeEmptyPassword, validaToken, getAllUsers, getUser, testeEmptyEmail, userLogin, } = require('./services/user.js');
 
-const { verifyCategory,
-  createCategory, getAllCategories } = require('./services/categories.js');
+// const { verifyCategory,
+//   createCategory, getAllCategories } = require('./services/categories.js');
 
-const { verifyCategoryId, verifyContent,
-  verifyTitle, verifyCategoryIdExists, 
-  createBlogPost, getAllPosts } = require('./services/post.js');
+// const { verifyCategoryId, verifyContent,
+//   verifyTitle, verifyCategoryIdExists, 
+//   createBlogPost, getAllPosts } = require('./services/post.js');
 
 const app = express();
 
@@ -22,14 +22,14 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
-app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
-app.post('/categories', validaToken, verifyCategory, createCategory);
-app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
-  verifyCategoryIdExists, createBlogPost);
+// app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
+// app.post('/categories', validaToken, verifyCategory, createCategory);
+// app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
+//   verifyCategoryIdExists, createBlogPost);
 
-app.get('/user', validaToken, getAllUsers);
-app.get('/user/:id', validaToken, getUser);
-app.get('/categories', validaToken, getAllCategories);
-app.get('/post', validaToken, getAllPosts);
+// app.get('/user', validaToken, getAllUsers);
+// app.get('/user/:id', validaToken, getUser);
+// app.get('/categories', validaToken, getAllCategories);
+// app.get('/post', validaToken, getAllPosts);
 
-app.listen(process.env.PORT, () => console.log('ouvindo porta 3000!'));
+app.listen(3000, () => console.log('ouvindo porta 3000!'));
