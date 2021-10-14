@@ -33,5 +33,6 @@ app.get('/categories', JWTMiddleware, CategoryController.listCategories);
 app.use(categoryErrorMiddleware);
 
 app.get('/post', JWTMiddleware, PostController.listPosts);
+app.get('/post/:id', JWTMiddleware, PostController.findPost);
 app.post('/post', JWTMiddleware, PostController.newPost);
 app.use(postErrorMiddleware);

@@ -19,7 +19,17 @@ const listPosts = rescue(async (req, res, next) => {
   res.status(200).json(posts);
 });
 
+const findPost = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const post = await PostService.findPost(id);
+  
+  if (post.error) return next(post.error);
+  
+  res.status(200).json(post);
+});
+
 module.exports = {
   newPost,
   listPosts,
+  findPost,
 };

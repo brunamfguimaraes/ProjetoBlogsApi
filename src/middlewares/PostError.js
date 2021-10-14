@@ -4,6 +4,8 @@ const checkErrorType = (error) => {
       return { code: 400, message: error.details[0].message };
     case error.categoryNotFound:
       return { code: 400, message: error.message };
+    case error.postNotFound:
+      return { code: 404, message: error.message };
 
     default:
       return { code: 500, message: error };
