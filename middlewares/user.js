@@ -14,7 +14,7 @@ const checkName = (user) => {
   if (!displayName) return { message: '"displayName" is required' };
   if (displayName.length < 8) {
     return { 
-      message: '"displayName" length must be at least 8 characteres long',
+      message: '"displayName" length must be at least 8 characters long',
     }; 
   }
   return { message: 'ok' };
