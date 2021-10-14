@@ -7,6 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use('/post', routers.postRouter);
 app.use('/user', routers.userRouter);
 app.use('/login', routers.loginRouter);
 app.use('/categories', routers.categoryRouter);
