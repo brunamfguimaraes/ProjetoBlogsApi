@@ -27,7 +27,21 @@ async function getAllPosts(_req, res) {
   }
 }
 
+async function getPostByID(req, res) {
+  try {
+    const { id } = req.params;
+  
+    const post = await postService.getPostByID(id);
+
+    return res.status(200).json(post);
+  } catch (error) {
+    console.log(`An unknown error has occurred: ${error}`);
+    return res.status(500).json({ message: 'An unknown error has occurred' });
+  }
+}
+
 module.exports = {
   create,
   getAllPosts,
+  getPostByID,
 };
