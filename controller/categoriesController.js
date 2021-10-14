@@ -7,6 +7,15 @@ const categoriesService = require('../service/categoriesService');
 //     expiresIn: '10h',
 //     algorithm: 'HS256',
 //   };
+const getCategories = async (req, res) => {
+    console.log('token validado');
+    try {
+        const users = await categoriesService.getCategories();
+        return res.status(200).json(users);
+    } catch (error) {
+        return res.status(500).json({ message: 'Ops, algo de errado :( ' });
+    }
+};
 
 const createCategory = async (req, res) => {
     try { 
@@ -25,4 +34,4 @@ const createCategory = async (req, res) => {
     }
 };
 
-module.exports = { createCategory };
+module.exports = { createCategory, getCategories };
