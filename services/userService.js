@@ -3,7 +3,7 @@ const { User } = require('../models/index');
 const { code, errorMessage } = require('../schema/index');
 require('dotenv/config');
 
-const secret = process.env.SECRET;
+const secret = process.env.JWT_SECRET;
 const jwtConfig = {
   expiresIn: '1d',
   algorithm: 'HS256',
