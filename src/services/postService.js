@@ -46,7 +46,7 @@ async function getAllPosts() {
       include: [{
         model: User,
         as: 'user',
-        
+
       },
       {
         model: Category,
@@ -60,10 +60,32 @@ async function getAllPosts() {
   return posts;
 }
 
+async function getPostByID(id) {
+  const post = await BlogPost.findOne(
+    {
+      where: { id },
+      include: [{
+        model: User,
+        as: 'user',
+
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  },
+  );
+  
+  return post;
+}
+
 module.exports = {
   validateTitle,
   validateContent,
   validateContegoryIds,
   create,
   getAllPosts,
+  getPostByID,
 };
