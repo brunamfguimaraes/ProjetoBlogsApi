@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
         algorithm: 'HS256',
     };
     const token = jwt.sign({ data: login }, secret, jwtConfig);
-    return res.status(statusCode.CREATED).json({ token });
+    return res.status(statusCode.OK).json({ token });
 });
 
 module.exports = router;
