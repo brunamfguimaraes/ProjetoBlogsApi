@@ -1,7 +1,9 @@
 const express = require('express');
 
 const userController = require('../controllers/userController');
-const { validUser, uniqueEmail, validToken, validId } = require('../middlewares/userValidations');
+const { validUser, uniqueEmail, validId } = require('../middlewares/userValidations');
+
+const { validToken } = require('../api/auth/validToken');
 
 const router = express.Router();
 
