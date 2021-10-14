@@ -1,11 +1,12 @@
 const express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const { createUser } = require('./controllers/user_controller');
+const { createUser, loginUser } = require('./controllers/user_controller');
 const { NameValidation,
   PasswordValidation,
   EmailExist,
-  EmailValidation } = require('./middlewares/user_middleware');
+  EmailValidation, emptyEmail,
+  emptyPassword } = require('./middlewares/user_middleware');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,3 +19,4 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', NameValidation, EmailValidation, PasswordValidation, EmailExist, createUser);
+app.post('/login', emptyEmail, emptyPassword, loginUser);
