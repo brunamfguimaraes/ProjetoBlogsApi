@@ -7,8 +7,8 @@ const { User } = require('../models');
 const { JWT_SECRET } = process.env;
 
 const jwtConfig = {
-  expiresIn: '5d',
-  algorithm: 'H256',
+  expiresIn: '2d',
+  algorithm: 'HS256',
 };
 
 const router = express.Router();
