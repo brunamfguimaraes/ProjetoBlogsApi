@@ -6,7 +6,7 @@ const defineCategoryModels = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    }
+    },
   );
 
   return Category;
