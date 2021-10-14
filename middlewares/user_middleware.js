@@ -6,11 +6,11 @@ const EmailValidation = async (req, res, next) => {
     // https://qastack.com.br/programming/2507030/email-validation-using-jquery
     const regexValido = /\w+@\w+/g.test(email);
 
-    if (!regexValido) {
-        return res.status(400).json({ message: '"email" must be a valid email' });
-    }
     if (!email || email === undefined) {
         return res.status(400).json({ message: '"email" is required' });
+    }
+    if (!regexValido) {
+        return res.status(400).json({ message: '"email" must be a valid email' });
     }
     next();
 };
@@ -50,7 +50,7 @@ const NameValidation = async (req, res, next) => {
 
 module.exports = {
     NameValidation,
+    EmailValidation,
     PasswordValidation,
     EmailExist,
-    EmailValidation,
 };

@@ -17,4 +17,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/user', NameValidation, PasswordValidation, EmailExist, EmailValidation, createUser);
+app.post('/user', NameValidation, EmailValidation, PasswordValidation, EmailExist, createUser);

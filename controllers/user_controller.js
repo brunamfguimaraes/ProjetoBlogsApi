@@ -2,10 +2,8 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 require('dotenv');
 
-const createUser = async (req, res) => {
-    await User.create(req.body);
-
-    const { id, displayName, email, image } = User;
+const createToken = (user) => {
+    const { id, displayName, email, image } = user;
 
     const Token = jwt.sign({
         id, displayName, email, image,
@@ -14,7 +12,16 @@ const createUser = async (req, res) => {
     {
         expiresIn: 1440, // 24h
     });
-    return res.status(201).json({ token: Token });
+
+    return Token;
+};
+
+const createUser = async (req, res) => {
+   const user = await User.create(req.body);
+
+   const token = createToken(user);
+
+    return res.status(201).json({ token });
 };
 
 module.exports = {
