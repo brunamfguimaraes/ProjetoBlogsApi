@@ -11,6 +11,19 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      content: {
+        type: Sequelize.STRING
+      },
+      userId: {
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        type: Sequelize.INTEGER,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
