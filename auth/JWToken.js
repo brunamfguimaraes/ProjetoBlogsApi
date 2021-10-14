@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
 
-const createJWT = async (payload) => {
+const createJWT = (payload) => {
   const newToken = jwt.sign(payload, secret, {
     algorithm: 'HS256',
   });
@@ -11,17 +11,16 @@ const createJWT = async (payload) => {
 };
 
 const verifyJWT = async (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).json({ message: 'Token not found' });
-  }
   try {
-    const payload = jwt.verify(token, secret);
+    const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
+    const payload = jwt.verify(authorization, secret);
     req.user = payload.user;
-    return next();
+    next();
   } catch (err) {
-    const message = 'Expired or invalid token';
-    return res.status(401).json({ message });
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
