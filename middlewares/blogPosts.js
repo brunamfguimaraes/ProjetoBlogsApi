@@ -8,9 +8,9 @@ const blogPostSchema = Joi.object().keys({
   title: Joi.string().not().empty().required(),
 
   content: Joi.string().not().empty().required(),
-
-  categoryIds: Joi.array().items(Joi.number()).not().empty().required(),
   
+  categoryIds: Joi.array().items(Joi.number()).not().empty()
+  .required(),
 });
 
 const validatePost = (req, res, next) => {
