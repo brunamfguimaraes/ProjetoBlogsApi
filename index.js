@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const {
   verifyEmail, verifyName, verifyPassword, userAlreadyExists,
-  verifyImage, createUser } = require('./services/user');
+  createUser } = require('./services/user');
 
 const { User } = require('./models');
 
@@ -18,7 +18,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', verifyEmail, userAlreadyExists, verifyPassword, verifyName,
-verifyImage, createUser);
+ createUser);
 
 app.get('/user', (req, res) => {
   User.findAll().then((dados) => res.status(200).json(dados))
