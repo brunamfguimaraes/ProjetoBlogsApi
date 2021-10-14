@@ -1,6 +1,6 @@
 const { User } = require('../models');
 
-const verifyEmptyFields = (field) => {
+const emptyFields = (field) => {
   if (field) {
   const err = { name: 'emptyError',
   message: `"${field}" is required` };
@@ -78,7 +78,7 @@ module.exports = {
   createNewUser,
   fieldLength,
   validateEmail,
-  verifyEmptyFields,
+  emptyFields,
   registeredEmail,
   allUsers,
   oneUser,
