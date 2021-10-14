@@ -1,5 +1,5 @@
 const express = require('express');
-// require('dotenv').config();
+require('dotenv').config();
 
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     const newUser = await userService.createUser(displayName, email, password, image);
 
     if (newUser.message) {
-      res.status(newUser.status).json({ message: newUser.message });
+      return res.status(newUser.status).json({ message: newUser.message });
     }
 
     const jwtConfig = {
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     // return res.status(201).json({ newUser });
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: 'Algo deu errado' });
   }
 });
 
