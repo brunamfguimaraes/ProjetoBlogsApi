@@ -1,11 +1,13 @@
 const userService = require('../services/userServices');
 
-const jwtValidation = require('../middlewares/jwtValidation');
+const JWTgenerate = require('../middlewares/JWTgenerate');
+
+const codes = require('../middlewares/codes');
 
 const secret = 'meusecretdetoken';
 
 const jwtConfig = {
-  expiresIn: '100d',
+  expiresIn: '7d',
   algorithm: 'HS256',
 };
 
@@ -14,12 +16,13 @@ const create = async (req, res) => {
     const userData = req.body;
     const user = await userService.create(userData);
 
-    const token = jwtValidation(user, jwtConfig, secret);
+    const token = JWTgenerate({ user }, jwtConfig, secret);
 
-    return res.status(201).json({ token });
+    return res.status(codes.created).json({ token });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    const { code, message } = error;
+    return res.status(code).json({ message });
   }
 };
 
-module.exports = create;
+module.exports = { create };

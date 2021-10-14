@@ -1,25 +1,11 @@
 const { User } = require('../models');
-
-const err = { message: 'displayName length must be at least 8 characters long',
-};
-
-const invalidEmail = { message: 'email must be a valid email' };
-
-const invalidPassword = { message: 'password length must be 6 characters long' };
-
-const emailIsRequired = { message: 'email is required' };
-
-const emailIsNotEmpty = { message: '"email" is not allowed to be empty' };
-
-const passwordIsNotEmpty = { message: '"password" is not allowed to be empty' };
-
-const isrequired = { message: 'password is required' };
-
-const alreadyExists = { message: 'User already registered' };
+const codes = require('./codes');
+const Indexerror = require('./Indexerror');
+const errorMessages = require('./errorMessages');
 
 const validateName = (displayName, min) => {
   if (displayName.length < min) {
-    return (err.message);
+    throw new Indexerror(codes.badRequest, errorMessages.displayLengthError);
   }
 };
 
@@ -28,32 +14,41 @@ const verifyEmail = (email) => {
   return re.test(email);
  };
 
+ const emailAlreadyExists = async (email) => {
+  const user = await User.findOne({ where: { email } });
+    return user;
+  };
+
  const emailValidate = (email) => {
-  if (email === '') return emailIsNotEmpty;
-  if (!email) return emailIsRequired;
+  if (email === '') throw new Indexerror(codes.badRequest, errorMessages.emailIsNotEmpty);
+  if (!email) throw new Indexerror(codes.badRequest, errorMessages.emailIsRequired);
   if (!verifyEmail(email)) {
-    return invalidEmail;
+    throw new Indexerror(codes.badRequest, errorMessages.invalidEmail);
 }
 };
 
 const passwordValidate = (password, min) => {
-  if (password === '') return passwordIsNotEmpty;
-  if (!password) return isrequired;
+  if (password === '') throw new Indexerror(codes.badRequest, errorMessages.passwordIsNotEmpty);
+  if (!password) throw new Indexerror(codes.badRequest, errorMessages.isrequired);
   if (password.length < min) {
-    return invalidPassword;
+    throw new Indexerror(codes.badRequest, errorMessages.invalidPassword);
 }
 };
-
-const emailAlreadyExists = async (email) => {
-  const user = await User.findOne({ where: { email } });
-    return user;
-  };
 
 const verifyCreateUser = async (displayName, email, password) => {
   validateName(displayName, 8);
   passwordValidate(password, 6);
   emailValidate(email);
-  if (await emailAlreadyExists(email)) return alreadyExists;
+  if (await emailAlreadyExists(email)) {
+    throw new Indexerror(codes.conflict, errorMessages.alreadyExists);
+  }
 };
 
-module.exports = { validateName, emailValidate, verifyCreateUser };
+/* const verifyCreateLogin = async (email, password) => {
+  if (!email) throw new Indexerror(codes.badRequest, errorMessages.emailIsRequired);
+  if (!password) throw new Indexerror(codes.badRequest, errorMessages.isrequired);
+  if (email === '') throw new Indexerror(codes.badRequest, errorMessages.emailIsNotEmpty);
+  if (password === '') throw new Indexerror(codes.badRequest, errorMessages.passwordIsNotEmpty);
+};
+ */
+module.exports = { verifyCreateUser };

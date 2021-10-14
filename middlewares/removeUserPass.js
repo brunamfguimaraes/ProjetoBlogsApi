@@ -7,4 +7,4 @@ const removeUserPass = ({ id, email, displayName }) => {
   return userWithoutPass;
 };
 
-module.exports = { removeUserPass };
+module.exports = removeUserPass;
