@@ -16,6 +16,19 @@ const {
 const postService = require('../service/Post');
 const httpStatus = require('../httpStatus');
 
+route.get('/:id',
+  verifyToken,
+  async (req, res) => {
+    const { id } = req.params;
+    const post = await postService.getPostById(id);
+    if (!post) {
+      return res.status(httpStatus.notFound).json({
+        message: 'Post does not exist',
+      });
+    }
+    res.status(httpStatus.ok).json(post);
+});
+
 route.post('/',
   verifyToken,
   verifyPostTitle,
