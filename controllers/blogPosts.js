@@ -7,7 +7,9 @@ const validateToken = require('../middlewares/validateToken');
 const router = express.Router();
 
 router.get('/', validateToken, async (_req, res) => {
-  const posts = await BlogPost.findAll();
+  const posts = await BlogPost.findAll({
+    include: { model: User, as: 'user' },
+  });
   return res.status(200).json(posts);
 });
 
