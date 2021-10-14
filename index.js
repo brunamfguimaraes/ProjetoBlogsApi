@@ -1,9 +1,9 @@
 require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { checkEmailExists, 
-  checkPassword, checkName, checkEmail, createUser } = require('./services/user.js');
-  // testeEmptyPassword, validaToken, getAllUsers, getUser, testeEmptyEmail, userLogin, } = require('./services/user.js');
+const { checkEmailExists, testeEmptyPassword, userLogin,
+checkPassword, checkName, checkEmail, createUser, testeEmptyEmail } = require('./services/user.js');
+  // testeEmptyPassword, validaToken, getAllUsers, getUser, , userLogin, } = require('./services/user.js');
 
 // const { verifyCategory,
 //   createCategory, getAllCategories } = require('./services/categories.js');
@@ -22,7 +22,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
-// app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
+app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
 // app.post('/categories', validaToken, verifyCategory, createCategory);
 // app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
 //   verifyCategoryIdExists, createBlogPost);
