@@ -78,6 +78,7 @@ const createBlogPost = async (req, res) => {
     return { message: 'erro' };
   }
 };
+
 const getAllPosts = async (_req, res) => {
   const result = await BlogPost.findAll({ 
     include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
@@ -86,10 +87,23 @@ const getAllPosts = async (_req, res) => {
   return res.status(200).json(result);
 };
 
+const getPost = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await BlogPost.findOne({ where: { id },
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  
+  if (!result) return res.status(404).json({ message: 'Post does not exist' });
+  res.status(200).json(result);
+};
+
 module.exports = { verifyCategoryId,
   verifyContent,
   verifyTitle,
   verifyCategoryIdExists,
   createBlogPost,
   getAllPosts,
+  getPost,
 };
