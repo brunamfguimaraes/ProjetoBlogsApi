@@ -1,5 +1,8 @@
-const { checkPostEntries, checkCategories } = require('../validations/blogPostValidation');
 const { BlogPost, User, Category } = require('../models');
+const {
+  checkPostEntries,
+  checkCategories,
+  checkUpdateEntries } = require('../validations/blogPostValidation');
 
 const createPost = async (postData) => {
   const entries = checkPostEntries(postData);
@@ -36,8 +39,25 @@ const getPostById = async (id) => {
   return post; 
 };
 
+const updatePost = async ({ title, content, postId, userId, categoryIds }) => {
+  if (categoryIds) return { message: 'Categories cannot be edited' };
+
+  const entries = checkUpdateEntries({ title, content });
+  if (entries.message) return entries;
+
+  const post = await BlogPost.findByPk(postId);
+  if (post.userId !== userId) return { message: 'Unauthorized user', unauthorized: true };
+
+   await BlogPost.update(
+    { title, content, updated: Date.now() }, { where: { id: postId, userId } },
+  );
+  
+  return getPostById(postId);
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };
