@@ -10,7 +10,7 @@ const defineBlogPostsModels = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    }
+    },
   );
 
   blogPost.associate = (models) => {

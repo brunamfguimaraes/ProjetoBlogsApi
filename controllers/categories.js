@@ -21,7 +21,7 @@ categoriesControllers.post(
     }
     const result = await categoriesServices.createCategory(category);
     return res.status(CREATED_STATUS).json(result);
-  })
+  }),
 );
 
 categoriesControllers.get(
@@ -30,7 +30,7 @@ categoriesControllers.get(
   rescue(async (_req, res, _next) => {
     const categories = await categoriesServices.getAllCategories();
     return res.status(OK_STATUS).json(categories);
-  })
+  }),
 );
 
 module.exports = categoriesControllers;
