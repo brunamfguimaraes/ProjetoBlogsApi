@@ -1,6 +1,7 @@
 require('dotenv');
 
 const jwt = require('jsonwebtoken');
+
 const { verifyEmail, 
   verifyName, 
   verifyPassword, 
