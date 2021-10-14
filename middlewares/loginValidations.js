@@ -1,5 +1,6 @@
 const rescue = require('express-rescue');
 const Joi = require('joi');
+
 const { User } = require('../models');
 
 const validLogin = rescue(async (req, _res, next) => {
