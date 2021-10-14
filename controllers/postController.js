@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { postService } = require('../services');
+const { postService, getPostsService } = require('../services');
 
 const postController = async (req, res, next) => { 
   const { title, content, categoryIds } = req.body;
@@ -20,4 +20,9 @@ const postController = async (req, res, next) => {
   .json({ id: idPost, userId: idUser, title: titleUser, content: contentUser });
 };
 
-module.exports = { postController };
+const getPostsController = async (_req, res, _next) => {
+  const allUsers = await getPostsService();
+  res.status(StatusCodes.OK).json(allUsers);
+};
+
+module.exports = { postController, getPostsController };
