@@ -7,7 +7,7 @@ module.exports = (sequelize, _DataTypes) => {
     models.Blogpost.belongsToMany(models.User, { // pertence
       as: 'users',
       through: PostsCategory,
-      foreignKey: 'userId',
+      foreignKey: 'userId', // a fk precisa ter o mesmo do field da migrations
       otherKey: 'id',
     });
 
