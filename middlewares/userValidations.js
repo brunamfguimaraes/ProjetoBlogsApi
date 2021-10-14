@@ -10,7 +10,8 @@ const validateName = (name) => {
 };
 
 const validateEmail = (email) => {
-  if (!email) return ({ message: '"email" is required' });
+  if (email === '') return ({ message: '"email" is not allowed to be empty' });
+  if (email === undefined) return ({ message: '"email" is required' });
   const validation = Joi.string().email().required().validate(email);
   if (validation.error) { 
     return ({ message: '"email" must be a valid email' });
@@ -20,6 +21,7 @@ const validateEmail = (email) => {
 
 const validatePassword = (password) => {
   console.log(password);
+  if (password === '') return ({ message: '"password" is not allowed to be empty' });
   if (password === undefined) return ({ message: '"password" is required' });
   const validation = Joi.string().min(6).required().validate(password);
   if (validation.error) { 
@@ -28,7 +30,7 @@ const validatePassword = (password) => {
   return false;
 };
 
-const validations = (req, _res, next) => {
+const validateCreateUser = (req, _res, next) => {
   const { displayName, email, password } = req.body;
   const invalidName = validateName(displayName);
   const invalidEmail = validateEmail(email);
@@ -39,4 +41,16 @@ const validations = (req, _res, next) => {
   next();
 };
 
-module.exports = validations;
+const validateLogin = (req, _res, next) => {
+  const { email, password } = req.body;
+  const invalidEmail = validateEmail(email);
+  const invalidPassword = validatePassword(password);
+  if (invalidEmail) next(invalidEmail);
+  if (invalidPassword) next(invalidPassword);
+  next();
+};
+
+module.exports = {
+  validateCreateUser,
+  validateLogin,
+};

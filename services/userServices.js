@@ -12,6 +12,19 @@ const createUser = async (newUser) => {
   } catch (e) { return { message: '...Something is wrong' }; }
 };
 
+const login = async (user) => {
+  const { email, password } = user;
+  try {
+    const checkUser = await User.findOne({ where: { email, password } });
+    if (!checkUser) return { message: 'Invalid fields' };
+    const { id, displayName } = checkUser;
+    return generateToken({ id, displayName, email });
+  } catch (e) {
+    return { message: '...Something is wrong' };
+  }
+};
+
 module.exports = {
   createUser,
+  login,
 };
