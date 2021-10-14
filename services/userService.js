@@ -10,11 +10,13 @@ const validateName = (displayName) => {
 
 const validateField = (email, password) => {
     if (!email) {
-        return email;
+        return { message: 'email is required' };
     }
+
     if (!password) {
-        return password;
+        return { message: 'password is required' };
     }
+   
     return true;
 };
 
@@ -44,7 +46,7 @@ const createUser = async ({ displayName, email, password, image }) => {
     if (!validName) {
         return { message: 'displayName length must be at least 8 characters long' };
     }
-    if (!validField) { return { message: `${validField} is required` }; }
+    if (validField !== true) return { message: validField.message };
     if (!validEmail) { return { message: 'email must be a valid email' }; }
     if (!validPassword) { return { message: 'password length must be 6 characters long' }; }
     if (existEmail) { return { message: 'User already registered' }; }

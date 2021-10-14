@@ -12,10 +12,14 @@ router.post('/', async (req, res) => {
 
     const createUser = await userService.createUser({ displayName, email, password, image });
     
-    if (createUser.message) {
-        return res.status(400).json({ message: createUser.message });
-    }
+    if (createUser.message === 'User already registered') {
+        return res.status(statusCode.CONFLICT).json({ message: createUser.message });
+    } 
 
+    if (createUser.message) {
+        return res.status(statusCode.BAD_REQUEST).json({ message: createUser.message });
+    }
+        
     const jwtConfig = {
         expiresIn: '7d',
         algorithm: 'HS256',
