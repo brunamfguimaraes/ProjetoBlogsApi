@@ -5,6 +5,7 @@ const { checkEmailExists,
   checkPassword, checkName, checkEmail, createUser } = require('./services/user.js');
 
 const app = express();
+
 app.use(bodyParser.json());
 
 // não remova esse endpoint, e para o avaliador funcionar
