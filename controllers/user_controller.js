@@ -38,7 +38,14 @@ const loginUser = async (req, res) => {
    return res.status(200).json({ token });
 };
 
+const getAll = async (req, res) => {
+    const users = await User.find().toArray();
+
+    return res.status(200).json(users);
+};
+
 module.exports = {
     createUser,
     loginUser,
+    getAll,
 };
