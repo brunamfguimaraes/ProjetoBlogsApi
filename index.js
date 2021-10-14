@@ -4,8 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const {
-  verifyEmail, verifyName, verifyPassword, userAlreadyExists, createUser, verifyImage,
-} = require('./services/user');
+  verifyEmail, verifyName, verifyPassword, userAlreadyExists,
+  verifyImage, createUser } = require('./services/user');
 
 const { User } = require('./models');
 
