@@ -9,20 +9,20 @@ const validUndEmail = (email) => {
 };
 const validUndPasswd = (password) => {
     if (password === undefined) return '"password" is required';
+    if (password.length === 0) return '"password" is not allowed to be empty';
 
     return false;
 };
 const login = async ({ email, password }) => {
-    console.log(email, password);
     if (typeof (validUndEmail(email)) === 'string') return validUndEmail(email);
     if (typeof (validUndPasswd(password)) === 'string') return validUndPasswd(password);
-    console.log('passei');
-  const find = await User.findOne({ where: { email } });
-console.log(find);
-  if (validations.validLogin(email, password, find)) {
-      console.log('validei');
-      return true;
+
+    const find = await User.findOne({ where: { email } });
+    if (find === null) return 'Invalid fields';
+    if (validations.validLogin(email, password, find)) {
+        return true;
     }
+    return 'user invalid';
 };
 
 module.exports = { login };
