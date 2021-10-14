@@ -23,4 +23,11 @@ const getBlogPostById = async (req, res) => {
   return res.status(200).json(blogPost);
 };
 
-module.exports = { createPost, getAllBlogPost, getBlogPostById };
+const updateBlogPost = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user;
+  const blogPost = await BlogPostService.updateBlogPost(id, userId, req.body);
+  if (!blogPost) return res.status(404).json({ message: 'Post does not exist' });
+  return res.status(200).json(blogPost);
+};
+module.exports = { createPost, getAllBlogPost, getBlogPostById, updateBlogPost };
