@@ -59,6 +59,18 @@ const loginUp = async (req, res) => {
 
 // verify
 
+const emptyEmailLogin = (req, res, next) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: '"email" is not allow to be empty' });
+  next();
+};
+
+const emptyPasswordLogin = (req, res, next) => {
+  const { password } = req.body;
+  if (!password) return res.status(400).json({ message: '"password" is not allow to be empty' });
+  next();
+};
+
 const verifyEmail = (req, res, next) => {
   const emailIsValid = checkEmail({ email: req.body.email });
   if (emailIsValid.message !== 'ok') return res.status(400).json(emailIsValid);
@@ -98,4 +110,6 @@ module.exports = {
   verifyImage,
   userAlreadyExists,
   loginUp,
+  emptyEmailLogin,
+  emptyPasswordLogin,
 };
