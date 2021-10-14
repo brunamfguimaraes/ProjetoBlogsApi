@@ -1,5 +1,5 @@
 const { checkPostEntries, checkCategories } = require('../validations/blogPostValidation');
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 
 const createPost = async (postData) => {
   const entries = checkPostEntries(postData);
@@ -15,6 +15,16 @@ const createPost = async (postData) => {
   return BlogPost.create({ title, userId, content });
 }; 
 
+const getAllPosts = async () => BlogPost.findAll(
+    { 
+      include: [
+        { model: User, as: 'user' },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ], 
+    },
+  );
+
 module.exports = {
   createPost,
+  getAllPosts,
 };
