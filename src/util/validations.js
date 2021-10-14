@@ -52,7 +52,12 @@ const verifyLoginData = async (email, password) => {
   }
 };
 
+const verifyCategoryName = (name) => {
+  if (!name) throw new AppError(codes.badRequest, messages.missingName);
+};
+
 module.exports = {
   verifyCreateUserData,
+  verifyCategoryName,
   verifyLoginData,
 };

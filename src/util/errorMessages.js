@@ -5,6 +5,7 @@ module.exports = {
   invalidFields: 'Invalid fields',
   invalidToken: 'Expired or invalid token',
   missingEmail: '"email" is required',
+  missingName: '"name" is required',
   missingPassword: '"password" is required',
   missingToken: 'Token not found',
   shortDisplayName: '"displayName" length must be at least 8 characters long',
