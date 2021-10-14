@@ -12,10 +12,34 @@ const validatePostInfo = (postInfo) => {
   return error;
 };
 
+const verifyUpdate = (body) => {
+  const { error } = Joi.object({
+    title: Joi.string().not().empty().required(),
+    content: Joi.string().not().empty().required(),
+  }).validate(body);
+
+  return error;
+};
+
 const verifyCategoriesExist = async (categories) => {
   const listOfCategories = await CategoryService.findCategories();
   const arrayOfCategories = listOfCategories.map((cat) => cat.dataValues.id);
   return categories.every((category) => arrayOfCategories.includes(category));
+};
+
+const findPostAfterUpdate = async (id) => {
+  const post = await BlogPosts.findByPk(id, {
+    include: {
+      model: Categories,
+      as: 'categories',
+      through: {
+        attributes: [],
+      },
+    },
+    attributes: { exclude: ['id', 'published', 'updated'] },
+  });
+
+  return post;
 };
 
 const createPost = async (postInfo, userId) => {
@@ -82,4 +106,22 @@ const findPost = async (id) => {
   return post;
 };
 
-module.exports = { createPost, findPosts, findPost };
+const editPost = async (id, body, userId) => {
+  if (body.categoryIds) {
+    return {
+      error: { noEdit: true, message: 'Categories cannot be edited' },
+    };
+  }
+  const invalidUpdate = verifyUpdate(body);
+
+  if (invalidUpdate) return { error: invalidUpdate };
+
+  const update = await BlogPosts.update(body, { where: { id, userId } });
+
+  if (!update[0]) { return { error: { invalidUser: true, message: 'Unauthorized user' } }; }
+  const post = await findPostAfterUpdate(id);
+
+  return post;
+};
+
+module.exports = { createPost, findPosts, findPost, editPost };
