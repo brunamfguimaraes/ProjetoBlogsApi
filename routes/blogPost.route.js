@@ -10,5 +10,10 @@ BlogPostRoute.get(
   rescue(validateToken),
   rescue(BlogPostController.getAllBlogPost),
 );
+BlogPostRoute.get(
+  '/:id',
+  rescue(validateToken),
+  rescue(BlogPostController.getBlogPostById),
+);
 
 module.exports = BlogPostRoute;

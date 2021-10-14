@@ -16,4 +16,11 @@ const getAllBlogPost = async (_req, res) => {
   return res.status(200).json(allBlogPosts);
 };
 
-module.exports = { createPost, getAllBlogPost };
+const getBlogPostById = async (req, res) => {
+  const { id } = req.params;
+  const blogPost = await BlogPostService.getBlogPostById(id);
+  if (!blogPost) return res.status(404).json({ message: 'Post does not exist' });
+  return res.status(200).json(blogPost);
+};
+
+module.exports = { createPost, getAllBlogPost, getBlogPostById };
