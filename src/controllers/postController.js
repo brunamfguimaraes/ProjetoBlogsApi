@@ -1,4 +1,4 @@
-const { INTERNAL_SERVER_ERROR, BAD_REQUEST, CREATED, OK } = require('http-status');
+const { INTERNAL_SERVER_ERROR, BAD_REQUEST, CREATED, OK, NOT_FOUND } = require('http-status');
 
 const blogPostService = require('../services/blogPostService');
 
@@ -28,7 +28,22 @@ const getAllPosts = async (req, res) => {
   }
 };
 
+const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await blogPostService.getPostById(id);
+
+    if (result.message) return res.status(NOT_FOUND).json(result);
+
+    return res.status(OK).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error.message }); 
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
+  getPostById,
 };
