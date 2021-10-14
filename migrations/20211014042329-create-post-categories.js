@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('CategoryPost', {
+    await queryInterface.createTable('PostsCategories', {
       categoryId: {
         references: {
           model: 'Categories',
@@ -13,7 +13,7 @@ module.exports = {
       },
       postId: {
         references: {
-          model: 'Posts',
+          model: 'BlogPosts',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -25,6 +25,6 @@ module.exports = {
   },
 
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable('CategoryPost');
+    await queryInterface.dropTable('PostsCategories');
   },
 };

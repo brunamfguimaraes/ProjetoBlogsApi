@@ -2,7 +2,7 @@ const {
   createNewUser,
   fieldLength,
   validateEmail,
-  verifyEmptyFields,
+  emptyFields,
   registeredEmail,
   allUsers,
   oneUser,
@@ -11,8 +11,8 @@ const {
 const verifyFieldsEmpty = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (!password) await verifyEmptyFields('password');
-    if (!email) await verifyEmptyFields('email');
+    if (!password) await emptyFields('password');
+    if (!email) await emptyFields('email');
     next();
   } catch (e) {
     if (e.name === 'emptyError') {
