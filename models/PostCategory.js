@@ -10,7 +10,7 @@ const PostCategory = (sequelize, _DataTypes) => {
         foreignKey: 'userId',
         otherKey: 'id',
       });
-      models.Categorie.hasMany(models.PostCategory, {
+      models.Categorie.belongsToMany(models.PostCategory, {
         as: 'Categories',
         through: 'PostCategory',
         foreignKey: 'categoryId',
