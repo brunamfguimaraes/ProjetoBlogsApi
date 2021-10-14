@@ -6,8 +6,8 @@ checkPassword, checkName, checkEmail, createUser,
 testeEmptyEmail, getUser } = require('./services/user.js');
   // testeEmptyPassword, validaToken, getAllUsers, getUser, , userLogin, } = require('./services/user.js');
 
-// const { verifyCategory,
-//   createCategory, getAllCategories } = require('./services/categories.js');
+const { verifyCategory,
+  createCategory } = require('./services/categories.js');// , getAllCategories } = require('./services/categories.js');
 
 // const { verifyCategoryId, verifyContent,
 //   verifyTitle, verifyCategoryIdExists, 
@@ -24,7 +24,7 @@ app.get('/', (request, response) => {
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
 app.post('/login', testeEmptyEmail, testeEmptyPassword, userLogin);
-// app.post('/categories', validaToken, verifyCategory, createCategory);
+app.post('/categories', validaToken, verifyCategory, createCategory);
 // app.post('/post', validaToken, verifyCategoryId, verifyContent, verifyTitle,
 //   verifyCategoryIdExists, createBlogPost);
 
