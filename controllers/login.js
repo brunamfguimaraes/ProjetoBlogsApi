@@ -25,7 +25,7 @@ loginController.post(
 
     const token = createToken(email);
     return res.status(OK_STATUS).json({ token });
-  })
+  }),
 );
 
 module.exports = loginController;
