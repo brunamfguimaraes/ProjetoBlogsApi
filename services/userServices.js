@@ -19,8 +19,8 @@ const verifyUser = async (email) => {
 };
 
 const addUser = async (user) => {
-  await User.create(user);
-  return User;
+  const result = await User.create(user);
+  return result;
 };
 
 const getAllUsers = async () => {
