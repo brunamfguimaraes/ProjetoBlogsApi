@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { createUserService } = require('../service/userService');
+const { createUserService, LoginUserService } = require('../service/userService');
 require('dotenv').config();
 
 const segredo = process.env.SECRETPASSWORD;
@@ -30,4 +30,21 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const LoginUser = async (req, res) => {
+  const { body } = req; 
+  try {
+    const user = await LoginUserService(body);
+    console.log(user.message, 'login user');
+
+    if (user.message) return res.status(400).json({ message: user.message });
+    
+   const token = jwt.sign({ 
+     payload: { body } }, segredo, jwtConfig);
+  
+    return res.status(200).json({ token });
+    } catch (err) { 
+      const { message } = err;
+      return res.status(400).json({ message });
+    }
+};
+module.exports = { createUser, LoginUser };

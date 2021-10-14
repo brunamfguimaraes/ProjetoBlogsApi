@@ -19,4 +19,18 @@ const validateIfFieldsExist = (body) => {
   }
 };
 
-module.exports = { validateIfFieldsExist };
+const validateIfLoginFieldsExist = (body) => {
+  const { error } = Joi.object({
+    email: Joi.string()
+    .email().required(),
+    password: Joi.string().min(6).required().messages({
+      'string.min': '"password" length must be 6 characters long',
+    }),
+  })
+    .validate(body);
+  if (error) {
+  return renderError(error); 
+  }
+};
+
+module.exports = { validateIfFieldsExist, validateIfLoginFieldsExist };
