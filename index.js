@@ -6,7 +6,7 @@ const { NameValidation,
   PasswordValidation,
   EmailExist,
   EmailValidation, emptyEmail,
-  emptyPassword } = require('./middlewares/user_middleware');
+  emptyPassword, tokenValidation } = require('./middlewares/user_middleware');
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,4 +21,4 @@ app.get('/', (request, response) => {
 app.post('/user', NameValidation, EmailValidation, PasswordValidation, EmailExist, createUser);
 app.post('/login', emptyEmail, emptyPassword, loginUser);
 
-app.get('/user', getAll);
+app.get('/user', tokenValidation, getAll);

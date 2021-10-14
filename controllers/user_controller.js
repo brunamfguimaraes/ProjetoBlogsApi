@@ -39,7 +39,7 @@ const loginUser = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-    const users = await User.find().toArray();
+    const users = await User.findAll();
 
     return res.status(200).json(users);
 };
