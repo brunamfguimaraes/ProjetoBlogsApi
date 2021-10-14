@@ -1,15 +1,17 @@
+const { postController } = require('./postController');
+const { postLoginController } = require('./loginController');
+const { postCategoryController, getCategoriesController } = require('./categoryController');
 const {
   postUserController,
   getUsersController,
   getUserByIdController,
 } = require('./userController');
-const { postLoginController } = require('./LoginController');
-const { postCategoryController, getCategoriesController } = require('./categoryController');
 
 module.exports = {
+  postController,
   postUserController,
-  postLoginController,
   getUsersController,
+  postLoginController,
   getUserByIdController,
   postCategoryController,
   getCategoriesController,
