@@ -9,7 +9,7 @@ const validateDisplayName = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(500).json(messages.ERROR);
+    return res.status(400).json(messages.DISPLAY_NAME_LENGTH);
   }
 };
 
@@ -24,7 +24,7 @@ const validateEmail = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(500).json(messages.ERROR);
+    return res.status(400).json(messages.VALID_EMAIL);
   } 
 };
 
@@ -41,7 +41,7 @@ const validatePassword = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(500).json(messages.ERROR);
+    return res.status(400).json(messages.PASSWORD_LENGTH);
   }
 };
 
@@ -54,7 +54,7 @@ const emailExists = async (req, res, next) => {
     
     next();
   } catch (error) {
-    return res.status(500).json(messages.ERROR);
+    return res.status(409).json(messages.ALREADY_EXISTS);
   }
 };
 
