@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const {
   checkPostEntries,
@@ -63,10 +64,29 @@ const removePost = async ({ userId, postId }) => {
   return BlogPost.destroy({ where: { id: postId } });
 };
 
+const searchPost = async (query) => {
+  if (query === '') return getAllPosts();
+
+  // ref: https://pt.stackoverflow.com/questions/355872/como-utilizar-o-like-do-sql-no-sequelize
+  return BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${query}%` } },
+        { content: { [Op.like]: `%${query}%` } },
+      ],
+    },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
   removePost,
+  searchPost,
 };

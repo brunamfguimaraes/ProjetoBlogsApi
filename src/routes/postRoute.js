@@ -1,35 +1,42 @@
 const express = require('express');
-const valiteJWT = require('../auth/validateJWT');
+const validateJWT = require('../auth/validateJWT');
 const {
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
-  removePost } = require('../controllers/postController');
+  removePost,
+  searchPost } = require('../controllers/postController');
 
 const router = express.Router();
 
+router.route('/search')
+    .get(
+      validateJWT,
+      searchPost,
+    );
+
 router.route('/')
   .post(
-    valiteJWT,
+    validateJWT,
     createPost,
   )
   .get(
-    valiteJWT,
+    validateJWT,
     getAllPosts,
   );
 
 router.route('/:id')
   .get(
-    valiteJWT,
+    validateJWT,
     getPostById,
   )
   .put(
-    valiteJWT,
+    validateJWT,
     updatePost,
   )
   .delete(
-    valiteJWT,
+    validateJWT,
     removePost,
   );
 
