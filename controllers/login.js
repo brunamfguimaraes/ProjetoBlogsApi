@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const rescue = require('express-rescue');
 
 const { createToken } = require('../middlewares/token');
 const { getUserByEmail } = require('../services/login');
@@ -9,18 +10,22 @@ const BAD_REQUEST_STATUS = 400;
 
 const loginController = new Router();
 
-loginController.post('/', validateLogin, async (req, res, _next) => {
-  const { email } = req.body;
+loginController.post(
+  '/',
+  validateLogin,
+  rescue(async (req, res, _next) => {
+    const { email } = req.body;
 
-  const user = await getUserByEmail(email);
+    const user = await getUserByEmail(email);
 
-  if (!user) {
-    const message = 'Invalid fields';
-    return res.status(BAD_REQUEST_STATUS).json({ message });
-  }
+    if (!user) {
+      const message = 'Invalid fields';
+      return res.status(BAD_REQUEST_STATUS).json({ message });
+    }
 
-  const token = createToken(email);
-  return res.status(OK_STATUS).json({ token });
-});
+    const token = createToken(email);
+    return res.status(OK_STATUS).json({ token });
+  })
+);
 
 module.exports = loginController;
