@@ -8,14 +8,16 @@ const registerPost = async (body, token) => {
   const verifyCategory = await middlewares.existsCategory(categoryIds);
   if (verifyCategory) return verifyCategory;
 
-  const newPost = await BlogPost.create({ title, content, userId });
-  return newPost;
+  return BlogPost.create({ title, content, userId });
 };
 
 const getAllPosts = async () => BlogPost.findAll({
     include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }] });
 
+const postById = async (id) => middlewares.verifyPostById(id);
+
 module.exports = {
   registerPost,
   getAllPosts,
+  postById,
 };

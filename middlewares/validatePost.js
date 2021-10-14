@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
+const { BlogPost, Category, User } = require('../models');
 
 const SECRET = process.env.JWT_SECRET;
 
@@ -16,7 +17,21 @@ const decodeToken = (token) => {
   return id;
 };
 
+const verifyPostById = async (id) => {
+  const findPostById = await BlogPost.findOne({ 
+    where: { id },
+    include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }],
+  });
+  if (!findPostById) {
+    const err = new Error('Post does not exist');
+    err.statusCode = 404;
+    return err;
+  }
+  return findPostById;
+};
+
 module.exports = {
   validationPost,
   decodeToken,
+  verifyPostById,
 };

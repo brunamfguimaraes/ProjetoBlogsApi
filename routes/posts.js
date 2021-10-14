@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const middlewares = require('../middlewares');
-const { createPost, getPosts } = require('../controllers/postController');
+const { 
+  createPost,
+  getPosts, 
+  getPostById,
+} = require('../controllers/postController');
 
 router.post('/', middlewares.validateJWT, createPost);
 router.get('/', middlewares.validateJWT, getPosts);
-// getPostById
-// router.get('/:id', getPostById);
+router.get('/:id', middlewares.validateJWT, getPostById);
 // updatePost
 // router.put('/:id', updatePost);
 // removePost
