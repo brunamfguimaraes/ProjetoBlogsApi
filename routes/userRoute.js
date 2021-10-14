@@ -8,6 +8,7 @@ const {
   verifyRegisteredUser,
   getAllUsers,
   getOneUser,
+  deleteSelfUser,
 } = require('../controllers/userController');
 
 const { generateJWT, validateJWT } = require('../middlewares/tokenJwt');
@@ -20,5 +21,7 @@ router.post('/', verifyFieldsEmpty,
 router.get('/', validateJWT, getAllUsers);
 
 router.get('/:id', validateJWT, getOneUser);
+
+router.delete('/me', validateJWT, deleteSelfUser);
 
 module.exports = router;

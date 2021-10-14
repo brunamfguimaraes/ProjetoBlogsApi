@@ -6,6 +6,7 @@ const {
   registeredEmail,
   allUsers,
   oneUser,
+  deleteSelf,
 } = require('../services/userService');
 
 const verifyFieldsEmpty = async (req, res, next) => {
@@ -83,6 +84,12 @@ const getOneUser = async (req, res) => {
   }
 };
 
+const deleteSelfUser = async (req, res) => {
+  const { id } = req.user;
+  await deleteSelf(id);
+  return res.status(204).json();
+};
+
 module.exports = {
   createUser,
   verifyFieldsLength,
@@ -91,4 +98,5 @@ module.exports = {
   verifyRegisteredUser,
   getAllUsers,
   getOneUser,
+  deleteSelfUser,
 };

@@ -74,6 +74,10 @@ const oneUser = async (userId) => {
   return user;
 };
 
+const deleteSelf = async (id) => {
+  await User.destroy({ where: { id } });
+};
+
 module.exports = {
   createNewUser,
   fieldLength,
@@ -82,4 +86,5 @@ module.exports = {
   registeredEmail,
   allUsers,
   oneUser,
+  deleteSelf,
 };
