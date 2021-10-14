@@ -1,5 +1,5 @@
 const express = require('express');
-const { userRouter } = require('./routes');
+const { userRouter, loginRouter } = require('./routes');
 const error = require('./middlewares/error');
 
 const app = express();
@@ -9,6 +9,8 @@ app.listen(3000, () => console.log('ouvindo porta 3000!'));
 app.use(express.json());
 
 app.use('/user', userRouter);
+
+app.use('/login', loginRouter);
 
 app.use(error);
 
