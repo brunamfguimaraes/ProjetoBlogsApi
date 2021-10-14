@@ -1,5 +1,4 @@
 const CODE = require('http-status-codes');
-const { User } = require('../models');
 
 const validateDisplayName = (req, res, next) => {
   const { displayName } = req.body;
@@ -15,17 +14,21 @@ const validateDisplayName = (req, res, next) => {
   
   const validateEmail = (req, res, next) => {
   const { email } = req.body;
-  console.log(email);
   const regex = /\b[\w.-]+@[\w.-]+\.\w{2,4}\b/;
-  console.log(regex.test(email), 'REGEX EMAIL');
+    
+  if (email === '') {
+    return res.status(CODE.BAD_REQUEST).json(
+      { message: '"email" is not allowed to be empty' },
+      );
+    }   
+
   if (!email) {
     return res.status(CODE.BAD_REQUEST).json(
       { message: '"email" is required' },
       );
-  }
-
+    }
+    
   if (!regex.test(email)) {
-    console.log('entrei aqui');
     return res.status(CODE.BAD_REQUEST).json(
       { message: '"email" must be a valid email' },
       );
@@ -36,6 +39,12 @@ const validateDisplayName = (req, res, next) => {
 
 const validatePassword = (req, res, next) => {
   const { password } = req.body;
+
+  if (password === '') {
+    return res.status(CODE.BAD_REQUEST).json(
+      { message: '"password" is not allowed to be empty' },
+      );
+    }
   
   if (!password) {
     return res.status(CODE.BAD_REQUEST).json(

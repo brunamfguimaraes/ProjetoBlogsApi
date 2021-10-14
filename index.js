@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.post('/user', validateDisplayName, validatePassword, validateEmail, userController);
+app.post('/login', validateEmail, validatePassword, userController);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
