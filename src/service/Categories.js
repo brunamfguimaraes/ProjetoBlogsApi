@@ -7,12 +7,12 @@ const createCategorie = async (categorie) => {
 
 const findAllCategories = async () => {
   const allCategories = await Categories.findAll();
-  return allCategories.slice(-1)[0].dataValues.id;
+  return allCategories;
 };
 
 const getLastCategoryId = async () => {
   const categories = await findAllCategories();
-  return categories;
+  return categories.slice(-1)[0].dataValues.id;
 };
 
 module.exports = {
