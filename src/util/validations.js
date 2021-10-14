@@ -1,4 +1,5 @@
 const { User: UserModel } = require('../models');
+const { Category: CategoryModel } = require('../models');
 const AppError = require('./appError');
 const codes = require('./httpCodes');
 const messages = require('./errorMessages');
@@ -56,8 +57,30 @@ const verifyCategoryName = (name) => {
   if (!name) throw new AppError(codes.badRequest, messages.missingName);
 };
 
+const verifyCategoryExistence = async (categoryIds) => {
+  const allCategories = await CategoryModel.findAll();
+  // console.log('allCategories', allCategories);
+  const existingIds = allCategories.map((categorie) => categorie.id);
+  // console.log('categoryIds', categoryIds);
+  // console.log('existingIds', existingIds);
+  const allExists = categoryIds.every((id) => existingIds.includes(id));
+  // console.log('allExists', allExists);
+  return allExists;
+};
+
+const verifyPostData = async (title, content, categoryIds) => {
+  if (!title) throw new AppError(codes.badRequest, messages.missingTitle);
+  if (!content) throw new AppError(codes.badRequest, messages.missingContent);
+  if (!categoryIds) throw new AppError(codes.badRequest, messages.missingCategories);
+  const allExists = await verifyCategoryExistence(categoryIds);
+  if (!allExists) {
+    throw new AppError(codes.badRequest, messages.categoryNotFound);
+  }
+};
+
 module.exports = {
   verifyCreateUserData,
   verifyCategoryName,
+  verifyPostData,
   verifyLoginData,
 };

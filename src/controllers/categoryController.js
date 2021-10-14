@@ -1,4 +1,3 @@
-// require('dotenv').config();
 const CategoryService = require('../services/categoryService');
 const codes = require('../util/httpCodes');
 
