@@ -15,7 +15,7 @@ const { verifyName, verifyEmail,
   verifyPassword, verifyEmpty, verifyDbUser, findById } = require('./middlewares/userMid');
 const { verifyNameCateg, foundCateg } = require('./middlewares/categMid');
 const { validateJWT } = require('./middlewares/tokenVerify');
-const { VerifyTitle, VerifyContent } = require('./middlewares/blogMid');
+const { VerifyTitle, VerifyContent, VerifyBlog } = require('./middlewares/blogMid');
 // middlewares
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
@@ -87,3 +87,14 @@ app.get('/post', validateJWT, async (_req, res) => {
 });
 
 // https://sequelize.org/master/class/lib/model.js~Model.html#static-method-findAll
+
+app.get('/post/:id', validateJWT, VerifyBlog, async (req, res) => {
+  const { id } = req.params;
+  BlogPost.findOne(
+    { where: { id },
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+              { model: Categorie, as: 'categories', through: { attributes: [] } }] },
+    ).then((categ) => {
+    res.status(200).json(categ);
+  });
+});
