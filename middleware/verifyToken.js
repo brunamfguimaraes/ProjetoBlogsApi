@@ -18,10 +18,11 @@ const verifyToken = async (req, res, next) => {
     if (!user) {
       return res.status(401).json(({ message: 'Expired or invalid token' }));
     }
-    next();
+    req.user = user;
   } catch (error) {
     return res.status(401).json(({ message: 'Expired or invalid token' }));
   }  
+  next();
 };
 
 module.exports = verifyToken;
