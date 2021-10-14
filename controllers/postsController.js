@@ -1,5 +1,5 @@
 const {
-  createNewPost, emptyFields, invalidCategory, allPosts, onePost,
+  createNewPost, emptyFields, invalidCategory, allPosts, onePost, postUpdater,
 } = require('../services/postsService');
 
 const verifyEmptyFields = async (req, res, next) => {
@@ -44,6 +44,44 @@ const getOnePost = async (req, res) => {
     }
 };
 
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const newPost = await postUpdater(id, title, content);
+  return res.status(200).json(newPost);
+};
+
+const verifyEmptyField = async (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+  if (categoryIds) {
+      return res.status(400).json({ message: 'Categories cannot be edited' });
+  }
+  try {
+    if (!title) await emptyFields('title');
+    if (!content) await emptyFields('content');
+    next();
+  } catch (e) {
+      return res.status(400).json({ message: e.message });
+    }
+};
+
+const validateUser = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await onePost(id);
+  const { id: userId } = req.user;
+  if (post.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+  next();
+};
+
 module.exports = {
-  createPost, verifyEmptyFields, checkCategories, getAllPosts, getOnePost,
+  createPost,
+  verifyEmptyFields,
+  verifyEmptyField,
+  checkCategories,
+  getAllPosts,
+  getOnePost,
+  updatePost,
+  validateUser,
 };

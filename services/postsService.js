@@ -42,4 +42,14 @@ const onePost = async (id) => {
   return post;
 };
 
-module.exports = { createNewPost, emptyFields, invalidCategory, allPosts, onePost };
+const postUpdater = async (id, title, content) => {
+  await BlogPost.update({ title, content }, { where: { id } });
+    const newPost = await BlogPost.findOne({ where: { id },
+       attributes: { exclude: ['id', 'published', 'updated'] },
+      include: { model: Category, as: 'categories', through: { attributes: [] } } });
+    return newPost;
+};
+
+module.exports = {
+  createNewPost, emptyFields, invalidCategory, allPosts, onePost, postUpdater,
+};
