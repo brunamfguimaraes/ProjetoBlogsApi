@@ -1,17 +1,7 @@
-const express = require('express');
-const { userRoute, loginRoute, categoriesRoute, postRoute } = require('./src/routes');
+require('dotenv').config();
 
-const app = express();
-app.use(express.json());
+const app = require('./src/app');
 
-app.listen(3000, () => console.log('listening to port 3000!'));
+const PORT = process.env.PORT || '3000';
 
-app.use('/user', userRoute);
-app.use('/login', loginRoute);
-app.use('/categories', categoriesRoute);
-app.use('/post', postRoute);
-
-// do not remove this endpoint, it is for the evaluator to work correctly
-app.get('/', (request, response) => {
-  response.send();
-});
+app.listen(PORT, () => console.log(`listening to port ${PORT}!`));
