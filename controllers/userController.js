@@ -1,20 +1,21 @@
 const express = require('express');
+const { User } = require('../models');
 
 const router = express.Router();
 
-const { User } = require('../../models/User');
-
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
-    const { id } = await User.create({ displayName, email, password, image });
-
-    return res.status(201).json({ id, displayName, email, image });
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: '' });
+    const newUser = await User.create({ displayName, email, password, image });
+    
+    return res.status(201).json(newUser);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Algo deu errado' });
   }
 });
+
+module.exports = router;
 
 /* Alguns exemplos:
 
