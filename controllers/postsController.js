@@ -72,11 +72,15 @@ const verifyEmptyField = async (req, res, next) => {
 };
 
 const validateUser = async (req, res, next) => {
-  const { id } = req.params;
-  const post = await onePost(id);
-  const { id: userId } = req.user;
-  if (post.userId !== userId) {
-    return res.status(401).json({ message: 'Unauthorized user' });
+  try {
+    const { id } = req.params;
+    const post = await onePost(id);
+    const { id: userId } = req.user;
+    if (post.userId !== userId) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
   }
   next();
 };
