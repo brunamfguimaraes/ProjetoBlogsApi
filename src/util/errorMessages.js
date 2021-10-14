@@ -9,5 +9,6 @@ module.exports = {
   missingToken: 'Token not found',
   shortDisplayName: '"displayName" length must be at least 8 characters long',
   shortPassword: '"password" length must be 6 characters long',
+  userNotFound: 'User does not exist',
   wrongEmailFormat: '"email" must be a valid email',
 };

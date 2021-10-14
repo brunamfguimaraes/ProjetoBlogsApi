@@ -20,7 +20,7 @@ const createUser = async (req, res, next) => {
 
     return res.status(codes.created).json({ token });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -35,7 +35,7 @@ const login = async (req, res, next) => {
     return res.status(codes.ok).json({ token });
   } catch (err) {
     console.log(err);
-    next(err);
+    return next(err);
   }
 };
 
@@ -46,12 +46,25 @@ const getUsers = async (_req, res, next) => {
     return res.status(codes.ok).json(users);
   } catch (error) {
     console.log(error);
-    next(error);
+    return next(error);
+  }
+};
+
+const getUserById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await UserService.getUserById(id);
+
+    return res.status(codes.ok).json(user);
+  } catch (error) {
+    console.log(error);
+    return next(error);
   }
 };
 
 module.exports = {
   createUser,
+  getUserById,
   getUsers,
   login,
 };

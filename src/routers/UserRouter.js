@@ -4,6 +4,7 @@ const validateJWT = require('../middlewares/validateJWT');
 
 const router = express.Router();
 
+router.get('/user/:id', validateJWT, UserController.getUserById);
 router.get('/user', validateJWT, UserController.getUsers);
 
 router.post('/user', UserController.createUser);

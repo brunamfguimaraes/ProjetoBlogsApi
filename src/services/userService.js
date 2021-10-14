@@ -1,6 +1,10 @@
 const { User: UserModel } = require('../models');
 const validations = require('../util/validations');
 const removeUserPass = require('../util/removeUserPass');
+const AppError = require('../util/appError');
+
+const codes = require('../util/httpCodes');
+const messages = require('../util/errorMessages');
 
 const createUser = async ({ displayName, email, password, image }) => {
   await validations.verifyCreateUserData(displayName, email, password);
@@ -28,8 +32,17 @@ const getUsers = async () => {
   return usersWithoutPass;
 };
 
+const getUserById = async (id) => {
+  const user = await UserModel.findByPk(id);
+
+  if (!user) throw new AppError(codes.notFound, messages.userNotFound);
+
+  return removeUserPass(user);
+};
+
 module.exports = {
   createUser,
+  getUserById,
   getUsers,
   login,
 };
