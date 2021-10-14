@@ -49,6 +49,14 @@ const createUser = async (req, res) => {
   return res.status(201).json({ token: newToken });
 };
 
+const loginUp = async (req, res) => {
+  const { email, password } = req.body;
+  const finder = await User.findOne({ where: { email, password } });
+  if (!finder) return res.status(400).json({ message: 'Invalid fields' });
+  const newToken = authenticationToken(finder);
+  return res.status(200).json({ token: newToken });
+};
+
 // verify
 
 const verifyEmail = (req, res, next) => {
@@ -89,4 +97,5 @@ module.exports = {
   verifyPassword,
   verifyImage,
   userAlreadyExists,
+  loginUp,
 };

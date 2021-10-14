@@ -5,9 +5,7 @@ const bodyParser = require('body-parser');
 
 const {
   verifyEmail, verifyName, verifyPassword, userAlreadyExists,
-  createUser } = require('./services/user');
-
-const { User } = require('./models');
+  createUser, loginUp } = require('./services/user');
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,13 +17,6 @@ app.get('/', (request, response) => {
 
 app.post('/user', verifyEmail, userAlreadyExists, verifyPassword, verifyName,
  createUser);
-
-app.get('/user', (req, res) => {
-  User.findAll().then((dados) => res.status(200).json(dados))
-    .catch((e) => {
-      console.log(e.message);
-      res.status(500).json({ message: 'erro' });
-    });
-});
+app.post('/login', verifyEmail, verifyPassword, loginUp);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
