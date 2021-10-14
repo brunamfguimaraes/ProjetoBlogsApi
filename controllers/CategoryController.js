@@ -13,4 +13,14 @@ CategoryRouter.post('/', validateJWT, categoryValidate, async (req, res) => {
   return res.status(201).json(category);
 });
 
+CategoryRouter.get('/', validateJWT, async (_req, res) => {
+  try {
+    const categories = await Category.findAll();
+
+    return res.status(200).json(categories);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+});
+
 module.exports = CategoryRouter;
