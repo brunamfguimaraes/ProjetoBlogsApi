@@ -57,6 +57,11 @@ const loginUp = async (req, res) => {
   return res.status(200).json({ token: newToken });
 };
 
+const getUsers = async (req, res) => {
+  const allusers = await User.findAll();
+  res.status(200).json(allusers);
+};
+
 // verify
 const emptyEmailLogin = async (req, res, next) => {
   try {
@@ -123,4 +128,5 @@ module.exports = {
   loginUp,
   emptyEmailLogin,
   emptyPasswordLogin,
+  getUsers,
 };
