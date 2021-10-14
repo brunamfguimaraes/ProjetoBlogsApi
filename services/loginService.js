@@ -1,6 +1,6 @@
 const { User } = require('../models');
 
-const verifyEmptyFields = (field) => {
+const emptyFields = (field) => {
   if (field) {
   const err = { name: 'emptyError',
   message: `"${field}" is required` };
@@ -20,10 +20,9 @@ const blankFields = (field) => {
 
 const userLogin = async (email, password) => {
   const registeredUser = await User.findOne({ where: { email, password } });
-  console.log(registeredUser);
   if (!registeredUser) {
     const err = { name: 'notRegistered',
-    message: 'invalid fields' };
+    message: 'Invalid fields' };
     throw err;
   }
   return true;
@@ -31,6 +30,6 @@ const userLogin = async (email, password) => {
 
 module.exports = {
   userLogin,
-  verifyEmptyFields,
+  emptyFields,
   blankFields,
 };

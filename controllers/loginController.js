@@ -1,13 +1,27 @@
-const { userLogin, verifyEmptyFields } = require('../services/loginService');
+const { userLogin, emptyFields, blankFields } = require('../services/loginService');
 
-const verifyFieldsEmpty = async (req, res, next) => {
+const verifyEmptyFields = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (!password) await verifyEmptyFields('password');
-    if (!email) await verifyEmptyFields('email');
+    if (!password) await emptyFields('password');
+    if (!email) await emptyFields('email');
     next();
   } catch (e) {
     if (e.name === 'emptyError') {
+      const response = e.message;
+      return res.status(400).json({ message: response });
+    }
+  }
+};
+
+const verifyBlankFields = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    if (password === '') await blankFields('password');
+    if (email === '') await blankFields('email');
+    next();
+  } catch (e) {
+    if (e.name === 'blankError') {
       const response = e.message;
       return res.status(400).json({ message: response });
     }
@@ -30,5 +44,6 @@ const makeLogin = async (req, res, next) => {
 
 module.exports = {
   makeLogin,
-  verifyFieldsEmpty,
+  verifyEmptyFields,
+  verifyBlankFields,
 };
