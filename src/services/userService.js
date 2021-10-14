@@ -20,7 +20,16 @@ const login = async ({ email, password }) => {
   return userWithoutPass;
 };
 
+const getUsers = async () => {
+  const users = await UserModel.findAll();
+
+  const usersWithoutPass = users.map((user) => removeUserPass(user));
+
+  return usersWithoutPass;
+};
+
 module.exports = {
   createUser,
+  getUsers,
   login,
 };

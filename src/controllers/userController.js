@@ -16,7 +16,7 @@ const createUser = async (req, res, next) => {
 
     const user = await UserService.createUser(userData);
 
-    const token = generateToken(user, jwtConfig, secret);
+    const token = generateToken({ user }, jwtConfig, secret);
 
     return res.status(codes.created).json({ token });
   } catch (err) {
@@ -30,7 +30,7 @@ const login = async (req, res, next) => {
 
     const user = await UserService.login(loginData);
 
-    const token = generateToken(user, jwtConfig, secret);
+    const token = generateToken({ user }, jwtConfig, secret);
 
     return res.status(codes.ok).json({ token });
   } catch (err) {
@@ -39,7 +39,19 @@ const login = async (req, res, next) => {
   }
 };
 
+const getUsers = async (_req, res, next) => {
+  try {
+    const users = await UserService.getUsers();
+
+    return res.status(codes.ok).json(users);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
+  getUsers,
   login,
 };
