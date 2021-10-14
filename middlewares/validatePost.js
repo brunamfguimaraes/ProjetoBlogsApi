@@ -22,6 +22,7 @@ const verifyPostById = async (id) => {
     where: { id },
     include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }],
   });
+  
   if (!findPostById) {
     const err = new Error('Post does not exist');
     err.statusCode = 404;
