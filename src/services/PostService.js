@@ -44,9 +44,7 @@ const createPost = async (postInfo, userId) => {
 };
 
 const findPosts = async () => {
-  const response = await BlogPosts.findAll({
-    include: { model: Users, attributes: { exclude: 'password' } },
-  });
+  const response = await BlogPosts.findAll();
   console.log(response);
 
   return response;

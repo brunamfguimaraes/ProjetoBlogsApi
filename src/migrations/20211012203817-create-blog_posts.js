@@ -27,13 +27,13 @@ module.exports = {
         },
       },
 
-      createdAt: {
+      published: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue:new Date(),
         field: 'published', // a coluna será criada no banco com este nome
       },
-      updatedAt: {
+      updated: {
         allowNull: false,
         defaultValue:new Date(),
         type: Sequelize.DATE,
