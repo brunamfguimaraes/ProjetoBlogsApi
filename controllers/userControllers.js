@@ -1,4 +1,5 @@
 const userServices = require('../services/userServices');
+const { User } = require('../models');
 
 const createUser = async (req, res, next) => {
   const newUser = await userServices.createUser(req.body);
@@ -12,7 +13,13 @@ const login = async (req, res, next) => {
   return res.status(200).json({ token: user });
 };
 
+const getUsers = async (_req, res) => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  return res.status(200).json(users);
+};
+
 module.exports = {
   createUser,
   login,
+  getUsers,
 };

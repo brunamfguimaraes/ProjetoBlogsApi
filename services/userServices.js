@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const generateToken = require('../middlewares/generateToken');
+const { generateToken } = require('../middlewares/Token');
 
 const createUser = async (newUser) => {
   const { displayName, email } = newUser;

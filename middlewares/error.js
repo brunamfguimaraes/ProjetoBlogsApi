@@ -9,6 +9,8 @@ const error = (err, _req, res, _next) => {
     '"password" is not allowed to be empty': 400,
     '"password" length must be 6 characters long': 400,
     'Invalid fields': 400, 
+    'Token not found': 401,
+    'Expired or invalid token': 401,
     'User already registered': 409,
   };
   

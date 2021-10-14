@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { validateCreateUser, validateLogin } = require('./middlewares/userValidations');
 const userControllers = require('./controllers/userControllers');
 const error = require('./middlewares/error');
+const { authenticateToken } = require('./middlewares/Token');
 
 const app = express();
 
@@ -18,5 +19,7 @@ app.get('/', (request, response) => {
 app.post('/user', validateCreateUser, userControllers.createUser);
 
 app.post('/login', validateLogin, userControllers.login);
+
+app.get('/user', authenticateToken, userControllers.getUsers);
 
 app.use(error);
