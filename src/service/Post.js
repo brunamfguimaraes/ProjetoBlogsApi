@@ -1,4 +1,4 @@
-const { BlogPosts, Users } = require('../models');
+const { BlogPosts, Users, PostsCategories, Categories } = require('../models');
 
 const findUserByEmail = async (email) => {
   const { id } = await Users.findOne({ where: { email } });
@@ -7,11 +7,39 @@ const findUserByEmail = async (email) => {
 
 const createPost = async (title, content, categoryIds, userId) => {
   const published = Date.now();
-  const { id } = await BlogPosts.create({ title, content, categoryIds, userId, published });
+  const categories = categoryIds;
+  const { id } = await BlogPosts.create({ title, content, userId, published });
+  await categories.forEach(async (categoryId) => {
+    const postId = id;
+    await PostsCategories.create({ categoryId, postId });
+  });
   return id;
+};
+
+const getAllPosts = async () => {
+  const allPosts = await BlogPosts.findAll({
+    // Ederson me ajudou nessa >:)
+    include: [
+    {
+      model: Users,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    },
+    {
+      model: Categories,
+      as: 'categories',
+      attributes: {
+        exclude: ['PostsCategories'],
+      },
+      through: { attributes: [] },
+    }],
+  });
+
+  return allPosts;
 };
 
 module.exports = {
   createPost,
   findUserByEmail,
+  getAllPosts,
 };

@@ -14,6 +14,7 @@ const {
 } = require('../middlewares/Post');
 
 const postService = require('../service/Post');
+const httpStatus = require('../httpStatus');
 
 route.post('/',
   verifyToken,
@@ -25,12 +26,19 @@ route.post('/',
     const { title, content, categoryIds } = req.body;
     const userId = await postService.findUserByEmail(email);
     const id = await postService.createPost(title, content, categoryIds, userId);
-    res.status(201).json({
+    res.status(httpStatus.created).json({
       id,
       userId,
       title,
       content,
     });
   });
+
+route.get('/',
+  verifyToken,
+  async (req, res) => {
+    const allPosts = await postService.getAllPosts();
+    res.status(httpStatus.ok).json(allPosts);
+});
 
 module.exports = route;
