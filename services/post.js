@@ -42,8 +42,8 @@ const verifyCategoryId = (req, res, next) => {
 };
 
 const verifyCategoryIdExists = async (req, res, next) => {
-  const categoriesId = await Category.findAll();
   try {
+    const categoriesId = await Category.findAll();
     const { categoryIds } = req.body;
 
     const verificacao = categoryIds.every((data1) => categoriesId
@@ -64,28 +64,30 @@ const getTokenData = (token) => {
 };
 
 const createBlogPost = async (req, res) => {
-  const usuario = getTokenData(req.headers.authorization);
   try {
-    console.log('req.body', req.body);
+    const usuario = getTokenData(req.headers.authorization);
+
     const newBlogPost = await BlogPost.create(
       { title: req.body.title, content: req.body.content, userId: usuario },
     );
     const { id, title, content, userId } = newBlogPost;
-    console.log('newBlogPost', newBlogPost);
-    
+  
     return res.status(201).json({ id, userId, title, content });
   } catch (error) {
-    console.log('error', error);
-    res.status(400).json({ message: 'erro' });
+    return { message: 'erro' };
   }
 };
 
 const getAllPosts = async (_req, res) => {
-  const result = await BlogPost.findAll({ 
-    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
-    { model: Category, as: 'categories', through: { attributes: [] } }],
-  });
-  return res.status(200).json(result);
+  try {
+    const result = await BlogPost.findAll({ 
+      include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
+    });
+    return res.status(200).json(result);
+  } catch (error) {
+    return { message: 'erro' };
+  }
 };
 
 module.exports = { verifyCategoryId,
