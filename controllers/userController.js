@@ -1,8 +1,10 @@
 const express = require('express');
-
+require('dotenv').config();
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
+
+const { JWT_SECRET } = process.env;
 
 const secret = 'chave-secreta';
 
@@ -23,7 +25,7 @@ router.post('/', async (req, res) => {
   
     delete newUser.password; 
   
-    const token = jwt.sign({ data: newUser }, secret, jwtConfig);
+    const token = jwt.sign({ data: newUser }, JWT_SECRET, jwtConfig);
   
     return res.status(201).json({ token });
   } catch (e) {
