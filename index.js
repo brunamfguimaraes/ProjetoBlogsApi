@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 const secret = 'secreto';
 const jwtConfig = {
-  expiresIn: '1d',
+  expiresIn: '30d',
   algorithm: 'HS256',
 };
 const jwt = require('jsonwebtoken');
@@ -77,7 +77,13 @@ app.post('/post', validateJWT, VerifyTitle, VerifyContent, foundCateg, async (re
 });
 
 app.get('/post', validateJWT, async (_req, res) => {
-  BlogPost.findAll().then((categ) => {
+  // nome tem que ser igual do alias nos models (as)
+  BlogPost.findAll(
+    { include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+                { model: Categorie, as: 'categories', through: { attributes: [] } }] },
+    ).then((categ) => {
     res.status(200).json(categ);
   });
 });
+
+// https://sequelize.org/master/class/lib/model.js~Model.html#static-method-findAll
