@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const {
   verifyEmail, verifyName, verifyPassword, userAlreadyExists,
   createUser, loginUp, emptyEmailLogin, emptyPasswordLogin,
-  getUsers, validToken } = require('./services/user');
+  getUsers, getUserById, validToken } = require('./services/user');
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,5 +21,6 @@ app.post('/user', verifyEmail, userAlreadyExists, verifyPassword, verifyName,
 app.post('/login', emptyEmailLogin, emptyPasswordLogin, loginUp);
 
 app.get('/user', validToken, getUsers);
+app.get('/user/:id', validToken, getUserById);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
