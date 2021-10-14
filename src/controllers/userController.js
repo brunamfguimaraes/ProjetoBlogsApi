@@ -25,7 +25,19 @@ const logInUser = async (req, res) => {
   }
 };
 
+const getUser = async (_req, res) => {
+  try {
+    const { code, notification } = await service.getUser();
+
+    return res.status(code).json(notification);
+  } catch (e) {
+    console.log(e);
+    return res.status(HTTP_INTERNAL_SERVER_ERROR).json({ message: 'Internal error' });
+  }
+};
+
 module.exports = {
   registerUser,
   logInUser,
+  getUser,
 };

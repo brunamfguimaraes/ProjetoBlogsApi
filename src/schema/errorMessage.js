@@ -8,4 +8,6 @@ module.exports = (errorType) => ({
   emailEmpty: '"email" is not allowed to be empty',
   passwordEmpty: '"password" is not allowed to be empty',
   nonExistentUser: 'Invalid fields',
+  noToken: 'Token not found',
+  invalidToken: 'Expired or invalid token',
 })[errorType];

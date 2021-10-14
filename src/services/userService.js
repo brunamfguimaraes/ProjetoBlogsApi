@@ -73,7 +73,21 @@ const loginUser = async (userData) => {
   return userFound;
 };
 
+const getUser = async () => {
+  const findAll = await User.findAll({
+    attributes: ['id', 'displayName', 'email', 'image'],
+  });
+
+  const allUser = {
+    code: code.HTTP_OK_STATUS,
+    notification: findAll,
+  };
+
+  return allUser;
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getUser,
 };

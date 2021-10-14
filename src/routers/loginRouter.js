@@ -6,7 +6,7 @@ const {
   validateEmail,
   validatePassword,
   validateEmptyFields,
-} = require('../middlewares/validations');
+} = require('../middlewares/genericValidations');
 
 router.post('/', validateEmptyFields, validateEmail, validatePassword, controller.logInUser);
 
