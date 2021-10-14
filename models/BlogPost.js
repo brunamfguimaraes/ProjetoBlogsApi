@@ -7,7 +7,7 @@ const BlogPost = (sequelize, dataType) => {
   published: dataType.DATE,
   updated: dataType.DATE,
   },
-  { timestamp: false });
+  { timestamps: false });
   blogPost.associate = (model) => {
     blogPost.belongsTo(model.User, {
       foreignKey: 'userId', as: 'User',
