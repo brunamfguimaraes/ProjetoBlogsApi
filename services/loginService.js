@@ -25,7 +25,6 @@ const notEmpty = (email, password) => {
 };
 
 const existingEmail = async (email, password) => {
-    console.log(email);
     const existEmail = await User.findOne({ where: { email, password } });
     if (!existEmail) { return { message: 'Invalid fields' }; }
     return true;

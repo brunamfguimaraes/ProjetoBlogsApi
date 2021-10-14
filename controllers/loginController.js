@@ -1,7 +1,6 @@
 const express = require('express');
 const statusCode = require('http-status-codes');
 const jwt = require('jsonwebtoken');
-/* const { User } = require('../models'); */
 const loginService = require('../services/loginService');
 
 const router = express.Router();
