@@ -7,4 +7,9 @@ const add = rescue(async (req, res) => {
   res.status(201).json(newCategory);
 });
 
-module.exports = { add };
+const findAll = rescue(async (req, res) => {
+  const findCategory = await Categorie.findAll();
+  res.status(200).json(findCategory);
+});
+
+module.exports = { add, findAll };
