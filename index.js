@@ -8,6 +8,10 @@ const loginRoute = require('./src/controller/Login');
 
 const categoriesRoute = require('./src/controller/Categories');
 
+const postRoute = require('./src/controller/Post');
+
+app.use('/post', postRoute);
+
 app.use('/user', userRoute);
 
 app.use('/login', loginRoute);
