@@ -3,12 +3,14 @@ const express = require('express');
 const validationError = require('./src/middlewares/validations/error');
 const userRoute = require('./src/routes/userRouter');
 
-const { PORT } = process.env;
+const loginRouter = require('./src/routes/loginRouter');
+
+// const { PORT } = process.env;
 
 const app = express();
 app.use(express.json());
 
-app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
+app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
@@ -16,6 +18,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user', userRoute);
+app.use('/login', loginRouter);
 
 app.use(validationError);
 
