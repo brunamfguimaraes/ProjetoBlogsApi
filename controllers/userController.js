@@ -2,10 +2,10 @@ const express = require('express');
 // require('dotenv').config();
 
 const router = express.Router();
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
 
-// const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 
 router.post('/', async (req, res) => {
   try {
@@ -17,17 +17,17 @@ router.post('/', async (req, res) => {
       res.status(newUser.status).json({ message: newUser.message });
     }
 
-    // const jwtConfig = {
-    //   expiresIn: '7d',
-    //   algorithm: 'HS256',
-    // };
+    const jwtConfig = {
+      expiresIn: '7d',
+      algorithm: 'HS256',
+    };
   
-    // delete newUser.password; 
+    delete newUser.password; 
   
-    // const token = jwt.sign({ data: newUser }, JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: newUser }, JWT_SECRET, jwtConfig);
   
-    // return res.status(201).json({ token });
-    return res.status(201).json({ newUser });
+    return res.status(201).json({ token });
+    // return res.status(201).json({ newUser });
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado' });
