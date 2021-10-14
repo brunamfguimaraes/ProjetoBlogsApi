@@ -54,7 +54,6 @@ const allValidations = (displayName, email, password) => {
 const existingEmail = async (email) => {
     console.log(email);
     const existEmail = await User.findOne({ email });
-    console.log(existEmail);
     if (existEmail) { return { message: 'User already registered' }; }
     return true;
 };
