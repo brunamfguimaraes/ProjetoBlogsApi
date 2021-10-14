@@ -27,7 +27,7 @@ postControllers.post(
     }
     const newPost = await blogPostsServices.createPost(title, content, id);
     return res.status(CREATED_STATUS).json(newPost);
-  })
+  }),
 );
 
 postControllers.get(
@@ -36,7 +36,7 @@ postControllers.get(
   rescue(async (_req, res, _next) => {
     const result = await blogPostsServices.getAllPosts();
     return res.status(OK_STATUS).json(result);
-  })
+  }),
 );
 
 module.exports = postControllers;
