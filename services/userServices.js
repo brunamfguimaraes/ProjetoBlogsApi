@@ -11,4 +11,12 @@ const create = async ({ displayName, email, password, image }) => {
   return userWithoutPass;
 };
 
-module.exports = { create };
+const createLogin = async ({ email, password }) => {
+  await verifyCreate.verifyCreateLogin(email, password);
+
+  const userLogin = await User.findOne({ where: { email } });
+  const userWithoutPass = removeUserPass(userLogin);
+  return userWithoutPass;
+};
+
+module.exports = { create, createLogin };

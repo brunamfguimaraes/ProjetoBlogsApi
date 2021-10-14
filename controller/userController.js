@@ -25,4 +25,18 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { create };
+const createLogin = async (req, res) => {
+  try {
+    const loginData = req.body;
+    const user = await userService.createLogin(loginData);
+
+    const token = JWTgenerate({ user }, jwtConfig, secret);
+
+    return res.status(codes.ok).json({ token });
+  } catch (error) {
+    const { code, message } = error;
+    return res.status(code).json({ message });
+  }
+};
+
+module.exports = { create, createLogin };

@@ -44,11 +44,14 @@ const verifyCreateUser = async (displayName, email, password) => {
   }
 };
 
-/* const verifyCreateLogin = async (email, password) => {
-  if (!email) throw new Indexerror(codes.badRequest, errorMessages.emailIsRequired);
-  if (!password) throw new Indexerror(codes.badRequest, errorMessages.isrequired);
-  if (email === '') throw new Indexerror(codes.badRequest, errorMessages.emailIsNotEmpty);
-  if (password === '') throw new Indexerror(codes.badRequest, errorMessages.passwordIsNotEmpty);
+const verifyCreateLogin = async (email, password) => {
+  emailValidate(email);
+  passwordValidate(password);
+
+  const user = await User.findOne({ where: { email } });
+  if (!user || user.password !== password) {
+    throw new Indexerror(codes.badRequest, errorMessages.invalidFields);
+  }
 };
- */
-module.exports = { verifyCreateUser };
+
+module.exports = { verifyCreateUser, verifyCreateLogin };

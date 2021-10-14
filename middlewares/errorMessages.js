@@ -7,4 +7,5 @@ module.exports = {
   passwordIsNotEmpty: '"password" is not allowed to be empty',
   isrequired: '"password" is required',
   alreadyExists: 'User already registered',
+  invalidFields: 'Invalid fields',
 };
