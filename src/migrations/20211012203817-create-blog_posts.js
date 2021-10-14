@@ -30,10 +30,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue:new Date(),
         field: 'published', // a coluna será criada no banco com este nome
       },
       updatedAt: {
         allowNull: false,
+        defaultValue:new Date(),
         type: Sequelize.DATE,
         field: 'updated', // a coluna será criada no banco com este nome
       },

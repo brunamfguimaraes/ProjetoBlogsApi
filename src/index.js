@@ -3,8 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const UserController = require('./controllers/UserController');
 const CategoryController = require('./controllers/CategoryController');
+const PostController = require('./controllers/PostController');
 const userErrorMiddleware = require('./middlewares/UserError');
 const categoryErrorMiddleware = require('./middlewares/CategoryError');
+const postErrorMiddleware = require('./middlewares/PostError');
 const JWTMiddleware = require('./middlewares/jwtAuth');
 
 const app = express();
@@ -29,3 +31,6 @@ app.post('/categories', JWTMiddleware, CategoryController.newCategory);
 app.get('/categories', JWTMiddleware, CategoryController.listCategories);
 
 app.use(categoryErrorMiddleware);
+
+app.post('/post', JWTMiddleware, PostController.newPost);
+app.use(postErrorMiddleware);

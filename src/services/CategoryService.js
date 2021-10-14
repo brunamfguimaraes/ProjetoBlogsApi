@@ -20,5 +20,6 @@ const createCategory = async (categoryInfo) => {
 };
 
 const findCategories = async () => Categories.findAll();
+const findCategory = async (id) => Categories.findOne({ where: { id } });
 
-module.exports = { createCategory, findCategories };
+module.exports = { createCategory, findCategories, findCategory };
