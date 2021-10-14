@@ -18,8 +18,21 @@ const getUsers = async (_req, res) => {
   return res.status(200).json(users);
 };
 
+const getUserById = async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findOne(
+    {
+      where: { id },
+      attributes: { exclude: ['password'] },
+    },
+  );
+  if (!user) next({ message: 'User does not exist' });
+  res.status(200).json(user);
+};
+
 module.exports = {
   createUser,
   login,
   getUsers,
+  getUserById,
 };

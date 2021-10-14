@@ -22,4 +22,6 @@ app.post('/login', validateLogin, userControllers.login);
 
 app.get('/user', authenticateToken, userControllers.getUsers);
 
+app.get('/user/:id', authenticateToken, userControllers.getUserById);
+
 app.use(error);

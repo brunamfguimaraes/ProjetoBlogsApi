@@ -11,6 +11,7 @@ const error = (err, _req, res, _next) => {
     'Invalid fields': 400, 
     'Token not found': 401,
     'Expired or invalid token': 401,
+    'User does not exist': 404,
     'User already registered': 409,
   };
   
