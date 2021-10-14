@@ -1,5 +1,5 @@
-const { postController } = require('./postController');
 const { postLoginController } = require('./loginController');
+const { postController, getPostsController } = require('./postController');
 const { postCategoryController, getCategoriesController } = require('./categoryController');
 const {
   postUserController,
@@ -9,6 +9,7 @@ const {
 
 module.exports = {
   postController,
+  getPostsController,
   postUserController,
   getUsersController,
   postLoginController,
