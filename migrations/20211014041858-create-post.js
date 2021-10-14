@@ -24,6 +24,12 @@ module.exports = {
         onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
       },
+      published: {
+        type: Sequelize.DATE
+      },
+      updated: {
+        type: Sequelize.DATE
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {

@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 
 const userRouter = require('./routes/userRoute');
 const loginRouter = require('./routes/loginRoute');
-const categoriesRouter = require('./routes/categoriesRoute.js');
+const categoriesRouter = require('./routes/categoriesRoute');
+const postsRouter = require('./routes/postsRoute');
 
 const app = express();
 
@@ -19,3 +20,4 @@ app.get('/', (request, response) => {
 app.use('/user', userRouter);
 app.use('/login', loginRouter);
 app.use('/categories', categoriesRouter);
+app.use('/post', postsRouter);

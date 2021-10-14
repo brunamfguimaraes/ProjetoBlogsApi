@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+const { User } = require('../models');
+
 const secret = process.env.JWT_SECRET;
 
 const jwtConfig = {
@@ -10,8 +12,9 @@ const jwtConfig = {
 
 const generateJWT = async (req, res) => {
 try {
-  const user = { email: req.body.email };
-  const token = jwt.sign(user, secret, jwtConfig);
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email } });
+  const token = jwt.sign({ id: user.id, email: user.email }, secret, jwtConfig);
   res.status(req.statusCode).json({ token });
 } catch (e) {
     return res.status(500).json({ message: 'Erro interno', error: e });
