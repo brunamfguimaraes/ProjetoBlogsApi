@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { checkEmailExists, testeEmptyEmail, userLogin,
@@ -15,8 +17,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000;
-
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
@@ -33,4 +33,4 @@ app.get('/user/:id', validaToken, getUser);
 app.get('/categories', validaToken, getAllCategories);
 app.get('/post', validaToken, getAllPosts);
 
-app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
+app.listen(process.env.PORT, () => console.log(`ouvindo porta ${process.env.PORT}!`));
