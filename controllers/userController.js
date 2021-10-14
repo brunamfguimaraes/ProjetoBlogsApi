@@ -1,14 +1,26 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+
 const { User } = require('../models');
+
+const secret = 'seusecretdetoken';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
-    const newUser = await User.create({ displayName, email, password, image });
     
-    return res.status(201).json(newUser);
+    const jwtConfig = {
+      expiresIn: '7d',
+      algorithm: 'HS256',
+    };
+    
+    const newUser = await User.create({ displayName, email, password, image });
+
+    const token = jwt.sign({ data: newUser }, secret, jwtConfig);
+
+    return res.status(201).json({ token });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: 'Algo deu errado' });
