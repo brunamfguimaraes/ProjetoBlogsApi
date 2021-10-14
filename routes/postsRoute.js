@@ -9,6 +9,7 @@ const {
   updatePost,
   verifyEmptyField,
   validateUser,
+  deletePost,
 } = require('../controllers/postsController');
 
 const { validateJWT } = require('../middlewares/tokenJwt');
@@ -22,5 +23,7 @@ router.get('/', validateJWT, getAllPosts);
 router.get('/:id', validateJWT, getOnePost);
 
 router.put('/:id', validateJWT, verifyEmptyField, validateUser, updatePost);
+
+router.delete('/:id', validateJWT, validateUser, deletePost);
 
 module.exports = router;

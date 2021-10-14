@@ -1,5 +1,11 @@
 const {
-  createNewPost, emptyFields, invalidCategory, allPosts, onePost, postUpdater,
+  createNewPost,
+  emptyFields,
+  invalidCategory,
+  allPosts,
+  onePost,
+  postUpdater,
+  destroyPost,
 } = require('../services/postsService');
 
 const verifyEmptyFields = async (req, res, next) => {
@@ -75,6 +81,16 @@ const validateUser = async (req, res, next) => {
   next();
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await destroyPost(id);
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createPost,
   verifyEmptyFields,
@@ -84,4 +100,5 @@ module.exports = {
   getOnePost,
   updatePost,
   validateUser,
+  deletePost,
 };

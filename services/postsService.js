@@ -50,6 +50,14 @@ const postUpdater = async (id, title, content) => {
     return newPost;
 };
 
+const destroyPost = async (id) => {
+  const post = await BlogPost.findOne({ where: { id } });
+    if (!post) {
+      throw new Error('Post does not exist');
+    }
+  await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
-  createNewPost, emptyFields, invalidCategory, allPosts, onePost, postUpdater,
+  createNewPost, emptyFields, invalidCategory, allPosts, onePost, postUpdater, destroyPost,
 };
