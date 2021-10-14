@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const emptyFields = (field) => {
   if (field) {
@@ -22,4 +22,9 @@ const createNewPost = async (title, content, userId) => {
   return id;
 };
 
-module.exports = { createNewPost, emptyFields, invalidCategory };
+const allPosts = async () => {
+  const posts = await BlogPost.findAll({ include: { model: User, as: 'user' } });
+  return posts;
+};
+
+module.exports = { createNewPost, emptyFields, invalidCategory, allPosts };
