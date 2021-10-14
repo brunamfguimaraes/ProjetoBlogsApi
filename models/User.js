@@ -2,7 +2,7 @@
 // mas sim com a função sequelize.define() , então substitua
 // este código pelo seguinte:
 // models/user.js
-const UserModel = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     displayName: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -20,5 +20,3 @@ const UserModel = (sequelize, DataTypes) => {
 
   return User;
 };
-
-module.exports = UserModel;
