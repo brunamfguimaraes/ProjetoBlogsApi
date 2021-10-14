@@ -15,6 +15,8 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
+const validationJWT = require('./middlewares/validationJWT');
+
 const { 
   validateDisplayName,
   validateEmail,
@@ -23,6 +25,17 @@ const {
   userExists,
   emailExists,
   validateFields } = require('./middlewares/validationFields');
+
+  app.get('/user', validationJWT, async (_req, res) => {
+    try {
+      const users = await User.findAll();
+  
+      return res.status(200).json(users);
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ message: 'Algo deu errado' });
+    }
+  });
 
   app.post('/user',
     validateDisplayName,
