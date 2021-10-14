@@ -23,7 +23,10 @@ const createNewPost = async (title, content, userId) => {
 };
 
 const allPosts = async () => {
-  const posts = await BlogPost.findAll({ include: { model: User, as: 'user' } });
+  const posts = await BlogPost.findAll({ include: [{ model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
   return posts;
 };
 
