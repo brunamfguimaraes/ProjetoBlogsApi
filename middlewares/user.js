@@ -32,7 +32,7 @@ const checkPassword = (user) => {
 const emailAlreadyExists = async (user) => {
   const { email } = user;
   const check = await User.findOne({ where: { email } });
-  if (check) return { message: 'User already registred' };
+  if (check) return { message: 'User already registered' };
   return { message: 'ok' };
 };
 
