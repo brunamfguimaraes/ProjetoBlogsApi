@@ -48,7 +48,6 @@ const verifyPassword = (req, res, next) => {
 const verifyUser = async (req, res, next) => {
   const { email } = req.body;
   const existance = await userServices.verifyUser(email);
-  // console.log(existance);
   if (existance) {
     return res.status(409).json({ message: 'User already registered' });
   }
@@ -85,6 +84,13 @@ const getAllUsers = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const result = await userServices.getUserById(id);
+  if (!result) return res.status(404).json({ message: 'User does not exist' });
+  res.status(200).json(result);
+};
+
 module.exports = {
   verifyDisplayName,
   verifyEmail,
@@ -93,4 +99,5 @@ module.exports = {
   addUser,
   validToken,
   getAllUsers, 
+  getUserById,
 };
