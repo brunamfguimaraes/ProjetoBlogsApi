@@ -6,12 +6,12 @@ const { checkEmailExists, testeEmptyEmail, userLogin,
   checkPassword, checkName, checkEmail, createUser,
   testeEmptyPassword, validaToken, getAllUsers, getUser } = require('./services/user.js');
 
-const { verifyCategory,
-  createCategory, getAllCategories } = require('./services/categories.js');
+// const { verifyCategory,
+//   createCategory, getAllCategories } = require('./services/categories.js');
 
-const { verifyCategoryId, verifyContent,
-  verifyTitle, verifyCategoryIdExists, 
-  createBlogPost, getAllPosts } = require('./services/post.js');
+// const { verifyCategoryId, verifyContent,
+//   verifyTitle, verifyCategoryIdExists, 
+//   createBlogPost, getAllPosts } = require('./services/post.js');
 
 const app = express();
 
