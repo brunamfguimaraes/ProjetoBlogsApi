@@ -1,8 +1,11 @@
 const {
+  OK,
   CREATED,
-  INTERNAL_SERVER_ERROR,
+  NO_CONTENT,
   BAD_REQUEST,
-  CONFLICT, OK, NOT_FOUND,
+  NOT_FOUND,
+  CONFLICT,
+  INTERNAL_SERVER_ERROR,
 } = require('http-status');
 
 const userService = require('../services/userService');
@@ -49,8 +52,21 @@ const getById = async (req, res) => {
   }
 };
 
+const removeUser = async (req, res) => {
+  try {
+    const { userId } = req;
+    await userService.removeUser(userId);
+
+    return res.status(NO_CONTENT).send();
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   getById,
+  removeUser,
 };
