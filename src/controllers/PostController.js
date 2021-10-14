@@ -13,9 +13,9 @@ const newPost = rescue(async (req, res, next) => {
 
 const listPosts = rescue(async (req, res, next) => {
   const posts = await PostService.findPosts();
-
+  
   if (posts.error) return next(posts.error);
-
+  
   res.status(200).json(posts);
 });
 
