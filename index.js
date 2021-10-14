@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.post('/user', validateDisplayName, validatePassword, validateEmail, userController);
 app.post('/login', validateEmail, validatePassword, loginController);
+app.get('/user/:id', jwtValidations, userController);
 app.get('/user', jwtValidations, userController);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

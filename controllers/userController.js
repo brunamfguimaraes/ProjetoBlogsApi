@@ -31,12 +31,24 @@ router.post('/user', async (req, res) => {
 router.get('/user', async (_req, res) => {
   try {
    const users = await User.findAll();
-   console.log(users);
-
-    return res.status(200).json(users);
+   return res.status(200).json(users);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Ocorreu um erro' });
+    res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
+  }
+});
+
+router.get('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    
+    if (!user) return res.status(404).json({ message: 'User does not exist' });
+
+    return res.status(200).json(user);
+  } catch (e) {
+    console.log(e.message);
+    res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
   }
 });
 
