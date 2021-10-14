@@ -3,7 +3,7 @@ const BlogPost = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    categoryIds: DataTypes.STRING, // Array ou string ???
+    categoryIds: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     published: DataTypes.DATE,
     updated: DataTypes.DATE,
@@ -12,11 +12,6 @@ const BlogPost = (sequelize, DataTypes) => {
     tableName: 'BlogPosts',
     underscored: false,
   });
-
-  BlogPost.associate = (models) => {
-    BlogPost.hasOne(models.User,
-      { foreignKey: 'id', as: 'userId' });
-  };
 
   return blogPost;
 };

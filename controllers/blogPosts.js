@@ -16,8 +16,9 @@ router.post('/', validateToken, validatePost, async (req, res) => {
   const { email } = req;
   try {
     const user = await User.findOne({ where: { email } });
+    console.log(user.dataValues.id);
     const newPost = await BlogPost.create(
-      { title, content, categoryIds: JSON.stringify(categoryIds), userId: user.id },
+      { title, content, categoryIds: JSON.stringify(categoryIds), userId: user.dataValues.id },
     );
     return res.status(201).json(newPost);
   } catch (e) {
