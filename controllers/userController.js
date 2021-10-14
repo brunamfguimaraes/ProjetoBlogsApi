@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 const messages = require('../helpers/validationMessages');
 const { User } = require('../models');
 
-const { JWT_SECRET, EXPIRE, ALG } = process.env;
+const { JWT_SECRET } = process.env;
 
 const jwtConfig = {
-  expiresIn: EXPIRE,
-  algorithm: ALG,
+  expiresIn: '5d',
+  algorithm: 'H256',
 };
 
 const router = express.Router();
