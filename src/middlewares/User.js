@@ -53,7 +53,8 @@ const verifyToken = (req, res, next) => {
       return res.status(httpStatus.unauthorized).json({ message: 'Token not found' });
     }
     const { authorization } = req.headers;
-    jwt.verify(authorization, process.env.JWT_SECRET);
+    const user = jwt.verify(authorization, process.env.JWT_SECRET);
+    req.logged = user;
     next();
   } catch (e) {
     return res.status(httpStatus.unauthorized).json({

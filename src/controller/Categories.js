@@ -11,6 +11,13 @@ const { verifyCategoryName } = require('../middlewares/Categories');
 const categoriesService = require('../service/Categories');
 const httpStatus = require('../httpStatus');
 
+route.get('/',
+verifyToken,
+  async (req, res) => {
+    const allCategories = await categoriesService.findAllCategories();
+    res.status(httpStatus.ok).json(allCategories);
+});
+
 route.post('/',
   verifyToken,
   verifyCategoryName,
