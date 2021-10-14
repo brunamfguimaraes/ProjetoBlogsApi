@@ -1,15 +1,22 @@
 const express = require('express');
 const statusCode = require('http-status-codes');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
 const router = express.Router();
 
+const secret = 'seusecretdetoken';
+
 router.post('/', async (req, res) => {
     try {
         const { displayName, email, password, image } = req.body;
+        const jwtConfig = {
+            expiresIn: '7d',
+            algorithm: 'HS256',
+        };
         const createUser = await User.create({ displayName, email, password, image });
-        console.log(createUser, 'estou no create');
-        return res.status(statusCode.CREATED).json(createUser);
+        const token = jwt.sign({ data: createUser }, secret, jwtConfig);
+        return res.status(statusCode.CREATED).json({ token });
     } catch (error) {
         console.log(error);
         return res.status(statusCode.INTERNAL_SERVER_ERROR)
