@@ -14,11 +14,16 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
 
-  const exists = await User.findOne({ where: { email, password } });
-  if (!exists) return res.status(400).json({ message: 'Invalid fields' });
-
-  const token = jwt.sign({ data: email }, secret, jwtConfig);
-  return res.status(200).json({ token });
+  try {
+    const exists = await User.findOne({ where: { email, password } });
+    if (exists) {
+      const token = jwt.sign({ data: email }, secret, jwtConfig);
+      return res.status(200).json({ token });
+    }
+    return res.status(400).json({ message: 'Invalid fields' });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 module.exports = router;

@@ -11,14 +11,18 @@ router.get('/', validateToken, async (_req, res) => {
   return res.status(200).json(posts);
 });
 
-router.post('/', validatePost, validateToken, async (req, res) => {
+router.post('/', validateToken, validatePost, async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { email } = req;
-  const user = await User.findOne({ where: { email } });
-  const newPost = await BlogPost.create(
-    { title, content, categoryIds: categoryIds.toString(), userId: user.id },
-  );
-  return res.status(201).json(newPost);
+  try {
+    const user = await User.findOne({ where: { email } });
+    const newPost = await BlogPost.create(
+      { title, content, categoryIds: JSON.stringify(categoryIds), userId: user.id },
+    );
+    return res.status(201).json(newPost);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 module.exports = router;
