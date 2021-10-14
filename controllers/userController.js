@@ -29,18 +29,3 @@ router.post('/user', async (req, res) => {
 });
 
 module.exports = router;
-
-/* try {
-    const { displayName, email, password, image } = req.body;
-    const jwtConfig = {
-        expiresIn: '7d',
-        algorithm: 'HS256',
-    };
-    const createUser = await userService({ displayName, email, password, image });
-    const token = jwt.sign({ data: createUser }, secret, jwtConfig);
-    return res.status(statusCode.CREATED).json({ token });
-} catch (error) {
-    console.log(error);
-    return res.status(statusCode.INTERNAL_SERVER_ERROR)
-    .json({ message: 'Ops! algo deu errado' });
-} */
