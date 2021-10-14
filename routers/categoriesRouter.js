@@ -10,4 +10,8 @@ validateJWT,
 categoriesController.verifyCategoryName,
 categoriesController.createCategory);
 
+router.get('/',
+validateJWT,
+categoriesController.getAllCategories);
+
 module.exports = router;
