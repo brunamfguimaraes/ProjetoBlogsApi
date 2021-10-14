@@ -12,10 +12,10 @@ module.exports = (sequelize, _DataTypes) => {
       });
   
       models.Category.belongsToMany(models.Category, {
-        as: 'books',
+        as: 'BlogPost',
         through: PostsCategory,
-        foreignKey: 'user_id',
-        otherKey: 'book_id',
+        foreignKey: 'postId',
+        otherKey: 'id',
       });
     };
   
