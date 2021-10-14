@@ -6,7 +6,6 @@ const Categorie = (sequelize, DataTypes) => {
     {
         timestamps: false,
         tableName: 'Categories',
-        underscored: true,
     });
 
     Categorie.associate = (models) => {
