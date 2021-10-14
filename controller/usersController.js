@@ -7,6 +7,19 @@ const jwtConfig = {
     expiresIn: '10h',
     algorithm: 'HS256',
   };
+
+  const getById = async (req, res) => {
+   const { id } = req.params;
+    try {
+        const users = await usersService.getById(id);
+        if (users === null) {
+            return res.status(404).json({ message: 'User does not exist' });
+        }
+        return res.status(200).json(users);
+    } catch (error) {
+        return res.status(500).json({ message: 'Ops, algo de errado :( ' });
+    }
+};
 const getAll = async (req, res) => {
     console.log('token validado');
     try {
@@ -16,6 +29,7 @@ const getAll = async (req, res) => {
         return res.status(500).json({ message: 'Ops, algo de errado :( ' });
     }
 };
+
 const createUser = async (req, res) => {
     try { 
         const result = await usersService.createUser(req.body);
@@ -34,4 +48,4 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { getAll, createUser };
+module.exports = { getAll, createUser, getById };
