@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { BlogPosts, Users, PostsCategories } = require('../models');
+const { BlogPosts, Users, Categories, PostsCategories } = require('../models');
 const CategoryService = require('./CategoryService');
 
 const validatePostInfo = (postInfo) => {
@@ -44,8 +44,18 @@ const createPost = async (postInfo, userId) => {
 };
 
 const findPosts = async () => {
-  const response = await BlogPosts.findAll();
-  console.log(response);
+  const response = await BlogPosts.findAll({
+    include: [
+      { model: Users, as: 'user', attributes: { exclude: 'password' } },
+      {
+        model: Categories,
+        as: 'categories',
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
 
   return response;
 };
