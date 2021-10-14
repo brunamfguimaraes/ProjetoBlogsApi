@@ -1,10 +1,10 @@
 const express = require('express');
 const { login } = require('../controllers/loginController');
-const { validLogin, validUserDB } = require('../middlewares/loginValidations');
+const { validLogin, validEmail } = require('../middlewares/loginValidations');
 
 const router = express.Router();
 
 router.route('/')
-  .post(validLogin, validUserDB, login);
+  .post(validLogin, validEmail, login);
 
 module.exports = router;
