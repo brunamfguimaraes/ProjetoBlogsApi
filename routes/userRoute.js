@@ -1,10 +1,11 @@
 const express = require('express');
-const { validateFilds } = require('../middlewares/validations');
+const { validateFilds, validationEmail } = require('../middlewares/validations');
+// const validateToken = require('../middlewares/validationToken');
 const { createUser } = require('../controller/User');
 
 const router = express.Router();
 
 router.route('/')
-  .post(validateFilds, createUser);
+  .post(validateFilds, validationEmail, createUser);
 
   module.exports = router;

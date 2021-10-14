@@ -1,9 +1,10 @@
-const User = require('../models/User');
+const { User } = require('../models');
 
 const createUser = async (req, res) => {
+ console.log('chegei post');
  const { body } = req;
- const create = await User.create(body);
- res.status(201).json({ create });
+ const created = await User.create(body);
+ res.status(201).json({ created });
 };
 
 module.exports = {
