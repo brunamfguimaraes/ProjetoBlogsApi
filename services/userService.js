@@ -10,11 +10,11 @@ const validateName = (displayName) => {
 
 const validateField = (email, password) => {
     if (!email) {
-        return { message: "\"email\" is required" };
+        return { message: '"email" is required' };
     }
 
     if (!password) {
-        return { message: "\"password\" is required" };
+        return { message: '"password" is required' };
     }
    
     return true;
@@ -43,11 +43,11 @@ const allValidations = (displayName, email, password) => {
     const validEmail = validateEmail(email);
     const validPassword = validatePassword(password);
     if (!validName) {
-        return { message: "\"displayName\" length must be at least 8 characters long" };
+        return { message: '"displayName" length must be at least 8 characters long' };
     }
     if (validField !== true) return { message: validField.message };
-    if (!validEmail) { return { message: "\"email\" must be a valid email" }; }
-    if (!validPassword) { return { message: "\"password\" length must be 6 characters long" }; }
+    if (!validEmail) { return { message: '"email" must be a valid email' }; }
+    if (!validPassword) { return { message: '"password" length must be 6 characters long' }; }
     return true;
 };
 
