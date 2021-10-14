@@ -1,11 +1,11 @@
-// require('dotenv/config');
+require('dotenv/config');
 const express = require('express');
 const validationError = require('./src/middlewares/validations/error');
 const userRoute = require('./src/routes/userRouter');
 
 const loginRouter = require('./src/routes/loginRouter');
 
-const { PORT } = process.env;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
