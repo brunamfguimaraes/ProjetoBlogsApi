@@ -4,7 +4,7 @@ require('dotenv').config();
 const { JWT_SECRET } = process.env || 'minhaSenhaBlog';
 
 const jwtConfig = {
-  expiresIn: '1h',
+  expiresIn: '1d',
   algorithm: 'HS256',
 };
 

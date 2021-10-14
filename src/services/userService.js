@@ -1,5 +1,5 @@
 const generateToken = require('../middlewares/generateToken');
-const { User } = require('../models');
+const { User } = require('../../models');
 require('dotenv').config();
 
 const { ERROR_INVALID_FIELDS, ERROR_USER_EXISTS, ERROR_USER_NOT_EXISTS } = require('./msgErrors');

@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { userRouter, loginRouter } = require('./src/routers');
+const { userRouter, loginRouter, categoriesRouter } = require('./src/routers');
 
 const app = express();
 app.use(bodyParser.json());
 
 app.use('/user', userRouter);
 app.use('/login', loginRouter);
+app.use('/categories', categoriesRouter);
 
 app.use((error, _req, res, _next) => {
   res.status(error.status).json({ message: error.message });
@@ -15,6 +16,6 @@ app.use((error, _req, res, _next) => {
 app.listen(3000, () => console.log('rodando na porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (request, response) => {
+app.get('/', (_request, response) => {
   response.send();
 });
