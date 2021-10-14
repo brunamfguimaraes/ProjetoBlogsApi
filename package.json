@@ -25,6 +25,7 @@
     "frisby": "2.1.2",
     "jest": "26.0.1",
     "mysql2": "^2.1.0",
+    "nodemon": "^2.0.13",
     "sequelize": "^6.3.4",
     "sequelize-cli": "^6.2.0",
     "supertest": "4.0.2"

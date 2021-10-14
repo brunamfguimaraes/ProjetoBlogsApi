@@ -1,5 +1,12 @@
 const express = require('express');
-const { User } = require('./models');
+const { requestCreateUser } = require('./controllers/User');
+
+const {
+  isValidName,
+  isValidEmail,
+  isValidPassword,
+  uniqueEmail,
+} = require('./middlewares');
 
 const app = express();
 
@@ -10,16 +17,11 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/user', async (req, res) => {
-  try {
-    const { displayName, email, password, image } = req.body;
-    const createUser = await User.create({ displayName, email, password, image });
-
-    return res.status(201).json(createUser);
-  } catch (e) {
-    console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
-  }
-});
+app.post('/user',
+  isValidName,
+  isValidEmail,
+  isValidPassword,
+  uniqueEmail,
+  requestCreateUser);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
