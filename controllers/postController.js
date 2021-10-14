@@ -1,4 +1,4 @@
-const { registerPost } = require('../services/postService');
+const { registerPost, getAllPosts } = require('../services/postService');
 const middlewares = require('../middlewares');
 
 const createPost = async (req, res, next) => {
@@ -12,6 +12,17 @@ const createPost = async (req, res, next) => {
   return res.status(201).json(newPost);
 };
 
+const getPosts = async (_req, res) => {
+  try {
+    const posts = await getAllPosts();
+    return res.status(200).json(posts);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   createPost,
+  getPosts,
 };

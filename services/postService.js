@@ -1,5 +1,5 @@
 const middlewares = require('../middlewares');
-const { BlogPost } = require('../models');
+const { User, BlogPost, Category } = require('../models');
 
 const registerPost = async (body, token) => {
   const { title, categoryIds, content } = body;
@@ -12,6 +12,10 @@ const registerPost = async (body, token) => {
   return newPost;
 };
 
+const getAllPosts = async () => BlogPost.findAll({
+    include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }] });
+
 module.exports = {
   registerPost,
+  getAllPosts,
 };
