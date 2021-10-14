@@ -1,4 +1,6 @@
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+require('dotenv');
 
 const verifyDisplayName = (displayName) => {
   if (displayName.length < 8) return false;
@@ -22,9 +24,15 @@ const addUser = async (user) => {
   return User;
 };
 
+const getAllUsers = async () => {
+  const result = await User.findAll();
+  return result;
+};
+
 module.exports = {
   verifyDisplayName,
   verifyEmail,
   verifyUser,
   addUser,
+  getAllUsers,
 };

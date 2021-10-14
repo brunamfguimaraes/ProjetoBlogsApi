@@ -11,4 +11,8 @@ userController.verifyPassword,
 userController.verifyUser,
 userController.addUser);
 
+router.get('/',
+userController.validToken,
+userController.getAllUsers);
+
 module.exports = router;
