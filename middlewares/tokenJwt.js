@@ -10,9 +10,9 @@ const jwtConfig = {
 
 const generateJWT = async (req, res) => {
 try {
-  const user = { email: req.body.email, username: req.body.displayName };
+  const user = { email: req.body.email };
   const token = jwt.sign(user, secret, jwtConfig);
-  res.status(201).json({ token });
+  res.status(req.statusCode).json({ token });
 } catch (e) {
     return res.status(500).json({ message: 'Erro interno', error: e });
   }

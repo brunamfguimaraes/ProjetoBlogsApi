@@ -63,6 +63,7 @@ const verifyRegisteredUser = async (req, res, next) => {
 const createUser = async (req, _res, next) => {
   const { displayName, email, password, image } = req.body;
   await createNewUser(displayName, email, password, image);
+  req.statusCode = 201;
   next();
 };
 
