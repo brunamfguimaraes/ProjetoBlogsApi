@@ -1,6 +1,16 @@
 const { User } = require('../models');
 const messages = require('../helpers/validationMessages');
 
+const validateFields = (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (email === undefined) return res.status(400).json(messages.REQUIRED_EMAIL);
+
+  if (password === undefined) return res.status(400).json(messages.REQUIRED_PASSWORD);
+
+  next();
+};
+
 const validateDisplayName = (req, res, next) => {
   try {
     const { displayName } = req.body;
@@ -20,7 +30,19 @@ const validateEmail = (req, res, next) => {
 
     if (email && !emailRegex.test(email)) return res.status(400).json(messages.VALID_EMAIL);
 
-    if (!email) return res.status(400).json(messages.REQUIRED_EMAIL);
+    next();
+  } catch (error) {
+    return res.status(500).json(messages.ERROR);
+  } 
+};
+
+const emptyFields = (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (email.length === 0) return res.status(400).json(messages.EMPTY_EMAIL);
+
+    if (password.length === 0) return res.status(400).json(messages.EMPTY_PASSWORD);
 
     next();
   } catch (error) {
@@ -36,8 +58,6 @@ const validatePassword = (req, res, next) => {
     if (password && password.length !== passwordLength) {
       return res.status(400).json(messages.PASSWORD_LENGTH);
     }
-    
-    if (!password) return res.status(400).json(messages.REQUIRED_PASSWORD);
 
     next();
   } catch (error) {
@@ -58,9 +78,25 @@ const emailExists = async (req, res, next) => {
   }
 };
 
+const userExists = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const checkEmailUser = await User.findOne({ where: { email, password } });
+
+    if (!checkEmailUser) return res.status(400).json(messages.FIELDS_NOT_EXISTS);
+    
+    next();
+  } catch (error) {
+    return res.status(500).json(messages.ERROR);
+  }
+};
+
 module.exports = {
   validateDisplayName,
   validateEmail,
+  emptyFields,
   validatePassword,
   emailExists,
+  userExists,
+  validateFields,
 };
