@@ -4,7 +4,7 @@ const { userRoute, loginRoute, categoriesRoute, postRoute } = require('./src/rou
 const app = express();
 app.use(express.json());
 
-app.listen(3000, () => console.log('Online at port 3000!'));
+app.listen(3000, () => console.log('listening to port 3000!'));
 
 app.use('/user', userRoute);
 app.use('/login', loginRoute);
