@@ -1,4 +1,5 @@
 const express = require('express');
+const { Op } = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 const { validatePost, validatePostUpdate } = require('../helpers/validate');
 
@@ -23,6 +24,23 @@ router.get('/', async (_req, res) => {
   }
 });
 
+router.get('/search', async (req, res) => {
+  const { q } = req.query;
+  try {
+    const posts = await BlogPost.findAll({
+      where: {
+        [Op.or]: [{ title: { [Op.like]: `%${q}%` } }, { content: { [Op.like]: `%${q}%` } }],
+      },
+      include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } }],
+    });
+    return res.status(200).json(posts);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: SERVER_ERROR_MESSAGE });
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -30,7 +48,6 @@ router.get('/:id', async (req, res) => {
       include: [{ model: User,
         as: 'user',
         attributes: { exclude: ['password'] } },
-        // through: { attributes: [] } },
       { model: Category, as: 'categories', through: { attributes: [] } }],
     });
 
@@ -42,22 +59,6 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: SERVER_ERROR_MESSAGE });
   }
 });
-
-// URL a ser utilizada para o exemplo http://localhost:3000/user/search/1?email=aqui-o-email
-// router.get('/search/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { email } = req.query;
-//     const user = await User.findOne({ where: { id, email } });
-
-//     if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
-
-//     return res.status(200).json(user);
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: SERVER_ERROR_MESSAGE });
-//   }
-// });
 
 router.post('/', async (req, res) => {
   const { id } = req.user;
@@ -94,7 +95,6 @@ router.put('/:id', async (req, res) => {
     const updatedPost = await BlogPost.findByPk(id, {
       attributes: { include: ['title', 'content', 'userId'] },
       include: [{ model: Category, as: 'categories', through: { attributes: [] } }] });
-    // console.log('updatedPost:', updatedPost);
     if (!updatedPost) return res.status(404).json({ message: 'Post does not exist' });
 
     return res.status(200).json(updatedPost);
@@ -106,17 +106,16 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  const post = await BlogPost.findByPk(id);
-
-  if (!post) return res.status(404).json({ message: 'Post does not exist' });
-  if (req.user.id !== post.userId) {
-    return res.status(401).json({ message: 'Unauthorized user' });
-  }
   try {
-    await BlogPost.destroy({ where: { id } });
-
-    return res.status(200);
-    // return res.status(200).json({ message: 'Post excluído com sucesso!' });
+    const post = await BlogPost.findByPk(id);
+    if (post) {
+      if (req.user.id === post.userId) {
+        await post.destroy();
+        return res.status(204).json({ message: 'Post deleted successfully' });          
+      } 
+        return res.status(401).json({ message: 'Unauthorized user' });
+    }
+    return res.status(404).json({ message: 'Post does not exist' });
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: SERVER_ERROR_MESSAGE });

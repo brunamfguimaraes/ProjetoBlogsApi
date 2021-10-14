@@ -85,16 +85,13 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/me', validateJWT, async (req, res) => {
   try {
-    const { id } = req.params;
-    const deleteUser = await User.destroy(
+    const { id } = req.user;
+    await User.destroy(
       { where: { id } },
     );
-
-    console.log(deleteUser);
-
-    return res.status(200).json({ message: 'Usuário excluído com sucesso!' });
+    return res.status(204).json({ message: 'User deleted successfully' });
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: SERVER_ERROR_MESSAGE });
