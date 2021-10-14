@@ -6,17 +6,15 @@ const {
 const createUserService = async (body) => {
   const { email } = body;
   const validateField = validateIfFieldsExist(body);
-  // console.log(validateField, 'validatefield');
   if (validateField) return validateField;
 
   const validateUser = await User.findOne({ where: { email } });
-  // console.log(validateUser, 'validate user');
   if (validateUser) return { message: 'User already registered' }; 
   const user = await User.create(body);
   return user;
 };
 
-const LoginUserService = async (body) => {
+const loginUserService = async (body) => {
   const { email, password } = body;
   const validateField = validateIfLoginFieldsExist(body);
   if (validateField) return validateField;
@@ -27,4 +25,13 @@ const LoginUserService = async (body) => {
 
   return true; 
 };
-module.exports = { createUserService, LoginUserService };
+
+const getAllUsersService = async () => {
+  const user = await User.findAll();
+  
+  return user;
+};
+module.exports = { createUserService,
+loginUserService, 
+  getAllUsersService, 
+};

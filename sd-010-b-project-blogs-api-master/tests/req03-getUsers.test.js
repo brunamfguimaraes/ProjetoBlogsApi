@@ -40,6 +40,8 @@ describe('3 - Sua aplicação deve ter o endpoint GET `/user`', () => {
         const { json } = responseSales;
         const firstUser = json[0];
         const secondUser = json[1];
+        console.log(json, json.user)
+
         expect(firstUser.displayName).toBe('Lewis Hamilton');
         expect(firstUser.email).toBe('lewishamilton@gmail.com');
         expect(firstUser.image).toBe('https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg');

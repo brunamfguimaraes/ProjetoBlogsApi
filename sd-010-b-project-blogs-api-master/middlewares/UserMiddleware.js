@@ -1,5 +1,8 @@
 const Joi = require('@hapi/joi');
+const jwt = require('jsonwebtoken');
 const { renderError } = require('../helper/renderError');
+
+const TOKEN_ERROR_MSG = 'Expired or invalid token';
 
 const validateIfFieldsExist = (body) => {
   const { error } = Joi.object({
@@ -33,4 +36,27 @@ const validateIfLoginFieldsExist = (body) => {
   }
 };
 
-module.exports = { validateIfFieldsExist, validateIfLoginFieldsExist };
+const validateToken = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const segredo = process.env.SECRETPASSWORD;
+
+  if (!token) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
+    try {
+      const decoded = jwt.verify(token, segredo);
+      const userWithoutPassword = {
+          username: decoded.payload.email,
+          role: decoded.payload.role,
+          userId: decoded.payload.userId,
+      };
+        req.user = userWithoutPassword;
+        console.log(req.user, 'decoded', decoded);
+
+        next();
+} catch (err) {
+  return res.status(401).json({ message: TOKEN_ERROR_MSG });
+}
+};
+
+module.exports = { validateIfFieldsExist, validateIfLoginFieldsExist, validateToken };
