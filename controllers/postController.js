@@ -28,9 +28,15 @@ const { id, title, content, userId } = result;
 return res.status(201).json({ id, title, content, userId });
 };
 
+const getAll = async (req, res) => {
+  const result = await postServices.getAll();
+  return res.status(200).json(result);
+};
+
 module.exports = {
   createPost,
   verifyTitle,
   verifyContent,
   verifyCategoryId,
+  getAll,
 };
