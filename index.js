@@ -14,4 +14,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/', userController);
+app.post('/user', userController);

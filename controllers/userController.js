@@ -7,7 +7,7 @@ const router = express.Router();
 
 const secret = 'seusecretdetoken';
 
-router.post('/', async (req, res) => {
+router.post('/user', async (req, res) => {
     const { displayName, email, password, image } = req.body;
 
     const createUser = await userService.createUser({ displayName, email, password, image });
