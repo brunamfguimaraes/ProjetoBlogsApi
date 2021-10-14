@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../services/userService');
 
-router.post('/user', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
     

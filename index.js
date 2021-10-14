@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(userController);
+app.use('/user', userController);
 
 // const PORT = 3000;
 
