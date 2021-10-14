@@ -25,7 +25,7 @@ usersControllers.post(
     await usersServices.createUser(displayName, email, password, image);
     const token = createToken(email);
     return res.status(CREATED_STATUS).json({ token });
-  })
+  }),
 );
 
 usersControllers.get(
@@ -34,7 +34,7 @@ usersControllers.get(
   rescue(async (_req, res, _next) => {
     const users = await usersServices.getAllUsers();
     return res.status(OK_STATUS).json(users);
-  })
+  }),
 );
 
 usersControllers.get(
@@ -48,7 +48,7 @@ usersControllers.get(
       return res.status(NOT_FOUND_STATUS).json({ message });
     }
     return res.status(OK_STATUS).json(user);
-  })
+  }),
 );
 
 module.exports = usersControllers;
