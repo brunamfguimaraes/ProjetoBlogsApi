@@ -8,9 +8,10 @@ const jwtConfig = {
     algorithm: 'HS256',
   };
 const getAll = async (req, res) => {
+    console.log('token validado');
     try {
         const users = await usersService.getAll();
-        return res.status(201).json(users);
+        return res.status(200).json(users);
     } catch (error) {
         return res.status(500).json({ message: 'Ops, algo de errado :( ' });
     }

@@ -2,7 +2,7 @@ const { User } = require('../models');
 const { validName, validEmail, validPassword } = require('../validations/validations');
 
 const getAll = async () => {
-    const users = await User.getAll();
+    const users = await User.findAll();
     return users;
 };
 const validUnd = (email, password) => {
