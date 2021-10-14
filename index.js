@@ -4,6 +4,7 @@ const validationError = require('./src/middlewares/validations/error');
 const userRoute = require('./src/routes/userRouter');
 
 const loginRouter = require('./src/routes/loginRouter');
+// comentário apra subir requisito 1
 
 // const { PORT } = process.env;
 
