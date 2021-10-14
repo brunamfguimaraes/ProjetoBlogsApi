@@ -6,7 +6,7 @@ checkPassword, checkName, checkEmail, createUser,
 testeEmptyEmail, getUser } = require('./services/user.js');
   // testeEmptyPassword, validaToken, getAllUsers, getUser, , userLogin, } = require('./services/user.js');
 
-const { verifyCategory,
+const { verifyCategory, getAllCategories,
   createCategory } = require('./services/categories.js');// , getAllCategories } = require('./services/categories.js');
 
 // const { verifyCategoryId, verifyContent,
@@ -30,7 +30,7 @@ app.post('/categories', validaToken, verifyCategory, createCategory);
 
 app.get('/user', validaToken, getAllUsers);
 app.get('/user/:id', validaToken, getUser);
-// app.get('/categories', validaToken, getAllCategories);
+app.get('/categories', validaToken, getAllCategories);
 // app.get('/post', validaToken, getAllPosts);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
