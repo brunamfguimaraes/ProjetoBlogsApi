@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
+app.get('/categories', validateToken, categoryController.getAllCategorys);
 app.post('/categories', validateToken, categoryController.createCategory);
 app.post('/user', userController.createUser);
 app.post('/login', userController.loginUser);
