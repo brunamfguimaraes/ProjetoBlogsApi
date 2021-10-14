@@ -13,3 +13,5 @@ app.listen(PORT, () => console.log(`Escutando na porta ${PORT}`));
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use('/user', );
