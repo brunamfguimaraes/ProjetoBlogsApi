@@ -30,4 +30,16 @@ const allPosts = async () => {
   return posts;
 };
 
-module.exports = { createNewPost, emptyFields, invalidCategory, allPosts };
+const onePost = async (id) => {
+  const post = await BlogPost.findOne({ where: { id },
+    include: [{ model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  if (!post) {
+    throw new Error('Post does not exist');
+  }
+  return post;
+};
+
+module.exports = { createNewPost, emptyFields, invalidCategory, allPosts, onePost };

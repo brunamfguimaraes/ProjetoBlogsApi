@@ -1,5 +1,5 @@
 const {
-  createNewPost, emptyFields, invalidCategory, allPosts,
+  createNewPost, emptyFields, invalidCategory, allPosts, onePost,
 } = require('../services/postsService');
 
 const verifyEmptyFields = async (req, res, next) => {
@@ -34,4 +34,16 @@ const getAllPosts = async (_req, res) => {
   return res.status(200).json(posts);
 };
 
-module.exports = { createPost, verifyEmptyFields, checkCategories, getAllPosts };
+const getOnePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await onePost(id);
+    return res.status(200).json(post);
+  } catch (error) {
+      return res.status(404).json({ message: error.message });
+    }
+};
+
+module.exports = {
+  createPost, verifyEmptyFields, checkCategories, getAllPosts, getOnePost,
+};
