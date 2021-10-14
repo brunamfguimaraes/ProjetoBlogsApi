@@ -6,7 +6,7 @@ const {
   verifyBlankFields,
 } = require('../controllers/loginController');
 
-const generateJWT = require('../middlewares/tokenJwt');
+const { generateJWT } = require('../middlewares/tokenJwt');
 
 const router = express.Router();
 

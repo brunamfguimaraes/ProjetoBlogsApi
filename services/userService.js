@@ -57,10 +57,18 @@ const createNewUser = async (displayName, email, password, image) => {
     return response;
 };
 
+const allUsers = async () => {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
+  return users;
+};
+
 module.exports = {
   createNewUser,
   fieldLength,
   validateEmail,
   verifyEmptyFields,
   registeredEmail,
+  allUsers,
 };

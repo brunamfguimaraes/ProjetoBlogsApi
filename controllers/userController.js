@@ -5,6 +5,7 @@ const {
   validateEmail,
   verifyEmptyFields,
   registeredEmail,
+  allUsers,
 } = require('../services/userService');
 
 const verifyFieldsEmpty = async (req, res, next) => {
@@ -67,10 +68,16 @@ const createUser = async (req, _res, next) => {
   next();
 };
 
+const getAllUsers = async (_req, res) => {
+  const response = await allUsers();
+  res.status(200).json(response);
+};
+
 module.exports = {
   createUser,
   verifyFieldsLength,
   verifyEmail,
   verifyFieldsEmpty,
   verifyRegisteredUser,
+  getAllUsers,
 };
