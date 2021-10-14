@@ -4,7 +4,8 @@ const {
   CREATED,
   OK,
   NOT_FOUND,
-  UNAUTHORIZED } = require('http-status');
+  UNAUTHORIZED, 
+  NO_CONTENT } = require('http-status');
 
 const blogPostService = require('../services/blogPostService');
 
@@ -68,9 +69,27 @@ const updatePost = async (req, res) => {
   }
 };
 
+const removePost = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+    const { userId } = req;
+
+    const result = await blogPostService.removePost({ postId, userId });
+
+    if (result.message && result.unauthorized) return res.status(UNAUTHORIZED).json(result);
+    if (result.message) return res.status(NOT_FOUND).json(result);
+
+    return res.status(NO_CONTENT).send();
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error.message });  
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
+  removePost,
 };

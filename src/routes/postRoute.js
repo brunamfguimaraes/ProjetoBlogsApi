@@ -4,7 +4,8 @@ const {
   createPost,
   getAllPosts,
   getPostById,
-  updatePost } = require('../controllers/postController');
+  updatePost,
+  removePost } = require('../controllers/postController');
 
 const router = express.Router();
 
@@ -26,6 +27,10 @@ router.route('/:id')
   .put(
     valiteJWT,
     updatePost,
+  )
+  .delete(
+    valiteJWT,
+    removePost,
   );
 
 module.exports = router;
