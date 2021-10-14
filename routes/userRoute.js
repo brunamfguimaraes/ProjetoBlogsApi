@@ -7,6 +7,7 @@ const {
   verifyFieldsEmpty,
   verifyRegisteredUser,
   getAllUsers,
+  getOneUser,
 } = require('../controllers/userController');
 
 const { generateJWT, validateJWT } = require('../middlewares/tokenJwt');
@@ -17,5 +18,7 @@ router.post('/', verifyFieldsEmpty,
   verifyFieldsLength, verifyEmail, verifyRegisteredUser, createUser, generateJWT);
 
 router.get('/', validateJWT, getAllUsers);
+
+router.get('/:id', validateJWT, getOneUser);
 
 module.exports = router;

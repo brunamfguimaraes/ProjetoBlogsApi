@@ -64,6 +64,16 @@ const allUsers = async () => {
   return users;
 };
 
+const oneUser = async (userId) => {
+  const user = await User.findOne({ where: { id: userId },
+    attributes: { exclude: ['password'] },
+  });
+  if (!user) {
+    throw new Error('User does not exist');
+  }
+  return user;
+};
+
 module.exports = {
   createNewUser,
   fieldLength,
@@ -71,4 +81,5 @@ module.exports = {
   verifyEmptyFields,
   registeredEmail,
   allUsers,
+  oneUser,
 };
