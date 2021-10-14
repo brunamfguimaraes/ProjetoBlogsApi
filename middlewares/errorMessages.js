@@ -9,4 +9,5 @@ module.exports = {
   alreadyExists: 'User already registered',
   invalidFields: 'Invalid fields',
   doesntExist: 'User does not exist',
+  nameIsRequired: '"name" is required',
 };

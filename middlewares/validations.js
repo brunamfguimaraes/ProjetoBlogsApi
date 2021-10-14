@@ -54,4 +54,10 @@ const verifyCreateLogin = async (email, password) => {
   }
 };
 
-module.exports = { verifyCreateUser, verifyCreateLogin };
+const verifyNameCategorie = (name) => {
+  if (!name) {
+    throw new Indexerror(codes.badRequest, errorMessages.nameIsRequired);
+  }
+};
+
+module.exports = { verifyCreateUser, verifyCreateLogin, verifyNameCategorie };

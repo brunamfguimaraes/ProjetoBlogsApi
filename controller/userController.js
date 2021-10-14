@@ -1,5 +1,4 @@
 const userService = require('../services/userServices');
-const { User } = require('../models');
 
 const JWTgenerate = require('../middlewares/JWTgenerate');
 
