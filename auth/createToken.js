@@ -7,7 +7,7 @@ const newToken = async (body) => {
   const { displayName, email, id } = body;
 
   const jwtConfig = {
-    expiresIn: '10min',
+    expiresIn: '7d',
     algorithm: 'HS256',
   };
 

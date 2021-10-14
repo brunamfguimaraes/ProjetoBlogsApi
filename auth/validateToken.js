@@ -10,6 +10,7 @@ const validateJWT = async (req, res, next) => {
   jwt.verify(token, secret, (err, decoded) => {
     if (decoded) {
       const { id } = decoded;
+      console.log(`${id} sou o id`);
       req.userId = id;
     }
 
