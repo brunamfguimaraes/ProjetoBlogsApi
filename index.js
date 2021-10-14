@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { user } = require('./controllers/userController');
+const { user, login } = require('./controllers/userController');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,3 +14,5 @@ app.get('/', (request, response) => {
 
 app.route('/user')
   .post(user);
+
+app.post('/login', login);
