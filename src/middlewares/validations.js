@@ -11,14 +11,15 @@ const validateName = (req, res, next) => {
 };
 
 const validateEmail = (req, res, next) => {
-  const { email } = req.body;
+  const { body } = req;
+  const bodyKeys = Object.keys(body);
   const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.([a-z]+)?$/i;
   
-  if (!email || !email.length) {
+  if (!bodyKeys.includes('email')) {
     return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('noEmail') });
   }
   
-  if (!regexEmail.test(email)) {
+  if (!regexEmail.test(body.email)) {
     return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('email') });
   }
 
@@ -28,13 +29,26 @@ const validateEmail = (req, res, next) => {
 const validatePassword = (req, res, next) => {
   const { password } = req.body;
 
-  if (!password || !password.length) {
+  if (!password) {
     return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('noPassword') });
   }
   
-  console.log(password.toString().length !== 6);
   if (password.toString().length !== 6) {
     return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('password') });
+  }
+
+  next();
+};
+
+const validateEmptyFields = (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (email === '') {
+    return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('emailEmpty') });
+  }
+
+  if (password === '') {
+    return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('passwordEmpty') });
   }
 
   next();
@@ -44,4 +58,5 @@ module.exports = {
   validateName,
   validateEmail,
   validatePassword,
+  validateEmptyFields,
 };

@@ -13,6 +13,19 @@ const registerUser = async (req, res) => {
   }
 };
 
+const logInUser = async (req, res) => {
+  try {
+    const userInfo = req.body;
+    const { code, notification } = await service.loginUser(userInfo);
+
+    return res.status(code).json(notification);
+  } catch (e) {
+    console.log(e);
+    return res.status(HTTP_INTERNAL_SERVER_ERROR).json({ message: 'Internal error' });
+  }
+};
+
 module.exports = {
   registerUser,
+  logInUser,
 };

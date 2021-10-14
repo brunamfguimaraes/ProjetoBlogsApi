@@ -5,4 +5,7 @@ module.exports = (errorType) => ({
   password: '"password" length must be 6 characters long',
   noPassword: '"password" is required',
   userConflict: 'User already registered',
+  emailEmpty: '"email" is not allowed to be empty',
+  passwordEmpty: '"password" is not allowed to be empty',
+  nonExistentUser: 'Invalid fields',
 })[errorType];
