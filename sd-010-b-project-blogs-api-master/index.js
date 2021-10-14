@@ -13,6 +13,7 @@ app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 app.post('/user', userController.createUser);
 app.post('/login', userController.loginUser);
+app.get('/user/:id', validateToken, userController.getUserById);
 app.get('/user', validateToken, userController.getAllUsers);
 
 // não remova esse endpoint, e para o avaliador funcionar

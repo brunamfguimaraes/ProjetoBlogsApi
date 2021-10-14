@@ -31,7 +31,16 @@ const getAllUsersService = async () => {
   
   return user;
 };
+
+const getUserByIdService = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  if (!user) return { message: 'User does not exist' };
+
+  return user;
+};
+
 module.exports = { createUserService,
 loginUserService, 
   getAllUsersService, 
+  getUserByIdService,
 };

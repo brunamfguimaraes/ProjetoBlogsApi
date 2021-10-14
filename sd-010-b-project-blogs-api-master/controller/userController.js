@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { createUserService, loginUserService, 
+const { createUserService, loginUserService, getUserByIdService,
   getAllUsersService } = require('../service/userService');
 require('dotenv').config();
 
@@ -58,4 +58,17 @@ const getAllUsers = async (req, res) => {
       return res.status(400).json({ message });
     }
 };
-module.exports = { createUser, loginUser, getAllUsers };
+
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await getUserByIdService(id);
+    console.log(user);
+    if (user.message) return res.status(404).json({ message: user.message });
+    return res.status(200).json(user);
+  } catch (err) {
+    const { message } = err;
+    return res.status(400).json({ message });
+  }
+};
+module.exports = { createUser, loginUser, getAllUsers, getUserById };
