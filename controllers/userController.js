@@ -10,13 +10,13 @@ const {
 const verifyFieldsEmpty = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if (!password) verifyEmptyFields('password');
-    if (!email)verifyEmptyFields('email');
+    if (!password) await verifyEmptyFields('password');
+    if (!email) await verifyEmptyFields('email');
     next();
   } catch (e) {
     if (e.name === 'emptyError') {
       const response = e.message;
-      return res.status(400).json(response);
+      return res.status(400).json({ message: response });
     }
   }
 };
@@ -29,7 +29,7 @@ const verifyFieldsLength = async (req, res, next) => {
   } catch (e) {
     if (e.name === 'lengthError') {
       const response = e.message;
-      return res.status(400).json(response);
+      return res.status(400).json({ message: response });
       }
     }
 };
@@ -42,7 +42,7 @@ const verifyEmail = async (req, res, next) => {
   } catch (e) {
     if (e.name === 'emailError') {
       const response = e.message;
-      return res.status(400).json(response);
+      return res.status(400).json({ message: response });
       }
     }
 };
@@ -55,7 +55,7 @@ const verifyRegisteredUser = async (req, res, next) => {
   } catch (e) {
     if (e.name === 'registeredUser') {
       const response = e.message;
-      return res.status(409).json(response);
+      return res.status(409).json({ message: response });
       }
     }
 };

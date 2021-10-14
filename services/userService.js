@@ -2,40 +2,41 @@ const { User } = require('../models');
 
 const verifyEmptyFields = (field) => {
   if (field) {
-    const err = { name: 'emptyError',
-    message: `'${field}' is required` };
-    throw err;
+  const err = { name: 'emptyError',
+  message: `"${field}" is required` };
+  throw err;
   }
   return false;
 };
 
 const validateNameAndPassword = (field, count, length) => {
   if (count < length) {
+    const atLeast = field === 'displayName' ? ' at least ' : ' ';
     const err = { name: 'lengthError',
-    message: `'${field}' lenght must be at least ${length} characters long` };
+    message: `"${field}" length must be${atLeast}${length} characters long` };
     throw err;
   }
   return false;
 };
 
-const fieldLength = (v1, v2) => {
+const fieldLength = async (v1, v2) => {
   const DISPLAY_LENGTH = 8;
   const PASSWORD_LENGTH = 6;
   const count1 = v1.length;
   const count2 = v2.length;
   if (v1.length < DISPLAY_LENGTH) {
-    validateNameAndPassword('displayName', count1, DISPLAY_LENGTH);
+    await validateNameAndPassword('displayName', count1, DISPLAY_LENGTH);
   } if (v2.length < PASSWORD_LENGTH) {
-    validateNameAndPassword('password', count2, PASSWORD_LENGTH);
+    await validateNameAndPassword('password', count2, PASSWORD_LENGTH);
   }
 };
 
-const validateEmail = (email) => {
+const validateEmail = async (email) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const validation = re.test(email);
   if (!validation) {
     const err = { name: 'emailError',
-    message: '\'email\' must be a valid email' };
+    message: '"email" must be a valid email' };
     throw err;
   }
 };
