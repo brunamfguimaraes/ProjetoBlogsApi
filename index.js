@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { User } = require('./models');
+const { User, Categorie } = require('./models');
 const messages = require('./helpers/validationMessages');
 
 const app = express();
@@ -34,8 +34,8 @@ const {
       if (!user) return res.status(404).json(messages.USER_DOES_NOT_EXIST);
 
       return res.status(200).json(user);
-    } catch (e) {
-      console.log(e.message);
+    } catch (error) {
+      console.log(error.message);
       res.status(500).json({ message: 'Algo deu errado' });
     }
   });
@@ -45,8 +45,8 @@ const {
       const users = await User.findAll();
   
       return res.status(200).json(users);
-    } catch (e) {
-      console.log(e.message);
+    } catch (error) {
+      console.log(error.message);
       res.status(500).json({ message: 'Algo deu errado' });
     }
   });
@@ -76,8 +76,8 @@ const {
       const token = jwt.sign({ payload: userWithoutPassword }, JWT_SECRET, jwtConfig);
   
       return res.status(201).json({ token });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       res.status(500).json(messages.ERROR);
     }
   });
@@ -100,8 +100,23 @@ const {
       const token = jwt.sign({ payload: userWithoutPassword }, JWT_SECRET, jwtConfig);
   
       return res.status(200).json({ token });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(messages.ERROR);
+    }
+  });
+
+  app.post('/categories', validationJWT, async (req, res) => {
+    try {
+      const { name } = req.body; 
+      
+      if (!name) return res.status(400).json(messages.REQUIRED_NAME);
+      
+      const createCategorie = await Categorie.create({ name });
+  
+      return res.status(201).json(createCategorie);
+    } catch (error) {
+      console.log(error);
       res.status(500).json(messages.ERROR);
     }
   });
