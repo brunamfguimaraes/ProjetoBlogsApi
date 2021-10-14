@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { create, getAllPosts } = require('../../controllers/postController');
+const { create, getAllPosts, getPostByID } = require('../../controllers/postController');
 
 const validateToken = require('../../middlewares/validateToken');
 
@@ -8,6 +8,7 @@ const validateToken = require('../../middlewares/validateToken');
    validateTitle,
    validateContent,
    validateContegoryIds,
+   validateExistPost,
   } = require('../../middlewares/postMiddleware');
 
 const router = express.Router();
@@ -19,6 +20,13 @@ router.post('/',
   validateContegoryIds,
   create);
 
-router.get('/', validateToken, getAllPosts);
+router.get('/', 
+  validateToken, 
+  getAllPosts);
+  
+router.get('/:id',
+  validateToken, 
+  validateExistPost,
+  getPostByID);
 
 module.exports = router;
