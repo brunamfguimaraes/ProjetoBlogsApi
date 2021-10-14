@@ -58,7 +58,7 @@ const createUser = async (displayName, email, password, image) => {
     return validates;
   }
 
-  const emailIsNotUnique = await User.findOne({ email });
+  const emailIsNotUnique = await User.findOne({ where: { email } });
   if (emailIsNotUnique) {
     return respEmailUnique;
   }
