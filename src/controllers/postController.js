@@ -14,18 +14,18 @@ const createPost = async (req, res, next) => {
   }
 };
 
-// const getCategories = async (_req, res, next) => {
-//   try {
-//     const categories = await CategoryService.getCategories();
+const getPosts = async (_req, res, next) => {
+  try {
+    const posts = await PostService.getAllPosts();
 
-//     return res.status(codes.ok).json(categories);
-//   } catch (error) {
-//     console.log(error);
-//     return next(error);
-//   }
-// };
+    return res.status(codes.ok).json(posts);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+};
 
 module.exports = {
   createPost,
-  // getCategories,
+  getPosts,
 };

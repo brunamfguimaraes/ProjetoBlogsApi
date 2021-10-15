@@ -6,6 +6,7 @@ const Category = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
+      tableName: 'Categories',
     },
   );
 
