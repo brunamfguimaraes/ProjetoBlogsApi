@@ -20,7 +20,7 @@ const validEmail = rescue(async (req, _res, next) => {
   if (!findEmail) { 
     return next({ status: 400, message: 'Invalid fields' }); 
   }
-  next();
+  return next();
 });
 
 module.exports = { validLogin, validEmail };

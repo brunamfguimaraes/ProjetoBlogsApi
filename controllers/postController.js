@@ -8,7 +8,7 @@ const add = rescue(async (req, res) => {
   categoryIds.forEach(async (categoryId) => PostsCategorie.create(
     { postId: payload.id, categoryId },
   ));
-  res.status(201).json(newCategory);
+  return res.status(201).json(newCategory);
 });
 
 const findAll = rescue(async (req, res) => {
@@ -16,7 +16,7 @@ const findAll = rescue(async (req, res) => {
      include: [{ all: true, attributes: { exclude: ['password'] } }],
   });
 
-  res.status(200).json(findBlog);
+  return res.status(200).json(findBlog);
 });
 
 module.exports = { add, findAll };

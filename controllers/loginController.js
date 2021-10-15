@@ -9,7 +9,7 @@ const login = rescue(async (req, res) => {
   const { id, email } = loginResult;
   const payload = { id, email };
   const token = jwtLogin(payload);
-  res.status(200).json({ token });
+  return res.status(200).json({ token });
 });
 
 module.exports = { login };

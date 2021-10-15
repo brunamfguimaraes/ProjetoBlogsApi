@@ -22,15 +22,15 @@ const uniqueEmail = rescue(async (req, _res, next) => {
   if (findEmail) { 
     return next({ status: 409, message: 'User already registered' }); 
   }
-  next();
+  return next();
 });
 
 const validId = rescue(async (req, _res, next) => {
   const findId = await User.findByPk(req.params.id);
   if (!findId) {
-    next({ status: 404, message: 'User does not exist' });
+    return next({ status: 404, message: 'User does not exist' });
   }
-  next();
+  return next();
 });
 
 module.exports = { validUser, uniqueEmail, validId };

@@ -11,7 +11,7 @@ const validPost = rescue(async (req, _res, next) => {
    if (error) {
       return next(error);
    }
-   next();
+   return next();
 });
 
 const validCategoryIds = rescue(async (req, _res, next) => {
@@ -20,11 +20,11 @@ const validCategoryIds = rescue(async (req, _res, next) => {
   categoryIds.map(async (categoryId) => {
     const result = await PostsCategorie.findOne({ where: { categoryId } });
     if (!result) {
-      next({ status: 400, message: '"categoryIds" not found' });
+      return next({ status: 400, message: '"categoryIds" not found' });
     }
   });
 
-  next();
+  return next();
 });
 
 module.exports = { validPost, validCategoryIds };
