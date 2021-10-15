@@ -4,11 +4,11 @@ require('dotenv').config();
 const secret = process.env.JWT_SECRET;
 
 const jwtError = {
-  message: 'jwt malformed',
+  message: 'Expired or invalid token',
 };
 
 const missingJwtError = {
-  message: 'missing auth token',
+  message: 'Token not found',
 };
 
 const validateToken = async (req, res, next) => {
@@ -27,6 +27,4 @@ const validateToken = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  validateToken,
-};
+module.exports = validateToken;

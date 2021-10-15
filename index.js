@@ -4,6 +4,7 @@ const usersController = require('./controllers/usersController');
 
 const validateUser = require('./middlewares/validateUserInfo');
 const validateLogin = require('./middlewares/validateLoginInfo');
+const validateJWT = require('./middlewares/validateJWT');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,4 +23,4 @@ app.post('/user', validateUser, usersController.createUser);
 
 app.post('/login', validateLogin, usersController.loginUser);
 
-app.get('/user', );
+app.get('/user', validateJWT, usersController.getAll);

@@ -35,7 +35,9 @@ const createUser = async (userInfo) => {
     return {
       resp: {
         status: 201,
-        content: jwt,
+        content: {
+          token: jwt,
+        },
       },
     };
   } catch (e) { return genericError; }
@@ -70,7 +72,9 @@ const loginUser = async (userInfo) => {
   return {
     resp: {
       status: 200,
-      content: jwt,
+      content: {
+        token: jwt,
+      },
     },
   };
 };
