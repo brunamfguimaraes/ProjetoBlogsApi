@@ -7,6 +7,7 @@ const validateJWT = async (req, res, next) => {
   if (!authorization) {
     next('missingAuthToken');
   }
+
   jwt.verify(authorization, SECRET, (err, decoded) => {
     if (decoded) {
       const { id } = decoded;
