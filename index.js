@@ -3,6 +3,7 @@ const express = require('express');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const categoriesController = require('./controllers/categoriesController');
+const postController = require('./controllers');
 const validateJWT = require('./middlewares/validateJWT');
 
 const app = express();
@@ -21,3 +22,4 @@ app.get('/user/:id', validateJWT, userController);
 app.get('/user', validateJWT, userController);
 app.post('/categories', validateJWT, categoriesController); 
 app.get('/categories', validateJWT, categoriesController);
+app.post('/post', validateJWT, postController);
