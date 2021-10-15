@@ -1,11 +1,11 @@
-const express = require('express');
+// const express = require('express');
 
-const CODE = require('http-status-codes');
+// const CODE = require('http-status-codes');
 
-const { Category } = require('../models');
+// const { Category } = require('../models');
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post('/categories', async (req, res) => {
-  const { name } = req.body;
-});
+// router.post('/categories', async (req, res) => {
+//   const { name } = req.body;
+// });
