@@ -1,5 +1,5 @@
 const postService = require('../services/postService');
-const { CREATED } = require('./msgStatus');
+const { CREATED, OK } = require('./msgStatus');
 
 const createPost = async (req, res) => {
   const newPost = req.body;
@@ -8,6 +8,12 @@ const createPost = async (req, res) => {
   return res.status(CREATED).json(blogPost);
 };
 
+const getPosts = async (_req, res) => {
+  const blogPosts = await postService.getPosts();
+  return res.status(OK).json(blogPosts);
+};
+
 module.exports = {
   createPost,
+  getPosts,
 };
