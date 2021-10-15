@@ -20,4 +20,17 @@ const createPost = async (req, res) => {
   return res.status(201).json({ id, title, content, userId });
 };
 
-module.exports = { createPost };
+const getAllPosts = async (req, res) => {
+  const posts = await BlogPosts.findAll({
+    include: [
+      { model: Users, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return res.status(200).json(posts);
+};
+
+module.exports = {
+  createPost,
+  getAllPosts,
+};
