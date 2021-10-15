@@ -23,7 +23,6 @@ const createLogin = async ({ email, password }) => {
 
 const getUsers = async () => {
   const users = await User.findAll();
-  console.log(users);
   const userWithoutPass = users.map((user) => removeUserPass(user));
   return userWithoutPass;
 };

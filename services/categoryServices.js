@@ -7,4 +7,10 @@ const createCategory = async (name) => {
   return category;
 };
 
-module.exports = { createCategory };
+const getCategories = async () => {
+  const category = await Category.findAll();
+  // const userWithoutPass = users.map((user) => removeUserPass(user));
+  return category;
+};
+
+module.exports = { createCategory, getCategories };
