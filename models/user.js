@@ -1,4 +1,4 @@
-const User = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('User', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     displayName: DataTypes.STRING,
@@ -8,14 +8,12 @@ const User = (sequelize, DataTypes) => {
   },
   {
     timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
-    tableName: 'User',
+    tableName: 'Users',
   });
-  User.associate = (models) => {
-    User.hasMany(models.BlogPost,
+  user.associate = (models) => {
+    user.hasMany(models.BlogPost,
       { foreignKey: 'userId', as: 'blogposts' });
   };
 
   return user;
 };
-
-module.exports = User;
