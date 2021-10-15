@@ -1,8 +1,9 @@
+const { CREATED } = require('http-status');
 const { User } = require('../models');
 
-const createUser = async (req, _res) => {
-  const { body } = req;
-  return User.create(body);
+const createUser = async (req, res) => {
+  const userData = await User.create(req.body);
+  res.status(CREATED).json(userData);
 };
 
 module.exports = { createUser };
