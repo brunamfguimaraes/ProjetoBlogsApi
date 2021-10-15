@@ -28,6 +28,7 @@ const listAllUsers = async () => {
 const getUserById = async (id) => {
   try {
     const user = await User.findOne({ where: { id } });
+    if (user === null) return { err: { message: 'User does not exist' }, status: 404 };
     return user;
   } catch (e) {
     console.log('ERRO NO GET USERBYID', e.message);

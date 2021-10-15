@@ -37,6 +37,16 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
+  const { authorization } = req.headers;
+  if (authorization === undefined || authorization === '') {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+  try {
+    jwt.verify(authorization, secret);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
   const result = await service.getUserById(id);
   if (result.err) {
     const { err } = result;
