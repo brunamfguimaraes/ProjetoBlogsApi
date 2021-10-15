@@ -22,8 +22,17 @@ const validationEmail = rescue(async (req, res, next) => {
   }
   next();
 });
+const validateUser = rescue(async (req, res, next) => {
+const { id } = req.params;
+const findUser = await User.findOne({ where: { id } });
+if (!findUser) {
+  next('userDoesntExist');
+}
+  next();
+});
 
 module.exports = {
   validateFilds,
   validationEmail,
+  validateUser,
 };

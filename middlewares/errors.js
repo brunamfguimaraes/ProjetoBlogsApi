@@ -8,6 +8,7 @@ const statusCode = {
   missingAuthToken: 401,
   userDontExist: 400,
   expiredToken: 401,
+  userDoesntExist: 404,
 
 };
 const statusMenssage = {
@@ -15,6 +16,7 @@ const statusMenssage = {
   missingAuthToken: 'Token not found',
   userDontExist: 'Invalid fields',
   expiredToken: 'Expired or invalid token',
+  userDoesntExist: 'User does not exist',
 };
 
 return res.status(statusCode[err] || 500).json({ message: statusMenssage[err] });

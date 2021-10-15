@@ -8,13 +8,19 @@ const createUser = async (req, res) => {
  res.status(201).json({ token });
 };
 
-const getUser = async (req, res) => {
+const getAllUser = async (_req, res) => {
  const getAll = await User.findAll({ attributes: { exclude: ['password'] } });
- console.log(getAll);
  res.status(200).json(getAll);
+};
+
+const getUserById = async (req, res) => {
+const { id } = req.params;
+const getUser = await User.findOne({ where: { id } });
+res.status(200).json(getUser);
 };
 
 module.exports = {
   createUser,
-  getUser,
+  getAllUser,
+  getUserById,
 };
