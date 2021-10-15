@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const { validateCreateUser, validateLogin } = require('./middlewares/userValidations');
 const { postValidations, updatePostValidations } = require('./middlewares/postValidations');
@@ -12,8 +13,6 @@ const { authenticateToken } = require('./middlewares/Token');
 const app = express();
 
 app.use(bodyParser.json());
-
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
@@ -41,3 +40,5 @@ app.get('/post/:id', authenticateToken, blogPostControllers.getPostById);
 app.put('/post/:id', authenticateToken, updatePostValidations, blogPostControllers.updatePost);
 
 app.use(error);
+
+app.listen(process.env.PORT, () => console.log(`ouvindo porta ${process.env.PORT}!`));
