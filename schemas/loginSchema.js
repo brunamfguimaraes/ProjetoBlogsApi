@@ -22,7 +22,7 @@ const validatePassword = (password) => {
     return { err: { message: errors.passwordUndef }, status: badRequestStatus };
   }
   if (password === '') {
-    return { err: { message: errors.passwordUndef }, status: badRequestStatus };
+    return { err: { message: errors.passwordEmpty }, status: badRequestStatus };
   }
   return {};
 };

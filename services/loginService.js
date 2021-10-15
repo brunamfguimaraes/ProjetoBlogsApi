@@ -6,10 +6,13 @@ const login = async (email, password) => {
     const loginValidation = schema.validateLogin(email, password);
     if (loginValidation.err) return loginValidation;
     const loggedUser = await User.findOne({ where: { email, password } });
-    // console.log(loggedUser);
+    console.log(loggedUser);
+    if (loggedUser === null) {
+      return { err: { message: 'Invalid fields' }, status: 400 };
+    }
     return loggedUser;
   } catch (e) {
-    console.log(e.message);
+    console.log(e.name);
     return { err: { message: 'Algo deu errado' }, status: 500 };
   }
 };

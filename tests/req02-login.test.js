@@ -10,7 +10,7 @@ describe('2 - Sua aplicação deve ter o endpoint POST `/login`', () => {
     shell.exec('npx sequelize-cli db:seed:all $');
   });
 
-  it.only('Será validado que é possível fazer login com sucesso', async () => {
+  it('Será validado que é possível fazer login com sucesso', async () => {
     await frisby
       .post(`${url}/login`,
         {
