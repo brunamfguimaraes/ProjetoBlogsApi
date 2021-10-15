@@ -25,8 +25,8 @@ rescue(async (req, res) => {
 
 router.get('/',
 tokenValidation,
-rescue(async () => {
-    await getAllUsers();
+rescue(async (req, res) => {
+    await getAllUsers(req, res);
 }));
 
 module.exports = router;

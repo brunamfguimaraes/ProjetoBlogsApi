@@ -20,7 +20,6 @@ const checkEmailExists = async (email, res) => {
 
 const getAllUsers = async (_req, res) => {
     const check = await User.findAll();
-    console.log(check);
     return res.status(200).json(check);
 };
 

@@ -94,7 +94,6 @@ const tokenValidation = rescue((req, res, next) => {
     } catch (err) {
         return res.status(401).json({ message: 'Expired or invalid token' });
     }
-    next();
 });
 
 module.exports = { 
