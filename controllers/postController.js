@@ -4,6 +4,7 @@ const {
   getAllPosts,
   postById,
   updatedpost,
+  deletePost,
  } = require('../services/postService');
 
 const createPost = async (req, res, next) => {
@@ -65,9 +66,28 @@ const updatePost = async (req, res, next) => {
   }
 };
 
+const removePost = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = req.params;
+    const removedPost = await deletePost(id, token);
+
+    if (removedPost.message) {
+      return res.status(removedPost.statusCode)
+      .json({ message: removedPost.message }); 
+    }
+
+    return res.status(204).json(removedPost);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
   updatePost,
+  removePost,
 };

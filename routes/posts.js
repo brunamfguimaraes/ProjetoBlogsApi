@@ -5,14 +5,14 @@ const {
   getPosts, 
   getPostById,
   updatePost,
+  removePost,
 } = require('../controllers/postController');
 
 router.post('/', middlewares.validateJWT, createPost);
 router.get('/', middlewares.validateJWT, getPosts);
 router.get('/:id', middlewares.validateJWT, getPostById);
 router.put('/:id', middlewares.validateJWT, updatePost);
-// removePost
-// router.delete('/:id', removePost);
+router.delete('/:id', middlewares.validateJWT, removePost);
 // searchPost
 
 module.exports = router;

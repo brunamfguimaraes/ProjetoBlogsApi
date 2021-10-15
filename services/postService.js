@@ -30,8 +30,16 @@ const updatedpost = async (body, id, token) => {
   return BlogPost.findByPk(id, {
     attributes: { exclude: ['published', 'updated'] },
     include: { model: Category, as: 'categories' } });
-  // retorno do update, inclui categories, com id e name.
-  // validação para não editar as categorias.
+};
+
+const deletePost = async (id, token) => {
+  const verifyPost = await middlewares.verifyPostById(id);
+  if (verifyPost.message) return verifyPost;
+
+  const verifyUser = await middlewares.validateUser(id, token);
+  if (verifyUser) return verifyUser;
+
+  return BlogPost.destroy({ where: { id } });
 };
 
 module.exports = {
@@ -39,4 +47,5 @@ module.exports = {
   getAllPosts,
   postById,
   updatedpost,
+  deletePost,
 };
