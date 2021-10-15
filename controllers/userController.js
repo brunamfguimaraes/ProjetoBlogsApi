@@ -2,6 +2,7 @@ const express = require('express');
 const statusCode = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
+const { User } = require('../models');
 
 const router = express.Router();
 
@@ -26,6 +27,12 @@ router.post('/user', async (req, res) => {
     };
     const token = jwt.sign({ data: createUser }, secret, jwtConfig);
     return res.status(statusCode.CREATED).json({ token });
+});
+
+router.get('/user', async (req, res) => {
+    const getAll = await User.findAll();
+    const { id, displayName, email, image } = getAll[0].dataValues;
+    return res.status(statusCode.OK).json({ id, displayName, email, image });
 });
 
 module.exports = router;
