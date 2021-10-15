@@ -3,7 +3,6 @@ const Error = require('../helpers/errors');
 
 const userValidate = (req, res, next) => {
   const { error } = schemaUser.validate(req.body);
-  console.log(error);
   const { code } = Error.badRequest();
   if (error) {
     return res.status(code).json({ 
