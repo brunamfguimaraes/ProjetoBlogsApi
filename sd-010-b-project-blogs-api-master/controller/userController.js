@@ -36,6 +36,8 @@ const loginUser = async (req, res) => {
   try {
     const user = await loginUserService(body);
 
+    console.log(user, 'user');
+
     if (user.message) return res.status(400).json({ message: user.message });
     
    const token = jwt.sign({ 

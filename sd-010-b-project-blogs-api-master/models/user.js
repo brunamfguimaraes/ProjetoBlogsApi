@@ -6,5 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
   },
   { timestamps: false });
+  User.associate = (models) => {
+    User.hasOne(models.BlogPost, {
+      foreignKey: 'userId', as: 'BlogPosts',
+    });
+  };
   return User;
 };

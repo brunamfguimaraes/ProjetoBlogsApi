@@ -6,12 +6,14 @@ const { validateToken } = require('./middlewares/UserMiddleware');
 const app = express();
 const userController = require('./controller/userController');
 const categoryController = require('./controller/categoryController');
+const blogPostController = require('./controller/blogpostsController');
 
 app.use(bodyParser.json());
 // app.use(express.json());
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
+app.post('/post', validateToken, blogPostController.createBlogPost);
 app.get('/categories', validateToken, categoryController.getAllCategorys);
 app.post('/categories', validateToken, categoryController.createCategory);
 app.post('/user', userController.createUser);
