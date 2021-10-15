@@ -2,16 +2,16 @@ require('dotenv').config();
 
 const jwt = require('jsonwebtoken');
 
-const { verifyEmail, 
-  verifyName, 
-  verifyPassword, 
+const { verifyEmail,
+  verifyName,
+  verifyPassword,
   userExists } = require('../middlewares/user.js');
 
 const { User } = require('../models');
 
 const criaToken = (user) => {
   const { id, displayName, email, image } = user;
-  
+
   const newToken = jwt.sign(
     {
       id,
@@ -24,21 +24,21 @@ const criaToken = (user) => {
       expiresIn: 1440,
       algorithm: 'HS256',
     },
-    ); 
-    return newToken;
-  };
+  );
+  return newToken;
+};
 
 const createUser = async (req, res) => {
   const user = await User.create(req.body);
   const newToken = criaToken(user);
-  
+
   return res.status(201).json({ token: newToken });
 };
 
 const checkEmail = (req, res, next) => {
   const emailIsValid = verifyEmail({ email: req.body.email });
   if (emailIsValid.message !== 'ok') {
-   return res.status(400).json(emailIsValid);
+    return res.status(400).json(emailIsValid);
   }
   next();
 };
@@ -67,4 +67,45 @@ const checkEmailExists = async (req, res, next) => {
   next();
 };
 
-module.exports = { checkEmailExists, checkPassword, checkName, checkEmail, createUser }; 
+const verifyEmptyEmail = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (email.length === 0) {
+      return res.status(400).json({ message: '"email" is not allowed to be empty' });
+    }
+    next();
+  } catch (error) {
+    return res.status(400).json({ message: '"email" is required' });
+  }
+};
+
+const verifyEmptyPassword = (req, res, next) => {
+  try {
+    const { password } = req.body;
+    if (password.length === 0) {
+      return res.status(400).json({ message: '"password" is not allowed to be empty' });
+    }
+    next();
+  } catch (error) {
+    return res.status(400).json({ message: '"password" is required' });
+  }
+};
+
+const userLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const result = await User.findOne({ where: { email, password } });
+  if (!result) return res.status(400).json({ message: 'Invalid fields' });
+  const newToken = criaToken(result);
+  return res.status(200).json({ token: newToken });
+};
+
+module.exports = {
+  checkEmailExists,
+  checkPassword,
+  checkName,
+  checkEmail,
+  createUser,
+  verifyEmptyEmail,
+  verifyEmptyPassword,
+  userLogin,
+};
