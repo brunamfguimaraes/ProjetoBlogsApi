@@ -23,6 +23,8 @@ app.post('/user', validateUser, usersController.createUser);
 
 app.post('/login', validateLogin, usersController.loginUser);
 
+app.post('/categories', );
+
 app.get('/user', validateJWT, usersController.getAll);
 
 app.get('/user/:id', validateJWT, usersController.getById);
