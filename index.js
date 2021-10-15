@@ -11,6 +11,10 @@ const { verifyEmail, verifyName, verifyPassword, userAlreadyExists,
 
 const { createCategory, verifyCategory, getAllCategories } = require('./services/category');
 
+const { createPost } = require('./services/post');
+const { checkTitle, checkContent, checkCategoriesIds,
+   checkIfCategoryExists } = require('./middlewares/post');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -22,6 +26,8 @@ app.get('/', (request, response) => {
 app.post('/user', verifyEmail, userAlreadyExists, verifyPassword, verifyName, createUser);
 app.post('/login', emptyEmailLogin, emptyPasswordLogin, loginUp);
 app.post('/categories', validToken, verifyCategory, createCategory);
+app.post('/post', validToken, checkTitle, checkContent, checkCategoriesIds,
+checkIfCategoryExists, createPost);
 
 app.get('/user', validToken, getUsers);
 // app.get('/user/:id', validToken, getUserById);
