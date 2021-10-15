@@ -52,7 +52,12 @@ const getUser = async (userInfo) => {
 const getAllUsers = async () => {
   const users = await User.findAll({ attributes: { exclude: ['password'] } });
   try {
-    return users;
+    return {
+      resp: {
+        status: 200,
+        content: users,
+      },
+    };
   } catch (e) { return genericError; }
 };
 
