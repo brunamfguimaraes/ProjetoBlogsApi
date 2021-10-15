@@ -15,6 +15,17 @@ const postNewUser = async (displayName, email, password, image) => {
   }
 };
 
+const listAllUsers = async () => {
+  try {
+    const allUsers = await User.findAll();
+    return allUsers;
+  } catch (e) {
+    console.log(e.message);
+    return { err: { message: 'Algo deu errado' }, status: 500 };
+  }
+};
+
 module.exports = {
   postNewUser,
+  listAllUsers,
 };

@@ -20,4 +20,13 @@ router.post('/', async (req, res) => {
   res.status(201).json({ token });
 });
 
+router.get('/', async (req, res) => {
+  const { authorization } = req.headers;
+  if (authorization === undefined || authorization === '') {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+  const result = await service.listAllUsers();
+  res.status(200).json(result);
+});
+
 module.exports = router;
