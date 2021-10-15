@@ -1,13 +1,12 @@
-const express = require('express');
 require('dotenv').config();
 
-const router = express.Router();
+// const router = express.Router();
 const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
 
 const { JWT_SECRET } = process.env;
 
-router.post('/', async (req, res) => {
+const create = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
     
@@ -32,6 +31,15 @@ router.post('/', async (req, res) => {
     console.log(e.message);
     return res.status(500).json({ message: 'Algo deu errado' });
   }
-});
+};
 
-module.exports = router;
+const getAll = async (req, res) => {
+  const listUsers = await userService.getAll();
+
+  return res.status(200).json(listUsers);
+};
+
+module.exports = {
+  create,
+  getAll,
+};

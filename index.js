@@ -2,6 +2,7 @@ const express = require('express');
 // require('dotenv').config();
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
+const validateJWT = require('./auth/validateJWT');
 
 const app = express();
 
@@ -13,9 +14,10 @@ const PORT = 3000;
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
-});
+});    
 
-app.use('/user', userController);
+app.post('/user', userController.create);
 app.use('/login', loginController);
+app.get('/user', validateJWT, userController.getAll);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
