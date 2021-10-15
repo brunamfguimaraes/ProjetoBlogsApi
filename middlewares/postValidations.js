@@ -9,7 +9,7 @@ const categoryValidation = async (categoryIds) => {
   return true;
 };
 
-const postValidations = async (req, res, next) => {
+const postValidations = async (req, _res, next) => {
   const { title, categoryIds, content } = req.body;
   if (!title) return next({ message: '"title" is required' });
   if (!categoryIds) return next({ message: '"categoryIds" is required' });
