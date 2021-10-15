@@ -10,6 +10,12 @@ const createUser = async (userCreate) => {
   return User.create(userCreate);
 };
 
+const allUser = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
 module.exports = {
   createUser,
+  allUser,
 };
