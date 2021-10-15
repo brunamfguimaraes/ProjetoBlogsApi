@@ -52,9 +52,7 @@ const allValidations = (displayName, email, password) => {
 };
 
 const existingEmail = async (entryEmail) => {
-/*     console.log(email); */
     const existEmail = await User.findOne({ where: { email: entryEmail } });
-    console.log(existEmail);
     if (existEmail) { return { message: 'User already registered' }; }
     return true;
 };

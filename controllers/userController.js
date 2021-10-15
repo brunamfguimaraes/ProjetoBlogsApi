@@ -34,7 +34,6 @@ router.get('/user', async (req, res) => {
     const withoutPassword = getAll.map(
         ({ id, displayName, email, image }) => ({ id, displayName, email, image }),
     );
-    console.log(withoutPassword);
     return res.status(statusCode.OK).json(withoutPassword);
 });
 
