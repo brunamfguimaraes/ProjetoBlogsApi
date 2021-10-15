@@ -23,4 +23,12 @@ const getAllUsers = async (_req, res) => {
     return res.status(200).json(check);
 };
 
-module.exports = { createUser, checkEmailExists, getAllUsers };
+const getUserById = async (_req, res, id) => {
+    const check = await User.findOne({ where: { id } });
+    if (!check) {
+        res.status(404).json({ message: 'User does not exist' });
+    }
+    return res.status(200).json(check);
+};
+
+module.exports = { createUser, checkEmailExists, getAllUsers, getUserById };
