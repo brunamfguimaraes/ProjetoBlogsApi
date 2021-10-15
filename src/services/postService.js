@@ -63,18 +63,9 @@ const deletePost = async (postId, userId) => {
   const post = await getPostsById(postId);
   if (post.userId !== userId) throw new AppError(codes.unauthorized, messages.wrongUser);
 
-  // const { title, content, categoryIds } = updateData;
-  // if (categoryIds) throw new AppError(codes.badRequest, 'Categories cannot be edited');
-  // validations.verifyUpdatePostData(title, content);
-
-  const deleteUser = await PostModel.destroy(
+  await PostModel.destroy(
     { where: { id: postId } },
   );
-
-  console.log('deleted user', deleteUser);
-  // const updatedPost = await getPostsById(postId);
-
-  // return updatedPost;
 
   return null;
 };

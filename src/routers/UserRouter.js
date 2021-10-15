@@ -10,4 +10,6 @@ router.get('/user', validateJWT, UserController.getUsers);
 router.post('/user', UserController.createUser);
 router.post('/login', UserController.login);
 
+router.delete('/user/me', validateJWT, UserController.deleteUser);
+
 module.exports = router;

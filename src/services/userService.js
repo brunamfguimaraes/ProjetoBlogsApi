@@ -40,8 +40,17 @@ const getUserById = async (id) => {
   return removeUserPass(user);
 };
 
+const deleteUser = async (id) => {
+  await UserModel.destroy(
+    { where: { id } },
+  );
+
+  return null;
+};
+
 module.exports = {
   createUser,
+  deleteUser,
   getUserById,
   getUsers,
   login,
