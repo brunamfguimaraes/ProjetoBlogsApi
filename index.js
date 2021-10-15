@@ -1,9 +1,10 @@
 require('dotenv/config');
 const express = require('express');
 const validationError = require('./src/middlewares/validations/error');
-const userRoute = require('./src/routes/userRouter');
 
+const userRoute = require('./src/routes/userRouter');
 const loginRouter = require('./src/routes/loginRouter');
+const categoryRouter = require('./src/routes/categoryRouter');
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,6 +20,7 @@ app.get('/', (request, response) => {
 
 app.use('/user', userRoute);
 app.use('/login', loginRouter);
+app.use('/categories', categoryRouter);
 
 app.use(validationError);
 
