@@ -26,7 +26,7 @@ const getUserById = async (req, res, next) => {
       attributes: { exclude: ['password'] },
     },
   );
-  if (!user) next({ message: 'User does not exist' });
+  if (!user) return next({ message: 'User does not exist' });
   return res.status(200).json(user);
 };
 
