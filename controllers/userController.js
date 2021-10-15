@@ -35,4 +35,14 @@ router.get('/', async (req, res) => {
   res.status(200).json(result);
 });
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const result = await service.getUserById(id);
+  if (result.err) {
+    const { err } = result;
+    return res.status(result.status).json(err);
+  }
+  res.status(200).json(result);
+});
+
 module.exports = router;

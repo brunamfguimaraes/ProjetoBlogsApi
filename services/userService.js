@@ -25,7 +25,18 @@ const listAllUsers = async () => {
   }
 };
 
+const getUserById = async (id) => {
+  try {
+    const user = await User.findOne({ where: { id } });
+    return user;
+  } catch (e) {
+    console.log('ERRO NO GET USERBYID', e.message);
+    return { err: { message: 'Algo deu errado' }, status: 500 };
+  }
+};
+
 module.exports = {
   postNewUser,
   listAllUsers,
+  getUserById,
 };
