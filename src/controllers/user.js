@@ -8,7 +8,8 @@ const secret = process.env.JWT_SECRET;
 const userRegister = rescue(async (req, res, next) => {
   const user = req.body;
 
-  const emailExist = await User.findOne({ where: { email: user.email } });
+  const emailExist = user.email 
+  && await User.findOne({ where: { email: user.email } });
   
   const validations = await service.userRegister(user, emailExist);
 

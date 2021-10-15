@@ -9,8 +9,6 @@ const userRegister = async (user, emailExist) => {
   || emailValid(user.email, emailExist) 
   || passwordValid(user.password);
 
-  console.log(`verifyFields: ${verifyFields.message}`);
-
   if (verifyFields) {
     return verifyFields;
   }
