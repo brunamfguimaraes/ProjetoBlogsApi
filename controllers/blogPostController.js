@@ -5,11 +5,6 @@ const createBlogPost = async (req, res) => {
   const { userId } = req;
   const newBlogPost = await BlogPost.create({ userId, title, content });
 
-  // const newPostCategory = categoryIds.map((categoryId) =>
-  //   PostCategory.create({ postId: [newBlogPost].id, categoryId }));
-  
-  // Promise.resolve(newPostCategory);
-
   res.status(201).json(newBlogPost);
 };
 
