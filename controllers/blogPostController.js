@@ -13,6 +13,17 @@ const post = async (req, res) => {
   return res.status(201).json(result);
 };
 
+const get = async (req, res, next) => {
+  try {
+    const result = await postServices.getAllPosts();
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   post,
+  get,
 };

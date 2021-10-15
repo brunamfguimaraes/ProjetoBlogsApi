@@ -18,5 +18,6 @@ router.post('/login', validateLogin, loginController.post);
 router.post('/categories', validateCategories, validateToken, categoriesController.post);
 router.get('/categories', validateToken, categoriesController.get);
 router.post('/post', validatePost, validateToken, blogPostController.post);
+router.get('/post', validateToken, blogPostController.get);
 
 module.exports = router;

@@ -24,6 +24,13 @@ const postNewPost = async ({ userId, title, content, categoryIds }) => {
   return result;
 };
 
+const getAllPosts = async () => {
+  const result = await postModels.getAllPosts();
+
+  return result;
+};
+
 module.exports = {
   postNewPost,
+  getAllPosts,
 };
