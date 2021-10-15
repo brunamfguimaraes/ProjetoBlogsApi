@@ -1,24 +1,29 @@
-const { user } = require('../models');
+const { User } = require('../models');
 const createToken = require('../middlewares/generateJWT');
 
 const userExistsErr = { 
   err: {
     status: 409,
-    message: 'User already registered',
+    message: {
+      message: 'User already registered',
+    },
 } };
 
 const genericError = {
   err: {
     status: 500,
-    message: 'Undefined error',
+    message: {
+      message: 'Undefined error',
+    },
 } };
 
 const createUser = async (userInfo) => {
   const { displayName, email } = userInfo;
-  const userExists = await user.findOne({ where: { email } });
+  const userExists = await User.findOne({ where: { email } });
   if (userExists) return userExistsErr;
   try {
-    const { id } = await user.create(userInfo);
+    console.log(userInfo);
+    const { id } = await User.create(userInfo);
     const jwt = createToken({ id, displayName, email });
     return {
       resp: {

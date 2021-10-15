@@ -5,7 +5,7 @@ const usersController = require('./controllers/usersController');
 const validateUser = require('./middlewares/validateUserInfo');
 
 const app = express();
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -17,4 +17,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/user', validateUser, usersController.createUser);
+app.post('/user', validateUser, usersController.createUser);
