@@ -17,4 +17,5 @@ module.exports = {
   shortPassword: '"password" length must be 6 characters long',
   userNotFound: 'User does not exist',
   wrongEmailFormat: '"email" must be a valid email',
+  wrongUser: 'Unauthorized user',
 };

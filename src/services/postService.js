@@ -42,8 +42,26 @@ const getPostsById = async (id) => {
   return post;
 };
 
+const updatePost = async (postId, userId, updateData) => {
+  const post = await getPostsById(postId);
+  if (post.userId !== userId) throw new AppError(codes.unauthorized, messages.wrongUser);
+
+  const { title, content, categoryIds } = updateData;
+  if (categoryIds) throw new AppError(codes.badRequest, 'Categories cannot be edited');
+  validations.verifyUpdatePostData(title, content);
+
+  await PostModel.update(
+    { title, content },
+    { where: { id: postId } },
+  );
+  const updatedPost = await getPostsById(postId);
+
+  return updatedPost;
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostsById,
+  updatePost,
 };

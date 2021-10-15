@@ -59,12 +59,8 @@ const verifyCategoryName = (name) => {
 
 const verifyCategoryExistence = async (categoryIds) => {
   const allCategories = await CategoryModel.findAll();
-  // console.log('allCategories', allCategories);
   const existingIds = allCategories.map((categorie) => categorie.id);
-  // console.log('categoryIds', categoryIds);
-  // console.log('existingIds', existingIds);
   const allExists = categoryIds.every((id) => existingIds.includes(id));
-  // console.log('allExists', allExists);
   return allExists;
 };
 
@@ -78,9 +74,15 @@ const verifyPostData = async (title, content, categoryIds) => {
   }
 };
 
+const verifyUpdatePostData = (title, content) => {
+  if (!title) throw new AppError(codes.badRequest, messages.missingTitle);
+  if (!content) throw new AppError(codes.badRequest, messages.missingContent);
+};
+
 module.exports = {
   verifyCreateUserData,
   verifyCategoryName,
-  verifyPostData,
   verifyLoginData,
+  verifyPostData,
+  verifyUpdatePostData,
 };
