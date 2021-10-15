@@ -11,6 +11,17 @@ const createCategory = async (name) => {
   }
 };
 
+const getAllCategories = async () => {
+  try {
+    const allCategories = await Categorie.findAll();
+    return allCategories;
+  } catch (e) {
+    console.log(e.message);
+    return { err: { message: 'Algo deu errado' }, status: 500 };
+  }
+};
+
 module.exports = {
   createCategory,
+  getAllCategories,
 };

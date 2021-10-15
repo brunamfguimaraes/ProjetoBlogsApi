@@ -35,4 +35,19 @@ router.post('/', async (req, res) => {
   res.status(201).json(result);
 });
 
+router.get('/', async (req, res) => {
+  const { authorization } = req.headers;
+  const tokenValidation = validateToken(authorization);
+  if (tokenValidation.err) {
+    const { err, status } = tokenValidation;
+    return res.status(status).json(err);
+  }
+  const result = await service.getAllCategories();
+  if (result.err) {
+    const { err, status } = result;
+    return res.status(status).json(err);
+  }
+  res.status(200).json(result);
+});
+
 module.exports = router;
