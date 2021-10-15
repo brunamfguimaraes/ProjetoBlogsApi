@@ -1,13 +1,15 @@
 const express = require('express');
-const User = require('./routes/User');
+const User = require('./src/routes/User');
 
 const app = express();
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 
 app.use('/user', User);
 
-// não remova esse endpoint, e para o avaliador funcionar
+// do not remove that endpoint, it is used by the evatuator
 app.get('/', (request, response) => {
   response.send();
 });
