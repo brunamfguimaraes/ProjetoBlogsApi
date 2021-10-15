@@ -9,6 +9,9 @@ const router = express.Router();
 router.post('/categories', async (req, res) => {
     const { name } = req.body;
     const categories = await createCategory({ name });
+    if (categories.message) {
+        return res.status(statusCode.BAD_REQUEST).json({ message: categories.message });
+    }
     return res.status(statusCode.CREATED).json(categories);
 });
 
