@@ -20,7 +20,7 @@ const login = async ({ email, password }) => {
     const find = await User.findOne({ where: { email } });
     if (find === null) return 'Invalid fields';
     if (validations.validLogin(email, password, find)) {
-        return true;
+        return find;
     }
     return 'user invalid';
 };

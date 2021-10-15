@@ -19,5 +19,31 @@ const validLogin = (email, password, find) => {
     if (find.email === email && find.password === password) return true;
     return false;
 };
+const validCategoryId = (categoryIds, categorys) => {
+    let count = 0;
+    categoryIds.forEach((categoryId) => {
+        categorys.forEach((category) => {
+            if (category.dataValues.id === categoryId) {
+                count += 1;
+            }
+        });
+    });
+    return count;
+};
+const validPost = (post, categorys) => {
+    const { title, content, categoryIds } = post;
+    // console.log(categorys);
+    // console.log('categoryPOst', categoryIds);
+    if (!title) return '"title" is required';
+    if (!content) return '"content" is required';
+    if (!categoryIds) return '"categoryIds" is required';
+    const count = validCategoryId(categoryIds, categorys);
+     console.log(count);
+    if (count !== categoryIds.length) {
+        return '"categoryIds" not found';
+    }
 
-module.exports = { validName, validEmail, validPassword, validLogin };
+    return true;
+};
+
+module.exports = { validName, validEmail, validPassword, validLogin, validPost };
