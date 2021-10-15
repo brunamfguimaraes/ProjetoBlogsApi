@@ -1,4 +1,4 @@
-const { createUser, isValidLogin } = require('../services/userService');
+const { createUser, isValidLogin, findUserById } = require('../services/userService');
 const { Users } = require('../models');
 const { token } = require('../auth/token');
 
@@ -32,8 +32,16 @@ const getUsers = async (req, res) => {
   return res.status(200).json(users);
 };
 
+const findUser = async (req, res) => {
+  const { id } = req.params;
+  const find = await findUserById(id);
+  if (find.message) return res.status(404).json({ message: find.message });
+  return res.status(200).json(find);
+};
+
 module.exports = {
   user,
   login,
   getUsers,
+  findUser,
 }; 
