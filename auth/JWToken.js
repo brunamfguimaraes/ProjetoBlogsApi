@@ -10,7 +10,7 @@ const createJWT = (payload) => {
   return newToken;
 };
 
-const verifyJWT = async (req, res, next) => {
+const verifyJWT = (req, res, next) => {
   try {
     const { authorization } = req.headers;
     if (!authorization) {
