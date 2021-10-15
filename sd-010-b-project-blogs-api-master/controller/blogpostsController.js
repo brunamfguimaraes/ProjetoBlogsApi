@@ -1,4 +1,4 @@
-const { createBlogPostService } = require('../service/blogpostsService');
+const { createBlogPostService, getAllPostsService } = require('../service/blogpostsService');
 
 const createBlogPost = async (req, res) => {
   const { body, user } = req;
@@ -15,4 +15,14 @@ const createBlogPost = async (req, res) => {
     }
 };
 
-module.exports = { createBlogPost };
+const getAllPosts = async (req, res) => {
+  try {
+    const blogPost = await getAllPostsService();
+    return res.status(200).json(blogPost);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+};
+
+module.exports = { createBlogPost, getAllPosts };

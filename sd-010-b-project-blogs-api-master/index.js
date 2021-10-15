@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
+app.get('/post', validateToken, blogPostController.getAllPosts);
 app.post('/post', validateToken, blogPostController.createBlogPost);
 app.get('/categories', validateToken, categoryController.getAllCategorys);
 app.post('/categories', validateToken, categoryController.createCategory);

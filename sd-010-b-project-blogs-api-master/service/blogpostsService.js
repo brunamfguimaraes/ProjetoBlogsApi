@@ -27,4 +27,10 @@ const blogPost = BlogPost
 return blogPost;
 };
 
-module.exports = { createBlogPostService };
+const getAllPostsService = async () => {
+  const posts = await BlogPost.findAll();
+
+  return posts;
+};
+
+module.exports = { createBlogPostService, getAllPostsService };
