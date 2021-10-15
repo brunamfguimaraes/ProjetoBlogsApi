@@ -9,6 +9,19 @@ const jwtConfig = {
 
 const router = express.Router();
 
+const validateToken = (token) => {
+  if (token === undefined || token === '') {
+    return { err: { message: 'Token not found' }, status: 401 };
+  }
+  try {
+    jwt.verify(token, secret);
+  } catch (e) {
+    console.log(e.message);
+    return { err: { message: 'Expired or invalid token' }, status: 401 };
+  }
+  return {};
+};
+
 router.post('/', async (req, res) => {
   const { displayName, email, password, image } = req.body;
   const result = await service.postNewUser(displayName, email, password, image);
@@ -22,14 +35,10 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const { authorization } = req.headers;
-  if (authorization === undefined || authorization === '') {
-    return res.status(401).json({ message: 'Token not found' });
-  }
-  try {
-    jwt.verify(authorization, secret);
-  } catch (e) {
-    console.log(e.message);
-    return res.status(401).json({ message: 'Expired or invalid token' });
+  const tokenValidation = validateToken(authorization);
+  if (tokenValidation.err) {
+    const { err, status } = tokenValidation;
+    return res.status(status).json(err);
   }
   const result = await service.listAllUsers();
   res.status(200).json(result);
@@ -38,14 +47,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const { authorization } = req.headers;
-  if (authorization === undefined || authorization === '') {
-    return res.status(401).json({ message: 'Token not found' });
-  }
-  try {
-    jwt.verify(authorization, secret);
-  } catch (e) {
-    console.log(e.message);
-    return res.status(401).json({ message: 'Expired or invalid token' });
+  const tokenValidation = validateToken(authorization);
+  if (tokenValidation.err) {
+    const { err, status } = tokenValidation;
+    return res.status(status).json(err);
   }
   const result = await service.getUserById(id);
   if (result.err) {
