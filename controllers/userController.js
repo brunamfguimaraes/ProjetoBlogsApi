@@ -16,20 +16,24 @@ const user = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   const isValid = isValidLogin(email, password);
-  console.log(isValid);
   if (isValid) return res.status(400).json({ message: isValid.message });
 
   const users = await Users.findOne({ where: { email, password } });
-  console.log('user', users);
   if (!users) {
     return res.status(400).json({ message: 'Invalid fields' });
   }
 
-  const newToken = token(users);
+  const newToken = await token(req.body);
   return res.status(200).json({ token: newToken });
+};
+
+const getUsers = async (req, res) => {
+  const users = await Users.findAll({ attributes: { exclude: ['password'] } });
+  return res.status(200).json(users);
 };
 
 module.exports = {
   user,
   login,
+  getUsers,
 }; 

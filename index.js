@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { user, login } = require('./controllers/userController');
+const { user, login, getUsers } = require('./controllers/userController');
+const validateJWT = require('./auth/validateJWT');
 
 const app = express();
 app.use(bodyParser.json());
@@ -12,7 +13,8 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.route('/user')
-  .post(user);
-
 app.post('/login', login);
+
+app.route('/user')
+  .post(user)
+  .get(validateJWT, getUsers);
