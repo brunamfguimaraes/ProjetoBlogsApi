@@ -18,3 +18,5 @@ app.get('/', (request, response) => {
 });
 
 app.post('/user', validateUser, usersController.createUser);
+
+app.post('/login', usersController.loginUser);
