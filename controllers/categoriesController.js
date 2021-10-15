@@ -12,7 +12,6 @@ categoriesRouter.post('/',
   loginValidate,
   rescue(async (req, res) => {
     const category = await createCategories(req.body);
-    console.log(category);
     return res.status(StatusCodes.CREATED).json(category);
   }));
 
