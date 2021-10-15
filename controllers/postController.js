@@ -11,4 +11,12 @@ const add = rescue(async (req, res) => {
   res.status(201).json(newCategory);
 });
 
-module.exports = { add };
+const findAll = rescue(async (req, res) => {
+  const findBlog = await BlogPost.findAll({
+     include: [{ all: true, attributes: { exclude: ['password'] } }],
+  });
+
+  res.status(200).json(findBlog);
+});
+
+module.exports = { add, findAll };

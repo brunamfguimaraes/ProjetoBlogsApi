@@ -17,7 +17,6 @@ const findAll = rescue(async (req, res) => {
 });
 
 const findById = rescue(async (req, res) => {
-  console.log(req.params.id);
   const findId = await User.findByPk(req.params.id);
   res.status(200).json(findId);
 });
