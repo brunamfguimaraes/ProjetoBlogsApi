@@ -27,11 +27,11 @@ const validateDisplayName = (displayName) => {
 };
 
 const validateEmail = (email) => {
-  if (!isEmail(email)) {
-    return { err: { message: errors.emailFormatErr }, status: badRequestStatus };
-  }
   if (email === undefined) {
     return { err: { message: errors.emailUndefErr }, status: badRequestStatus };
+  }
+  if (!isEmail(email)) {
+    return { err: { message: errors.emailFormatErr }, status: badRequestStatus };
   }
   return {};
 };
