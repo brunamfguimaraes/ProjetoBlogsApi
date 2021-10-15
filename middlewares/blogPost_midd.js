@@ -32,6 +32,7 @@ const ValidCategoryIdsExist = async (req, res, next) => {
 
     const category = await Category.findAll();
 
+    // Lógica feita com ajuda da Alessandra Rezende
     const verificacao = categoryIds.every((data1) => category
     .some((data2) => data1 === data2.id)); 
 
