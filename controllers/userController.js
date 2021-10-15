@@ -37,4 +37,10 @@ router.get('/user', async (req, res) => {
     return res.status(statusCode.OK).json(withoutPassword);
 });
 
+router.get('/user/:id', async (req, res) => {
+    const { id: idParams } = req.params;
+    const { id, displayName, email, image } = await User.findByPk(idParams);
+    return res.status(statusCode.OK).json({ id, displayName, email, image });
+});
+
 module.exports = router;
