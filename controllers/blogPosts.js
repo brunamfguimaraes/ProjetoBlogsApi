@@ -1,14 +1,25 @@
 const express = require('express');
-const { BlogPost, User } = require('../models');
+const { BlogPost, User, PostCategory, Category } = require('../models');
 require('dotenv/config');
 const validatePost = require('../middlewares/validatePost');
 const validateToken = require('../middlewares/validateToken');
 
 const router = express.Router();
 
+const savePostCategories = (postId, categories) => {
+  categories.forEach(async (element) => {
+    console.log(postId);
+    console.log(element);
+    await PostCategory.create({ postId, categoryId: element });
+  });
+};
+
 router.get('/', validateToken, async (_req, res) => {
   const posts = await BlogPost.findAll({
-    include: { model: User, as: 'user' },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
   });
   return res.status(200).json(posts);
 });
@@ -18,10 +29,10 @@ router.post('/', validateToken, validatePost, async (req, res) => {
   const { email } = req;
   try {
     const user = await User.findOne({ where: { email } });
-    console.log(user.dataValues.id);
     const newPost = await BlogPost.create(
       { title, content, categoryIds: JSON.stringify(categoryIds), userId: user.dataValues.id },
     );
+    await savePostCategories(newPost.id, categoryIds);
     return res.status(201).json(newPost);
   } catch (e) {
     console.log(e);
