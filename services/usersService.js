@@ -21,7 +21,7 @@ const loginError = {
   err: {
     status: 400,
     message: {
-      message: 'Campos inválidos',
+      message: 'Invalid fields',
     },
 } };
 
@@ -51,13 +51,13 @@ const getUser = async (userInfo) => {
 
 const loginUser = async (userInfo) => {
   const userExists = await getUser(userInfo);
-  if (userExists.err) return userExists;
+  if (userExists === null) return loginError;
   const { id } = userExists.dataValues;
   const { email } = userInfo;
   const jwt = createToken({ id, email });
   return {
     resp: {
-      status: 201,
+      status: 200,
       content: jwt,
     },
   };
