@@ -15,18 +15,6 @@ const postNewUser = async (displayName, email, password, image) => {
   }
 };
 
-const validateLogin = async (email, password) => {
-  try {
-    const loggedUser = await User.findOne({ where: { email, password } });
-    // console.log(loggedUser);
-    return loggedUser;
-  } catch (e) {
-    console.log(e.message);
-    return { err: { message: 'Algo deu errado' }, status: 500 };
-  }
-};
-
 module.exports = {
   postNewUser,
-  validateLogin,
 };
