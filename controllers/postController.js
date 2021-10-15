@@ -33,10 +33,18 @@ const getAll = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const getOne = async (req, res) => {
+  const { id } = req.params;
+  const result = await postServices.getOne(id);
+  if (!result) return res.status(404).json({ message: 'Post does not exist' });
+  res.status(200).json(result);
+};
+
 module.exports = {
   createPost,
   verifyTitle,
   verifyContent,
   verifyCategoryId,
   getAll,
+  getOne,
 };
