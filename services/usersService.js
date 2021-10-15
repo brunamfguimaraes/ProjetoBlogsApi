@@ -9,6 +9,14 @@ const userExistsErr = {
     },
 } };
 
+const userNotExistsErr = { 
+  err: {
+    status: 404,
+    message: {
+      message: 'User does not exist',
+    },
+} };
+
 const genericError = {
   err: {
     status: 500,
@@ -63,6 +71,19 @@ const getAllUsers = async () => {
   } catch (e) { return genericError; }
 };
 
+const getUserById = async (userInfo) => {
+  const { id } = userInfo;
+  const user = await User.findOne({ where: { id } });
+  try {
+    return {
+      resp: {
+        status: 200,
+        content: user,
+      },
+    };
+  } catch (e) { return userExistsErr; }
+};
+
 const loginUser = async (userInfo) => {
   const userExists = await getUser(userInfo);
   if (userExists === null) return loginError;
@@ -83,4 +104,5 @@ module.exports = {
   createUser,
   loginUser,
   getAllUsers,
+  getUserById,
 };
