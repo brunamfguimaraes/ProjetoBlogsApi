@@ -81,7 +81,7 @@ const getUserById = async (userInfo) => {
         content: user,
       },
     };
-  } catch (e) { return userExistsErr; }
+  } catch (e) { return userNotExistsErr; }
 };
 
 const loginUser = async (userInfo) => {
