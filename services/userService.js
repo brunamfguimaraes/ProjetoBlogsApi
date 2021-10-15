@@ -51,6 +51,9 @@ const createUser = async (user) => {
   return createToken(user.email);
 };
 
+const getAll = async () => User.findAll();
+
 module.exports = {
   createUser,
+  getAll,
 };
