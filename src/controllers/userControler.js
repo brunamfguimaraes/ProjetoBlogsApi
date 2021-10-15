@@ -28,4 +28,18 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { postNewUser, getAll };
+const getById = async (req, res) => {
+  try {
+    const user = await UserService.getById(req.params);
+    console.log('usuário', user);
+    if (user.error) {
+      return res.status(StatusCodes.NOT_FOUND).json({ message: user.error.message });
+    }
+
+    return res.status(StatusCodes.OK).json(user);
+  } catch (e) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: e.message });
+  }
+};
+
+module.exports = { postNewUser, getAll, getById };

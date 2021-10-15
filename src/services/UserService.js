@@ -22,4 +22,21 @@ const getAll = async () => {
   return allUsers;
 };
 
-module.exports = { newUser, getAll };
+const getById = async ({ id }) => {
+  const user = await User.findByPk(id, {
+    attributes: { exclude: ['password'] },
+  });
+  console.log('usuário service', user);
+
+  if (user === null) {
+    return {
+      error: {
+        message: 'User does not exist',
+      },
+    };
+  }
+
+  return user;
+};
+
+module.exports = { newUser, getAll, getById };
