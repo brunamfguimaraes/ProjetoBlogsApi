@@ -1,5 +1,6 @@
 const express = require('express');
 const { User, Category, BlogPost, PostsCategory } = require('../models');
+const PostService = require('../services/PostService');
 const validateJWT = require('../middlewares/token/validateJWT');
 const postValidate = require('../middlewares/postValidate');
 
@@ -46,6 +47,12 @@ BlogPostRouter.get('/:id', validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
 
+    const isPostExists = await PostService.postExists(id);
+
+    if (isPostExists.isError) {
+      return res.status(404).json({ message: isPostExists.message });
+    }
+    
     const post = await BlogPost.findByPk(id, { 
       include: [
         { model: User, as: 'user', attributes: { exclude: ['password'] } },
@@ -58,5 +65,10 @@ BlogPostRouter.get('/:id', validateJWT, async (req, res) => {
     return res.status(500).json({ error });
   }
 });
+
+// BlogPostRouter.put('/:id', validateJWT, async (req, res) => {
+//   const { title, content } = req.body
+//   const { user } = req;
+// });
 
 module.exports = BlogPostRouter;
