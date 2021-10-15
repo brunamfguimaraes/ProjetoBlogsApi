@@ -2,9 +2,9 @@ const blogpostService = require('../services/blogpostsServices');
 const codes = require('../middlewares/codes');
 
 const createBlogpost = async (req, res) => {
-  const { title, content, categoryIds } = req.body;
+  const { title, content, categoryId } = req.body;
   try {
-    const blogpost = await blogpostService.createBlogpost(title, content, categoryIds);
+    const blogpost = await blogpostService.createBlogpost(title, content, categoryId);
 
     return res.status(codes.created).json(blogpost);
   } catch (error) {

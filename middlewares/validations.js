@@ -60,14 +60,14 @@ const verifyNameCategory = (name) => {
   }
 };
 
-const verifyFieldsBlogpost = (title, content, categoryIds) => {
+const verifyFieldsBlogpost = (title, content, categoryId) => {
   if (!title) {
     throw new Indexerror(codes.badRequest, errorMessages.titleIsRequired);
   }
   if (!content) {
     throw new Indexerror(codes.badRequest, errorMessages.contentIsRequired);
   }
-  if (!categoryIds) {
+  if (!categoryId) {
     throw new Indexerror(codes.badRequest, errorMessages.categoryIdIsRequired);
   }
 };
