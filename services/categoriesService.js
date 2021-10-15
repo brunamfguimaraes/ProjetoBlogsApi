@@ -10,6 +10,7 @@ const genericError = {
 
 const createCategory = async (categoryInfo) => {
   const { name } = categoryInfo;
+  console.log(name);
   try {
     const { id } = await Category.create(categoryInfo);
     return {
@@ -21,7 +22,10 @@ const createCategory = async (categoryInfo) => {
         },
       },
     };
-  } catch (e) { return genericError; }
+  } catch (e) {
+ console.log(e);
+    return genericError; 
+}
 };
 
 module.exports = {
