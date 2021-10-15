@@ -7,7 +7,6 @@ const requestCreateUser = async (req, res) => {
 
     return res.status(201).json(createUser);
   } catch (e) {
-    console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado' });
   }
 };

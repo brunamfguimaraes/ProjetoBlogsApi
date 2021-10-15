@@ -1,12 +1,17 @@
 const express = require('express');
+const requestLogin = require('./controllers/Login');
 const { requestCreateUser } = require('./controllers/User');
+const {
+  passwordRequired,
+  emailRequired,
+} = require('./middlewares/loginMiddlewares');
 
 const {
   isValidName,
   isValidEmail,
   isValidPassword,
   uniqueEmail,
-} = require('./middlewares');
+} = require('./middlewares/userMiddlewares');
 
 const app = express();
 
@@ -16,6 +21,11 @@ app.use(express.json());
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.post('/login',
+  emailRequired,
+  passwordRequired,
+  requestLogin);
 
 app.post('/user',
   isValidName,
