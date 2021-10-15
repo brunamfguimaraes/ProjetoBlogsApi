@@ -1,19 +1,24 @@
-/* eslint-disable complexity */
+const BAD_REQUEST = 400;
+const UNAUTHORIZED = 401;
+const NOT_FOUND = 404;
+const CONFLICT = 409;
+const INTERNAL_SERVER_ERROR = 500;
+
 const ERRORS_DICT = {
-  userRegistered: 409,
-  invalidFields: 400,
-  userNotFound: 404,
-  categoryNotFound: 400,
-  noEdit: 400,
-  postNotFound: 404,
-  invalidUser: 401,
+  userRegistered: CONFLICT,
+  invalidFields: BAD_REQUEST,
+  userNotFound: NOT_FOUND,
+  categoryNotFound: BAD_REQUEST,
+  noEdit: BAD_REQUEST,
+  postNotFound: NOT_FOUND,
+  invalidUser: UNAUTHORIZED,
 };
 
 const errorsKeys = Object.keys(ERRORS_DICT);
 
 const checkErrorType = (error) => {
   if (error.isJoi) {
-    return { code: 400, message: error.details[0].message };
+    return { code: BAD_REQUEST, message: error.details[0].message };
   }
 
   for (let i = 0; i < errorsKeys.length; i += 1) {
@@ -22,7 +27,7 @@ const checkErrorType = (error) => {
     }
   }
   
-  return { code: 500, message: error };
+  return { code: INTERNAL_SERVER_ERROR, message: error };
 };
 
 module.exports = (err, _req, res, next) => {

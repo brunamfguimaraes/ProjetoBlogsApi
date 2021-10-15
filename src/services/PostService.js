@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { BlogPosts, Users, Categories, PostsCategories } = require('../models');
+const { BlogPosts, Users, Categories } = require('../models');
 const CategoryService = require('./CategoryService');
 
 const validatePostInfo = (postInfo) => {
@@ -49,20 +49,16 @@ const createPost = async (postInfo, userId) => {
 
   const { categoryIds, ...newPost } = postInfo;
   const post = await BlogPosts.create({ ...newPost, userId });
-  const categoryExist = await verifyCategoriesExist(categoryIds);
 
+  const categoryExist = await verifyCategoriesExist(categoryIds);
+  
   if (!categoryExist) {
     return {
       error: { categoryNotFound: true, message: '"categoryIds" not found' },
     };
   }
-
-  await categoryIds.forEach((id) => {
-    PostsCategories.create({
-      postId: post.id,
-      categoryId: id,
-    });
-  });
+  
+  await post.setCategories(categoryIds);
 
   return post;
 };
@@ -118,7 +114,9 @@ const editPost = async (id, body, userId) => {
 
   const update = await BlogPosts.update(body, { where: { id, userId } });
 
-  if (!update[0]) { return { error: { invalidUser: true, message: 'Unauthorized user' } }; }
+  if (!update[0]) {
+    return { error: { invalidUser: true, message: 'Unauthorized user' } };
+  }
   const post = await findPostAfterUpdate(id);
 
   return post;
