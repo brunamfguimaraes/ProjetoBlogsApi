@@ -7,7 +7,8 @@ module.exports = (errorType) => ({
   userConflict: 'User already registered',
   emailEmpty: '"email" is not allowed to be empty',
   passwordEmpty: '"password" is not allowed to be empty',
-  nonExistentUser: 'Invalid fields',
+  invalidFields: 'Invalid fields',
   noToken: 'Token not found',
   invalidToken: 'Expired or invalid token',
+  nonExistentUser: 'User does not exist',
 })[errorType];

@@ -11,5 +11,6 @@ const { checkToken, validateJWT } = require('../middlewares/jwtValidations');
 
 router.post('/', validateName, validateEmail, validatePassword, controller.registerUser);
 router.get('/', checkToken, validateJWT, controller.getUser);
+router.get('/:id', checkToken, validateJWT, controller.getUserById);
 
 module.exports = router;

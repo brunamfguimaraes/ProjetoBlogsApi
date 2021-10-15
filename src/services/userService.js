@@ -59,7 +59,7 @@ const loginUser = async (userData) => {
   if (findUser === null) {
     return {
       code: code.HTTP_BAD_REQUEST,
-      notification: { message: errorMessage('nonExistentUser') },
+      notification: { message: errorMessage('invalidFields') },
     };
   }
 
@@ -75,7 +75,7 @@ const loginUser = async (userData) => {
 
 const getUser = async () => {
   const findAll = await User.findAll({
-    attributes: ['id', 'displayName', 'email', 'image'],
+    attributes: { exclude: ['password'] },
   });
 
   const allUser = {
@@ -86,8 +86,30 @@ const getUser = async () => {
   return allUser;
 };
 
+const getUserById = async (id) => {
+  const findById = await User.findOne({
+    where: { id },
+    attributes: { exclude: ['password'] },
+  });
+
+  if (findById === null) {
+    return {
+      code: code.HTTP_NOT_FOUND,
+      notification: { message: errorMessage('nonExistentUser') },
+    };
+  }
+
+  const user = {
+    code: code.HTTP_OK_STATUS,
+    notification: findById,
+  };
+
+  return user;
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUser,
+  getUserById,
 };
