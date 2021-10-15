@@ -2,7 +2,7 @@ const express = require('express');
 
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
-const categoriesController = require('./controllers');
+const categoriesController = require('./controllers/categoriesController');
 const validateJWT = require('./middlewares/validateJWT');
 
 const app = express();
