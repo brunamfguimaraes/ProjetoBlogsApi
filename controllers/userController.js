@@ -25,6 +25,12 @@ router.get('/', async (req, res) => {
   if (authorization === undefined || authorization === '') {
     return res.status(401).json({ message: 'Token not found' });
   }
+  try {
+    jwt.verify(authorization, secret);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
   const result = await service.listAllUsers();
   res.status(200).json(result);
 });
