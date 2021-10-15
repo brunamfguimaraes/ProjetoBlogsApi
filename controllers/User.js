@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { userListService } = require('../services/User');
 
 const requestCreateUser = async (req, res) => {
   try {
@@ -11,6 +12,13 @@ const requestCreateUser = async (req, res) => {
   }
 };
 
+const requestUserList = async (_req, res) => {
+  const userList = await userListService();
+
+  return res.status(200).json(userList);
+};
+
 module.exports = {
   requestCreateUser,
+  requestUserList,  
 };

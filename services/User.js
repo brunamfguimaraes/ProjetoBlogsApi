@@ -3,6 +3,14 @@ const { User } = require('../models');
 
 const SECRET = 'secret';
 
+const userListService = async () => {
+  const userList = await User.findAll();
+
+  if (!userList) return null;
+
+  return userList;
+};
+
 const loginAuth = async (email, password) => {
   const user = await User.findOne({ where: { email, password } });
   console.log('oi');
@@ -21,4 +29,5 @@ const loginAuth = async (email, password) => {
 
 module.exports = {
   loginAuth,
+  userListService,
 };
