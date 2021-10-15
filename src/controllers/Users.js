@@ -1,9 +1,22 @@
-const { CREATED } = require('http-status');
-const { User } = require('../models');
+const { CREATED, INTERNAL_SERVER_ERROR, BAD_REQUEST, CONFLICT } = require('http-status');
+const Users = require('../services/Users');
 
 const createUser = async (req, res) => {
-  const userData = await User.create(req.body);
-  res.status(CREATED).json(userData);
+  try {
+    const { body: userData } = req;
+    const result = await Users.createUser(userData);
+
+    if (result.message && result.conflict) {
+      return res.status(CONFLICT).json({ message: result.message });
+    }
+
+    return result.message
+      ? res.status(BAD_REQUEST).json(result)
+      : res.status(CREATED).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error });
+  }
 };
 
 module.exports = { createUser };
