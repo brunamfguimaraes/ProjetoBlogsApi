@@ -1,4 +1,5 @@
 const rescue = require('express-rescue');
+const jwt = require('jsonwebtoken');
 
 const validateDisplayName = rescue((req, res, next) => {
     const { displayName } = req.body;
@@ -78,6 +79,24 @@ const validatePassword = rescue((req, res, next) => {
     next();
 });
 
+const tokenValidation = rescue((req, res, next) => {
+    const takeToken = req.headers.authorization;
+
+    if (!takeToken) {
+        return res.status(401).json({
+            message: 'Token not found',
+          });
+        }
+    try {
+        const verify = jwt.verify(takeToken, process.env.JWT_SECRET);
+        req.user = verify;
+        next();
+    } catch (err) {
+        return res.status(401).json({ message: 'Expired or invalid token' });
+    }
+    next();
+});
+
 module.exports = { 
     validateDisplayName, 
     validateEmail, 
@@ -86,4 +105,5 @@ module.exports = {
     passwordIsRequired,
     emailIsRequiredLogin,
     passwordIsRequiredLogin,
+    tokenValidation,
 };

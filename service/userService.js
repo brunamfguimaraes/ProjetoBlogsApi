@@ -1,21 +1,5 @@
-// const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { createToken } = require('../authentication/token');
-
-// require('dotenv').config();
-
-// const secret = process.env.JWT_SECRET;
-
-// const jwtConfiguration = {
-//     expiresIn: '1d',
-//     algorithm: 'HS256',
-// };
-
-// const createToken = (user) => {
-//     console.log('token');
-//     const tokenSign = jwt.sign({ data: user }, secret, jwtConfiguration);
-//     return tokenSign;
-// };
 
 const createUser = async (req, res) => {
     console.log('createUuser', req.body);
@@ -34,4 +18,10 @@ const checkEmailExists = async (email, res) => {
     return false;
 };
 
-module.exports = { createUser, checkEmailExists };
+const getAllUsers = async (_req, res) => {
+    const check = await User.findAll();
+    console.log(check);
+    return res.status(200).json(check);
+};
+
+module.exports = { createUser, checkEmailExists, getAllUsers };

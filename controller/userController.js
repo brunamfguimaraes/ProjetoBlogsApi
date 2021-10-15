@@ -1,10 +1,11 @@
 const express = require('express');
 const rescue = require('express-rescue');
 
-const { checkEmailExists, createUser } = require('../service/userService');
+const { checkEmailExists, createUser, getAllUsers } = require('../service/userService');
 // const { token } = require('../middleware/jwtValidation');
 const { validateDisplayName, validateEmail } = require('../middleware/infoValidationUser');
 const { emailIsRequired, validatePassword } = require('../middleware/infoValidationUser');
+const { tokenValidation } = require('../middleware/infoValidationUser');
 const { passwordIsRequired } = require('../middleware/infoValidationUser');
 
 const router = express.Router();
@@ -20,6 +21,12 @@ rescue(async (req, res) => {
     await checkEmailExists(email, res);
     await createUser(req, res);
     // return data;
+}));
+
+router.get('/',
+tokenValidation,
+rescue(async () => {
+    await getAllUsers();
 }));
 
 module.exports = router;
