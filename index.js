@@ -20,3 +20,4 @@ app.post('/login', loginController);
 app.get('/user/:id', validateJWT, userController); 
 app.get('/user', validateJWT, userController);
 app.post('/categories', validateJWT, categoriesController); 
+app.get('/categories', validateJWT, categoriesController);
