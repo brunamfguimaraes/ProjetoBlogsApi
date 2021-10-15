@@ -1,6 +1,6 @@
 const { code, errorMessage } = require('../schema/index');
 
-const validateName = (req, res, next) => {
+const validatedisplayName = (req, res, next) => {
   const { displayName } = req.body;
 
   if (displayName.length < 8) {
@@ -54,9 +54,20 @@ const validateEmptyFields = (req, res, next) => {
   next();
 };
 
+const validateName = (req, res, next) => {
+  const bodyKey = Object.keys(req.body);
+
+  if (!bodyKey.includes('name')) {
+    return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('noName') });
+  }
+
+  next();
+};
+
 module.exports = {
-  validateName,
+  validatedisplayName,
   validateEmail,
   validatePassword,
   validateEmptyFields,
+  validateName,
 };

@@ -11,4 +11,5 @@ module.exports = (errorType) => ({
   noToken: 'Token not found',
   invalidToken: 'Expired or invalid token',
   nonExistentUser: 'User does not exist',
+  noName: '"name" is required',
 })[errorType];
