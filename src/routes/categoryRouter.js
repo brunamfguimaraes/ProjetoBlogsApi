@@ -5,6 +5,7 @@ const categoryController = require('../controllers/categoryController');
 
 const router = express.Router();
 
-router.post('/', validateJWT, validateCategory, categoryController);
+router.post('/', validateJWT, validateCategory, categoryController.postCategory);
+router.get('/', validateJWT, categoryController.getAll);
 
 module.exports = router;
