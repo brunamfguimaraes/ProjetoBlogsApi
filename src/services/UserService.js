@@ -80,6 +80,20 @@ const findUser = async (id) => {
   return user;
 };
 
+const removeUser = async (user) => {
+  if (!user) {
+    return { error: { userNotFound: true, message: 'User not found' } };
+  }
+
+  const { id } = user;
+  const destroy = await Users.destroy({ where: { id } });
+
+  if (!destroy) {
+    return { error: { invalidUser: true, message: 'Unauthorized user' } };
+  }
+
+  return true;
+};
 // const exemple =  () => {};
 
 module.exports = {
@@ -88,4 +102,5 @@ module.exports = {
   loginUser,
   findUsers,
   findUser,
+  removeUser,
 };

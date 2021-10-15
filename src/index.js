@@ -22,6 +22,7 @@ app.get('/user', JWTMiddleware, UserController.listUsers);
 app.get('/user/:id', JWTMiddleware, UserController.findUser);
 app.post('/user', UserController.newUser);
 app.post('/login', UserController.login);
+app.delete('/user/me', JWTMiddleware, UserController.deleteUser);
 
 app.post('/categories', JWTMiddleware, CategoryController.newCategory);
 app.get('/categories', JWTMiddleware, CategoryController.listCategories);

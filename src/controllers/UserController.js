@@ -18,11 +18,11 @@ const createJWT = (info) => {
 const newUser = rescue(async (req, res, next) => {
   const userInfo = req.body;
   const response = await UserService.createUser(userInfo);
-  
+
   if (response.error) return next(response.error);
-  
+
   const token = createJWT(userInfo);
-  
+
   res.status(201).json({ token });
 });
 
@@ -34,7 +34,7 @@ const login = rescue(async (req, res, next) => {
   if (response.error) return next(response.error);
 
   const token = createJWT({ ...response });
-  
+
   res.status(200).json({ token });
 });
 
@@ -43,16 +43,26 @@ const listUsers = rescue(async (req, res, _next) => {
 
   res.status(200).json(response);
 });
+
 const findUser = rescue(async (req, res, next) => {
   const { id } = req.params;
-  
+
   const response = await UserService.findUser(id);
-  
+
   if (response.error) return next(response.error);
-  
+
   res.status(200).json(response);
 });
 
+const deleteUser = rescue(async (req, res, next) => {
+  const user = req.userData;
+
+  const response = await UserService.removeUser(user);
+
+  if (response.error) return next(response.error);
+
+  res.status(204).json();
+});
 // const exemple = rescue(async (req, res, next) => {});
 
-module.exports = { newUser, login, listUsers, findUser };
+module.exports = { newUser, login, listUsers, findUser, deleteUser };
