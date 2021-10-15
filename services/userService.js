@@ -59,8 +59,8 @@ const existingEmail = async (entryEmail) => {
 
 const createUser = async ({ displayName, email, password, image }) => {
     const validations = allValidations(displayName, email, password);
-    const existUser = await existingEmail(email);
     if (validations.message) { return { message: validations.message }; }
+    const existUser = await existingEmail(email);
     if (existUser.message) { return { message: existUser.message }; }
     const user = await User.create({ displayName, email, password, image });
     return user;
