@@ -6,7 +6,7 @@ const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
   console.log(`token: ${token}`);
 
-  if (!token) return res.status(401).json({ message: 'missing auth token' });
+  if (!token) return res.status(401).json({ message: 'Token not found' });
 
   try {
       const payload = jwt.verify(token, secret);
@@ -15,7 +15,7 @@ const validateJWT = async (req, res, next) => {
       req.user = payload.data;
       next();
   } catch (error) {
-      return res.status(401).json({ message: 'jwt malformed' });
+      return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 

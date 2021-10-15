@@ -29,6 +29,13 @@ const userRegister = rescue(async (req, res, next) => {
   return res.status(201).json({ token });
 });
 
+const getAllUsers = rescue(async (req, res) => {
+  const allUsers = await User.findAll();
+
+  return res.status(200).json(allUsers);
+});
+
 module.exports = { 
   userRegister,
+  getAllUsers,
 };
