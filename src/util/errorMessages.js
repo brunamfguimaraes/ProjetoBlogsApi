@@ -12,6 +12,7 @@ module.exports = {
   missingPassword: '"password" is required',
   missingTitle: '"title" is required',
   missingToken: 'Token not found',
+  postNotFound: 'Post does not exist',
   shortDisplayName: '"displayName" length must be at least 8 characters long',
   shortPassword: '"password" length must be 6 characters long',
   userNotFound: 'User does not exist',
