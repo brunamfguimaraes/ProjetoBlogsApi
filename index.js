@@ -24,6 +24,6 @@ app.use('/login', userRouter);
 
 // ------------------------------------------------------------------
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`ouvindo porta ${port}!`));
+app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
