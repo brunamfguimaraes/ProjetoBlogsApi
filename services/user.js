@@ -7,8 +7,6 @@ const {
   checkName,
   checkPassword,
   emailAlreadyExists,
-  // authenticationToken,
-  // validToken,
  } = require('../middlewares/user');
 
 const { User } = require('../models');
