@@ -9,9 +9,9 @@ const { createCategory } = require('../controllers/categoriesController');
 //    validatePassword,
 //     validateEmail, 
 //  } = require('../middlewares/userValidations');
-//  const jwtValidations = require('../middlewares/jwtValidations');
+ const jwtValidations = require('../middlewares/jwtValidations');
  const { nameValidation } = require('../middlewares/categoryValidations');
 
-router.post('/', nameValidation, createCategory);
+router.post('/', jwtValidations, nameValidation, createCategory);
 
 module.exports = router;

@@ -7,8 +7,7 @@ const nameValidation = (req, res, next) => {
     return res.status(CODE.BAD_REQUEST).json(
       { message: '"name" is required' },
       );
-    }
-    
+    }    
     next();
   };
 
