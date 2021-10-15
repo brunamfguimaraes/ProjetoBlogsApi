@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../../models');
-const { ERROR_CATEGORY_NOT_FOUND } = require('./msgErrors');
+const { ERROR_CATEGORY_NOT_FOUND, ERROR_POST_NOT_FOUND } = require('./msgErrors');
 
 const checkCategoryExists = async (categoryIds) => {
   const categoryExists = await User.findAll({ where: { id: { [Op.in]: categoryIds } } });
@@ -26,7 +26,19 @@ const getPosts = async () => {
   return blogPosts;
 };
 
+const getPostById = async (id) => {
+  const blogPost = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories' },
+    ] });
+    if (!blogPost) { throw ERROR_POST_NOT_FOUND; }
+  return blogPost;
+};
+
 module.exports = {
   createPost,
   getPosts,
+  getPostById,
 };
