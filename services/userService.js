@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
+const createToken = require('../middleware/token');
 const { User } = require('../models');
-require('dotenv/config');
 
 const LENGTH_DISPLAYNAME = '"displayName" length must be at least 8 characters long';
 const LENGTH_PASSWORD = '"password" length must be 6 characters long';
@@ -16,7 +15,6 @@ const valueBlank = (value) => (!value || value === null || value === '');
 const validValue = (email, password) => {
   if (valueBlank(email)) { return erroMessage(400, EMAIL_REQUIRED); }
   if (valueBlank(password)) { return erroMessage(400, PASSWORD_REQUIRED); }
-  console.log('nao entrou no if password', password);
   return false;
 };
 
@@ -39,30 +37,20 @@ const emailAlreadyExists = async (email) => {
 };
 
 const validateUser = async ({ displayName, password, email }) => {
-  console.log('password', password);
-  
   if (validValue(email, password)) { return validValue(email, password); }
   if (validLength(displayName, password)) { return validLength(displayName, password); }
   if (validEmail(email)) { return validEmail(email); }
   if (await emailAlreadyExists(email)) { return emailAlreadyExists(email); }
-};
-
-const createToken = (user) => {
-  const jwtConfig = {
-    expiresIn: '7d',
-    algorithm: 'HS256',
-  };
-  const token = jwt.sign({ ...user }, process.env.JWT_SECRET, jwtConfig);
-  
-  return token;
+  return false;
 };
 
 const createUser = async (user) => {
+  const result = await validateUser(user);
+  if (result) { return result; }
   await User.create({ ...user });
-  return createToken(user);
+  return createToken(user.email);
 };
 
 module.exports = {
   createUser,
-  validateUser,
 };
