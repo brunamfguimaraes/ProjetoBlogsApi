@@ -1,11 +1,18 @@
-// const express = require('express');
+const CODE = require('http-status-codes');
 
-// const CODE = require('http-status-codes');
+const { Category } = require('../models');
 
-// const { Category } = require('../models');
+const createCategory = async (req, res) => {
+  try {
+    const { name } = req.body;
 
-// const router = express.Router();
+    const newCategory = await Category.create({ name });
 
-// router.post('/categories', async (req, res) => {
-//   const { name } = req.body;
-// });
+    return res.status(CODE.CREATED).JSON(newCategory);
+} catch (error) {
+console.log(error.message);
+res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
+  }
+};
+
+module.exports = { createCategory };

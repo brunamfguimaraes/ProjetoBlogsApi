@@ -1,4 +1,3 @@
-const express = require('express');
 const CODE = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 
@@ -6,9 +5,7 @@ const { User } = require('../models');
 
 const secret = 'seusecretdetoken';
 
-const router = express.Router();
-
-router.post('/user', async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
     
@@ -26,9 +23,9 @@ router.post('/user', async (req, res) => {
     console.log(error.message);
     res.status(CODE.CONFLICT).json({ message: 'User already registered' });
   }
-});
+};
 
-router.get('/user', async (_req, res) => {
+const getAll = async (_req, res) => {
   try {
    const users = await User.findAll();
    return res.status(200).json(users);
@@ -36,9 +33,9 @@ router.get('/user', async (_req, res) => {
     console.log(e.message);
     res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
   }
-});
+};
 
-router.get('/user/:id', async (req, res) => {
+const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -50,9 +47,13 @@ router.get('/user/:id', async (req, res) => {
     console.log(e.message);
     res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  createUser,
+  getAll,
+  getById,
+};
 
 /* Alguns exemplos:
 
