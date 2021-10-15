@@ -104,7 +104,7 @@ describe('1 - Sua aplicação deve ter o endpoint POST `/user`', () => {
       });
   });
 
-  it('Será validado que o campo `password` é obrigatório', async () => {
+  it.only('Será validado que o campo `password` é obrigatório', async () => {
     await frisby
       .post(`${url}/user`,
         {
