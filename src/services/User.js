@@ -6,6 +6,14 @@ const getAll = () => User.findAll(
   { attributes: { exclude: ['password', 'createdAt', 'updatedAt'] } },
 );
 
+const getById = async (id) => {
+  const user = await User.findByPk(Number(id), {
+    attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
+  });
+  valid.checkIfUserExists(user);
+  return user;
+};
+
 const create = async ({ displayName, email, password, image }) => {
   await valid.checkEmailExists(email, User);
   await User.create({ displayName, email, password, image });
@@ -23,6 +31,7 @@ const login = async ({ email, password }) => {
 
 module.exports = {
   getAll,
+  getById,
   create,
   login,
 };

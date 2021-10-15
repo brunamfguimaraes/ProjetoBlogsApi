@@ -37,9 +37,18 @@ const checkEmailExists = async (email, Model) => {
   }
 };
 
+const checkIfUserExists = (user) => {
+  if (!user) {
+    const err = new Error('User does not exist');
+    err.statusCode = 404;
+    throw err;
+  }
+};
+
 module.exports = {
   checkBodyRequest,
   checkBodyLogin,
   checkEntries,
   checkEmailExists,
+  checkIfUserExists,
 };
