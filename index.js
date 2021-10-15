@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const userController = require('./controllers/userController');
+// const jwtValidate = require('./middleware/validateJWT');
 
 const app = express();
 app.use(bodyparser.json());
