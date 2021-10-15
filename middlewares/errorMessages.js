@@ -12,5 +12,6 @@ module.exports = {
   nameIsRequired: '"name" is required',
   titleIsRequired: '"title" is required',
   contentIsRequired: '"content" is required',
-  categoryIdIsRequired: '"categoryId" is required',
+  categoryIdIsRequired: '"categoryIds" is required',
+  categoryIdIsNotFound: '"categoryIds" not found',
 };

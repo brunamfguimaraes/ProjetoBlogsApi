@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { Category } = require('../models');
 const codes = require('./codes');
 const Indexerror = require('./Indexerror');
 const errorMessages = require('./errorMessages');
@@ -60,15 +61,26 @@ const verifyNameCategory = (name) => {
   }
 };
 
-const verifyFieldsBlogpost = (title, content, categoryId) => {
+const validateBlogpost = async (categoryIds) => {
+  const getAllCategories = await Category.findAll();
+  const getIds = getAllCategories.map((category) => category.id);
+  const getAllIds = categoryIds.every((id) => getIds.includes(id));
+  return getAllIds;
+};
+
+const verifyFieldsBlogpost = async (title, content, categoryIds) => {
   if (!title) {
     throw new Indexerror(codes.badRequest, errorMessages.titleIsRequired);
   }
   if (!content) {
     throw new Indexerror(codes.badRequest, errorMessages.contentIsRequired);
   }
-  if (!categoryId) {
+  if (!categoryIds) {
     throw new Indexerror(codes.badRequest, errorMessages.categoryIdIsRequired);
+  }
+  const categoryIdsExists = await validateBlogpost(categoryIds);
+  if (!categoryIdsExists) {
+    throw new Indexerror(codes.badRequest, errorMessages.categoryIdIsNotFound);
   }
 };
 
