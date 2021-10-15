@@ -10,4 +10,7 @@ module.exports = {
   invalidFields: 'Invalid fields',
   doesntExist: 'User does not exist',
   nameIsRequired: '"name" is required',
+  titleIsRequired: '"title" is required',
+  contentIsRequired: '"content" is required',
+  categoryIdIsRequired: '"categoryId" is required',
 };

@@ -60,4 +60,16 @@ const verifyNameCategory = (name) => {
   }
 };
 
-module.exports = { verifyCreateUser, verifyCreateLogin, verifyNameCategory };
+const verifyFieldsBlogpost = (title, content, categoryIds) => {
+  if (!title) {
+    throw new Indexerror(codes.badRequest, errorMessages.titleIsRequired);
+  }
+  if (!content) {
+    throw new Indexerror(codes.badRequest, errorMessages.contentIsRequired);
+  }
+  if (!categoryIds) {
+    throw new Indexerror(codes.badRequest, errorMessages.categoryIdIsRequired);
+  }
+};
+
+module.exports = { verifyCreateUser, verifyCreateLogin, verifyNameCategory, verifyFieldsBlogpost };
