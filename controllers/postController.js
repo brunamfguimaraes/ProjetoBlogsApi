@@ -14,10 +14,12 @@ const verifyContent = (req, res, next) => {
 
 const verifyCategoryId = async (req, res, next) => {
   const { categoryIds } = req.body;
-  if (!categoryIds) return res.status(400).json({ message: '"categoryIds" is required' });
+  if (!categoryIds || categoryIds.length === 0) {
+    return res.status(400).json({ message: '"categoryIds" is required' }); 
+}
   const categoryExists = await postServices.findCategory(categoryIds);
   const existance = categoryExists.some((item) => item !== null);
-  if (existance) return res.status(400).json({ message: '"categoryIds" not found' });
+  if (!existance) return res.status(400).json({ message: '"categoryIds" not found' });
   next();
 };
 
