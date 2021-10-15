@@ -16,4 +16,5 @@ app.get('/', (request, response) => {
 
 app.post('/user', userController);
 app.post('/login', loginController);
+app.get('/user/:id', validateJWT, userController); 
 app.get('/user', validateJWT, userController); 
