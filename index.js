@@ -1,10 +1,17 @@
 const express = require('express');
+const userController = require('./controllers/userController');
+const {
+  validName,
+  validEmail,
+  validPassword,
+  alreadyExists,
+} = require('./middlewares/validations');
 
 const app = express();
 
 app.use(express.json());
 
-app.post('/user');
+app.post('/user', validName, validEmail, validPassword, alreadyExists, userController.createUser);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 

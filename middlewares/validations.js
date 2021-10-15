@@ -1,39 +1,50 @@
+const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 
-const validName = ({ displayName }) => {
+const validName = (req, res, next) => {
+  const { displayName } = req.body;
   if (!displayName || displayName.length < 8) {
-    return { message: '"displayName" length must be at least 8 characters long' };
+    return res.status(StatusCodes.BAD_REQUEST)
+      .json({ message: '"displayName" length must be at least 8 characters long' });
   }
-  return true;
+  next();
 };
 
-const validEmail = ({ email }) => {
+const validEmail = (req, res, next) => {
+  const { email } = req.body;
   const regEmail = new RegExp(/^[\w.]+@[a-z]+.\w{2,3}$/g);
   if (!email) {
-    return { message: '"email" is required' };
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"email" is required' });
   }
   if (!regEmail.test(email)) {
-    return { message: '"email" must be a valid email' };
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"email" must be a valid email' });
   }
-  return true;
+  next();
 };
 
-const validPassword = ({ password }) => {
+const validPassword = (req, res, next) => {
+  const { password } = req.body;
   if (!password) {
-    return { message: '"password" is required' };
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"password" is required' });
   }
   if (password.length < 6) {
-    return { message: '"password" length must be 6 characters long' };
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"password" length must be 6 characters long' });
   }
+  next();
 };
 
-const alreadyExists = async (user) => {
-  const { email } = user;
+const alreadyExists = async (req, res, next) => {
+  const { email } = req.body;
   const findUser = await User.findOne({ where: { email } });
   if (findUser) {
-    return { message: 'User already registered' };
+    return res.status(StatusCodes.CONFLICT)
+    .json({ message: 'User already registered' });
   }
-  return true;
+  next();
 };
 
 module.exports = {
