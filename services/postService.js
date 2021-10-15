@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const middlewares = require('../middlewares');
 const { User, BlogPost, Category } = require('../models');
 
@@ -42,10 +43,20 @@ const deletePost = async (id, token) => {
   return BlogPost.destroy({ where: { id } });
 };
 
+const findPost = async (searchTerm) => {
+  if (!searchTerm) return getAllPosts();
+
+  return BlogPost.findAll({
+    where: { [Op.or]: [{ title: searchTerm }, { content: searchTerm }] },
+    include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }],
+  });
+};
+
 module.exports = {
   registerPost,
   getAllPosts,
   postById,
   updatedpost,
   deletePost,
+  findPost,
 };

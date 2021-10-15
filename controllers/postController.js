@@ -5,6 +5,7 @@ const {
   postById,
   updatedpost,
   deletePost,
+  findPost,
  } = require('../services/postService');
 
 const createPost = async (req, res, next) => {
@@ -84,10 +85,22 @@ const removePost = async (req, res) => {
   }
 };
 
+const searchPost = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const post = await findPost(q);
+    return res.status(200).json(post);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
   updatePost,
   removePost,
+  searchPost,
 };
