@@ -16,8 +16,14 @@ const getAllUsers = async () => User.findAll();
 
 const userById = async (id) => middlewares.verifyUserById(id);
 
+const deleteMe = async (token) => {
+  const id = middlewares.decodeToken(token);
+  return User.destroy({ where: { id } });
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   userById,
+  deleteMe,
 };

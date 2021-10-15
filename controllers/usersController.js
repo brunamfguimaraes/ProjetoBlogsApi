@@ -1,7 +1,9 @@
 const { 
   createUser: registerUser, 
   getAllUsers, 
-  userById } = require('../services/usersService');
+  userById,
+  deleteMe,
+ } = require('../services/usersService');
 const middlewares = require('../middlewares');
 
 const createUser = async (req, res, next) => {
@@ -37,8 +39,20 @@ const getUserById = async (req, res) => {
   }
 };
 
+const removeMe = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const removedUser = await deleteMe(token);
+    return res.status(204).json(removedUser);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  removeMe,
 };
