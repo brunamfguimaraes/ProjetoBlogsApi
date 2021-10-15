@@ -1,6 +1,6 @@
 const express = require('express');
 const user = require('./controller/userController');
-const login = require('./controller/userController');
+const login = require('./controller/loginController');
 
 const app = express();
 
@@ -15,4 +15,4 @@ app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 
 app.use('/user', user);
-app.use('/user', login);
+app.use('/login', login);

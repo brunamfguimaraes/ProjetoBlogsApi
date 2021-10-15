@@ -1,20 +1,21 @@
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const { createToken } = require('../authentication/token');
 
-require('dotenv').config();
+// require('dotenv').config();
 
-const secret = process.env.JWT_SECRET;
+// const secret = process.env.JWT_SECRET;
 
-const jwtConfiguration = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
-};
+// const jwtConfiguration = {
+//     expiresIn: '1d',
+//     algorithm: 'HS256',
+// };
 
-const createToken = (user) => {
-    console.log('token');
-    const tokenSign = jwt.sign({ data: user }, secret, jwtConfiguration);
-    return tokenSign;
-};
+// const createToken = (user) => {
+//     console.log('token');
+//     const tokenSign = jwt.sign({ data: user }, secret, jwtConfiguration);
+//     return tokenSign;
+// };
 
 const createUser = async (req, res) => {
     console.log('createUuser', req.body);

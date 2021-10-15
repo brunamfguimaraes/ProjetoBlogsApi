@@ -3,9 +3,9 @@ const rescue = require('express-rescue');
 
 const { checkEmailExists, createUser } = require('../service/userService');
 // const { token } = require('../middleware/jwtValidation');
-const { validateDisplayName, validateEmail } = require('../middleware/infoValidation');
-const { emailIsRequired, validatePassword } = require('../middleware/infoValidation');
-const { passwordIsRequired } = require('../middleware/infoValidation');
+const { validateDisplayName, validateEmail } = require('../middleware/infoValidationUser');
+const { emailIsRequired, validatePassword } = require('../middleware/infoValidationUser');
+const { passwordIsRequired } = require('../middleware/infoValidationUser');
 
 const router = express.Router();
 

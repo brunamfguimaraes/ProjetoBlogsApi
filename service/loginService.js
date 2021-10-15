@@ -1,13 +1,13 @@
-const User = require('../models/user');
+const { User } = require('../models');
 
-module.exports = (_req, res) => {
-const checkUserExists = async (email, password) => {
+const checkUserExists = async (email, password, res) => {
     const check = await User.findOne({ where: { email, password } });
+    console.log('check', check);
     if (check === null) {
     return res.status(400).json({
-        message: 'invalid fields',
+        message: 'Invalid fields',
         });
     }
 };
-return checkUserExists;
-};
+
+module.exports = { checkUserExists };

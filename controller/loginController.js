@@ -2,22 +2,27 @@ const express = require('express');
 const rescue = require('express-rescue');
 
 const { checkUserExists } = require('../service/loginService');
-const { token } = require('../middleware/jwtValidation');
-const { validateEmail } = require('../middleware/infoValidation');
-const { emailIsRequired, validatePassword } = require('../middleware/infoValidation');
-const { passwordIsRequired } = require('../middleware/infoValidation');
+const { createToken } = require('../authentication/token');
+const { validateEmail, emailIsRequiredLogin } = require('../middleware/infoValidationLogin');
+const { passwordIsRequiredLogin } = require('../middleware/infoValidationLogin');
+const { emailIsRequired, validatePassword } = require('../middleware/infoValidationLogin');
+const { passwordIsRequired } = require('../middleware/infoValidationLogin');
 
 const router = express.Router();
 
 router.post('/',
+emailIsRequiredLogin, 
+passwordIsRequiredLogin,
+emailIsRequired,
+passwordIsRequired,
 validateEmail,
-emailIsRequired, 
 validatePassword,
-passwordIsRequired, 
 rescue(async (req, res) => {
-const { email, password } = req.body;
-await checkUserExists(email, password);
-return res.status(201).json(token);
+    console.log('controllerLogin');
+    const { email, password } = req.body;
+    await checkUserExists(email, password, res);
+    const token = createToken(req.body);
+    return res.status(200).json({ token });
 }));
 
 module.exports = router;
