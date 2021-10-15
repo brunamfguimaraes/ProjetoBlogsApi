@@ -28,8 +28,18 @@ const getPostById = async (req, res, next) => {
   return res.status(200).json(post);
 };
 
+const updatePost = async (req, res, next) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const { id: userId } = JWT.decode(token);
+  const updatedPost = await blogPostServices.updatePost(id, userId, req.body);
+  if (updatedPost.message) return next(updatedPost);
+  return res.status(200).json(updatedPost);
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
+  updatePost,
 };

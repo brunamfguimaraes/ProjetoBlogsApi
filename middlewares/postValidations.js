@@ -19,6 +19,15 @@ const postValidations = async (req, _res, next) => {
   next();
 };
 
+const updatePostValidations = async (req, _res, next) => {
+  const { title, content, categoryIds } = req.body;
+  if (categoryIds) return next({ message: 'Categories cannot be edited' });
+  if (!title) return next({ message: '"title" is required' });
+  if (!content) return next({ message: '"content" is required' });
+  next();
+};
+
 module.exports = {
   postValidations,
+  updatePostValidations,
 };

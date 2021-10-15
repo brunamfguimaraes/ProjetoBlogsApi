@@ -24,7 +24,24 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePost = async (id, userId, post) => {  
+  const setUpdate = await BlogPost.update({
+    ...post,
+    updated: new Date(),
+  },
+  {
+    where: {
+      id,
+      userId,
+    },
+  });
+  if (setUpdate[0] === 0) return { message: 'Unauthorized user' };
+  const { categories } = await getPostById(id);
+    return { ...post, userId, categories };
+};
+
 module.exports = {
   createPost,
   getPostById,
+  updatePost,
 };

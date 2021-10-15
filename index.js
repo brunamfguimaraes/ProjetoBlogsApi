@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { validateCreateUser, validateLogin } = require('./middlewares/userValidations');
-const { postValidations } = require('./middlewares/postValidations');
+const { postValidations, updatePostValidations } = require('./middlewares/postValidations');
 const userControllers = require('./controllers/userControllers');
 const categoryControllers = require('./controllers/categoryControllers');
 const blogPostControllers = require('./controllers/blogPostControllers');
@@ -37,5 +37,7 @@ app.post('/post', authenticateToken, postValidations, blogPostControllers.create
 app.get('/post', authenticateToken, blogPostControllers.getPosts);
 
 app.get('/post/:id', authenticateToken, blogPostControllers.getPostById);
+
+app.put('/post/:id', authenticateToken, updatePostValidations, blogPostControllers.updatePost);
 
 app.use(error);
