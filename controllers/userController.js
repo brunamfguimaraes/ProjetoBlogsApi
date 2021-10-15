@@ -27,7 +27,9 @@ const createUser = async (req, res) => {
 
 const getAll = async (_req, res) => {
   try {
-   const users = await User.findAll();
+   const users = await User.findAll({
+     attributes: { exclude: ['password'] },
+   });
    return res.status(200).json(users);
   } catch (e) {
     console.log(e.message);
@@ -38,7 +40,9 @@ const getAll = async (_req, res) => {
 const getById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] },
+    });
     
     if (!user) return res.status(404).json({ message: 'User does not exist' });
 

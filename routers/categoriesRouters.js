@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { createCategory } = require('../controllers/categoriesController');
+const { createCategory, getAllCategory } = require('../controllers/categoriesController');
 
 // const { 
 //   validateDisplayName,
@@ -13,5 +13,6 @@ const { createCategory } = require('../controllers/categoriesController');
  const { nameValidation } = require('../middlewares/categoryValidations');
 
 router.post('/', jwtValidations, nameValidation, createCategory);
+router.get('/', jwtValidations, getAllCategory);
 
 module.exports = router;

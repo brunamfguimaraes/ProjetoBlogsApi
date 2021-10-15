@@ -16,4 +16,17 @@ res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
   }
 };
 
-module.exports = { createCategory };
+const getAllCategory = async (_req, res) => {
+  try {
+   const allCategory = await Category.findAll();
+   return res.status(CODE.OK).json(allCategory);
+  } catch (error) {
+    console.log(error.message);
+    res.status(CODE.CONFLICT).json({ message: 'unexpected server problem' });
+  }
+};
+
+module.exports = { 
+  createCategory,
+  getAllCategory,
+};
