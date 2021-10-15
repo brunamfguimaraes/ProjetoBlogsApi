@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { 
   userRouter, 
-  // loginRouter,
+  loginRouter,
 } = require('./src/routers');
 const { errorMiddleware } = require('./src/middlewares');
 
@@ -18,6 +18,8 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user', userRouter);
+
+app.use('/login', loginRouter);
 
 app.use(errorMiddleware);
 

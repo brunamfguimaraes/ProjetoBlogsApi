@@ -13,6 +13,10 @@ const errors = {
         message: '"email" must be a valid email',
         code: 400,
       },
+      emptyField: {
+        message: '"email" is not allowed to be empty',
+        code: 400,
+      },
       repeatedEmail: {
         message: 'User already registered',
         code: 409,
@@ -20,18 +24,31 @@ const errors = {
   },
 
   invalidPassword: {
-    invalidField: {
-      message: '"password" is required',
-      code: 400,
-    },
-    invalidFormat: {
-      message: '"password" length must be 6 characters long',
-      code: 400,
-    },
+      invalidField: {
+        message: '"password" is required',
+        code: 400,
+      },
+      emptyField: {
+        message: '"password" is not allowed to be empty',
+        code: 400,
+      },
+      invalidFormat: {
+        message: '"password" length must be 6 characters long',
+        code: 400,
+      },
+  },
+
+  nonExistentUser: {
+    message: 'Invalid fields',
+    code: 400,
   },
 };
  
 const emailValid = (value, emailExist) => {
+  if (value === '') {
+    return errors.invalidEmail.emptyField;
+  }
+
   if (!value) {
     return errors.invalidEmail.invalidField;
   }
@@ -58,6 +75,10 @@ const displayNameValid = (value) => {
 };
  
 const passwordValid = (value) => {
+  if (value === '') {
+    return errors.invalidPassword.emptyField;
+  }
+
   if (!value) {
   return errors.invalidPassword.invalidField;
   }
@@ -68,9 +89,18 @@ const passwordValid = (value) => {
 
   return false;
 };
+
+const userExistentValid = (value) => {
+  if (value === null) {
+    return errors.nonExistentUser;
+  }
+
+  return false;
+};
  
 module.exports = { 
   emailValid,
   displayNameValid,
   passwordValid,
+  userExistentValid,
 };
