@@ -10,17 +10,16 @@ const login = require('../service/loginService');
 const routeLogin = express.Router();
 
 routeLogin.post('/', validationLogin, async (req, res, next) => {
-  const { email } = req.body;
   const result = await login(req.body);
-  console.log(result);
+  const { id, displayName } = result;
+  const payload = { id, displayName };
   if (result.isError) {
-    console.log('result :', result);
     return next(result);
   }
   const tempo = {
     expiresIn: '10d',
   };
-  const token = jwt.sign({ email }, secret, tempo);
+  const token = jwt.sign({ payload }, secret, tempo);
   return res.status(200).json({ token });
 });
 
