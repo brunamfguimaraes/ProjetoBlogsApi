@@ -1,8 +1,20 @@
 // const jwt = require('jsonwebtoken');
 const postService = require('../service/postService');
 
+const getById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const posts = await postService.getById(id);
+        if (posts === null) {
+            return res.status(404).json({ message: 'Post does not exist' });
+        }
+        return res.status(200).json(posts);
+    } catch (error) {
+        return res.status(500).json({ message: 'Ops, algo de errado :( ' });
+    }
+};
+
 const getAll = async (req, res) => {
-    console.log('getAll posts');
     try {
         const posts = await postService.getAll();
         return res.status(200).json(posts);
@@ -28,4 +40,4 @@ const createPost = async (req, res) => {
     }
 };
 
-module.exports = { createPost, getAll };
+module.exports = { createPost, getAll, getById };

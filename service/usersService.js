@@ -2,6 +2,7 @@ const { User } = require('../models');
 const { validName, validEmail, validPassword } = require('../validations/validations');
 
 const getById = async (id) => {
+    console.log('get by id');
     console.log(id);
     const users = await User.findOne({ where: { id } });
     console.log(users);
