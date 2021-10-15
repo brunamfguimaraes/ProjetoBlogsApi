@@ -1,10 +1,10 @@
 const Categories = (sequelize, DataTypes) => {
-    const UserModel = sequelize.define('Category', {
+    const CategoryModel = sequelize.define('Category', {
         name: DataTypes.STRING,
     },
     { timestamps: false, tableName: 'Categories' });
     
-    return UserModel;
+    return CategoryModel;
 };
 
 module.exports = Categories;
