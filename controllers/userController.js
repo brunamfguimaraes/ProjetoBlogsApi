@@ -31,8 +31,11 @@ router.post('/user', async (req, res) => {
 
 router.get('/user', async (req, res) => {
     const getAll = await User.findAll();
-    const { id, displayName, email, image } = getAll[0].dataValues;
-    return res.status(statusCode.OK).json({ id, displayName, email, image });
+    const withoutPassword = getAll.map(
+        ({ id, displayName, email, image }) => ({ id, displayName, email, image }),
+    );
+    console.log(withoutPassword);
+    return res.status(statusCode.OK).json(withoutPassword);
 });
 
 module.exports = router;
