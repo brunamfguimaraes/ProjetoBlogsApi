@@ -84,11 +84,11 @@ const verifyId = async (idParams) => {
 const getById = async (idParams) => {
     const validateId = await verifyId(idParams);
     if (validateId.message) { return { message: validateId.message }; }
-    const userId = await User.findByPk(idParams);
+    const { id, displayName, email, image } = await User.findByPk(idParams);
   /*   if (!id || !displayName || !email || !image) {
         return { message: 'User does not exist' };
     } */
-    return userId;
+    return { id, displayName, email, image };
 };
 
 module.exports = { createUser, getById };
