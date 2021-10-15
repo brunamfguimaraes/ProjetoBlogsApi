@@ -8,7 +8,10 @@ const postNewUser = async (displayName, email, password, image) => {
     const newUser = await User.create({ displayName, email, password, image });
     return newUser;
   } catch (e) {
-    console.log(e.message);
+    console.log(Object.keys(e), e.name);
+    if (e.name === 'SequelizeUniqueConstraintError') {
+      return { err: { message: 'User already registered' }, status: 409 };
+    }
     return { err: { message: 'Algo deu errado' }, status: 500 };
   }
 };
