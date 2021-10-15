@@ -1,46 +1,48 @@
 require('dotenv').config();
 
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 const { 
   checkEmail,
   checkName,
   checkPassword,
   emailAlreadyExists,
+  authenticationToken,
+  validToken,
  } = require('../middlewares/user');
 
 const { User } = require('../models');
 
-const authenticationToken = (user) => {
-  const { id, displayName, image, email } = user;
-  const newToken = jwt.sign(
-    {
-      id,
-      displayName,
-      image,
-      email,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: '7d',
-      algorithm: 'HS256',
-    },
-  );
-  return newToken;
-};
+// const authenticationToken = (user) => {
+//   const { id, displayName, image, email } = user;
+//   const newToken = jwt.sign(
+//     {
+//       id,
+//       displayName,
+//       image,
+//       email,
+//     },
+//     process.env.JWT_SECRET,
+//     {
+//       expiresIn: '7d',
+//       algorithm: 'HS256',
+//     },
+//   );
+//   return newToken;
+// };
 
-const validToken = async (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) return res.status(401).json({ message: 'Token not found' });
+// const validToken = async (req, res, next) => {
+//   const token = req.headers.authorization;
+//   if (!token) return res.status(401).json({ message: 'Token not found' });
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: 'Expired or invalid token' });
-  }
-};
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     return res.status(401).json({ message: 'Expired or invalid token' });
+//   }
+// };
 
 const createUser = async (req, res) => {
   const newUser = await User.create(req.body);
