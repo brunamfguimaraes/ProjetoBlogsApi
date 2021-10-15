@@ -27,7 +27,7 @@ const getUserById = async (req, res, next) => {
     },
   );
   if (!user) next({ message: 'User does not exist' });
-  res.status(200).json(user);
+  return res.status(200).json(user);
 };
 
 module.exports = {
