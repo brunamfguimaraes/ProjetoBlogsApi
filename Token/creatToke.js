@@ -9,8 +9,9 @@ const jwtConfig = {
 };
 
 const generateToken = async (body) => {
-const token = jwt.sign(body, SECRET, jwtConfig);
+const { id, displayName, email } = body;
+const token = jwt.sign({ id, displayName, email }, SECRET, jwtConfig);
 return token;
 };
 
-module.exports = generateToken;
+module.exports = { generateToken };

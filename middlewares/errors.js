@@ -6,11 +6,13 @@ if (err.isJoi) {
 const statusCode = {
   userAlreadyExist: 409,
   missingAuthToken: 401,
+  userDontExist: 400,
 
 };
 const statusMenssage = {
   userAlreadyExist: 'User already registered',
   missingAuthToken: 'Token not found',
+  userDontExist: 'Invalid fields',
 };
 
 return res.status(statusCode[err] || 500).json({ message: statusMenssage[err] });
