@@ -11,6 +11,12 @@ const category = async (req, res) => {
   return res.status(201).json(findCategory);
 };
 
+const allCategories = async (req, res) => {
+  const categories = await Categories.findAll();
+  return res.status(200).json(categories);
+};
+
 module.exports = {
   category,
+  allCategories,
 };

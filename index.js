@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { user, login, getUsers, findUser } = require('./controllers/userController');
-const { category } = require('./controllers/categoryController');
+const { category, allCategories } = require('./controllers/categoryController');
 const validateJWT = require('./auth/validateJWT');
 
 const app = express();
@@ -23,4 +23,5 @@ app.route('/user')
   .get(validateJWT, getUsers);
 
 app.route('/categories')
-  .post(validateJWT, category);
+  .post(validateJWT, category)
+  .get(validateJWT, allCategories);
