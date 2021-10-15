@@ -2,6 +2,7 @@ const express = require('express');
 
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
+const validateJWT = require('./middlewares/validateJWT');
 
 const app = express();
 app.use(express.json());
@@ -15,4 +16,4 @@ app.get('/', (request, response) => {
 
 app.post('/user', userController);
 app.post('/login', loginController);
-app.get('/user', userController); 
+app.get('/user', validateJWT, userController); 
