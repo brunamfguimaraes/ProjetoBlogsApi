@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 const { validateIfPostBlogPostFieldsExist } = require('../middlewares/BlogPostMiddlewares');
 
 const checkCategorys = async (categoryIds) => {
@@ -17,6 +17,9 @@ const createBlogPostService = async (body, user) => {
   const validateField = validateIfPostBlogPostFieldsExist(body);
   if (validateField) return validateField;
   console.log(user, 'user');
+
+  const userInfo = await User.findOne({ where: { id: user } });
+  console.log(userInfo, 'userInfo');
 
   const validateCategory = await checkCategorys(categoryIds);
 
