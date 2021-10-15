@@ -4,6 +4,7 @@ const validateJWT = require('../middlewares/validateJWT');
 
 const router = express.Router();
 
+router.get('/post/search', validateJWT, PostController.getPostsByTerm);
 router.get('/post/:id', validateJWT, PostController.getPostsById);
 router.get('/post', validateJWT, PostController.getPosts);
 

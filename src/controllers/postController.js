@@ -27,6 +27,7 @@ const getPosts = async (_req, res, next) => {
 
 const getPostsById = async (req, res, next) => {
   const { id } = req.params;
+  console.log('getById', id);
   try {
     const post = await PostService.getPostsById(id);
 
@@ -64,10 +65,23 @@ const deletePost = async (req, res, next) => {
   }
 };
 
+const getPostsByTerm = async (req, res, next) => {
+  const { q: searchTerm } = req.query;
+  try {
+    const posts = await PostService.getPostsByTerm(searchTerm);
+
+    return res.status(codes.ok).json(posts);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+};
+
 module.exports = {
   createPost,
   deletePost,
   getPosts,
   getPostsById,
+  getPostsByTerm,
   updatePost,
 };
