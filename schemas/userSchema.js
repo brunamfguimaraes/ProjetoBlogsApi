@@ -37,11 +37,11 @@ const validateEmail = (email) => {
 };
 
 const validatePassword = (password) => {
+  if (password === undefined) {
+    console.log('entrei nopassword undef');
+    return { err: { message: errors.passwordUndefErr }, status: badRequestStatus };
+  }
   if (password.length !== 6) {
-    if (password === undefined) {
-      console.log('entrei nopassword undef');
-      return { err: { message: errors.passwordUndefErr }, status: badRequestStatus };
-    }
     return { err: { message: errors.passWordFormatErr }, status: badRequestStatus };
   }
   return {};
