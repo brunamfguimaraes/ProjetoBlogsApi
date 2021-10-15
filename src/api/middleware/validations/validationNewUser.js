@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 const validationNewUser = (req, _res, next) => {
+  console.log('entrei-newUser');
   const { error } = Joi.object().keys({
     displayName: Joi.string().min(8).max(50)
     .required(),

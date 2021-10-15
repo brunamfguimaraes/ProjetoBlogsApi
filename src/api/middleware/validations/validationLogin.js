@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 const validationLogin = (req, _res, next) => {
+  console.log('entrei-Login');
   const { error } = Joi.object().keys({
     email: Joi.string().email().required().empty(),
     password: Joi.string().min(6).not().empty()
