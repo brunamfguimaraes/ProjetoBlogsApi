@@ -4,13 +4,13 @@ const {
   createPost,
   getPosts, 
   getPostById,
+  updatePost,
 } = require('../controllers/postController');
 
 router.post('/', middlewares.validateJWT, createPost);
 router.get('/', middlewares.validateJWT, getPosts);
 router.get('/:id', middlewares.validateJWT, getPostById);
-// updatePost
-// router.put('/:id', updatePost);
+router.put('/:id', middlewares.validateJWT, updatePost);
 // removePost
 // router.delete('/:id', removePost);
 // searchPost

@@ -3,7 +3,14 @@ const { validationUser, verifyEmail, verifyUserById } = require('./validateUser'
 const { validationLogin, existsUser } = require('./validateLogin');
 const validateJWT = require('./validateJWT');
 const { validationCategory, existsCategory } = require('./validateCategory');
-const { validationPost, decodeToken, verifyPostById } = require('./validatePost');
+const { 
+  validationPost, 
+  decodeToken, 
+  verifyPostById, 
+  validationUpdatePost,
+  validateUser,
+  verifyCategory,
+} = require('./validatePost');
 
 module.exports = {
   error,
@@ -18,4 +25,7 @@ module.exports = {
   existsCategory,
   decodeToken,
   verifyPostById,
+  validationUpdatePost,
+  validateUser,
+  verifyCategory,
 };

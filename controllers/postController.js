@@ -3,6 +3,7 @@ const {
   registerPost, 
   getAllPosts,
   postById,
+  updatedpost,
  } = require('../services/postService');
 
 const createPost = async (req, res, next) => {
@@ -40,8 +41,33 @@ const getPostById = async (req, res) => {
   }
 };
 
+const updatePost = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = req.params;
+    const existsCategory = await middlewares.verifyCategory(req.body);
+    
+    if (existsCategory) {
+      return res.status(existsCategory.statusCode)
+      .json({ message: existsCategory.message }); 
+    }
+
+    const { error } = middlewares.validationUpdatePost(req.body);
+    if (error) return next(error);
+
+    const newPost = await updatedpost(req.body, id, token);
+    if (newPost.message) return res.status(newPost.statusCode).json({ message: newPost.message });
+
+    return res.status(200).json(newPost);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: e.message });
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
+  updatePost,
 };

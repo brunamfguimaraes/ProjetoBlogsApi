@@ -16,8 +16,27 @@ const getAllPosts = async () => BlogPost.findAll({
 
 const postById = async (id) => middlewares.verifyPostById(id);
 
+const updatedpost = async (body, id, token) => {
+  const { title, content } = body;
+  
+  const verifyUser = await middlewares.validateUser(id, token);
+  if (verifyUser) return verifyUser;
+  
+  await BlogPost.update(
+    { title, content },
+    { where: { id } },
+  );
+  
+  return BlogPost.findByPk(id, {
+    attributes: { exclude: ['published', 'updated'] },
+    include: { model: Category, as: 'categories' } });
+  // retorno do update, inclui categories, com id e name.
+  // validação para não editar as categorias.
+};
+
 module.exports = {
   registerPost,
   getAllPosts,
   postById,
+  updatedpost,
 };
