@@ -23,17 +23,6 @@ const emailIsRequired = rescue((req, res, next) => {
     next();
 });
 
-const emailIsRequiredLogin = rescue((req, res, next) => {
-    const { email } = req.body;
-
-    if (email === '') {
-        return res.status(400).json({
-            message: '"email" is not allowed to be empty',
-          });
-        }
-    next();
-});
-
 const validateEmail = rescue((req, res, next) => {
     const regex = /((\w+)@(\w+)\.(\w+))/i;
     const { email } = req.body;
@@ -102,7 +91,6 @@ module.exports = {
     emailIsRequired, 
     validatePassword, 
     passwordIsRequired,
-    emailIsRequiredLogin,
     passwordIsRequiredLogin,
     tokenValidation,
 };

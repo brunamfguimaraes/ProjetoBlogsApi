@@ -1,6 +1,7 @@
 const express = require('express');
 const user = require('./controller/userController');
 const login = require('./controller/loginController');
+const categories = require('./controller/categoryController');
 
 const app = express();
 
@@ -16,3 +17,4 @@ app.use(express.json());
 
 app.use('/user', user);
 app.use('/login', login);
+app.use('/categories', categories);

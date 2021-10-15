@@ -2,7 +2,6 @@ const { User } = require('../models');
 const { createToken } = require('../authentication/token');
 
 const createUser = async (req, res) => {
-    console.log('createUuser', req.body);
     const user = await User.create(req.body);
     const token = createToken(user);
     return res.status(201).json(token);
