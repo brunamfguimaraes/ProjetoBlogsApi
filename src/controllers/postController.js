@@ -4,8 +4,9 @@ const codes = require('../util/httpCodes');
 const createPost = async (req, res, next) => {
   try {
     const { title, content, categoryIds } = req.body;
+    const { id: userId } = req.user;
 
-    const post = await PostService.createPost(title, content, categoryIds);
+    const post = await PostService.createPost(title, content, categoryIds, userId);
 
     return res.status(codes.created).json(post);
   } catch (err) {

@@ -6,5 +6,7 @@ module.exports = (err, _req, res, _next) => {
   if (err instanceof AppError) {
     return res.status(code).json({ message });
   }
+
+  // console.log(err);
   return res.status(500).json({ message: err.message });
 };

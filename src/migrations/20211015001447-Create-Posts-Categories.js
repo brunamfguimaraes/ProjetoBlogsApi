@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        references: { model: 'Posts', key: 'id'}
+        references: { model: 'BlogPosts', key: 'id'}
       },
       categoryId: {
         allowNull: false,

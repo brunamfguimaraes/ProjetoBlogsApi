@@ -1,11 +1,11 @@
-const { Post: PostModel } = require('../models');
+const { BlogPost: PostModel } = require('../models');
 const validations = require('../util/validations');
 
-const createPost = async (title, content, categoryIds) => {
+const createPost = async (title, content, categoryIds, userId) => {
   await validations.verifyPostData(title, content, categoryIds);
-  console.log('cheguei');
-  const post = await PostModel.create({ title, content });
-  console.log('cheguei 2');
+
+  // console.log('userIdddddddddddddddddddddddddddddddddddddddddddddddddd', userId);
+  const post = await PostModel.create({ title, content, userId });
 
   return post;
 };
