@@ -36,4 +36,6 @@ app.post('/post', authenticateToken, postValidations, blogPostControllers.create
 
 app.get('/post', authenticateToken, blogPostControllers.getPosts);
 
+app.get('/post/:id', authenticateToken, blogPostControllers.getPostById);
+
 app.use(error);

@@ -1,4 +1,4 @@
-const { BlogPost, PostsCategory } = require('../models');
+const { BlogPost, PostsCategory, User, Category } = require('../models');
 
 const createPost = async (newPost) => {
   const { userId, title, categoryIds, content } = newPost;
@@ -11,6 +11,20 @@ const createPost = async (newPost) => {
   return { id, userId, title, content };
 };
 
+const getPostById = async (id) => {
+  const post = await BlogPost
+  .findOne({
+      where: { id },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['number'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+  if (!post) return { message: 'Post does not exist' };
+  return post;
+};
+
 module.exports = {
   createPost,
+  getPostById,
 };

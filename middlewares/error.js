@@ -15,6 +15,7 @@ const statusCode = {
   'Expired or invalid token': 401,
   '"categoryIds" not found': 400,
   'User does not exist': 404,
+  'Post does not exist': 404,
   'User already registered': 409,
   '"Category" already exists': 409,
 };
