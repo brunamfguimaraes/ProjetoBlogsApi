@@ -12,4 +12,6 @@ const isValid = (title, content, categoryIds) => {
   return false;
 };
 
-module.exports = { isValid };
+module.exports = {
+  isValid,
+};
