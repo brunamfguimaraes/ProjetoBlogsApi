@@ -14,7 +14,10 @@ const createBlogPost = async (req, res) => {
 };
 
 const getAllBlogPosts = async (req, res) => {
-  const allBlogPosts = await BlogPost.findAll({ include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }] });
+  const allBlogPosts = await BlogPost.findAll(
+    { include: [{ model: User, as: 'user' }, 
+    { model: Category, as: 'categories' }] },
+);
   return res.status(200).json(allBlogPosts);
 };
 
