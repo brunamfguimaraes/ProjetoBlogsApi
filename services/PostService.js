@@ -23,7 +23,26 @@ const postExists = async (id) => {
   return { isError: false, message: 'ok' };
 };
 
+const updatePost = async (id, user) => {
+  const post = await BlogPost.findByPk(
+    id, 
+    { 
+      include: [
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+      attributes: { exclude: ['id', 'published', 'updated'] },
+    },
+  );
+
+  if (user !== post.userId) {
+    return { isError: true, message: 'Unauthorized user' };
+  }
+
+  return post;
+};
+
 module.exports = {
   categoryExists,
   postExists,
+  updatePost,
 };

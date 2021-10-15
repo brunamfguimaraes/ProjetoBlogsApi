@@ -3,6 +3,7 @@ const { User, Category, BlogPost, PostsCategory } = require('../models');
 const PostService = require('../services/PostService');
 const validateJWT = require('../middlewares/token/validateJWT');
 const postValidate = require('../middlewares/postValidate');
+const updatePostValidate = require('../middlewares/updatePostValidate');
 
 const BlogPostRouter = express.Router();
 
@@ -66,9 +67,22 @@ BlogPostRouter.get('/:id', validateJWT, async (req, res) => {
   }
 });
 
-// BlogPostRouter.put('/:id', validateJWT, async (req, res) => {
-//   const { title, content } = req.body
-//   const { user } = req;
-// });
+BlogPostRouter.put('/:id', validateJWT, updatePostValidate, async (req, res) => {
+  const { id } = req.params;
+  const { post } = req;
+  const { title, content } = req.body;
+  
+  const [updatePost] = await BlogPost.update({ title, content }, { where: { id } });
+ 
+  if (!updatePost) return res.status(200).json({ message: 'Post does not exist' });
+
+  const newPost = {
+    title,
+    content,
+    userId: post.userId,
+    categories: post.categories,
+  };
+  return res.status(200).json(newPost);
+});
 
 module.exports = BlogPostRouter;

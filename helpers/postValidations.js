@@ -1,4 +1,7 @@
 const titleValidate = (title) => {
+  if (title === '') {
+    return { isError: true, message: '"title" is not allowed to be empty' };
+  }
   if (!title) {
     return { isError: true, message: '"title" is required' };
   }
@@ -7,6 +10,9 @@ const titleValidate = (title) => {
 };
 
 const contentValidate = (content) => {
+  if (content === '') {
+    return { isError: true, message: '"content" is not allowed to be empty' };
+  }
   if (!content) {
     return { isError: true, message: '"content" is required' };
   }
@@ -22,8 +28,17 @@ const categoryIdsValidate = (id) => {
   return { isError: false, message: 'ok' };
 };
 
+const categoryIdsNotEdited = (id) => {
+  if (id) {
+    return { isError: true, message: 'Categories cannot be edited' };
+  }
+  
+  return { isError: false, message: 'ok' };
+};
+
 module.exports = {
   titleValidate,
   contentValidate,
   categoryIdsValidate,
+  categoryIdsNotEdited,
 };
