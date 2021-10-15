@@ -1,4 +1,5 @@
 const express = require('express');
+const userController = require('./controllers/userController');
 
 const app = express();
 
@@ -6,7 +7,7 @@ const app = express();
 // Requisições que não seguem o formato pedido pelo servidor devem retornar um código de status 400;
 // Um problema inesperado no servidor deve retornar um código de status 500;
 
-app.post('/user');
+app.post('/user', userController.createUser);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
