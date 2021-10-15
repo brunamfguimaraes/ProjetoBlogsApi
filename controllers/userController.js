@@ -12,11 +12,10 @@ userRouter.post('/',
   userValidate,
   rescue(async (req, res) => {
     const user = await createUser(req.body);
-    const { nameDisplay, email } = req.body;
     if (user.isError) {
       return res.status(user.code).json({ message: user.message });
     }
-    const token = await creatorToken({ nameDisplay, email }); 
+    const token = await creatorToken(req.body); 
     return res.status(StatusCodes.CREATED).json({ token });
   }));
 
