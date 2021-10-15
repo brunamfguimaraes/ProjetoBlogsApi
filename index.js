@@ -19,3 +19,8 @@ app.get('/', (request, response) => {
 app.use('/user', userRouter);
 
 // ------------------------------------------------------------------
+// Requisitos 2 Rota de Login
+
+app.use('/login', userRouter);
+
+// ------------------------------------------------------------------

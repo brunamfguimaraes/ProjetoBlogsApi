@@ -3,11 +3,11 @@ const { User } = require('../models');
 
 // Comments: Lista de erros
 const errors = {
-  displayNameLength: '"displayName" length must be at least 8 characteres long',
-  passwordLength: '"password" length must be at 6 characteres long',
+  displayNameLength: '"displayName" length must be at least 8 characters long',
+  passwordLength: '"password" length must be 6 characters long',
   emailFormat: '"email" must be a valid email',
   emailRequired: '"email" is required',
-  userRegistered: '"user" is already registered',
+  userRegistered: 'User already registered',
   passwordRequired: '"password" is required',
 };
 
