@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { user, login, getUsers,findUser } = require('./controllers/userController');
+const { user, login, getUsers, findUser } = require('./controllers/userController');
 const validateJWT = require('./auth/validateJWT');
 
 const app = express();
