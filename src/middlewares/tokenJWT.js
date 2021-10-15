@@ -1,7 +1,7 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const User = require('../sequelize/models/user');
+// const User = require('../sequelize/models/user');
 
 const secret = process.env.JWT_SECRET;
 
@@ -24,6 +24,7 @@ const createJWT = async (req, res, next) => {
 
 const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
+  console.log('token', token);
 
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });
@@ -31,15 +32,10 @@ const validateJWT = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, secret);
-    const user = await User.findOne({ where: { email: payload.email } });
-    
-    if (user.email !== payload.email) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Invalid Token' });
-    }
 
-    req.user = user;
+    req.user = payload;
   } catch (error) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: error.message });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
   }
   next();
 };

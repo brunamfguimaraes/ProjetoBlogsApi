@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const userService = require('../services/UserService');
+const UserService = require('../services/UserService');
 
 const postNewUser = async (req, res) => {
   try {
@@ -7,7 +7,7 @@ const postNewUser = async (req, res) => {
     const { token } = req;
     const payload = { displayName, email, password, image };
 
-    const newUser = await userService.newUser(payload);
+    const newUser = await UserService.newUser(payload);
     
     if (newUser.error) {
       return res.status(StatusCodes.CONFLICT).json({ message: newUser.error.message });
@@ -19,4 +19,13 @@ const postNewUser = async (req, res) => {
   }
 };
 
-module.exports = postNewUser;
+const getAll = async (req, res) => {
+  try {
+    const users = await UserService.getAll();
+    return res.status(StatusCodes.OK).json(users);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.exports = { postNewUser, getAll };

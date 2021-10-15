@@ -16,6 +16,10 @@ const newUser = async (data) => {
   };
 };
 
-const findVyId = () => {};
+const getAll = async () => {
+  const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
+  // https://sequelize.org/master/class/lib/model.js~Model.html#static-method-findAll
+  return allUsers;
+};
 
-module.exports = { newUser, findVyId };
+module.exports = { newUser, getAll };
