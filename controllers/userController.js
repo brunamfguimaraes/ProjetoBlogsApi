@@ -1,13 +1,25 @@
 const express = require('express');
-const { validateDisplayNameLength } = require('../middlewares/userMiddlewares');
+const {
+  validateDisplayNameLength,
+  validateEmailWasInformed,
+  validateEmailFormat,
+  validateEmailIsAlreadyRegistered,
+  validatePasswordWasInformed,
+  validatePasswordLength } = require('../middlewares/userMiddlewares');
 const { User } = require('../models');
 
 const userRouter = express.Router();
 
 // ---------------------------------------------------------------
-// Requisito 1: CONTROLLER responsável por receber a requisição de cadastro de usuário, chamar SERVICE e retornar o usuário cadastrado.
+// Requisito 1: CONTROLLER responsável por realizar cadastro de usuário via sequelize e retornar usuário cadastrado.
 
-userRouter.post('/', validateDisplayNameLength, async (req, res) => {
+userRouter.post('/',
+  validateDisplayNameLength,
+  validateEmailWasInformed,
+  validateEmailFormat,
+  validateEmailIsAlreadyRegistered,
+  validatePasswordWasInformed,
+  validatePasswordLength, async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
     const newUser = await User.create({ displayName, email, password, image });
