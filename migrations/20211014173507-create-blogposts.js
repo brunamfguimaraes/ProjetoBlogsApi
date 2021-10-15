@@ -7,31 +7,33 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        references: { model: 'Users', key: 'id' }
+        references: { model:'Users', key: 'id' }
       },
       createdAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
         field: 'published',
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
         field: 'updated',
-      },
+        defaultValue: Sequelize.fn('now'),
+      }
     });
   },
 

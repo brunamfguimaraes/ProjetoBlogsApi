@@ -14,6 +14,7 @@ const verifyCategory = (req, res, next) => {
 
 const getAllCategories = async (req, res) => {
   const categories = await Category.findAll();
+  // console.log(JSON.stringify(categories), 'get-cat');
   return res.status(200).json(categories);
 };
 
