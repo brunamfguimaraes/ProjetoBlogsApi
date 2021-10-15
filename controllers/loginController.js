@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const service = require('../services/userService');
+const service = require('../services/loginService');
 
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
-  const result = await service.validateLogin(email, password);
+  const result = await service.login(email, password);
   if (result.err) {
     const { err } = result;
     return res.status(result.status).json(err);
