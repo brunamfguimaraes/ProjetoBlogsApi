@@ -24,6 +24,19 @@ router.get('/', validateToken, async (_req, res) => {
   return res.status(200).json(posts);
 });
 
+router.get('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  if (!post) return res.status(404).json({ message: 'Post does not exist' });
+  return res.status(200).json(post);
+});
+
 router.post('/', validateToken, validatePost, async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { email } = req;
