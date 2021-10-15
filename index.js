@@ -34,4 +34,6 @@ app.get('/categories', authenticateToken, categoryControllers.getCategories);
 
 app.post('/post', authenticateToken, postValidations, blogPostControllers.createPost);
 
+app.get('/post', authenticateToken, blogPostControllers.getPosts);
+
 app.use(error);
