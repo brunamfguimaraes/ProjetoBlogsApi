@@ -5,6 +5,9 @@ const { checkBodyRequest, checkBodyLogin } = require('../validations/User');
 
 const router = (app) => {
   app.route('/user')
+    .get(rescue(controller.getAll));
+
+  app.route('/user')
     .post(validateBody(checkBodyRequest), rescue(controller.create));
   
   app.route('/login')

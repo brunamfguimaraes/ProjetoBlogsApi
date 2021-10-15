@@ -20,7 +20,26 @@ const checkBodyLogin = (bodyObj) => {
   if (error) throw error;
 };
 
+const checkEntries = (validUser) => {
+  if (!validUser) {
+    const err = new Error('Invalid fields');
+    err.statusCode = 400;
+    throw err;
+  }
+};
+
+const checkEmailExists = async (email, Model) => {
+  const user = await Model.findOne({ where: { email } });
+  if (user) {
+    const err = new Error('User already registered');
+    err.statusCode = 409;
+    throw err;
+  }
+};
+
 module.exports = {
   checkBodyRequest,
   checkBodyLogin,
+  checkEntries,
+  checkEmailExists,
 };
