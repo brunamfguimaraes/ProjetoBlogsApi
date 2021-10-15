@@ -8,12 +8,12 @@ const validToken = async (req, res, next) => {
   let user;
   if (!authorize) return res.status(401).json({ message: 'Token not found' });
   try {
-    const decodes = jwt.verify(authorize, secret);
-    if (decodes.data) {
-      user = await Users.findOne({ where: { email: decodes.data } });
+    const decoded = jwt.verify(authorize, secret);
+    if (decoded) {
+      user = await Users.findOne({ where: { email: decoded } });
     }
     if (user) {
-      req.email = decodes.data;
+      req.email = decoded;
       next();
     }
   } catch (_e) {

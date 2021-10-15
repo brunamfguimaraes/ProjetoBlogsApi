@@ -4,22 +4,22 @@ const { User } = require('../models');
 require('dotenv/config');
 
 const { validName, validEmail, validPassword } = require('../middlewares/userMiddleware.js');
-const validateToken = require('../middlewares/tokenMiddleware.js');
+const { validToken } = require('../middlewares/tokenMiddleware.js');
 
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
-  expiresIn: '1d',
+  expiresIn: '7d',
   algorithm: 'HS256',
 };
 
 const router = express.Router();
 
-router.get('/', validateToken, async (_req, res) => {
+router.get('/', validToken, async (_req, res) => {
   const allUsers = await User.findAll();
   return res.status(200).json(allUsers);
 });
 
-router.get('/:id', validateToken, async (req, res) => {
+router.get('/:id', validToken, async (req, res) => {
   const { id } = req.params;
   const userId = await User.findOne({ where: { id } });
   if (!userId) return res.status(404).json({ message: 'User does not exist' });
