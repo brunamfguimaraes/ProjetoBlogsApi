@@ -19,11 +19,12 @@ const loginUserService = async (body) => {
   const validateField = validateIfLoginFieldsExist(body);
   if (validateField) return validateField;
 
-  const validateUser = await User.findOne({ where: { email, password } });
+  const validateUser = await User
+  .findOne({ where: { email, password }, attributes: ['id'] }).then((projects) => projects);
 
   if (!validateUser) return { message: 'Invalid fields' };
 
-  return true; 
+  return validateUser.id; 
 };
 
 const getAllUsersService = async () => {

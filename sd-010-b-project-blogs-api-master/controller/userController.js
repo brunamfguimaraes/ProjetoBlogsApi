@@ -39,9 +39,12 @@ const loginUser = async (req, res) => {
     console.log(user, 'user');
 
     if (user.message) return res.status(400).json({ message: user.message });
+
+    // const token = jwt.sign({ 
+    //   payload: { email, password, userId: _id, role } }, segredo, jwtConfig);
     
    const token = jwt.sign({ 
-     payload: { body } }, segredo, jwtConfig);
+     payload: { body, userId: user } }, segredo, jwtConfig);
   
     return res.status(200).json({ token });
     } catch (err) { 

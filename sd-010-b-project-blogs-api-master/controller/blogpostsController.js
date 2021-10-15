@@ -2,8 +2,9 @@ const { createBlogPostService } = require('../service/blogpostsService');
 
 const createBlogPost = async (req, res) => {
   const { body, user } = req;
+  console.log(user.userId, 'create blog post');
   try { 
-    const blogPost = await createBlogPostService(body, user);
+    const blogPost = await createBlogPostService(body, user.userId);
     console.log(blogPost, 'blogspot');
     if (blogPost.message) return res.status(400).json({ message: blogPost.message });
   

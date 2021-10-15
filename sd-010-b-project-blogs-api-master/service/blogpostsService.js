@@ -22,7 +22,8 @@ const createBlogPostService = async (body, user) => {
 
   if (!validateCategory) return { message: '"categoryIds" not found' };
 
-const blogPost = BlogPost.create({ categoryIds, title, content, user });
+const blogPost = BlogPost
+.create({ categoryIds, title, content, userId: user, published: new Date(), updated: new Date() });
 return blogPost;
 };
 
