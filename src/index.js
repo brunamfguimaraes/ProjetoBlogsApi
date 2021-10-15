@@ -30,5 +30,6 @@ app.get('/post', JWTMiddleware, PostController.listPosts);
 app.get('/post/:id', JWTMiddleware, PostController.findPost);
 app.post('/post', JWTMiddleware, PostController.newPost);
 app.put('/post/:id', JWTMiddleware, PostController.updatePost);
+app.delete('/post/:id', JWTMiddleware, PostController.deletePost);
 
 app.use(ErrorsMiddleware);

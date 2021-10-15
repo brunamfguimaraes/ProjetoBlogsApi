@@ -33,10 +33,21 @@ const updatePost = rescue(async (req, res, next) => {
   const postId = req.params.id;
   const bodyInfo = req.body;
   const post = await PostService.editPost(parseInt(postId, 10), bodyInfo, userId);
-
+  
   if (post.error) return next(post.error);
-
+  
   res.status(200).json(post);
+});
+
+const deletePost = rescue(async (req, res, next) => {
+  const userId = req.userData.id;
+  const postId = req.params.id;
+  
+  const post = await PostService.removePost(parseInt(postId, 10), userId);
+  
+  if (post.error) return next(post.error);
+  
+  res.status(204).json();
 });
 
 module.exports = {
@@ -44,4 +55,5 @@ module.exports = {
   listPosts,
   findPost,
   updatePost,
+  deletePost,
 };

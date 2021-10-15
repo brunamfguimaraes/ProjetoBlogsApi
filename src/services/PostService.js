@@ -51,13 +51,13 @@ const createPost = async (postInfo, userId) => {
   const post = await BlogPosts.create({ ...newPost, userId });
 
   const categoryExist = await verifyCategoriesExist(categoryIds);
-  
+
   if (!categoryExist) {
     return {
       error: { categoryNotFound: true, message: '"categoryIds" not found' },
     };
   }
-  
+
   await post.setCategories(categoryIds);
 
   return post;
@@ -122,4 +122,20 @@ const editPost = async (id, body, userId) => {
   return post;
 };
 
-module.exports = { createPost, findPosts, findPost, editPost };
+const removePost = async (id, userId) => {
+  const postFound = await BlogPosts.findByPk(id);
+
+  if (!postFound) {
+    return { error: { postNotFound: true, message: 'Post does not exist' } };
+  }
+
+  const destroy = await BlogPosts.destroy({ where: { id, userId } });
+
+  if (!destroy) {
+    return { error: { invalidUser: true, message: 'Unauthorized user' } };
+  }
+
+  return true;
+};
+
+module.exports = { createPost, findPosts, findPost, editPost, removePost };
