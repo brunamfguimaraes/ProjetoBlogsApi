@@ -66,4 +66,29 @@ const createUser = async ({ displayName, email, password, image }) => {
     return user;
 };
 
-module.exports = { createUser };
+const verifyId = async (idParams) => {
+    const userId = await User.findByPk(idParams);
+    /* console.log(userId); */
+    if (!userId) {
+        return { message: 'User does not exist' };
+    }
+    const { id } = userId;
+    if (Number(idParams) !== id) {
+        console.log(typeof idParams, 'to no params');
+        console.log(typeof id, 'to no id');
+        return { message: 'User does not exist' };
+    }
+    return true;
+};
+
+const getById = async (idParams) => {
+    const validateId = await verifyId(idParams);
+    if (validateId.message) { return { message: validateId.message }; }
+    const userId = await User.findByPk(idParams);
+  /*   if (!id || !displayName || !email || !image) {
+        return { message: 'User does not exist' };
+    } */
+    return userId;
+};
+
+module.exports = { createUser, getById };

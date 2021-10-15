@@ -38,9 +38,13 @@ router.get('/user', async (req, res) => {
 });
 
 router.get('/user/:id', async (req, res) => {
-    const { id: idParams } = req.params;
-    const { id, displayName, email, image } = await User.findByPk(idParams);
-    return res.status(statusCode.OK).json({ id, displayName, email, image });
+    const { id } = req.params;
+    const getById = await userService.getById(id);
+    if (getById.message) {
+        return res.status(statusCode.NOT_FOUND).json({ message: getById.message });
+    }
+    return res.status(statusCode.OK).json(getById);
 });
 
 module.exports = router;
+ /* User.findByPk(idParams) */
