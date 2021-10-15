@@ -1,10 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const { userRouter, loginRouter, categoriesRouter, postRouter } = require('./routes');
 const error = require('./middlewares/error');
 
 const app = express();
-
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+// PROCESS.ENV.PORT
+const { PORT } = process.env;
+app.listen(PORT || 3000, () => console.log('ouvindo porta 3000!'));
 
 app.use(express.json());
 
