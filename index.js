@@ -41,4 +41,6 @@ app.put('/post/:id', authenticateToken, updatePostValidations, blogPostControlle
 
 app.use(error);
 
-app.listen(process.env.PORT, () => console.log(`ouvindo porta ${process.env.PORT}!`));
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
