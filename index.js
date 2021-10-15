@@ -1,6 +1,6 @@
 const express = require('express');
 const requestLogin = require('./controllers/Login');
-const { requestCreateUser, requestUserList } = require('./controllers/User');
+const { requestCreateUser, requestUserList, requestDataUser } = require('./controllers/User');
 const {
   passwordRequired,
   emailRequired,
@@ -22,6 +22,8 @@ app.use(express.json());
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.get('/user/:id', verifyToken, requestDataUser);
 
 app.get('/user', verifyToken, requestUserList);
 

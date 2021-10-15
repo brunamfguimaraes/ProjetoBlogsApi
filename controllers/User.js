@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { userListService } = require('../services/User');
+const { userListService, userDataService } = require('../services/User');
 
 const requestCreateUser = async (req, res) => {
   try {
@@ -18,7 +18,18 @@ const requestUserList = async (_req, res) => {
   return res.status(200).json(userList);
 };
 
+const requestDataUser = async (req, res) => {
+  const { id } = req.params;
+
+  const userData = await userDataService(id);
+
+  if (!userData) return res.status(404).json({ message: 'User does not exist' });
+
+  return res.status(200).json(userData);
+};
+
 module.exports = {
   requestCreateUser,
-  requestUserList,  
+  requestUserList,
+  requestDataUser,
 };

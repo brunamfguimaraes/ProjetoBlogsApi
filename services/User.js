@@ -27,7 +27,16 @@ const loginAuth = async (email, password) => {
   return newToken;
 };
 
+const userDataService = async (id) => {
+  const user = await User.findByPk(id);
+
+  if (!user) return null;
+
+  return user;
+};
+
 module.exports = {
   loginAuth,
   userListService,
+  userDataService,
 };
