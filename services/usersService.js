@@ -49,6 +49,13 @@ const getUser = async (userInfo) => {
   } catch (e) { return loginError; }
 };
 
+const getAllUsers = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  try {
+    return users;
+  } catch (e) { return genericError; }
+};
+
 const loginUser = async (userInfo) => {
   const userExists = await getUser(userInfo);
   if (userExists === null) return loginError;
@@ -66,4 +73,5 @@ const loginUser = async (userInfo) => {
 module.exports = {
   createUser,
   loginUser,
+  getAllUsers,
 };
