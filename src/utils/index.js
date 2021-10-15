@@ -32,13 +32,11 @@ const createToken = (user) => {
   return token;
 };
 
-const validateToken = (req, _res, next) => {
-  const token = req.headers.authorization;
+const validateToken = (token) => {
   checkIfTokenExists(token);
   isTokenValid(token);
   const payload = Jwt.verify(token, SECRET);
-  req.user = payload;
-  next();
+  return payload;
 };
 
 module.exports = {
