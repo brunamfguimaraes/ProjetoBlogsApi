@@ -74,6 +74,7 @@ const getAllUsers = async () => {
 const getUserById = async (userInfo) => {
   const { id } = userInfo;
   const user = await User.findOne({ where: { id } });
+  if (user === null) return userNotExistsErr;
   try {
     return {
       resp: {
@@ -81,7 +82,7 @@ const getUserById = async (userInfo) => {
         content: user,
       },
     };
-  } catch (e) { return userNotExistsErr; }
+  } catch (e) { return genericError; }
 };
 
 const loginUser = async (userInfo) => {

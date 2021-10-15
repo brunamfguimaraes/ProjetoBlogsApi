@@ -25,4 +25,4 @@ app.post('/login', validateLogin, usersController.loginUser);
 
 app.get('/user', validateJWT, usersController.getAll);
 
-app.get('/user/:id', validateJWT);
+app.get('/user/:id', validateJWT, usersController.getById);
