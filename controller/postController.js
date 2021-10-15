@@ -1,6 +1,16 @@
 // const jwt = require('jsonwebtoken');
 const postService = require('../service/postService');
 
+const getAll = async (req, res) => {
+    console.log('getAll posts');
+    try {
+        const posts = await postService.getAll();
+        return res.status(200).json(posts);
+    } catch (error) {
+        return res.status(500).json({ message: 'Ops, algo de errado :( ' });
+    }
+};
+
 const createPost = async (req, res) => {
     try { 
         const { data: { id } } = req.user;
@@ -18,4 +28,4 @@ const createPost = async (req, res) => {
     }
 };
 
-module.exports = { createPost };
+module.exports = { createPost, getAll };

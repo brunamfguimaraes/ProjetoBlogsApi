@@ -1,5 +1,15 @@
-const { BlogPost, PostsCategory, Category } = require('../models');
+const { BlogPost, PostsCategory, Category, User } = require('../models');
 const { validPost } = require('../validations/validations');
+
+const getAll = async () => {
+    const posts = await BlogPost.findAll(
+        {
+            include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+            { model: Category, as: 'categories', through: { attributes: [] } }],
+        },
+);
+    return posts;
+};
 
 const createPost = async (post, userId) => {
     console.log('create category service');
@@ -8,7 +18,7 @@ const createPost = async (post, userId) => {
     console.log(typeof (valid));
     if (typeof (valid) === 'string') {
         return valid;
-    } 
+    }
     const newPost = { ...post, userId };
     const { categoryIds } = newPost;
     const response = await BlogPost.create(newPost);
@@ -19,4 +29,4 @@ const createPost = async (post, userId) => {
     });
     return response;
 };
-module.exports = { createPost };
+module.exports = { createPost, getAll };
