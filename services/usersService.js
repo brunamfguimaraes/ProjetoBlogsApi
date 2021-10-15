@@ -52,7 +52,9 @@ const getUser = async (userInfo) => {
 const loginUser = async (userInfo) => {
   const userExists = await getUser(userInfo);
   if (userExists.err) return userExists;
-  const jwt = createToken(userExists.id, userInfo.email);
+  const { id } = userExists.dataValues;
+  const { email } = userInfo;
+  const jwt = createToken({ id, email });
   return {
     resp: {
       status: 201,
