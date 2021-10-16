@@ -1,4 +1,3 @@
-const express = require('express');
 const CODE = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 
@@ -6,9 +5,7 @@ const { User } = require('../models');
 
 const secret = 'seusecretdetoken';
 
-const router = express.Router();
-
-router.post('/login', async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -28,6 +25,6 @@ router.post('/login', async (req, res) => {
     console.log(error.message);
     res.status(CODE.NOT_FOUND).json({ message: 'ERROR' });
   }
-});
+};
 
-module.exports = router;
+module.exports = { loginUser };
