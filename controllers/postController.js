@@ -1,13 +1,14 @@
 const rescue = require('express-rescue');
-const { BlogPost, PostsCategorie } = require('../models');
-
+const { BlogPost } = require('../models');
+// PostsCategorie
 const add = rescue(async (req, res) => {
-  const { title, content, categoryIds } = req.body;
+  const { title, content } = req.body;
+  // categoryIds
   const { payload } = req;
   const newCategory = await BlogPost.create({ title, content, userId: payload.id });
-  categoryIds.forEach(async (categoryId) => PostsCategorie.create(
-    { postId: payload.id, categoryId },
-  ));
+  // categoryIds.forEach(async (categoryId) => PostsCategorie.create(
+  //   { postId: payload.id, categoryId },
+  // ));
   return res.status(201).json(newCategory);
 });
 

@@ -5,9 +5,9 @@ const { validToken } = require('../api/auth/validToken');
 const { validPost, validCategoryIds } = require('../middlewares/postValidations');
 
 const router = express.Router();
-// , postController.add
+
 router.route('/')
-.post(validToken, validPost, validCategoryIds)
+.post(validToken, validPost, validCategoryIds, postController.add)
 .get(validToken, postController.findAll);
 
 module.exports = router;
