@@ -1,4 +1,3 @@
-// const rescue = require('express-rescue');
 const loginService = require('../services/loginService');
 
 const createLogin = async (req, res) => {
