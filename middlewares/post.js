@@ -24,7 +24,7 @@ const findCommonElments = (arr1, arr2) => arr1.some((el) => arr2.includes(el));
 const checkIfCategoryExists = async (req, res, next) => {
   const existingCategories = await Category.findAll();
   const result = findCommonElments(req.body.categoryIds, JSON.stringify(existingCategories));
-  if (result === false) return res.status(401).json({ message: '"categoryIds" not found' });
+  if (result === false) return res.status(400).json({ message: '"categoryIds" not found' });
   next();
 };
 
