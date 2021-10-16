@@ -4,8 +4,6 @@ const Category = (sequelize, DataTypes) => {
   },
   {
     timestamps: false,
-    tableName: 'Categories',
-    underscored: true,
   });
   return CategoryDefined;
 };

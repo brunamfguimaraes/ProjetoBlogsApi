@@ -7,8 +7,6 @@ const User = (sequelize, DataTypes) => {
   },
   {
     timestamps: false,
-    tableName: 'Users',
-    underscored: true,
   });
   return UserDefined;
 };

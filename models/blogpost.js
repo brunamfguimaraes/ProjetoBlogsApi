@@ -3,10 +3,6 @@ const BlogPost = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     userId: { type: DataTypes.INTEGER, foreignKey: true },
-  },
-  {
-    tableName: 'Users',
-    underscored: true,
   });
   return BlogPostDefined;
 };

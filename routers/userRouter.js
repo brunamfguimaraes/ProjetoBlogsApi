@@ -5,6 +5,6 @@ const router = express.Router();
 
 // ADD
 router.post('/', 
-userController.validNameEmailPassword);
+userController.validNameEmailPassword, userController.validUser, userController.createUser);
 
 module.exports = router;

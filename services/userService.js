@@ -1,15 +1,17 @@
-const User = require('../models/user');
+const { User } = require('../models');
 
 const isValidEmail = (email) => {
   if (!email) {
     return '"email" is required';
   } 
   
-  if (!email.includes('email.com') && !email.includes('gmail.com')) {
+  if (!email.includes('@')) {
     return '"email" must be a valid email';
   }
 
-  if (!email.includes('@')) {
+  const div = email.split('@');
+ 
+  if (!div[0] || !div[1]) {
     return '"email" must be a valid email';
   }
 
@@ -17,23 +19,25 @@ const isValidEmail = (email) => {
 };
 
 const isValidPassword = (password) => {
-  if (password.length < 6) {
+  if (password.length === 5) {
     return '"password" length must be 6 characters long';
   }
+
   return false;
 };
 
 const isValidDisplayName = (displayName) => {
   if (displayName.length < 8) {
-    return '"displayName length must br at least 8 characters long"';
+    return '"displayName" length must be at least 8 characters long"';
   }
+
   return false;
 };
 
-const existUser = async (displayName) => {
-  const user = await User.findOne({ where: { displayName } });
-  
-  if (user === null) {
+const existUser = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  console.log(user);
+  if (user) {
     return 'User already registered';
   }
 

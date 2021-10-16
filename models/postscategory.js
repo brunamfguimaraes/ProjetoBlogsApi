@@ -3,8 +3,6 @@ const PostsCategory = (sequelize, _DataTypes) => {
   {},
   {
     timestamps: false,
-    tableName: 'PostsCategories',
-    underscored: true,
   });
   return PostsCategoryDefined;
 };
