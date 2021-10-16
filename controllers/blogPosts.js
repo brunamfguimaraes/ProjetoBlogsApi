@@ -4,6 +4,7 @@ require('dotenv/config');
 const validatePost = require('../middlewares/validatePost');
 const validateToken = require('../middlewares/validateToken');
 const validateEdit = require('../middlewares/validateEdit');
+const validateOwnership = require('../middlewares/validateOwnership');
 
 const router = express.Router();
 
@@ -69,6 +70,16 @@ router.put('/:id', validateToken, validateEdit, async (req, res) => {
     return res.status(200).json(updated);
   } catch (e) {
     console.log(e);
+  }
+});
+
+router.delete('/:id', validateToken, validateOwnership, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await BlogPost.destroy({ where: { id } });
+    return res.send(204);
+  } catch (e) {
+    return res.status(404).json({ message: 'Post does not exist' });
   }
 });
 
