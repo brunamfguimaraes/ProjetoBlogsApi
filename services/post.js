@@ -41,7 +41,7 @@ const getAllPosts = async (req, res) => {
   const post = await BlogPost.findAll({
     include: [
       { model: User, as: 'user' },
-      { model: Category, as: 'category' },
+      { model: Category, as: 'categories' },
     ],
   });
   return res.status(200).json(post);
