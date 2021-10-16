@@ -41,7 +41,7 @@ router.post('/', validateDisplayName, validateEmail, validatePassword, async (re
 router.delete('/me', validateToken, async (req, res) => {
   const { email } = req;
   await User.destroy({ where: { email } });
-  return res.send(204);
+  return res.sendStatus(204);
 });
 
 module.exports = router;

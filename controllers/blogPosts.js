@@ -1,11 +1,13 @@
 const express = require('express');
-const { BlogPost, User, PostCategory, Category } = require('../models');
+const Sequelize = require('sequelize');
 require('dotenv/config');
+const { BlogPost, User, PostCategory, Category } = require('../models');
 const validatePost = require('../middlewares/validatePost');
 const validateToken = require('../middlewares/validateToken');
 const validateEdit = require('../middlewares/validateEdit');
 const validateOwnership = require('../middlewares/validateOwnership');
 
+const { Op } = Sequelize;
 const router = express.Router();
 
 const savePostCategories = (postId, categories) => {
@@ -24,6 +26,25 @@ router.get('/', validateToken, async (_req, res) => {
     ],
   });
   return res.status(200).json(posts);
+});
+
+router.get('/search', validateToken, async (req, res) => {
+  const { q } = req.query;
+  try {
+    const results = await BlogPost.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${q}%` } },
+          { content: { [Op.like]: `%${q}` } },
+        ],
+      },
+      include: [{ model: User, as: 'user' },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ] });
+    return res.status(200).json(results);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.get('/:id', validateToken, async (req, res) => {
