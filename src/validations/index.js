@@ -4,6 +4,11 @@ const errors = {
     code: 400,
   },
 
+  invalidFieldName: {
+    message: '"name" is required',
+    code: 400,
+  },
+
   invalidEmail: {
       invalidField: {
         message: '"email" is required',
@@ -42,7 +47,7 @@ const errors = {
     message: 'Invalid fields',
     code: 400,
   },
-  
+
   nonExistentUserById: {
     message: 'User does not exist',
     code: 404,
@@ -110,6 +115,14 @@ const userExistentValidById = (value) => {
 
   return false;
 };
+
+const checkFieldName = (value) => {
+  if (value === undefined) {
+    return errors.invalidFieldName;
+  }
+
+  return false;
+};
  
 module.exports = { 
   emailValid,
@@ -117,4 +130,5 @@ module.exports = {
   passwordValid,
   userExistentValid,
   userExistentValidById,
+  checkFieldName,
 };
