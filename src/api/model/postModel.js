@@ -9,7 +9,7 @@ const addNewPost = (title, categoryIds, content) => {
 
 const getPostAll = async () => PostsCategories.findAll();
 
-const getPostById = async (id) => PostsCategories.findOne({ where: { id } });
+const getPostById = async (postId) => PostsCategories.findOne({ where: { postId } });
 
 const getCategoryId = async (id) => {
   const result = await Categories.findOne({ where: { id } });
