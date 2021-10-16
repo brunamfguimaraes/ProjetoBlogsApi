@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost, PostsCategorie } = require('../models');
+const { BlogPost, PostsCategorie, User, Categorie } = require('../models');
 const schema = require('../schemas/postSchema');
 
 const createPost = async (title, content, categoryIds, token) => {
@@ -22,6 +22,18 @@ const createPost = async (title, content, categoryIds, token) => {
   }
 };
 
+const getAllPosts = async () => {
+  try {
+    const allPosts = await BlogPost.findAll({ include: [{ model: User, as: 'user' }, 
+      { model: Categorie, as: 'categories' }] });
+    return allPosts;
+  } catch (e) {
+    console.log(e.message);
+    return { err: { message: 'Algo deu errado' }, status: 500 };
+  }
+};
+
 module.exports = {
   createPost,
+  getAllPosts,
 };
