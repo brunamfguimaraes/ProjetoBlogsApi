@@ -4,6 +4,7 @@ const {
   userRouter, 
   loginRouter,
   categoriesRouter,
+  postsRouter,
 } = require('./src/routers');
 const { errorMiddleware } = require('./src/middlewares');
 
@@ -23,6 +24,8 @@ app.use('/user', userRouter);
 app.use('/login', loginRouter);
 
 app.use('/categories', categoriesRouter);
+
+app.use('/post', postsRouter);
 
 app.use(errorMiddleware);
 

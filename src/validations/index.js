@@ -9,6 +9,26 @@ const errors = {
     code: 400,
   },
 
+  invalidTitle: {
+    message: '"title" is required',
+    code: 400,
+  },
+
+  invalidContent: {
+    message: '"content" is required',
+    code: 400,
+  },
+
+  invalidCategoryId: {
+    message: '"categoryIds" is required',
+    code: 400,
+  },
+
+  categoryNotFound: {
+    message: '"categoryIds" not found',
+    code: 400,
+  },
+
   invalidEmail: {
       invalidField: {
         message: '"email" is required',
@@ -123,6 +143,38 @@ const checkFieldName = (value) => {
 
   return false;
 };
+
+const titleValid = (value) => {
+  if (!value) {
+    return errors.invalidTitle;
+  }
+
+  return false;
+};
+
+const contentValid = (value) => {
+  if (!value) {
+    return errors.invalidContent;
+  }
+
+  return false;
+};
+
+const categoryIdsValid = (value) => {
+  if (!value) {
+    return errors.invalidCategoryId;
+  }
+
+  return false;
+};
+
+const checkCategories = (value) => {
+  if (value === null) {
+    return errors.categoryNotFound;
+  }
+
+  return false;
+};
  
 module.exports = { 
   emailValid,
@@ -131,4 +183,8 @@ module.exports = {
   userExistentValid,
   userExistentValidById,
   checkFieldName,
+  titleValid,
+  contentValid,
+  categoryIdsValid,
+  checkCategories,
 };
