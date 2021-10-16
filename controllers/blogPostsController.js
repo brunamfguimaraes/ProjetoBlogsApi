@@ -6,7 +6,7 @@ const postsRouter = express.Router();
 
 const validateJWT = require('../middlewares/validateJWT');
 const validateBlogPosts = require('../middlewares/blogPostValidate');
-const { createBlogPost, checkCategory } = require('../services/blogPostsService');
+const { createBlogPost, checkCategory, allPosts } = require('../services/blogPostsService');
 const { getUser } = require('../services/userService');
 
 postsRouter.post('/',
@@ -23,5 +23,12 @@ postsRouter.post('/',
    const posts = await createBlogPost(title, content, idUser);
    res.status(StatusCodes.CREATED).json(posts);
  }));
+
+postsRouter.get('/',
+  validateJWT,
+  rescue(async (req, res) => {
+    const posts = await allPosts();
+    return res.status(StatusCodes.OK).json(posts);
+  }));
 
  module.exports = postsRouter;
