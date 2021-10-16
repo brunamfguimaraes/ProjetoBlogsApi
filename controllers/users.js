@@ -38,4 +38,10 @@ router.post('/', validateDisplayName, validateEmail, validatePassword, async (re
   return res.status(201).json({ token });
 });
 
+router.delete('/me', validateToken, async (req, res) => {
+  const { email } = req;
+  await User.destroy({ where: { email } });
+  return res.send(204);
+});
+
 module.exports = router;
