@@ -28,7 +28,7 @@ const isValidPassword = (password) => {
 
 const isValidDisplayName = (displayName) => {
   if (displayName.length < 8) {
-    return '"displayName" length must be at least 8 characters long"';
+    return '"displayName" length must be at least 8 characters long';
   }
 
   return false;
