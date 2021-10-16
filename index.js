@@ -11,7 +11,7 @@ const { verifyEmail, verifyName, verifyPassword, userAlreadyExists,
 
 const { createCategory, verifyCategory, getAllCategories } = require('./services/category');
 
-const { createPost } = require('./services/post');
+const { createPost, getAllPosts } = require('./services/post');
 const { checkTitle, checkContent, checkCategoriesIds,
    checkIfCategoryExists } = require('./middlewares/post');
 
@@ -29,8 +29,9 @@ app.post('/categories', validToken, verifyCategory, createCategory);
 app.post('/post', validToken, checkTitle, checkContent, checkCategoriesIds,
 checkIfCategoryExists, createPost);
 
-app.get('/user', validToken, getUsers);
 app.get('/user/:id', validToken, getUserById);
+app.get('/user', validToken, getUsers);
 app.get('/categories', validToken, getAllCategories);
+app.get('/post', validToken, getAllPosts);
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+app.listen(process.env.PORT || 3000, () => console.log('ouvindo porta 3000!'));

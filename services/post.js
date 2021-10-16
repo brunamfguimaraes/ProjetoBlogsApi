@@ -1,7 +1,7 @@
 require('dotenv');
 
 const jwt = require('jsonwebtoken');
-const { BlogPost, PostsCategory, User } = require('../models');
+const { BlogPost, Category, PostsCategory, User } = require('../models');
 
 const getTokenData = (token) => {
   const data = jwt.verify(token, process.env.JWT_SECRET);
@@ -37,8 +37,17 @@ const createPost = async (req, res) => {
   res.status(201).json({ id, userId, title, content });
 };
 
-// const getAllPosts = (req, res)
+const getAllPosts = async (req, res) => {
+  const post = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'category' },
+    ],
+  });
+  return res.status(200).json(post);
+};
 
 module.exports = {
   createPost,
+  getAllPosts,
 };
