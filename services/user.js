@@ -62,12 +62,12 @@ const getUsers = async (req, res) => {
   res.status(200).json(allusers);
 };
 
-// const getUserById = async (req, res) => {
-//   const { id } = req.params;
-//   const user = await User.findOne({ where: { id } });
-//   if (!user) return res.status(404).josn({ message: 'User does not exist' });
-//   return res.status(200).json(user);
-// };
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findByPk({ where: { id } });
+  if (!user) return res.status(404).josn({ message: 'User does not exist' });
+  return res.status(200).json(user);
+};
 
 // verify
 const emptyEmailLogin = async (req, res, next) => {
@@ -136,5 +136,5 @@ module.exports = {
   emptyEmailLogin,
   emptyPasswordLogin,
   getUsers,
-  // getUserById,
+  getUserById,
 };
