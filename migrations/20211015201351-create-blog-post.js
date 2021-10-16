@@ -27,10 +27,10 @@ module.exports = {
           key: 'id'
         }
       },
-      publish: {
+      published: {
         type: Sequelize.DATE,
       },
-      update: {
+      updated: {
         type: Sequelize.DATE,
       }
     })
