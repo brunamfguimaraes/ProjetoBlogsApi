@@ -23,11 +23,23 @@ const createCategory = async (categoryInfo) => {
       },
     };
   } catch (e) {
- console.log(e);
     return genericError; 
-}
+} 
+};
+
+const getAllCategories = async () => {
+  const categories = await Category.findAll();
+  try {
+    return {
+      resp: {
+        status: 200,
+        content: categories,
+      },
+    };
+  } catch (e) { return genericError; }
 };
 
 module.exports = {
   createCategory,
+  getAllCategories,
 };

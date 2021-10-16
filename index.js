@@ -30,3 +30,5 @@ app.post('/categories', validateJWT, validateCategory, categoriesController.crea
 app.get('/user', validateJWT, usersController.getAll);
 
 app.get('/user/:id', validateJWT, usersController.getById);
+
+app.get('/categories', validateJWT);
