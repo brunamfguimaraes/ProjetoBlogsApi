@@ -27,12 +27,16 @@ router.get('/:id', validToken, async (req, res) => {
 });
 
 router.post('/', validName, validEmail, validPassword, async (req, res) => {
-  const { displayName, email, password, image } = req.body;
-  const userExist = await User.findOne({ where: { email } });
-  if (userExist) return res.status(409).json({ message: 'User already registered' });
-  await User.create({ displayName, email, password, image });
-  const userToken = jwt.sign({ data: email }, secret, jwtConfig);
-  return res.status(201).json({ userToken });
+  try {
+    const { displayName, email, password, image } = req.body;
+    const userExist = await User.findOne({ where: { email } });
+    if (userExist) return res.status(409).json({ message: 'User already registered' });
+    await User.create({ displayName, email, password, image });
+    const userToken = jwt.sign({ data: email }, secret, jwtConfig);
+    res.status(201).json(userToken);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
 });
 
 module.exports = router;
