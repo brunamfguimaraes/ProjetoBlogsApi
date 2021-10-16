@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const { verifyEmail, verifyName, verifyPassword, userAlreadyExists,
   createUser, loginUp, emptyEmailLogin, emptyPasswordLogin,
   getUsers, validToken,
-  getUserById,
+  // getUserById,
  } = require('./services/user');
 
 const { createCategory, verifyCategory, getAllCategories } = require('./services/category');
@@ -29,7 +29,7 @@ app.post('/categories', validToken, verifyCategory, createCategory);
 app.post('/post', validToken, checkTitle, checkContent, checkCategoriesIds,
 checkIfCategoryExists, createPost);
 
-app.get('/user/:id', validToken, getUserById);
+// app.get('/user/:id', validToken, getUserById);
 app.get('/user', validToken, getUsers);
 app.get('/categories', validToken, getAllCategories);
 app.get('/post', validToken, getAllPosts);
