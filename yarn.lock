@@ -2728,6 +2728,11 @@
     "jsprim" "^1.2.2"
     "sshpk" "^1.7.0"
 
+"http-status@^1.5.0":
+  "integrity" "sha512-wcGvY31MpFNHIkUcXHHnvrE4IKYlpvitJw5P/1u892gMBAM46muQ+RH7UN1d+Ntnfx5apnOnVY6vcLmrWHOLwg=="
+  "resolved" "https://registry.npmjs.org/http-status/-/http-status-1.5.0.tgz"
+  "version" "1.5.0"
+
 "human-signals@^1.1.1":
   "integrity" "sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw=="
   "resolved" "https://registry.npmjs.org/human-signals/-/human-signals-1.1.1.tgz"
