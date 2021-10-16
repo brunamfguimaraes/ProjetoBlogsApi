@@ -3,6 +3,7 @@ const express = require('express');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const categoryController = require('./controllers/categoryController');
+const postController = require('./controllers/postController');
 
 const validateJWT = require('./auth/validateJWT');
 
@@ -25,5 +26,7 @@ app.get('/user/:id', validateJWT, userController.getById);
 
 app.post('/categories', validateJWT, categoryController.create);
 app.get('/categories', validateJWT, categoryController.getAllCategories);
+
+app.post('/post', validateJWT, postController.create);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));

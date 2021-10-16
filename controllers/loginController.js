@@ -13,6 +13,8 @@ router.post('/', async (req, res) => {
     
     const loginUser = await loginService.login(email, password);
 
+    // console.log(loginUser)
+
     if (loginUser.message) {
       return res.status(400).json({ message: loginUser.message });
     }
