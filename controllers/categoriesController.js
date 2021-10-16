@@ -7,7 +7,7 @@ const createCategory = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const all = await categoriesService.getAll();
+  const all = await categoriesService.getAllCategories();
   if (all.err) return res.status(all.err.status).json(all.err.message);
   return res.status(all.resp.status).json(all.resp.content);
 };
