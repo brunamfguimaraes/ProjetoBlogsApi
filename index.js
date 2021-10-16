@@ -11,7 +11,9 @@ const blogPostController = require('./controller/blogpostsController');
 app.use(bodyParser.json());
 // app.use(express.json());
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
 app.get('/post', validateToken, blogPostController.getAllPosts);
 app.post('/post', validateToken, blogPostController.createBlogPost);
