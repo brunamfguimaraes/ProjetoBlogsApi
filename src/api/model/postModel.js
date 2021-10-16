@@ -1,4 +1,4 @@
-const { PostsCategories, Categories, BlogPost } = require('../../models');
+const { PostsCategories, Categories, BlogPost, Users } = require('../../models');
 
 const addNewPost = (title, categoryIds, content) => {
   const resultAdd = PostsCategories.create({
@@ -7,7 +7,12 @@ const addNewPost = (title, categoryIds, content) => {
   return resultAdd;
 };
 
-const getPostAll = async () => PostsCategories.findAll();
+const getPostAll = async () => BlogPost.findAll({
+    include: [
+      { model: Users, as: 'user' },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
 
 const getPostById = async (postId) => PostsCategories.findOne({ where: { postId } });
 

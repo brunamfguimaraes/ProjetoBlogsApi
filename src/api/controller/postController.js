@@ -16,7 +16,7 @@ appPost.post('/', validPost, validateToken, async (req, res, next) => {
   return res.status(201).json(result);
 });
 
-appPost.get('/', validateToken, async (req, res) => {
+appPost.get('/', validateToken, async (_req, res) => {
   const resultAllPost = await getPostAll();
   return res.status(200).json(resultAllPost);
 });
