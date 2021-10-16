@@ -6,6 +6,7 @@ const { checkName } = require('../validations/Categorie');
 
 const router = (app) => {
   app.route('/categories')
+    .get(authMiddleware(validateToken), rescue(controller.getAll))
     .post(checkBody(checkName), authMiddleware(validateToken), rescue(controller.create));
 };
 
