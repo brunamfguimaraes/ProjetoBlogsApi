@@ -8,7 +8,7 @@ const add = rescue(async (req, res) => {
   // categoryIds.forEach(async (categoryId) => PostsCategorie.create(
   //   { postId: payload.id, categoryId },
   // ));
-  categoryIds.map(async (categoryId) => PostsCategorie.create({ postId: payload.id, categoryId }));
+  await categoryIds.map((categoryId) => PostsCategorie.create({ postId: payload.id, categoryId }));
 
   return res.status(201).json(newCategory);
 });
