@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.post('/', validateJWT, controller.addCategory);
 
+router.get('/', validateJWT, controller.getAllCategories);
+
 module.exports = router;
