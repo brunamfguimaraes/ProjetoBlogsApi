@@ -7,6 +7,7 @@ const EMAIL_REQUIRED = '"email" is required';
 const PASSWORD_REQUIRED = '"password" is required';
 const USER_ALREADY_EXISTS = 'User already registered';
 const EMAIL_NOT_VALID = '"email" must be a valid email';
+const USER_BOT_EXISTS = 'User does not exist';
 const erroMessage = (code, message) => ({ code, message });
 
 const valueLength = (value, min) => (value.length < min);
@@ -53,7 +54,16 @@ const createUser = async (user) => {
 
 const getAll = async () => User.findAll();
 
+const findById = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  
+  if (user) { return user; }
+  
+  return erroMessage(404, USER_BOT_EXISTS);
+};
+
 module.exports = {
   createUser,
   getAll,
+  findById,
 };
