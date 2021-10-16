@@ -2,12 +2,12 @@ const express = require('express');
 
 const postController = require('../controllers/postController');
 const { validToken } = require('../api/auth/validToken');
-// const { validPost } = require('../middlewares/postValidations');
-// validCategoryIds
+const { validPost, validCategoryIds } = require('../middlewares/postValidations');
+
 const router = express.Router();
-// validCategoryIds, validPost
+// , postController.add
 router.route('/')
-.post(validToken, postController.add)
+.post(validToken, validPost, validCategoryIds)
 .get(validToken, postController.findAll);
 
 module.exports = router;
