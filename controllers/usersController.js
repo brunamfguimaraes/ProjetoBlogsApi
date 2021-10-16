@@ -5,19 +5,19 @@ const { createUserServices } = require('../services/usersServices');
 const { JWT_SECRET } = process.env;
 
 const createUser = async (req, res) => {
-  // try {
+  try {
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
     const response = await createUserServices(req.body);
+    const token = jwt.sign({ data: response }, JWT_SECRET, jwtConfig);
 
     if (response.isError) {
       return res.status(response.code).json({ message: response.message });
     }
 
-    const token = jwt.sign({ data: response }, JWT_SECRET, jwtConfig);
     return res.status(StatusCodes.CREATED).json({ token });
-  // } catch (error) {
-    // return res.status(500).json({ message: error.message });
-  // }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 // const getAllStudents = async (_req, res) => {
