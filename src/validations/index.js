@@ -42,6 +42,11 @@ const errors = {
     message: 'Invalid fields',
     code: 400,
   },
+  
+  nonExistentUserById: {
+    message: 'User does not exist',
+    code: 404,
+  },
 };
  
 const emailValid = (value, emailExist) => {
@@ -97,10 +102,19 @@ const userExistentValid = (value) => {
 
   return false;
 };
+
+const userExistentValidById = (value) => {
+  if (value === null) {
+    return errors.nonExistentUserById;
+  }
+
+  return false;
+};
  
 module.exports = { 
   emailValid,
   displayNameValid,
   passwordValid,
   userExistentValid,
+  userExistentValidById,
 };

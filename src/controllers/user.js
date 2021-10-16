@@ -35,7 +35,22 @@ const getAllUsers = rescue(async (req, res) => {
   return res.status(200).json(allUsers);
 });
 
+const getUserById = rescue(async (req, res, next) => {
+  const { id } = req.params;
+
+  const userById = await User.findOne({ where: { id } });
+
+  const validations = await service.getUserById(userById);
+
+  if ('code' in validations) {
+    return next(validations);
+  }
+
+  return res.status(200).json(userById);
+});
+
 module.exports = { 
   userRegister,
   getAllUsers,
+  getUserById,
 };

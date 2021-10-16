@@ -1,7 +1,8 @@
 const { 
   emailValid,
   displayNameValid,
-  passwordValid, 
+  passwordValid,
+  userExistentValidById,
 } = require('../validations');
 
 const userRegister = async (user, emailExist) => {
@@ -16,6 +17,17 @@ const userRegister = async (user, emailExist) => {
   return {};
 };
 
+const getUserById = async (userById) => {
+  const verifyFields = userExistentValidById(userById);
+
+  if (verifyFields) {
+    return verifyFields;
+  }
+
+  return {};
+};
+
 module.exports = { 
   userRegister,
+  getUserById,
 };
