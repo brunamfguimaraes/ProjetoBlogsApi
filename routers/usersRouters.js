@@ -6,8 +6,8 @@ const { getById, getAll, createUser } = require('../controllers/userController')
 
 const { 
   validateDisplayName,
-   validatePassword,
-    validateEmail, 
+  validatePassword,
+  validateEmail, 
  } = require('../middlewares/userValidations');
 
  const jwtValidations = require('../middlewares/jwtValidations');
