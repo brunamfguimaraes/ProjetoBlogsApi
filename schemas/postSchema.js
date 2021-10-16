@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Categorie } = require('../models');
 
 const errors = {
@@ -24,14 +25,13 @@ const validateNewPost = (title, content, categoryIds) => {
 
 const validateCategories = async (categoryIds) => {
   try {
-    const validation = await categoryIds.map(async (categoryId) => {
-      const category = await Categorie.findOne({ where: { id: categoryId } });
-      return category;
-    });
-    if (validation.includes(null)) {
+    const registeredCategories = await Categorie.findAll({ where: { id: {
+      [Op.in]: categoryIds,
+    } } });
+    if (categoryIds.length !== registeredCategories.length) {
       return { err: { message: errors.categoryNotFound }, status: badRequestStatus };
     }
-    return {};
+    return { registeredCategories };
   } catch (e) {
     console.log(e.message);
     return { err: { message: 'Algo deu errado' }, status: 500 };

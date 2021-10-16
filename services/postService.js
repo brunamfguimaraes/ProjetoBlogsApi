@@ -18,7 +18,7 @@ const createPost = async (title, content, categoryIds, token) => {
     return newPost;
   } catch (e) {
     console.log(e.message);
-    return { err: { message: 'Algo deu errado' }, status: 500 };
+    return { err: { message: e.message }, status: 500 };
   }
 };
 
