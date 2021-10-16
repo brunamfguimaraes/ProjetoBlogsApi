@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const userRoutes = require('./src/routes/userRouter');
+const categoriesRoutes = require('./src/routes/categorieRouter');
+
 const error = require('./src/middlewares/error');
 
 const app = express();
@@ -13,6 +15,7 @@ app.get('/', (request, response) => {
 });
 
 userRoutes(app);
+categoriesRoutes(app);
 
 app.use(error);
 
