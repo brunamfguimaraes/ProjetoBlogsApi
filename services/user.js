@@ -36,7 +36,15 @@ const EmailFinder = async (email) => {
       };
  };
 
+const serviceUserListById = async (id) => {
+  const userListById = await User.findOne({ where: { id } });
+  return {
+    allUsers: { message: userListById }, code: 200,
+   };
+};
+
  module.exports = {
   ServiceUserRegister,
   serviceUserList,
+  serviceUserListById,
  };
