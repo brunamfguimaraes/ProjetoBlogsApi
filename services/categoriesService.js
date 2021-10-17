@@ -11,6 +11,9 @@ const create = async (name) => {
   return id;
 };
 
+const getAll = async () => Categorie.findAll();
+
 module.exports = {
   create,
+  getAll,
 };
