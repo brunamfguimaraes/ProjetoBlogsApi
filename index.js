@@ -37,6 +37,8 @@ app.post('/post', authenticateToken, postValidations, blogPostControllers.create
 
 app.get('/post', authenticateToken, blogPostControllers.getPosts);
 
+app.get('/post/search', authenticateToken, blogPostControllers.getPostsByTerm);
+
 app.get('/post/:id', authenticateToken, blogPostControllers.getPostById);
 
 app.put('/post/:id', authenticateToken, updatePostValidations, blogPostControllers.updatePost);

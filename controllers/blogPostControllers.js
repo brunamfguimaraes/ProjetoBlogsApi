@@ -1,4 +1,5 @@
 const JWT = require('jsonwebtoken');
+const { Op } = require('sequelize');
 const blogPostServices = require('../services/blogPostServices');
 const { BlogPost, User, Category } = require('../models');
 
@@ -46,10 +47,29 @@ const deletePost = async (req, res, next) => {
   return res.status(204).end();
 };
 
+const getPostsByTerm = async (req, res) => {
+  const { q: term } = req.query;
+  // console.log(sequelize.Validator.contains);
+  const posts = await BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${term}%` } },
+        { content: { [Op.like]: `%${term}%` } },
+      ],
+    },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return res.status(200).json(posts);
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
   updatePost,
   deletePost,
+  getPostsByTerm,
 };
