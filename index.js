@@ -39,6 +39,8 @@ app.get('/post/:id', authenticateToken, blogPostControllers.getPostById);
 
 app.put('/post/:id', authenticateToken, updatePostValidations, blogPostControllers.updatePost);
 
+app.delete('/post/:id', authenticateToken, blogPostControllers.deletePost);
+
 app.use(error);
 
 const PORT = process.env.PORT || 3000;
