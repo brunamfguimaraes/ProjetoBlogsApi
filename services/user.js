@@ -25,6 +25,7 @@ const error = {
     valid: { err: 400, message: '"password" length must be 6 characters long' },
   },
   notExists: { err: 400, message: 'Invalid fields' },
+  idNotExists: { err: 404, message: 'User does not exist' },
 };
 
 const check = (name, string) => {
@@ -54,6 +55,7 @@ const checkBody = (req) => {
 
 const getOne = async (email) => User.findOne({ where: { email } });
 const getAll = async () => User.findAll();
+const getById = async (id) => User.findOne({ where: { id } });
 
 const createUsersServices = async (req) => {
   const checksIsOk = checkBody(req);
@@ -107,8 +109,16 @@ const allUsersServices = async () => {
   return users;
 };
 
+const getIdUsersServices = async (req) => {
+  const { id } = req.params;
+  const answer = await getById(id);
+  if (!answer) { return error.idNotExists; }
+  return answer;
+};
+
 module.exports = {
   createUsersServices,
   loginUsersServices,
   allUsersServices,
+  getIdUsersServices,
 };
