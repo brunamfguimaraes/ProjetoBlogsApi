@@ -7,7 +7,7 @@ const { verifyEmptyEmail, verifyEmptyPassword, userLogin, checkEmailExists,
   getUser } = require('./services/user.js');
 const { verifyCategory, createCategory, getAllCategories } = require('./services/categories');
 const { verifyTitle, verifyContent, verifyCategoryId,
-  verifyCategoryIdExists, createBlogPost } = require('./services/post');
+  verifyCategoryIdExists, createBlogPost, getAllPosts } = require('./services/post');
 
 const app = express();
 
@@ -27,5 +27,6 @@ verifyTitle, verifyCategoryIdExists, createBlogPost);
 app.get('/user', validateToken, getAllUsers);
 app.get('/user/:id', validateToken, getUser);
 app.get('/categories', validateToken, getAllCategories);
+app.get('/post', validateToken, getAllPosts);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

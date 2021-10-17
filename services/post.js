@@ -3,6 +3,7 @@ require('dotenv');
 const jwt = require('jsonwebtoken');
 const { BlogPost } = require('../models');
 const { Category } = require('../models');
+const { User } = require('../models');
 
 const verifyTitle = (req, res, next) => {
   try {
@@ -77,8 +78,17 @@ const createBlogPost = async (req, res) => {
   }
 };
 
+const getAllPosts = async (_req, res) => {
+  const result = await BlogPost.findAll({ 
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  return res.status(200).json(result);
+};
+
 module.exports = { verifyTitle,
 verifyContent,
 verifyCategoryId, 
 verifyCategoryIdExists,
-createBlogPost };
+createBlogPost,
+getAllPosts };
