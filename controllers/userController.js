@@ -41,7 +41,7 @@ const validUser = async (req, res, next) => {
   const existUser = await userService.existUser(email);
   
   if (existUser) {
-    return res.status(status.BAD_REQUEST).json({ message: existUser });
+    return res.status(status.CONFLICT).json({ message: existUser });
   }
 
   next();
