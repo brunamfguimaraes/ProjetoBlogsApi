@@ -12,7 +12,7 @@ const addUser = async (req, res) => {
     const response = await userService.addUser(user);
     const { token } = response;
     if (token) {
-        return res.status(statusCode.CREATED).json({ token });
+        return res.status(statusCode.CREATED).json(response);
     }
    return res.status(statusCode.CONFLICT).json(response);
 };
