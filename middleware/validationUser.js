@@ -2,26 +2,53 @@ const RequestError = require('../helper/customErrors');
 
 let err;
 
-const validationEmail = (email) => {
+const validationEmail = (res, email) => {
+    if (!email) {
+        err = {
+            status: 400,
+            message: '"email" is required',
+        };
+        RequestError(res, err);
+    }
     const isValid = /\w+@\w+/g.test(email);
     if (!isValid) {
-      throw new RequestError('badRequest', '"email" must be a valid email');
+        err = {
+            status: 400,
+            message: '"email" must be a valid email',
+            };
+        RequestError(res, err);
     }
 };
 
-const validationName = (displayName) => {
+const validationName = (res, displayName) => {
     if (displayName.length < 8) {
-        err = { message: '"displayName" length must be at least 8 characters long' };
-        return err;
+        err = {
+        status: 400,
+        message: 'displayName length must be at least 8 characters long',
+        };
+        RequestError(res, err);
     }
 };
 
- const validationPassword = (password) => {
-    
+const validationPassword = (res, password) => {
+  if (!password) {
+      err = {
+          status: 400,
+          message: '"password" is required',
+      };
+      RequestError(res, err);
+  }
+  if (password.length < 6) {
+    err = {
+        status: 400,
+        message: '"password" length must be 6 characters long',
+    };
+    RequestError(res, err);
+  }
 };
 
 // const = () => {
     
 // }
 
-module.exports = { validationEmail, validationName, validationPassword }; 
+module.exports = { validationEmail, validationName, validationPassword };

@@ -4,10 +4,11 @@ const {
     validationPassword,
 } = require('../middleware/validationUser');
 
-const serviceUserValidation = (displayName, email, password, image) => {
-    return validationName(displayName);
-    //validationEmail(email);
-    //validationPassword(password);
+const serviceUserValidation = (res, displayName, email, password, image) => {
+    validationName(res, displayName);
+    validationEmail(res, email);
+    validationPassword(res, password);
+    return
 };
 
 module.exports = { serviceUserValidation };
