@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { verifyEmptyEmail, verifyEmptyPassword, userLogin, checkEmailExists, 
-  checkPassword, checkName, checkEmail, createUser, validateToken, getAllUsers } = require('./services/user.js');
+  checkPassword, 
+  checkName, checkEmail, createUser, validateToken, getAllUsers } = require('./services/user.js');
 
 const app = express();
 
