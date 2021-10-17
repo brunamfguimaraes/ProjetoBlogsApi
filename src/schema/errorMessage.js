@@ -12,4 +12,8 @@ module.exports = (errorType) => ({
   invalidToken: 'Expired or invalid token',
   nonExistentUser: 'User does not exist',
   noName: '"name" is required',
+  noTitle: '"title" is required',
+  noContent: '"content" is required',
+  noFiledCategoryIds: '"categoryIds" is required',
+  noCategoryIds: '"categoryIds" not found',
 })[errorType];

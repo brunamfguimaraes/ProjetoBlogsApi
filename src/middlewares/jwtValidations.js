@@ -21,7 +21,6 @@ const validateJWT = (req, res, next) => {
   } catch (e) {
     return res.status(code.HTTP_UNAUTHORIZED).json({ message: errorMessage('invalidToken') });
   }
-
   next();
 };
 

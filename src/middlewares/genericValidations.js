@@ -64,10 +64,43 @@ const validateName = (req, res, next) => {
   next();
 };
 
+const validateTitle = (req, res, next) => {
+  const bodyKey = Object.keys(req.body);
+
+  if (!bodyKey.includes('title')) {
+    return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('noTitle') });
+  }
+
+  next();
+};
+
+const validateContent = (req, res, next) => {
+  const bodyKey = Object.keys(req.body);
+
+  if (!bodyKey.includes('content')) {
+    return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('noContent') });
+  }
+
+  next();
+};
+
+const validateCategoryIds = (req, res, next) => {
+  const bodyKey = Object.keys(req.body);
+
+  if (!bodyKey.includes('categoryIds')) {
+    return res.status(code.HTTP_BAD_REQUEST).json({ message: errorMessage('noFiledCategoryIds') });
+  }
+
+  next();
+};
+
 module.exports = {
   validatedisplayName,
   validateEmail,
   validatePassword,
   validateEmptyFields,
   validateName,
+  validateTitle,
+  validateContent,
+  validateCategoryIds,
 };
