@@ -8,8 +8,17 @@ const postCategoriesServices = async (req) => {
   const { name } = req.body;
   if (!name) { return STATUS.notName; }
   try {
-    const user = await Categories.create({ name });
-    return (user);
+    const categories = await Categories.create({ name });
+    return (categories);
+  } catch (err) {
+    return (err);
+  }
+};
+
+const getCategoriesServices = async () => {
+  try {
+    const categories = await Categories.findAll();
+    return (categories);
   } catch (err) {
     return (err);
   }
@@ -17,4 +26,5 @@ const postCategoriesServices = async (req) => {
 
 module.exports = {
   postCategoriesServices,
+  getCategoriesServices,
 };
