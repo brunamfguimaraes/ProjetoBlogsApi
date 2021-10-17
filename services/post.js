@@ -66,7 +66,6 @@ const getTokenData = (token) => {
 const createBlogPost = async (req, res) => {
   try {
     const usuario = getTokenData(req.headers.authorization);
-
     const newBlogPost = await BlogPost.create(
       { title: req.body.title, content: req.body.content, userId: usuario },
     );
