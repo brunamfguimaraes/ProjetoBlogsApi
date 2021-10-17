@@ -9,12 +9,15 @@ const BlogPost = (sequelize, DataTypes) => {
   {
     timestamps: false,
   });
-  return BlogPostDefined;
-};
 
-BlogPost.associate = (models) => {
-  BlogPost.belongsTo(models.User,
-    { foreignKey: 'userId', as: 'user' });
+  BlogPostDefined.associate = (models) => {
+    BlogPostDefined.belongsTo(models.User,
+      { foreignKey: 'userId', as: 'user' });
+    BlogPostDefined.hasMany(models.PostsCategory,
+      { foreignKey: 'id', as: 'postId' });
+  };
+
+  return BlogPostDefined;
 };
 
 module.exports = BlogPost;
