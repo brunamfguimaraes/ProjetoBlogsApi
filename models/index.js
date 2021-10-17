@@ -1,5 +1,7 @@
 'use strict';
 
+//https://github.com/tryber/sd-07-live-lectures/blob/lecture_31_2/products-api/models/index.js
+
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
