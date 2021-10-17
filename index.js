@@ -14,4 +14,8 @@ const userRouter = require('./routers/userRouter');
 
 app.use('/', userRouter);
 
+const categoryRouter = require('./routers/categoryRouter');
+
+app.use('/', categoryRouter);
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

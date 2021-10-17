@@ -49,9 +49,15 @@ const isValidDisplayName = (displayName) => {
   return false;
 };
 
-const existUser = async (email) => {
-  const user = await User.findOne({ where: { email } });
-  console.log(user);
+const existUser = async (dado) => {
+  let user;
+
+  if (dado.length > 1) {
+    user = await User.findOne({ where: { email: dado } });
+  } else {
+    user = await User.findOne({ where: { id: dado } });
+  }
+  
   if (user) {
     return 'User already registered';
   }
@@ -59,4 +65,9 @@ const existUser = async (email) => {
   return false;
 };
 
-module.exports = { isValidEmail, isEmptyEmail, isValidPassword, isValidDisplayName, existUser };
+module.exports = { 
+  isValidEmail,  
+  isEmptyEmail, 
+  isValidPassword, 
+  isValidDisplayName, 
+  existUser };

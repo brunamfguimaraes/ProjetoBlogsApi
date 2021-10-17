@@ -6,7 +6,7 @@ const router = express.Router();
 
 // ADD
 router.post('/user', 
-  userController.validName,
+  userController.validDisplayName,
   userController.validEmail,
   userController.validPassword, 
   userController.validUser, 

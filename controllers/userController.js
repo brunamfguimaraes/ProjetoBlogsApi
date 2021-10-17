@@ -3,7 +3,7 @@ const { User } = require('../models');
 const userService = require('../services/userService');
 require('dotenv').config();
 
-const validName = async (req, res, next) => {
+const validDisplayName = async (req, res, next) => {
   const { displayName } = req.body;
 
   const isValidDisplayName = userService.isValidDisplayName(displayName);
@@ -76,15 +76,29 @@ const createUser = async (req, res) => {
 
 const findAllUsers = async (_req, res) => {  
   const users = await User.findAll();
+
   return res.status(status.OK).json(users);
 };
 
 const findUser = async (req, res) => {  
   const { id } = req.params;
 
+  const existUser = await userService.existUser(id);
+  
+  if (!existUser) {
+    return res.status(status.BAD_REQUEST).json({ message: 'User does not exist' });
+  }
+
   const user = await User.findOne({ where: { id } });
   return res.status(status.OK).json(user);
 };
 
 module.exports = { 
-  validName, validEmail, validPassword, loginUser, validUser, createUser, findAllUsers, findUser };
+  validDisplayName, 
+  validEmail, 
+  validPassword, 
+  loginUser, 
+  validUser, 
+  createUser, 
+  findAllUsers, 
+  findUser };
