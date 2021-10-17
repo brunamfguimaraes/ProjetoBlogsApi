@@ -1,3 +1,4 @@
+require('dotenv');
 const jwt = require('jsonwebtoken');
 const { Category } = require('../models');
 const { BlogPost } = require('../models');
