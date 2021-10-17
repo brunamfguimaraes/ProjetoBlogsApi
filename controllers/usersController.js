@@ -11,9 +11,7 @@ const createUser = async (req, res) => {
     const response = await createUserServices(req.body);
     const token = jwt.sign({ data: response }, JWT_SECRET, jwtConfig);
 
-    if (response.isError) {
-      return res.status(response.code).json({ message: response.message });
-    }
+    if (response.isError) return res.status(response.code).json({ message: response.message });
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
