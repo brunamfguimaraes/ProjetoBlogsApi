@@ -11,8 +11,9 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-const PORT = 3000;
+const PORT = 3001;
 
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
 
 app.post('/user', controllerUser);
+// SELECT * FROM blogs_api.Users;
