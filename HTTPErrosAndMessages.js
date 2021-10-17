@@ -11,6 +11,7 @@ const statusCode = {
     WRONG_FORMAT: 400,
     CREATED: 201,
     CONFLICT: 409,
+    OK: 200,
 };
 
 const message = {
@@ -26,6 +27,7 @@ const message = {
     INVALID_TOKEN: 'Expired or invalid token',
     NAME_NOT_EXISTS: '"name" is required',
     USER_EXISTS: 'User already registered',
+    INVALID_FIELDS: 'Invalid fields',
 };
 
 module.exports = {
