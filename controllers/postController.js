@@ -65,4 +65,12 @@ const createPost = async (req, res) => {
     });
 };
 
-module.exports = { validTitle, validContent, validCategoryIds, createPost };
+const getPost = async (req, res) => {
+  const posts = BlogPost.create({
+    include: { model: User, as: 'user' },
+  });
+
+  return res.status(status.OK).json(posts);
+};
+
+module.exports = { validTitle, getPost, validContent, validCategoryIds, createPost };
