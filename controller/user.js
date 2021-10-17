@@ -24,8 +24,12 @@ const controllerUserList = async (_req, res) => {
 const controllerUserListById = async (req, res) => {
   const { id } = req.params;
   const result = await serviceUserListById(id);
-  const { code, token } = result;
- return res.status(code).json({ token });
+  if (result.err) {
+    const { code, err } = result;
+    return res.status(code).json(err);
+  }
+  const { code, allUsers } = result;
+ return res.status(code).json(allUsers.message);
 };
 
 module.exports = {

@@ -1,4 +1,4 @@
- const { RegisterValidate, JWTToken, tokenValidator } = require('../middlewares');
+ const { RegisterValidate, JWTToken } = require('../middlewares');
 const { User } = require('../models');
 
 const EmailFinder = async (email) => {
@@ -38,6 +38,9 @@ const EmailFinder = async (email) => {
 
 const serviceUserListById = async (id) => {
   const userListById = await User.findOne({ where: { id } });
+  if (!userListById) {
+    return { err: { message: 'User does not exist' }, code: 404 };
+  }
   return {
     allUsers: { message: userListById }, code: 200,
    };
