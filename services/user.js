@@ -40,6 +40,12 @@ const isValidLogin = (email, password) => {
   if (password.length === 0) return { message: '"password" is not allowed to be empty' };
 };  
 
+const findUserById = async (id) => {
+  const findUser = await Users.findOne({ where: { id } });
+  if (!findUser) return { message: 'User does not exist' };
+  return findUser;
+};
+
 module.exports = {
-  createUser, isValidLogin,
+  createUser, isValidLogin, findUserById,
 };

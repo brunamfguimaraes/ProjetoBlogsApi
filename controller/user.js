@@ -1,6 +1,6 @@
 const { StatusCodes: {
   BAD_REQUEST, CONFLICT, CREATED, OK } } = require('http-status-codes');
-const { createUser, isValidLogin } = require('../services/user');
+const { createUser, isValidLogin, findUserById } = require('../services/user');
 const { Users } = require('../models');
 const { token } = require('../auth/token');
 
@@ -36,8 +36,16 @@ const getUsers = async (req, res) => {
   return res.status(OK).json(users);
 };
 
+const findUser = async (req, res) => {
+  const { id } = req.params;
+  const find = await findUserById(id);
+  if (find.message) return res.status(404).json({ message: find.message });
+  return res.status(200).json(find);
+};
+
 module.exports = {
   user,
   login,
   getUsers,
+  findUser,
 };
