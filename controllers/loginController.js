@@ -19,11 +19,11 @@ router.post('/', required, isEmpty, async (req, res) => {
     const userExist = await User.findOne({ where: { email, password } });
     if (userExist) {
       const userToken = jwt.sign({ data: email, secret, jwtConfig });
-      return res.status(200).json(userToken);
+      return res.status(200).json({ userToken });
     }
     return res.status(400).json({ message: 'Invalid fields' });
   } catch (e) {
-    res.status(500).json({ message: e });
+    res.status(500).json({ message: e.message });
   }
 });
 
