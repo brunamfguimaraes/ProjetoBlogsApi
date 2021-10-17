@@ -17,7 +17,6 @@ const getAll = async (req, res) => {
 const findById = async (req, res) => {
   const { id } = req.params;
   const result = await userService.findById(id);
-  console.log('result -----*****', result);
   if (result.code) { return res.status(result.code).json({ message: result.message }); }
   return res.status(200).json(result);
 };
