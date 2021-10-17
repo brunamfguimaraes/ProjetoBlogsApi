@@ -13,14 +13,14 @@ const {
     WrongdisplayName,
     WrongEmail,
     WrongPassword,
-    WrongToken,
+    // WrongToken,
    
      } = require('../middlewares/userValidate');
 
 router.post('/', WrongdisplayName, WrongEmail, WrongPassword, userController.addUser); 
 
-router.get('/', WrongToken, userController.getAllUser); 
+// router.get('/', WrongToken, userController.getAllUser); 
 
-router.get('/:id', WrongToken, userController.getUserById); 
+// router.get('/:id', WrongToken, userController.getUserById); 
 
 module.exports = router;
