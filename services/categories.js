@@ -23,4 +23,9 @@ const verifyCategory = (req, res, next) => {
   }
 };
 
-module.exports = { verifyCategory, createCategory };
+const getAllCategories = async (req, res) => {
+  const allCategories = await Category.findAll();
+  res.status(200).json(allCategories);
+};
+
+module.exports = { verifyCategory, createCategory, getAllCategories };

@@ -5,7 +5,7 @@ const { verifyEmptyEmail, verifyEmptyPassword, userLogin, checkEmailExists,
   checkPassword, 
   checkName, checkEmail, createUser, validateToken, getAllUsers,
   getUser } = require('./services/user.js');
-const { verifyCategory, createCategory } = require('./services/categories');
+const { verifyCategory, createCategory, getAllCategories } = require('./services/categories');
 
 const app = express();
 
@@ -22,5 +22,6 @@ app.post('/categories', validateToken, verifyCategory, createCategory);
 
 app.get('/user', validateToken, getAllUsers);
 app.get('/user/:id', validateToken, getUser);
+app.get('/categories', validateToken, getAllCategories);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
