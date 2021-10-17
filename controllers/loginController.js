@@ -9,7 +9,7 @@ const loginUser = async (req, res) => {
    const response = await userService.loginUser(user);
    const { token } = response;
    if (token) {
-    return res.status(statusCode.OK).json({ response });
+    return res.status(statusCode.OK).json(response);
    }
    return res.status(statusCode.WRONG_FORMAT).json(response);
 };

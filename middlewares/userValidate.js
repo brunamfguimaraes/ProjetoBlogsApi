@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+const JWT_SECRET_TRUE = process.env.JWT_SECRET;
+
 const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 
 const HTTP_REST = require('../HTTPErrosAndMessages');
@@ -48,20 +50,33 @@ const WrongPassword = (req, res, next) => {
     next();
 };
 
-const WrongToken = (req, res, next) => {
-    const token = req.headers.authorization;
+// const WrongToken = async (req, res, next) => {
+//     const token = req.headers.authorization;
+//     console.log(JWT_SECRET_TRUE, 'estou no meu middleware');
+    
+//     if (!token) {
+//      return res.status(statusCode.TOKEN_INVALID).json({ message: message.TOKEN_NOT_EXISTS });
+//     }
+//     try {
+//     req.user = jwt.verify(token, JWT_SECRET_TRUE);
+//     next(); 
+//     } catch (error) {
+//         // console.log(error, 'estou no middleware dentro do catch');
+//      return res.status(statusCode.TOKEN_INVALID).json({ message: message.INVALID_TOKEN });
+//     }
+// };
 
-    console.log(token);
-    if (!token) {
-     return res.status(statusCode.TOKEN_INVALID).json({ message: message.TOKEN_NOT_EXISTS });
-    }
+const WrongToken = async (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json({ message: 'Token not found' });
     try {
-     jwt.verify(token, process.env.JWT_SECRET);
-     next(); 
+    const answer = jwt.verify(token, JWT_SECRET_TRUE);
+    req.user = answer.data;
+    next();
     } catch (error) {
-     return res.status(statusCode.TOKEN_INVALID).json({ message: message.INVALID_TOKEN });
+    return res.status(401).json({ message: 'Expired or invalid token' });
     }
-};
+    }; 
 
 module.exports = {
     WrongdisplayName,

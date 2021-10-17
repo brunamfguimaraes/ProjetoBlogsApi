@@ -1,6 +1,6 @@
 const HTTP_REST = require('../HTTPErrosAndMessages');
 
-const { statusCode } = HTTP_REST;
+const { statusCode, message } = HTTP_REST;
 
 const userService = require('../service/usersService');
 
@@ -18,16 +18,17 @@ const addUser = async (req, res) => {
 
 // Falta Listar todos usuários e depois enviar o status 200
 const getAllUser = async (req, res) => {
-    const nada = 'aaaad';
-    // console.log(req.body);
-   return res.status(statusCode.CREATED).json({ nada });
+    const allUsers = await userService.getAllUsers();
+   return res.status(statusCode.OK).json(allUsers);
 };
 
 // Falta apenas Listar o usuário pelo ID Se ele não existir um 404
 const getUserById = async (req, res) => {
-    const nada = 'sasdsd';
-    // console.log(req.body);
-   return res.status(statusCode.CREATED).json({ nada });
+    const userById = await userService.getUserBydId(req.params.id);
+    if (!userById) {
+        return res.status(statusCode.NOT_FOUND).json({ message: message.USER_NOT_EXISTS });
+    }
+   return res.status(statusCode.OK).json(userById);
 };
 
 module.exports = {

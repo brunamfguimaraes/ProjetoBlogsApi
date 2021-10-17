@@ -12,6 +12,7 @@ const statusCode = {
     CREATED: 201,
     CONFLICT: 409,
     OK: 200,
+    NOT_FOUND: 404,
 };
 
 const message = {
@@ -28,6 +29,7 @@ const message = {
     NAME_NOT_EXISTS: '"name" is required',
     USER_EXISTS: 'User already registered',
     INVALID_FIELDS: 'Invalid fields',
+    USER_NOT_EXISTS: 'User does not exist',
 };
 
 module.exports = {

@@ -15,6 +15,12 @@ const addUser = async (user) => {
     return { message: message.USER_EXISTS };
 };
 
+const getAllUsers = async () => User.findAll();
+
+const getUserBydId = async (id) => User.findOne({ where: { id } });
+
 module.exports = {
     addUser,
+    getAllUsers,
+    getUserBydId,
 };
