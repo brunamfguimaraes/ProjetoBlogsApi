@@ -78,6 +78,7 @@ const tokenValidation = rescue((req, res, next) => {
         }
     try {
         const verify = jwt.verify(takeToken, process.env.JWT_SECRET);
+        console.log(verify);
         req.user = verify;
         next();
     } catch (err) {

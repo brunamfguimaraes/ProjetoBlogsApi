@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+// const { User } = require('../models');
 
 require('dotenv').config();
 
@@ -9,7 +10,7 @@ const jwtConfiguration = {
     algorithm: 'HS256',
 };
 
-const createToken = (user) => {
+const createToken = async (user) => {
     const tokenSign = jwt.sign({ data: user }, secret, jwtConfiguration);
     return tokenSign;
 };
