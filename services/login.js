@@ -7,7 +7,6 @@ const serviceUserlogin = async (login) => {
     return invalidator;
   }
   const user = await userFinder(email);
-  console.log(user);
   if (user) {
     const token = await JWTToken(email);
   

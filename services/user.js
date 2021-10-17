@@ -1,4 +1,4 @@
- const { RegisterValidate, JWTToken } = require('../middlewares');
+ const { RegisterValidate, JWTToken, tokenValidator } = require('../middlewares');
 const { User } = require('../models');
 
 const EmailFinder = async (email) => {
@@ -29,6 +29,14 @@ const EmailFinder = async (email) => {
   return { code: 201, token };
  };
 
+ const serviceUserList = async () => {
+   const userList = await User.findAll();
+     return {
+       allUsers: { message: userList }, code: 200,
+      };
+ };
+
  module.exports = {
   ServiceUserRegister,
+  serviceUserList,
  };

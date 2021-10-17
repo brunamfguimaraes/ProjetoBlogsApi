@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const { User } = require('../models');
 
-const secret = 'senhaToken';
+const { SECRET } = process.env;
 
 const jwtConfig = {
   expiresIn: '1d',
   algorithm: 'HS256',
 };
 
-const JWTToken = (email) => jwt.sign({ data: email }, secret, jwtConfig);
+const JWTToken = (email) => jwt.sign({ data: email }, SECRET, jwtConfig);
 
 const emailVerificator = (email) => {
   const emailRegEx = RegExp(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i);
@@ -95,9 +96,24 @@ const loginValidate = (email, password) => {
 
 const userFinder = async (email) => User.findOne({ where: { email } });
 
+const tokenValidator = async (req, res, next) => {
+  const { authorization: token } = req.headers;
+  if (!token) {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+  
+  try {
+    jwt.verify(token, SECRET);
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Expired or invalid token' }); 
+  }
+};
+
 module.exports = {
   JWTToken,
   RegisterValidate,
   loginValidate,
   userFinder,
+  tokenValidator,
 };
