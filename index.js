@@ -5,6 +5,7 @@ const { verifyEmptyEmail, verifyEmptyPassword, userLogin, checkEmailExists,
   checkPassword, 
   checkName, checkEmail, createUser, validateToken, getAllUsers,
   getUser } = require('./services/user.js');
+const { verifyCategory, createCategory } = require('./services/categories');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/', (request, response) => {
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
 app.post('/login', verifyEmptyEmail, verifyEmptyPassword, userLogin);
+app.post('/categories', validateToken, verifyCategory, createCategory);
 
 app.get('/user', validateToken, getAllUsers);
 app.get('/user/:id', validateToken, getUser);
