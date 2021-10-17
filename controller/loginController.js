@@ -18,7 +18,6 @@ passwordIsRequired,
 validateEmail,
 validatePassword,
 rescue(async (req, res) => {
-    console.log('controllerLogin');
     const { email, password } = req.body;
     await checkUserExists(email, password, res);
     const token = createToken(req.body);

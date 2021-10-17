@@ -10,7 +10,6 @@ const jwtConfiguration = {
 };
 
 const createToken = (user) => {
-    console.log('token');
     const tokenSign = jwt.sign({ data: user }, secret, jwtConfiguration);
     return tokenSign;
 };
