@@ -86,7 +86,7 @@ const findUser = async (req, res) => {
   const existUser = await userService.existUser(id);
   
   if (!existUser) {
-    return res.status(status.BAD_REQUEST).json({ message: 'User does not exist' });
+    return res.status(status.NOT_FOUND).json({ message: 'User does not exist' });
   }
 
   const user = await User.findOne({ where: { id } });
