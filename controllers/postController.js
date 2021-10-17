@@ -45,7 +45,6 @@ const createPost = async (req, res) => {
   const updated = new Date('2011-08-01T19:58:51.000Z');
 
   const user = await User.findOne({ where: { email } });
-  console.log(user.dataValues.id);
   const post = await BlogPost.create({ 
     userId: user.dataValues.id,
     title,
@@ -65,12 +64,20 @@ const createPost = async (req, res) => {
     });
 };
 
-const getPost = async (_req, res) => {
-  const posts = await BlogPost.findAll({
-    include: { model: User, as: 'user' },
-  });
+const getPost = async (_req, _res) => {
+  // const posts = await BlogPost.findAll();
+  // const users = await User.findAll();
+  // const categories = await Category.findAll();
 
-  return res.status(status.OK).json(posts);
+  // const listPosts = posts.map((post) => {
+  //   if(post.userId === users.id){
+  //     return 
+  //   } 
+  // });
+
+  // console.log(listPosts);
+
+  // return res.status(status.OK).json(posts);
 };
 
 module.exports = { validTitle, getPost, validContent, validCategoryIds, createPost };
