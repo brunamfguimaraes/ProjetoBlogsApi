@@ -24,7 +24,18 @@ const login = async (user) => {
   }
 };
 
+const deleteUser = async (id) => {
+  const setDelete = await User.destroy({
+    where: {
+      id,
+    },
+  });
+  if (setDelete === 0) return { message: 'Unauthorized user' };
+  return true;
+};
+
 module.exports = {
   createUser,
   login,
+  deleteUser,
 };

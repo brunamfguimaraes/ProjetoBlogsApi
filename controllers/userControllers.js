@@ -1,3 +1,4 @@
+const JWT = require('jsonwebtoken');
 const userServices = require('../services/userServices');
 const { User } = require('../models');
 
@@ -30,9 +31,18 @@ const getUserById = async (req, res, next) => {
   return res.status(200).json(user);
 };
 
+const deleteUser = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const { id } = JWT.decode(token);
+  const deletedPost = await userServices.deleteUser(id);
+  if (deletedPost.message) return next(deletedPost);
+  return res.status(204).end();
+};
+
 module.exports = {
   createUser,
   login,
   getUsers,
   getUserById,
+  deleteUser,
 };
