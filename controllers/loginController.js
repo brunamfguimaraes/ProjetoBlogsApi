@@ -14,8 +14,8 @@ const jwtConfig = {
 const router = express.Router();
 
 router.post('/', required, isEmpty, async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
     const userExist = await User.findOne({ where: { email, password } });
     if (userExist) {
       const userToken = jwt.sign({ data: email, secret, jwtConfig });

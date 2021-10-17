@@ -14,7 +14,7 @@ const jwtConfig = {
 
 const router = express.Router();
 
-router.get('/', validToken, async (_req, res) => {
+router.get('/', validToken, async (req, res) => {
   const allUsers = await User.findAll();
   return res.status(200).json(allUsers);
 });
@@ -27,8 +27,8 @@ router.get('/:id', validToken, async (req, res) => {
 });
 
 router.post('/', validName, validEmail, validPassword, async (req, res) => {
+  const { displayName, email, password, image } = req.body;
   try {
-    const { displayName, email, password, image } = req.body;
     const userExist = await User.findOne({ where: { email } });
     if (userExist) return res.status(409).json({ message: 'User already registered' });
     await User.create({ displayName, email, password, image });
