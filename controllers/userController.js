@@ -17,21 +17,21 @@ const addUser = async (req, res) => {
 };
 
 // Falta Listar todos usuários e depois enviar o status 200
-// const getAllUser = async (req, res) => {
-//     const nada = 'aaaad';
-//     // console.log(req.body);
-//    return res.status(STATUS_OK.CREATED).json({ nada });
-// };
+const getAllUser = async (req, res) => {
+    const nada = 'aaaad';
+    // console.log(req.body);
+   return res.status(statusCode.CREATED).json({ nada });
+};
 
 // Falta apenas Listar o usuário pelo ID Se ele não existir um 404
-// const getUserById = async (req, res) => {
-//     const nada = 'sasdsd';
-//     // console.log(req.body);
-//    return res.status(STATUS_OK.CREATED).json({ nada });
-// }
+const getUserById = async (req, res) => {
+    const nada = 'sasdsd';
+    // console.log(req.body);
+   return res.status(statusCode.CREATED).json({ nada });
+};
 
 module.exports = {
     addUser,
-    // getAllUser,
-    // getUserById,
+    getAllUser,
+    getUserById,
 };

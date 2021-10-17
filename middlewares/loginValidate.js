@@ -41,5 +41,4 @@ const LoginEmailIsWrong = (req, res, next) => {
 module.exports = {
     LoginEmailIsWrong,
     LoginPasswordIsWrong,
-
 };

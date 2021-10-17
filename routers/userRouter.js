@@ -13,7 +13,7 @@ const {
     WrongdisplayName,
     WrongEmail,
     WrongPassword,
-    // WrongToken,
+    WrongToken,
    
      } = require('../middlewares/userValidate');
 
