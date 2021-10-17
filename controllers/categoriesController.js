@@ -1,6 +1,6 @@
 const HTTP_REST = require('../HTTPErrosAndMessages');
 
-const { statusCode, message } = HTTP_REST;
+const { statusCode } = HTTP_REST;
 
 const categoryService = require('../service/categoryService');
 
