@@ -19,4 +19,4 @@ module.exports = (sequelize, _DataTypes) => {
   };
 
   return PostsCategory;
-};
+}; 
