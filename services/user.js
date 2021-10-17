@@ -15,13 +15,16 @@ const error = {
   },
   email: {
     have: { err: 400, message: '"email" is required' },
+    empty: { err: 400, message: '"email" is not allowed to be empty' },
     valid: { err: 400, message: '"email" must be a valid email' },
     exists: { err: 409, message: 'User already registered' },
   },
   password: {
     have: { err: 400, message: '"password" is required' },
+    empty: { err: 400, message: '"password" is not allowed to be empty' },
     valid: { err: 400, message: '"password" length must be 6 characters long' },
   },
+  notExists: { err: 400, message: 'Invalid fields' },
 };
 
 const check = (name, string) => {
@@ -61,7 +64,6 @@ const createUsersServices = async (req) => {
   if (checkExists) {
     return error.email.exists;
   }
-
   try {
     const user = await User.create({ displayName, email, password, image });
     return (user);
@@ -70,6 +72,37 @@ const createUsersServices = async (req) => {
   }
 };
 
+const checkBodyloginUser = async (req) => {
+  const { email, password } = req.body;
+  switch (true) {
+    case email === '':
+      return error.email.empty;
+    case password === '':
+      return error.password.empty;
+    case !!check(email, 'email'):
+      return check(email, 'email');
+    case !!check(password, 'password'):
+      return check(password, 'password');
+    default:
+      return false;
+  }
+};
+
+const loginUsersServices = async (req) => {
+  const { email } = req.body;
+  const checksIsOk = await checkBodyloginUser(req);
+  if (checksIsOk) {
+    return checksIsOk;
+  }
+  const exists = await getOne(email);
+  console.log(exists, '<---------------------------------------');
+  if (exists !== null) {
+    return exists;
+  }
+  return error.notExists;
+};
+
 module.exports = {
   createUsersServices,
+  loginUsersServices,
 };
