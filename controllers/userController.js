@@ -28,7 +28,7 @@ const addUser = async (req, res) => {
 //     const nada = 'sasdsd';
 //     // console.log(req.body);
 //    return res.status(STATUS_OK.CREATED).json({ nada });
-// };
+// }
 
 module.exports = {
     addUser,
