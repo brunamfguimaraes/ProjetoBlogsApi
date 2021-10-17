@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 
 const secret = 'senhaToken';
 
@@ -7,11 +8,7 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-const JWTToken = (id, email) => {
-  const payload = { id, email };
-
-  return jwt.sign({ data: payload }, secret, jwtConfig);
-};
+const JWTToken = (email) => jwt.sign({ data: email }, secret, jwtConfig);
 
 const emailVerificator = (email) => {
   const emailRegEx = RegExp(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i);
@@ -96,8 +93,11 @@ const loginValidate = (email, password) => {
   return false;
 };
 
+const userFinder = async (email) => User.findOne({ where: { email } });
+
 module.exports = {
   JWTToken,
   RegisterValidate,
   loginValidate,
+  userFinder,
 };

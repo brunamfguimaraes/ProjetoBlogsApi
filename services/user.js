@@ -22,9 +22,9 @@ const EmailFinder = async (email) => {
   return emailExists;
 }
 
- const { id } = await User.create(userData);
+  await User.create(userData);
   
-  const token = JWTToken(id, email);
+  const token = JWTToken(email);
   
   return { code: 201, token };
  };
