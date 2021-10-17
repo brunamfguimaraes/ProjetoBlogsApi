@@ -1,5 +1,5 @@
 const status = require('http-status');
-const { BlogPost, User, PostsCategory } = require('../models');
+const { BlogPost, User } = require('../models');
 const postService = require('../services/postService');
 
 const validTitle = async (req, res, next) => {
@@ -8,7 +8,7 @@ const validTitle = async (req, res, next) => {
   const isValidTitle = postService.isValidTitle(title);
   
   if (isValidTitle) {
-    return res.status(status.BAD_REQUEST).json({ message: isValidTitle });
+    return res.status(status.NOT_FOUND).json({ message: isValidTitle });
   }
     
   next();
@@ -20,7 +20,7 @@ const validContent = async (req, res, next) => {
   const isValidContent = postService.isValidContent(content);
   
   if (isValidContent) {
-    return res.status(status.BAD_REQUEST).json({ message: isValidContent });
+    return res.status(status.NOT_FOUND).json({ message: isValidContent });
   }
     
   next();
@@ -32,7 +32,7 @@ const validCategoryIds = async (req, res, next) => {
   const isValidCategoryIds = postService.isValidCategoryIds(categoryIds);
   
   if (isValidCategoryIds) {
-    return res.status(status.BAD_REQUEST).json({ message: isValidCategoryIds });
+    return res.status(status.NOT_FOUND).json({ message: isValidCategoryIds });
   }
     
   next();
