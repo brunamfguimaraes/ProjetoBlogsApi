@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const status = require('http-status');
 
 // JWT //
 const jwtConfig = {
@@ -10,7 +9,7 @@ const jwtConfig = {
 
 const secretKey = process.env.JWT_SECRET;
 
-const createJWT = (req, res, next) => {
+const createJWT = (req, _res, next) => {
   const { email } = req.body;
 
   const userData = {
