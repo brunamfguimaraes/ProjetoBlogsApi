@@ -1,17 +1,24 @@
 const { User } = require('../models');
 
-const isValidEmail = (email) => {
-  if (!email) {
+const isEmptyEmail = (email) => {
+  if (email === undefined) {
     return '"email" is required';
-  } 
-  
-  if (!email.includes('@')) {
-    return '"email" must be a valid email';
+  }
+
+  if (email.length === 0) {
+    return '"email" is not allowed to be empty';
+  }
+
+  return false;
+};
+
+const isValidEmail = (email) => {
+  if (isEmptyEmail(email)) {
+    return isEmptyEmail(email);
   }
 
   const div = email.split('@');
- 
-  if (!div[0] || !div[1]) {
+  if (!email.includes('@') || !div[0] || !div[1]) {
     return '"email" must be a valid email';
   }
 
@@ -19,9 +26,13 @@ const isValidEmail = (email) => {
 };
 
 const isValidPassword = (password) => {
-  if (!password) {
+  if (password === undefined) {
     return '"password" is required';
-  } 
+  }
+
+  if (password.length === 0) {
+    return '"password" is not allowed to be empty';
+  }
 
   if (password.length === 5) {
     return '"password" length must be 6 characters long';
@@ -48,4 +59,4 @@ const existUser = async (email) => {
   return false;
 };
 
-module.exports = { isValidEmail, isValidPassword, isValidDisplayName, existUser };
+module.exports = { isValidEmail, isEmptyEmail, isValidPassword, isValidDisplayName, existUser };
