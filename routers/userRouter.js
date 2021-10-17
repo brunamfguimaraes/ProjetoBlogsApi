@@ -26,7 +26,7 @@ router.get('/user',
   userController.findAllUsers);
 
 // GET ID
-router.get('/user:id',  
+router.get('/user/:id',  
   jwtToken.validJWT,
   userController.findUser);
 
