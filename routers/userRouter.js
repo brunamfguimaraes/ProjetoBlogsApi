@@ -20,4 +20,9 @@ router.post('/login',
   jwtToken.createJWT,
   userController.loginUser);
 
+// GET
+router.get('/user',  
+  jwtToken.validJWT,
+  userController.findAllUser);
+
 module.exports = router;

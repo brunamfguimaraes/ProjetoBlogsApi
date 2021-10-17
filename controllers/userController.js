@@ -74,4 +74,10 @@ const createUser = async (req, res) => {
   return res.status(status.CREATED).json({ token });
 };
 
-module.exports = { validName, validEmail, validPassword, loginUser, validUser, createUser };
+const findAllUser = async (_req, res) => {  
+  const users = await User.findAll();
+  return res.status(status.OK).json(users);
+};
+
+module.exports = { 
+  validName, validEmail, validPassword, loginUser, validUser, createUser, findAllUser };
