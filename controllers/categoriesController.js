@@ -2,7 +2,7 @@ const STATUS_OK = {
     CREATED: 200,
 };
 
-const User = require('../models/usermodel');
+// const User = require('../models/usermodel');
 
 const addCategory = async (req, res) => {
     const token = req.headers.authorization;
