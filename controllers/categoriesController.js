@@ -1,12 +1,13 @@
-const STATUS_OK = {
-    CREATED: 200,
-};
+const HTTP_REST = require('../HTTPErrosAndMessages');
 
-// const User = require('../models/usermodel');
+const { statusCode, message } = HTTP_REST;
+
+const categoryService = require('../service/categoryService');
 
 const addCategory = async (req, res) => {
-    const token = req.headers.authorization;
-   return res.status(STATUS_OK.CREATED).json({ token });
+    const name = req.body;
+    const newCategory = await categoryService.addCategory(name);
+    return res.status(statusCode.CREATED).json(newCategory.dataValues);
 };
 
 module.exports = {

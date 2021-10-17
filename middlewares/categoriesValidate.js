@@ -21,7 +21,7 @@ const WrongToken = (req, res, next) => {
 
 const WrongName = (req, res, next) => {
     const { name } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     if (!name) {
         return res.status(statusCode.WRONG_FORMAT).json({ message: message.NAME_NOT_EXISTS }); 
 }
