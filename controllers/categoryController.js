@@ -14,6 +14,18 @@ const validName = async (req, res, next) => {
   next();
 };
 
+const validCategory = async (req, res, next) => {
+  const { categoryIds } = req.body;
+
+  const existCategory = await categoryService.existCategory(categoryIds);
+  
+  if (existCategory) {
+    return res.status(status.BAD_REQUEST).json({ message: existCategory });
+  }
+
+  next();
+};
+
 const createCategory = async (req, res) => {
   const { name } = req.body;
   
@@ -27,4 +39,4 @@ const findAllCategories = async (_req, res) => {
   return res.status(status.OK).json(categories);
 };
 
-module.exports = { validName, createCategory, findAllCategories };
+module.exports = { validName, createCategory, validCategory, findAllCategories };

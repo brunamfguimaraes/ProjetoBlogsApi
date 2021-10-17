@@ -59,14 +59,14 @@ const createPost = async (req, res) => {
   // console.log(arrayPostCat);
   // await PostsCategory.create({ postId: 12, categoryId: 1 });
   return res.status(status.CREATED).json({ id: post.id,
-    userId: user.dataValues.id,
+    userId: user.dataVaslues.id,
     title,
     content, 
     });
 };
 
-const getPost = async (req, res) => {
-  const posts = BlogPost.create({
+const getPost = async (_req, res) => {
+  const posts = await BlogPost.findAll({
     include: { model: User, as: 'user' },
   });
 

@@ -8,7 +8,7 @@ const isValidTitle = (title) => {
 
 const isValidContent = (content) => {
   if (!content) {
-    return '"name" is required';
+    return '"content" is required';
   }
 
   return false;
@@ -16,7 +16,7 @@ const isValidContent = (content) => {
 
 const isValidCategoryIds = (id) => {
   if (!id) {
-    return '"categoryId" is required';
+    return '"categoryIds" is required';
   }
 
   return false;
