@@ -31,8 +31,9 @@ const validJWT = (req, res, next) => {
 
   try {
     /* Através o método verify, podemos validar e decodificar o nosso JWT. */
-    jwt.verify(token, secretKey); // payload
-  
+    const decoded = jwt.verify(token, secretKey); // payload
+    
+    req.email = { email: decoded.data.email };
     next();
   } catch (err) {
     return res.status(status.UNAUTHORIZED).json({ message: 'Expired or invalid token' });

@@ -18,4 +18,8 @@ const categoryRouter = require('./routers/categoryRouter');
 
 app.use('/', categoryRouter);
 
+const postRouter = require('./routers/postRouter');
+
+app.use('/', postRouter);
+
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
