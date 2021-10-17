@@ -1,9 +1,7 @@
 const { StatusCodes: {
-  BAD_REQUEST,
-  CONFLICT,
-  CREATED,
-} } = require('http-status-codes');
-const { createUser } = require('../services/user');
+  BAD_REQUEST, CONFLICT, CREATED, OK } } = require('http-status-codes');
+const { createUser, isValidLogin } = require('../services/user');
+const { Users } = require('../models');
 const { token } = require('../auth/token');
 
 const user = async (req, res) => {
@@ -17,6 +15,21 @@ const user = async (req, res) => {
   return res.status(CREATED).json({ token: newToken });
 };
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  const isValid = isValidLogin(email, password);
+  if (isValid) return res.status(BAD_REQUEST).json({ message: isValid.message });
+
+  const users = await Users.findOne({ where: { email, password } });
+  if (!users) {
+    return res.status(BAD_REQUEST).json({ message: 'Invalid fields' });
+  }
+
+  const newToken = token(users);
+  return res.status(OK).json({ token: newToken });
+};
+
 module.exports = {
   user,
+  login,
 };

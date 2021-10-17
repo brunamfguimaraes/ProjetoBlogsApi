@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('./controller/user');
+const { User, Login } = require('./controller/user');
 
 const app = express();
 app.use(express.json());
@@ -13,3 +13,4 @@ app.get('/', (request, response) => {
 });
 
 app.route('user').post(User);
+app.route('login').post(Login);
