@@ -13,4 +13,9 @@ const createBlogPost = async (req, res) => {
     return res.status(201).json({ id, title, content, userId });
 };
 
-module.exports = { createBlogPost };
+const getAllBlogPosts = async () => {
+    const check = await BlogPost.findAll();
+    return check;
+};
+
+module.exports = { createBlogPost, getAllBlogPosts };
