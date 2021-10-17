@@ -22,7 +22,7 @@ app.use('/login', loginRouter);
 app.use('/categories', categoriesRouter);
 
 // Necessário para uso de middlewares
-// app.use((err, req, res, _next) => 
-// res.status(500).send(`Algo deu errado! Mensagem: ${err.message}`));
+app.use((err, req, res, _next) => 
+res.status(500).send(`Algo deu errado! Mensagem: ${err.message}`));
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}`));
