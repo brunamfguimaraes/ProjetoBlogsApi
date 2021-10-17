@@ -74,10 +74,17 @@ const createUser = async (req, res) => {
   return res.status(status.CREATED).json({ token });
 };
 
-const findAllUser = async (_req, res) => {  
+const findAllUsers = async (_req, res) => {  
   const users = await User.findAll();
   return res.status(status.OK).json(users);
 };
 
+const findUser = async (req, res) => {  
+  const { id } = req.params;
+
+  const user = await User.findOne({ where: { id } });
+  return res.status(status.OK).json(user);
+};
+
 module.exports = { 
-  validName, validEmail, validPassword, loginUser, validUser, createUser, findAllUser };
+  validName, validEmail, validPassword, loginUser, validUser, createUser, findAllUsers, findUser };

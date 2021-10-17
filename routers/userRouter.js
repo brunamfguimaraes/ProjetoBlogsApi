@@ -23,6 +23,11 @@ router.post('/login',
 // GET
 router.get('/user',  
   jwtToken.validJWT,
-  userController.findAllUser);
+  userController.findAllUsers);
+
+// GET ID
+router.get('/user:id',  
+  jwtToken.validJWT,
+  userController.findUser);
 
 module.exports = router;
