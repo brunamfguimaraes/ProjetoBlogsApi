@@ -21,9 +21,9 @@ rescue(async (req, res) => {
 }));
 
 router.get('/',
-rescue(async (req, res) => {
+rescue(async (req) => {
     console.log(req.body);
-    await getAllBlogPosts(req, res);
+    await getAllBlogPosts();
 }));
 
 module.exports = router;
