@@ -1,5 +1,5 @@
 const status = require('http-status');
-const { BlogPost, User } = require('../models');
+const { BlogPost, User, PostsCategory } = require('../models');
 const postService = require('../services/postService');
 
 const validTitle = async (req, res, next) => {
@@ -39,15 +39,30 @@ const validCategoryIds = async (req, res, next) => {
 };
 
 const createPost = async (req, res) => {
-  const { title, content, categoryIds } = req.body;
-  
+  const { title, content } = req.body;
   const { email } = req.email;
-  console.log(email);
+  const published = new Date('2011-08-01T19:58:00.000Z');
+  const updated = new Date('2011-08-01T19:58:51.000Z');
 
   const user = await User.findOne({ where: { email } });
-  
-  const post = await BlogPost.create({ userId: user.id, title, content, categoryIds });
-  return res.status(status.CREATED).json(post);
+  console.log(user.dataValues.id);
+  const post = await BlogPost.create({ 
+    userId: user.dataValues.id,
+    title,
+    content,
+    published,
+    updated });
+
+  // const arrayPostCat = categoryIds.map((id) => ({ postId: post.id, categoryId: id,
+  // }));
+
+  // console.log(arrayPostCat);
+  // await PostsCategory.create({ postId: 12, categoryId: 1 });
+  return res.status(status.CREATED).json({ id: post.id,
+    userId: user.dataValues.id,
+    title,
+    content, 
+    });
 };
 
 module.exports = { validTitle, validContent, validCategoryIds, createPost };
