@@ -7,6 +7,7 @@ app.use(express.json());
 
 app.use('/user', userController);
 app.use('/login', loginController);
+// app.use('/');
 
 const port = process.env.PORT || 3000;
 

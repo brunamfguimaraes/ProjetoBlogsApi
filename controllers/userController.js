@@ -33,7 +33,7 @@ router.post('/', validName, validEmail, validPassword, async (req, res) => {
     if (userExist) return res.status(409).json({ message: 'User already registered' });
     await User.create({ displayName, email, password, image });
     const userToken = jwt.sign({ data: email, secret, jwtConfig });
-    res.status(201).json({ userToken });
+    res.status(201).json(userToken);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
