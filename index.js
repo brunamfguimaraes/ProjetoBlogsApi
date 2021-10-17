@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { verifyEmptyEmail, verifyEmptyPassword, userLogin, checkEmailExists, 
-  checkPassword, checkName, checkEmail, createUser } = require('./services/user.js');
+  checkPassword, checkName, checkEmail, createUser, validateToken, getAllUsers } = require('./services/user.js');
 
 const app = express();
 
@@ -15,5 +15,7 @@ app.get('/', (request, response) => {
 
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
 app.post('/login', verifyEmptyEmail, verifyEmptyPassword, userLogin);
+
+app.get('/user', validateToken, getAllUsers);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
