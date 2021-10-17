@@ -7,7 +7,7 @@ const { verifyEmptyEmail, verifyEmptyPassword, userLogin, checkEmailExists,
   getUser } = require('./services/user.js');
 const { verifyCategory, createCategory, getAllCategories } = require('./services/categories');
 const { verifyTitle, verifyContent, verifyCategoryId,
-  verifyCategoryIdExists, createPostBlog } = require('./services/post');
+  verifyCategoryIdExists, createBlogPost } = require('./services/post');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, create
 app.post('/login', verifyEmptyEmail, verifyEmptyPassword, userLogin);
 app.post('/categories', validateToken, verifyCategory, createCategory);
 app.post('/post', validateToken, verifyTitle, verifyContent, verifyCategoryId,
-  verifyCategoryIdExists, createPostBlog);
+  verifyCategoryIdExists, createBlogPost);
 
 app.get('/user', validateToken, getAllUsers);
 app.get('/user/:id', validateToken, getUser);

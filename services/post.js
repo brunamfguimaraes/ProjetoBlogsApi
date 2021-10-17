@@ -1,7 +1,8 @@
 require('dotenv');
+
 const jwt = require('jsonwebtoken');
-const { Category } = require('../models');
 const { BlogPost } = require('../models');
+const { Category } = require('../models');
 
 const verifyTitle = (req, res, next) => {
   try {
@@ -57,17 +58,17 @@ const verifyCategoryIdExists = async (req, res, next) => {
   }
 };
 
-const getToken = (token) => {
+const getTokenData = (token) => {
   const { id } = jwt.verify(token, process.env.JWT_SECRET);
   return id;
 };
 
-const createPostBlog = async (req, res) => {
+const createBlogPost = async (req, res) => {
   try {
-    const user = getToken(req.headers.authorization);
+    const usuario = getTokenData(req.headers.authorization);
 
     const newBlogPost = await BlogPost.create(
-      { title: req.body.title, content: req.body.content, userId: user },
+      { title: req.body.title, content: req.body.content, userId: usuario },
     );
     const { id, title, content, userId } = newBlogPost;
 
@@ -81,4 +82,4 @@ module.exports = { verifyTitle,
 verifyContent,
 verifyCategoryId, 
 verifyCategoryIdExists,
-createPostBlog };
+createBlogPost };
