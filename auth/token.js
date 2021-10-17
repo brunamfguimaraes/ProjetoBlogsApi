@@ -10,6 +10,6 @@ const jwtConfig = {
 };
 
 const token = async (id, displayName, email) =>
-(jwt.sign({ data: id, displayName, email }, secret, jwtConfig));
+(jwt.sign({ data: { id, displayName, email } }, secret, jwtConfig));
 
 module.exports = { token };
