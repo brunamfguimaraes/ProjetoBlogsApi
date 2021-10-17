@@ -13,7 +13,7 @@ const existCategory = async (ids) => {
   const category = await Category.findAll({ where: { id: [...ids] } });
   console.log(category);
   if (category.length !== ids.length) {
-    return '"category" not found';
+    return '"categoryIds" not found';
   }
 
   return false;
