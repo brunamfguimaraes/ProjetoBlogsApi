@@ -21,8 +21,8 @@ app.get('/', (request, response) => {
 app.post('/user', checkEmail, checkEmailExists, checkPassword, checkName, createUser);
 app.post('/login', verifyEmptyEmail, verifyEmptyPassword, userLogin);
 app.post('/categories', validateToken, verifyCategory, createCategory);
-app.post('/post', validateToken, verifyTitle, verifyContent, verifyCategoryId,
-  verifyCategoryIdExists, createBlogPost);
+app.post('/post', validateToken, verifyCategoryId, verifyContent, 
+verifyTitle, verifyCategoryIdExists, createBlogPost);
 
 app.get('/user', validateToken, getAllUsers);
 app.get('/user/:id', validateToken, getUser);
