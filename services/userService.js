@@ -19,6 +19,10 @@ const isValidEmail = (email) => {
 };
 
 const isValidPassword = (password) => {
+  if (!password) {
+    return '"password" is required';
+  } 
+
   if (password.length === 5) {
     return '"password" length must be 6 characters long';
   }
