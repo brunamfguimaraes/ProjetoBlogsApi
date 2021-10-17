@@ -12,6 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/user', validName, validEmail, validPassword, alreadyExists, userController.createUser);
+app.post('/login', validEmail, validPassword, userController.loginUser);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 

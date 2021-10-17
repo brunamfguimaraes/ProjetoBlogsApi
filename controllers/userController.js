@@ -20,4 +20,21 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const login = await service.loginUser({ email, password });
+    if (login.error) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ message: login.message });
+    }
+    const token = jwt.sign({ data: login }, JWT_SECRET, jwtConfiguration);
+    return res.status(StatusCodes.OK).json({ token });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { 
+  createUser,
+  loginUser,
+};

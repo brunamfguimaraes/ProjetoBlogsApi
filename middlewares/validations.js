@@ -13,9 +13,13 @@ const validName = (req, res, next) => {
 const validEmail = (req, res, next) => {
   const { email } = req.body;
   const regEmail = new RegExp(/^[\w.]+@[a-z]+.\w{2,3}$/g);
-  if (!email) {
+  if (email === undefined) {
     return res.status(StatusCodes.BAD_REQUEST)
     .json({ message: '"email" is required' });
+  }
+  if (email === '') {
+    return res.status(StatusCodes.BAD_REQUEST)
+      .json({ message: '"email" is not allowed to be empty' });
   }
   if (!regEmail.test(email)) {
     return res.status(StatusCodes.BAD_REQUEST)
@@ -26,9 +30,13 @@ const validEmail = (req, res, next) => {
 
 const validPassword = (req, res, next) => {
   const { password } = req.body;
-  if (!password) {
+  if (password === undefined) {
     return res.status(StatusCodes.BAD_REQUEST)
     .json({ message: '"password" is required' });
+  }
+  if (password === '') {
+    return res.status(StatusCodes.BAD_REQUEST)
+      .json({ message: '"password" is not allowed to be empty' });
   }
   if (password.length < 6) {
     return res.status(StatusCodes.BAD_REQUEST)
