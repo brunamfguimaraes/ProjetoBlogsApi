@@ -31,6 +31,10 @@ const emailVerificator = (email) => {
 };
 
 const passwordVerificator = (password) => {
+  if (password === '') {
+    return { err: { message: '"password" is not allowed to be empty' }, code: 400 };
+    } 
+
   if (!password) {
     return { 
       err: {
@@ -38,10 +42,6 @@ const passwordVerificator = (password) => {
      },
      code: 400 };
   }
-
-  if (password === '') {
-    return { err: { status: 400, message: '"password" is not allowed to be empty' } };
-    } 
 
   if (password.length !== 6) {
       return { 
@@ -82,7 +82,22 @@ const RegisterValidate = ({ displayName, email, password }) => {
   return false;
 };
 
+const loginValidate = (email, password) => {
+  const emailResult = emailVerificator(email);
+  const passwordResult = passwordVerificator(password);
+
+  if (emailResult) {
+    return emailResult;
+  }
+  if (passwordResult) {
+    return passwordResult;
+  }
+
+  return false;
+};
+
 module.exports = {
   JWTToken,
   RegisterValidate,
+  loginValidate,
 };

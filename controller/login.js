@@ -1,9 +1,9 @@
-const { ServiceUserRegister } = require('../services/user');
+const { serviceUserlogin } = require('../services/login');
 
-const controllerUserRegister = async (req, res) => {
+const controllerUserLogin = async (req, res) => {
   try {
     const userRecive = req.body;
-    const result = await ServiceUserRegister(userRecive);
+    const result = await serviceUserlogin(userRecive);
     if (result.err) {
       const { code, err } = result;
       return res.status(code).json(err);
@@ -16,5 +16,5 @@ const controllerUserRegister = async (req, res) => {
 };
 
 module.exports = {
-  controllerUserRegister,
+  controllerUserLogin,
 };
