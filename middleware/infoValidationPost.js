@@ -1,6 +1,6 @@
 const rescue = require('express-rescue');
 // const { User } = require('../models');
-const { Category } = require('../models');
+// const { Category } = require('../models');
 
 const titleIsRequired = rescue((req, res, next) => {
     const { title } = req.body;
