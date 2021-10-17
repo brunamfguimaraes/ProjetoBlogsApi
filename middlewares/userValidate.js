@@ -51,6 +51,7 @@ const WrongPassword = (req, res, next) => {
 const WrongToken = (req, res, next) => {
     const token = req.headers.authorization;
 
+    console.log(token);
     if (!token) {
      return res.status(statusCode.TOKEN_INVALID).json({ message: message.TOKEN_NOT_EXISTS });
     }
