@@ -1,9 +1,9 @@
 const { generateToken } = require('../services/token');
-const { createUsersServices, loginUsersServices } = require('../services/user');
+const { createUsersServices, loginUsersServices, allUsersServices } = require('../services/user');
 
 const STATUS = {
   OK: 201,
-  login: 200,
+  OKK: 200,
   ERR: 500,
 };
 
@@ -24,10 +24,20 @@ const loginUsers = async (req, res) => {
   }
   const { email } = req.body;
   const token = generateToken(email);
-  return res.status(STATUS.login).json({ token });
+  return res.status(STATUS.OKK).json({ token });
+};
+
+const allUsers = async (req, res) => {
+  const answer = await allUsersServices(req);
+  // console.log(answer, '<----------------------------');
+  if (answer.err) { 
+    return res.status(answer.err).json(answer); 
+  }
+  return res.status(STATUS.OKK).json(answer);
 };
 
 module.exports = {
   createUsers,
   loginUsers,
+  allUsers,
 };

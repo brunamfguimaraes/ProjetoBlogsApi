@@ -53,6 +53,7 @@ const checkBody = (req) => {
 };
 
 const getOne = async (email) => User.findOne({ where: { email } });
+const getAll = async () => User.findAll();
 
 const createUsersServices = async (req) => {
   const checksIsOk = checkBody(req);
@@ -95,14 +96,19 @@ const loginUsersServices = async (req) => {
     return checksIsOk;
   }
   const exists = await getOne(email);
-  console.log(exists, '<---------------------------------------');
   if (exists !== null) {
     return exists;
   }
   return error.notExists;
 };
 
+const allUsersServices = async () => {
+  const users = await getAll();
+  return users;
+};
+
 module.exports = {
   createUsersServices,
   loginUsersServices,
+  allUsersServices,
 };
