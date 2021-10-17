@@ -18,9 +18,11 @@ const user = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   const isValid = isValidLogin(email, password);
+  
   if (isValid) return res.status(BAD_REQUEST).json({ message: isValid.message });
 
   const users = await Users.findOne({ where: { email, password } });
+  
   if (!users) {
     return res.status(BAD_REQUEST).json({ message: 'Invalid fields' });
   }
@@ -29,7 +31,13 @@ const login = async (req, res) => {
   return res.status(OK).json({ token: newToken });
 };
 
+const getUsers = async (req, res) => {
+  const users = await Users.findAll({ attributes: { exclude: ['password'] } });
+  return res.status(OK).json(users);
+};
+
 module.exports = {
   user,
   login,
+  getUsers,
 };

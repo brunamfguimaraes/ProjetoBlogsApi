@@ -1,5 +1,6 @@
 const express = require('express');
-const { User, Login } = require('./controller/user');
+const { User, Login, getUsers } = require('./controller/user');
+const validateJWT = require('./auth/validateJWT');
 
 const app = express();
 app.use(express.json());
@@ -12,5 +13,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.route('/user').post(User);
+app.route('/user')
+  .post(User)
+  .get(validateJWT, getUsers);
 app.route('/login').post(Login);
