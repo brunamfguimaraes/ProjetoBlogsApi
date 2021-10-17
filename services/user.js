@@ -118,6 +118,13 @@ const getAllUsers = async (req, res) => {
   res.status(200).json(allUsers);
 };
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ where: { id } });
+  if (!user) return res.status(404).json({ message: 'User does not exist' });
+  res.status(200).json(user);
+};
+
 module.exports = {
   checkEmailExists,
   checkPassword,
@@ -129,4 +136,5 @@ module.exports = {
   userLogin,
   getAllUsers,
   validateToken,
+  getUser,
 };
