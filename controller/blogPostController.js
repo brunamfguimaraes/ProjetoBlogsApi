@@ -2,7 +2,7 @@ const express = require('express');
 const rescue = require('express-rescue');
 const { titleIsRequired, contentIsRequired } = require('../middleware/infoValidationPost');
 const { categoryIdIsRequired } = require('../middleware/infoValidationPost');
-const { idCategoryIsRequired } = require('../middleware/infoValidationPost');
+// const { idCategoryIsRequired } = require('../middleware/infoValidationPost');
 
 const { tokenValidation } = require('../middleware/infoValidationUser');
 const { createBlogPost, getAllBlogPosts } = require('../service/postService');
@@ -14,7 +14,7 @@ titleIsRequired,
 contentIsRequired,
 categoryIdIsRequired,
 tokenValidation,
-idCategoryIsRequired,
+// idCategoryIsRequired,
 rescue(async (req, res) => {
     console.log(req.body);
     await createBlogPost(req, res);

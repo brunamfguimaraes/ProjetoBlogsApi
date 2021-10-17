@@ -35,20 +35,20 @@ const categoryIdIsRequired = rescue((req, res, next) => {
     next();
 });
 
-const idCategoryIsRequired = rescue(async (req, res, next) => {
-    const { categoryIds } = req.body;
+// const idCategoryIsRequired = rescue(async (req, res, next) => {
+//     const { categoryIds } = req.body;
 
-    const getCategories = await Category.findAll();
-    const checkCategory = getCategories.map((get) => categoryIds[0] === get.dataValues.id);
-    if (checkCategory[0] === false && checkCategory[1] === false) {
-        res.status(400).json({ message: '"categoryIds" not found' });
-    }
-    next();
-});
+//     const getCategories = await Category.findAll();
+//     const checkCategory = getCategories.map((get) => categoryIds[0] === get.dataValues.id);
+//     if (checkCategory[0] === false && checkCategory[1] === false) {
+//         res.status(400).json({ message: '"categoryIds" not found' });
+//     }
+//     next();
+// });
 
 module.exports = { 
     titleIsRequired,
     contentIsRequired,
     categoryIdIsRequired,
-    idCategoryIsRequired,
+    // idCategoryIsRequired,
 };
