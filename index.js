@@ -11,7 +11,7 @@ const { NameValidation,
 const { createCategories, getAllCategories } = require('./controllers/categorie_controller');
 const { nameValid } = require('./middlewares/categories_middleware');
 
-const { createPost, getAllPosts } = require('./controllers/blogPost_controller');
+const { createPost, getAllPosts, getPostId } = require('./controllers/blogPost_controller');
 const { ValidTitle, ValidContent, ValidCategoryIds,
   ValidCategoryIdsExist } = require('./middlewares/blogPost_midd');
 
@@ -40,3 +40,4 @@ app.get('/user', tokenValidation, getAll);
 app.get('/user/:id', tokenValidation, getById);
 app.get('/categories', tokenValidation, getAllCategories);
 app.get('/post', tokenValidation, getAllPosts);
+app.get('/post/:id', tokenValidation, getPostId);
