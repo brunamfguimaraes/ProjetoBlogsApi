@@ -26,7 +26,6 @@ const getById = async ({ id }) => {
   const user = await User.findByPk(id, {
     attributes: { exclude: ['password'] },
   });
-  console.log('usuário service', user);
 
   if (user === null) {
     return {

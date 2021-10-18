@@ -1,7 +1,6 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-// const User = require('../sequelize/models/user');
 
 const secret = process.env.JWT_SECRET;
 
@@ -24,7 +23,6 @@ const createJWT = async (req, res, next) => {
 
 const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
-  console.log('token', token);
 
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });

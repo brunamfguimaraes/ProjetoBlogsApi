@@ -27,18 +27,19 @@ const login = async (data) => {
   const { email } = data;
   console.log('data', data);
   const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return {
+      error: {
+        message: 'Invalid fields',
+      },
+    };
+  }
+
   const { id } = user.dataValues;
-  console.log('usuario', user);
 
   if (user) {
     return createJWT(email, id);
   }
-  
-  return {
-    error: {
-      message: 'Invalid fields',
-    },
-  };
 };
 
 module.exports = { login, createJWT };
