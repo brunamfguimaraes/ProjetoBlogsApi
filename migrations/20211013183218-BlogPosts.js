@@ -13,13 +13,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-
       content: {
         allowNull: false,
         type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.INTEGER,
+        defaultValue: 1,
         field: 'userId',
         references: {
           model: 'Users',
