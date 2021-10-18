@@ -88,7 +88,7 @@ const validateUser = async (idUser, id) => {
   const { userId } = await BlogPost.findByPk(id);
 
   if (idUser !== userId) {
-    resp = { mess: 'Unauthorized user' };
+    resp = { mess: 'Unauthorized user', status: 401 };
   }
 
   return resp;
@@ -116,7 +116,7 @@ const update = async (id, userId, reqBody) => {
     id,
     { include: { model: Category, as: 'categories', through: { attributes: [] } } },
   );
-  
+
   return newPost;
 };
 
