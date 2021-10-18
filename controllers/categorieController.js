@@ -13,15 +13,15 @@ const { valdateJwt, validateCategorieName } = require('../midlewares');
 const router = express.Router();
 const ALGO_DEU_ERRADO = 'Algo deu errado';
 
-// router.get('/', valdateJwt, async (_req, res) => {
-//   try {
-//     const users = await User.findAll();
-//     return res.status(200).json(users);
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: ALGO_DEU_ERRADO });
-//   }
-// });
+router.get('/', valdateJwt, async (_req, res) => {
+  try {
+    const categories = await Categorie.findAll();
+    return res.status(200).json(categories);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: ALGO_DEU_ERRADO });
+  }
+});
 
 // router.get('/:id', valdateJwt, async (req, res) => {
 //   try {
