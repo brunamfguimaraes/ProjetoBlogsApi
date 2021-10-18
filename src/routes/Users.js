@@ -1,9 +1,11 @@
 const express = require('express');
-const { createUser } = require('../controllers/Users');
+const { validateJWT } = require('../auth/validateJWT');
+const { createUser, getAllUsers } = require('../controllers/Users');
 
 const router = express.Router();
 
 router.route('/')
-  .post(createUser);
+  .post(createUser)
+  .get(validateJWT, getAllUsers);
 
 module.exports = router;

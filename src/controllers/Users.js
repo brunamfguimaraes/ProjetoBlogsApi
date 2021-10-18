@@ -1,4 +1,4 @@
-const { CREATED, INTERNAL_SERVER_ERROR, BAD_REQUEST, CONFLICT } = require('http-status');
+const { OK, CREATED, INTERNAL_SERVER_ERROR, BAD_REQUEST, CONFLICT } = require('http-status');
 const Users = require('../services/Users');
 
 const createUser = async (req, res) => {
@@ -19,4 +19,15 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const getAllUsers = async (_req, res) => {
+  try {
+    const result = await Users.getAllUsers();
+    
+    return res.status(OK).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error });
+  }
+};
+
+module.exports = { createUser, getAllUsers };
