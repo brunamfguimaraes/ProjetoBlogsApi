@@ -11,7 +11,7 @@ const jwfConfig = {
 
 const createUser = async (req, res, next) => {
   const { displayName, email, password, image } = req.body;
-  const valid = userService.createUser(displayName, email, password, image);
+  const valid = await userService.createUser(displayName, email, password, image);
   if (valid.message) {
     return next(valid);
   }

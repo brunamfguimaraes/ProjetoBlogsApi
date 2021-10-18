@@ -48,7 +48,7 @@ const createUser = async (displayName, email, password) => {
     return validate;
   }
   const UserExist = await user.findOne(email);
-  if (UserExist.length < 1) {
+  if (UserExist.length > 0) {
     return { status: 409, message: 'User already registered' };
   }
   return true;
