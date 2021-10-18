@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { BlogPost, User, Category, PostsCategory } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 
   const createBlogPost = async (title, content, categoryIds, userId) => {
     const published = Date.now();
@@ -13,10 +13,6 @@ categoryIds: Joi.array().required(),
       const check = categoryIds.every((id) => verifyCategory.includes(id));
     if (!check) return { message: '"categoryIds" not found', status: 400 };
       const { id } = await BlogPost.create({ title, content, userId, published });
-      // if (!verifyCategory) { check = { message: 'is required', status: 400 }; }
-    // await categoryIds.forEach(async (categoryId) => {
-    //   await PostsCategory.create({ categoryId, postId: id });
-    // });
     return { id, userId, title, content };
     };
       
