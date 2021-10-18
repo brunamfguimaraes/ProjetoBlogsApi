@@ -11,7 +11,6 @@ const loginFunction = rescue(async (req, res, next) => {
   const userExist = email 
   && password 
   && await User.findOne({ where: { email, password } });
-  console.log(`userExist: ${userExist}`);
   
   const validations = await service.loginFunction({ email, password }, userExist);
 

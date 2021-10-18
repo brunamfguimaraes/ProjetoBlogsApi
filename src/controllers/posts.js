@@ -23,6 +23,18 @@ const addBlogPost = rescue(async (req, res, next) => {
   return res.status(201).json(newBlogPost);
 });
 
+const getAllBlogPost = rescue(async (req, res) => {
+  const allBlogPost = await BlogPost.findAll({ 
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ], 
+  });
+
+  return res.status(200).json(allBlogPost);
+});
+
 module.exports = { 
   addBlogPost,
+  getAllBlogPost,
 };
