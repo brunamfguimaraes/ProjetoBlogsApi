@@ -12,4 +12,20 @@ const createCategory = async (req, res) => {
   }
 };
 
-module.exports = { createCategory };
+const getAllCategories = async (req, res) => {
+  try {
+    const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });
+    }
+    const getAll = await service.getAllCategories();
+    return res.status(StatusCodes.OK).json(getAll);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  createCategory,
+  getAllCategories,
+};
