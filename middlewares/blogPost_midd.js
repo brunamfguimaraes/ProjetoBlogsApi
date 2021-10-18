@@ -34,7 +34,7 @@ const ValidCategoryIdsExist = async (req, res, next) => {
     const category = await Category.findAll({ where: { id: categoryIds } });
 
     if (category.length !== categoryIds.length) {
-        res.status(400).json({ message: '"categoryIds" not found' });
+        return res.status(400).json({ message: '"categoryIds" not found' });
     }
     next();
 };
