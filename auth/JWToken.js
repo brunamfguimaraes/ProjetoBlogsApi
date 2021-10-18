@@ -18,10 +18,10 @@ const verifyJWT = (req, res, next) => {
     }
     const payload = jwt.verify(authorization, secret);
     req.user = payload;
-    return next();
   } catch (err) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
+  return next();
 };
 
 module.exports = { 
