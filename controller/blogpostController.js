@@ -14,9 +14,9 @@ const createBlogpost = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (_req, res) => {
   try {
-    const post = blogpostService.getAllPosts();
+    const post = await blogpostService.getAllPosts();
     return res.status(codes.ok).json(post);
   } catch (error) {
     const { code, message } = error;
