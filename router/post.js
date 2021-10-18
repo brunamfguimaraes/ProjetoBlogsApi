@@ -1,5 +1,5 @@
 const express = require('express');
-const { controllerPostCreated } = require('../controller/post');
+const { controllerPostCreated, controllerPostList } = require('../controller/post');
 const { 
   tokenValidator,
   titleValidator,
@@ -14,5 +14,7 @@ router.post('/',
             contentValidator,
             categoryIdValidator,
             controllerPostCreated);
+           
+router.get('/', tokenValidator, controllerPostList);
 
 module.exports = router;
