@@ -3,11 +3,11 @@ const express = require('express');
 const { User, Login, getUsers, findUser } = require('../controller/user');
 const validateJWT = require('../auth/validateJWT');
 
-const router = express.Router();
+const route = express.Router();
 
-router.post('/user', User);
-router.get('/user', validateJWT, getUsers);
-router.get('/user/:id', validateJWT, findUser);
-router.post('/login', Login);
+route.get('/user/:id', validateJWT, findUser);
+route.post('/user', User);
+route.get('/user', validateJWT, getUsers);
+route.post('/login', Login);
 
-module.exports = { router };
+module.exports = route;
