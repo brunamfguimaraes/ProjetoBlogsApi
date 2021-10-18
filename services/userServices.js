@@ -27,7 +27,7 @@ const getUserByid = async (id, token) => {
   const user = await User.findOne({ where: { id } });
   userValidations.validUser(user);
   delete user.dataValues.password;
-  return { result: user.dataValues };
+  return user.dataValues;
 };
 
 module.exports = {
