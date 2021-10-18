@@ -10,18 +10,18 @@ const createJWT = (payload) => {
   return newToken;
 };
 
-const verifyJWT = async (req, res, next) => {
+const verifyJWT = (req, res, next) => {
   try {
     const { authorization } = req.headers;
     if (!authorization) {
       return res.status(401).json({ message: 'Token not found' });
     }
     const payload = jwt.verify(authorization, secret);
-    req.user = payload.user;
-    next();
+    req.user = payload;
   } catch (err) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
+  return next();
 };
 
 module.exports = { 

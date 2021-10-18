@@ -12,7 +12,8 @@ const createUser = async (body) => {
   }).validate(body);
   if (schema.error) return { message: schema.error.message, status: 400 };
   const { email } = body;
-  const verifyEmail = await User.findOne({ email });
+  const verifyEmail = await User.findOne({ where: { email } });
+  console.log(email);
   if (verifyEmail) return { message: 'User already registered', status: 409 };
   const { id } = await User.create(body);
   const token = createJWT({ id });
