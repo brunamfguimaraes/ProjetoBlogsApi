@@ -63,6 +63,21 @@ const {
     }
   });
 
+  app.get('/post', validationJWT, async (_req, res) => {
+    try {
+      const posts = await BlogPost.findAll({
+        attributes: { exclude: ['user_id'] },
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Categorie, as: 'categories', through: { attributes: [] } }],
+      });
+  
+      return res.status(200).json(posts);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json({ message: 'Algo deu errado' });
+    }
+  });
+
   app.post('/user',
     validateDisplayName,
     validateEmail,
