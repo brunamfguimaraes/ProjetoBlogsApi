@@ -20,6 +20,7 @@ const createUser = async (req, res, next) => {
     const token = await jwt.sign(
       { data: { displayName, email } }, JWT_SECRET, jwfConfig,
 );
+    
     return res.status(201).json({ token });
   } catch (err) {
     return next(err);
