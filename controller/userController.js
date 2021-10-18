@@ -3,7 +3,7 @@ const { createUserService, loginUserService, getUserByIdService,
   getAllUsersService } = require('../service/userService');
 require('dotenv').config();
 
-const segredo = process.env.SECRETPASSWORD;
+const segredo = process.env.JWT_SECRET;
 
 const jwtConfig = { 
  expiresIn: '1h',
