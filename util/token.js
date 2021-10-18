@@ -11,6 +11,17 @@ const createToken = (email) => {
     return token;
   };
 
+  const emailDecoder = (token) => {
+      const jwtConfig = {
+        expiresIn: '7d',
+        algorithm: 'HS256',
+      };
+  
+      const email = jwt.decode(token, process.env.JWT_SECRET, jwtConfig);
+  
+      return email;
+    };
+
 // const createToken = (obj) => {
 //   const secret = process.env.JWT_SECRET;
 //   const jwtConfig = {
@@ -25,4 +36,5 @@ const createToken = (email) => {
 
 module.exports = {
     createToken,
+    emailDecoder,
 };

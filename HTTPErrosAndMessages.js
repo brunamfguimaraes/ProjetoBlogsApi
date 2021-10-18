@@ -30,6 +30,10 @@ const message = {
     USER_EXISTS: 'User already registered',
     INVALID_FIELDS: 'Invalid fields',
     USER_NOT_EXISTS: 'User does not exist',
+    TITLE_NOT_EXIST: '"title" is required',
+    CONTENT_NOT_EXISTS: '"content" is required',
+    CATEGORYID_NOT_EXISTS: '"categoryIds" is required',
+    CATEGORYID_NOT_FOUND: '"categoryIds" not found',
 };
 
 module.exports = {

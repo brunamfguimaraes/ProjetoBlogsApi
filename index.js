@@ -9,6 +9,7 @@ app.use(bodyParser);
 const userRouter = require('./routers/userRouter');
 const loginRouter = require('./routers/loginRouter');
 const categoriesRouter = require('./routers/categoriesRouter');
+const postRouter = require('./routers/postRouter');
 
 const PORT = 3000;
 
@@ -20,6 +21,7 @@ app.get('/', (request, response) => {
 app.use('/user', userRouter);
 app.use('/login', loginRouter);
 app.use('/categories', categoriesRouter);
+app.use('/post', postRouter);
 
 // Necessário para uso de middlewares
 app.use((err, req, res, _next) => 

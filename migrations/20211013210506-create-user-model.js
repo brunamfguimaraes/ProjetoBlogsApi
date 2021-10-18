@@ -2,6 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Users', {
+      // Nome da tabela
       id: {
         allowNull: false,
         autoIncrement: true,
