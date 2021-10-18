@@ -1,5 +1,6 @@
 const express = require('express');
 const userController = require('./controllers/userController');
+const { Token } = require('./middlewares/validateJWT');
 const {
   validName,
   validEmail,
@@ -10,6 +11,8 @@ const {
 const app = express();
 
 app.use(express.json());
+
+app.get('/user', Token, userController.getAllUsers);
 
 app.post('/user', validName, validEmail, validPassword, alreadyExists, userController.createUser);
 app.post('/login', validEmail, validPassword, userController.loginUser);

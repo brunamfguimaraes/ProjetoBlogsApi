@@ -34,7 +34,17 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });
+  }
+  const getAll = await service.getAllUsers();
+  return res.status(StatusCodes.OK).json(getAll);
+};
+
 module.exports = { 
   createUser,
   loginUser,
+  getAllUsers,
 };
