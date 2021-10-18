@@ -1,10 +1,10 @@
-const path = require('path');
+'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-require('dotenv').config();
 const env = process.env.NODE_ENV || 'development';
-// alterar config.json para config.js
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
@@ -25,7 +25,7 @@ fs
     db[model.name] = model;
   });
 
-  Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
