@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const routes = require('./routes');
-const { error } = require('.');
+const { error } = require('./middlewares');
 
 const app = express();
 

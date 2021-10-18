@@ -21,6 +21,8 @@ const createUser = rescue(async (req, res, next) => {
 
   const token = getToken(email);
 
+  // Caso esteja tudo certo, retornamos o status 201 Created, junto com as informações
+  // do novo Produto
   res.status(201).json({ token });
 });
 
@@ -31,7 +33,7 @@ const login = rescue(async (req, res, next) => {
 
   if (loggedUser.error) return next(loggedUser);
 
-  const token = getToken(loggedUser);
+  const token = getToken(email);
 
   res.status(200).json({ token });
 });
