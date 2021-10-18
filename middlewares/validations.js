@@ -55,9 +55,19 @@ const alreadyExists = async (req, res, next) => {
   next();
 };
 
+const validCategoryName = (req, res, next) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"name" is required' });
+  }
+  next();
+};
+
 module.exports = {
   validName,
   validEmail,
   validPassword,
   alreadyExists,
+  validCategoryName,
 };

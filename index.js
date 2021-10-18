@@ -1,11 +1,13 @@
 const express = require('express');
 const userController = require('./controllers/userController');
+const categoryController = require('./controllers/categoryController');
 const { Token } = require('./middlewares/validateJWT');
 const {
   validName,
   validEmail,
   validPassword,
   alreadyExists,
+  validCategoryName,
 } = require('./middlewares/validations');
 
 const app = express();
@@ -17,6 +19,7 @@ app.get('/user/:id', Token, userController.getUserById);
 
 app.post('/user', validName, validEmail, validPassword, alreadyExists, userController.createUser);
 app.post('/login', validEmail, validPassword, userController.loginUser);
+app.post('/categories', Token, validCategoryName, categoryController.createCategory);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
