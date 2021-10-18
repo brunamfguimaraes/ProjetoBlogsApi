@@ -1,10 +1,19 @@
 const express = require('express');
+const { requestCreateCategory } = require('./controllers/Category');
+
 const requestLogin = require('./controllers/Login');
-const { requestCreateUser, requestUserList, requestDataUser } = require('./controllers/User');
+
+const {
+  requestCreateUser,
+  requestUserList,
+  requestDataUser,
+} = require('./controllers/User');
+
 const {
   passwordRequired,
   emailRequired,
 } = require('./middlewares/loginMiddlewares');
+
 const { verifyToken } = require('./middlewares/tokenValidation');
 
 const {
@@ -12,6 +21,7 @@ const {
   isValidEmail,
   isValidPassword,
   uniqueEmail,
+  categoryName,
 } = require('./middlewares/userMiddlewares');
 
 const app = express();
@@ -38,5 +48,7 @@ app.post('/user',
   isValidPassword,
   uniqueEmail,
   requestCreateUser);
+
+app.post('/categories', verifyToken, categoryName, requestCreateCategory);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

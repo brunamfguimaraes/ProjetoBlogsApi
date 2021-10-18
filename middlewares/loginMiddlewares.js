@@ -43,33 +43,7 @@ const passwordRequired = (req, res, next) => {
   next();
 };
 
-// const emailLength = (req, res, next) => {
-//   const { email } = req.body;
-
-//   if (!email) {
-//     res.status(BAD_REQUEST).json({
-//       message: loginMessages.emailField(),
-//     });
-//   }
-
-//   next();  
-// };
-
-// const passwordLength = (req, res, next) => {
-//   const { password } = req.body;
-
-//   if (!password) {
-//     res.status(BAD_REQUEST).json({
-//       message: loginMessages.passwordField(),
-//     });
-//   }
-
-//   next();  
-// };
-
 module.exports = {
-  // passwordLength,
-  // emailLength,
   passwordRequired,
   emailRequired,
 };

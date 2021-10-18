@@ -10,6 +10,7 @@ const responseMessages = {
   emailExclusivity: () => 'User already registered',
   validPassword: () => '"password" length must be 6 characters long',
   requiredPassword: () => '"password" is required',
+  categoryName: () => '"name" is required',
 };
 
 const isValidName = (req, res, next) => {
@@ -83,9 +84,24 @@ const uniqueEmail = async (req, res, next) => {
   next();
 };
 
+const categoryName = (req, res, next) => {
+  const { name } = req.body;
+
+  if (!name) {
+    return res.status(BAD_REQUEST).json(
+      {
+        message: responseMessages.categoryName(),
+      },
+    );
+  }
+
+  next();
+};
+
 module.exports = {
   isValidName,
   isValidEmail,
   isValidPassword,
   uniqueEmail,
+  categoryName,
 };
