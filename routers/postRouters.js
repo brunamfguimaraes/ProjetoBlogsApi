@@ -1,16 +1,16 @@
-const express = require('express');
+// const express = require('express');
 
-const router = express.Router();
+// const router = express.Router();
 
-const { createPost } = require('../controllers/postController');
+// const { createPost } = require('../controllers/postController');
 
 // const { 
 //   validateDisplayName,
 //    validatePassword,
 //     validateEmail, 
 //  } = require('../middlewares/userValidations');
-const jwtValidations = require('../middlewares/jwtValidations');
+// const jwtValidations = require('../middlewares/jwtValidations');
  
-router.post('/', jwtValidations, createPost);
+// router.post('/', jwtValidations, createPost);
 
-module.exports = router;
+// module.exports = router;
