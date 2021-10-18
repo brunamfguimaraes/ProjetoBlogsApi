@@ -7,8 +7,8 @@ const createPost = async (req, res) => {
     const { title, content, categoryIds } = req.body;
     // const { id } = req.user;
     const { id: userId } = req.user;
-    console.log(req.user, 'controller');
     const { id } = await BlogPost.create({ title, content, categoryIds, userId });
+    console.log(id, 'controller');
 
    // console.log('COMEÇA AQUI', post, 'post');
  

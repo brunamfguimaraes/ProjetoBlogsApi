@@ -12,8 +12,8 @@ const { createCategories, getAllCategories } = require('./controllers/categorie_
 const { nameValid } = require('./middlewares/categories_middleware');
 
 const { createPost, getAllPosts } = require('./controllers/blogPost_controller');
-/* const { ValidTitle, ValidContent, ValidCategoryIds,
-  ValidCategoryIdsExist } = require('./middlewares/blogPost_midd'); */
+const { /* ValidTitle, ValidContent, */ ValidCategoryIds,
+  ValidCategoryIdsExist } = require('./middlewares/blogPost_midd');
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,9 +30,9 @@ app.post('/login', emptyEmail, emptyPassword, loginUser);
 app.post('/categories', tokenValidation, nameValid, createCategories);
 app.post('/post',
 /* ValidTitle, 
-ValidContent, 
+ValidContent, */ 
 ValidCategoryIds, 
-ValidCategoryIdsExist */
+ValidCategoryIdsExist,
 tokenValidation, 
 createPost);
 
