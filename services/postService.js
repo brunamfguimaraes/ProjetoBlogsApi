@@ -69,9 +69,61 @@ const getById = async (id) => {
   return getpostId;
 };
 
+const validateTitleContent = (title, content) => {
+  let resp = false;
+  if (!title) {
+    resp = { mess: '"title" is required', status: 400 };
+  }
+
+  if (!content) {
+    resp = { mess: '"content" is required', status: 400 };
+  }
+
+  return resp;
+};
+
+const validateUser = async (idUser, id) => {
+  let resp = false;
+
+  const { userId } = await BlogPost.findByPk(id);
+
+  if (idUser !== userId) {
+    resp = { mess: 'Unauthorized user' };
+  }
+
+  return resp;
+};
+
+const update = async (id, userId, reqBody) => {
+  if (reqBody.categoryIds) {
+    const resp = { mess: 'Categories cannot be edited', status: 400 };
+    return resp;
+  }
+
+  const validates = validateTitleContent(reqBody.title, reqBody.content);
+  if (validates.mess) {
+    return validates;
+  }
+
+  const userValid = await validateUser(userId, id);
+  if (userValid.mess) {
+    return userValid;
+  }
+
+  await BlogPost.update({ title: reqBody.title, content: reqBody.content }, { where: { id } });
+
+  const newPost = await BlogPost.findByPk(
+    id,
+    { include: { model: Category, as: 'categories', through: { attributes: [] } } },
+  );
+  
+  return newPost;
+};
+
 module.exports = {
   create,
   findCategory,
   getAll,
   getById,
+  update,
 };
