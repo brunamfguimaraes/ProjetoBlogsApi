@@ -4,7 +4,7 @@ require('dotenv/config');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
   const allCategory = await Categories.findAll();
   return res.status(200).json({ allCategory });
 });

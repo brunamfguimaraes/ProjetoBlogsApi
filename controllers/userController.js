@@ -8,7 +8,7 @@ const { validToken } = require('../middlewares/tokenMiddleware.js');
 
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
-  expiresIn: '7d',
+  expiresIn: '1d',
   algorithm: 'HS256',
 };
 
