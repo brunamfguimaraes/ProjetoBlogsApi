@@ -15,7 +15,7 @@ const loginUser = async (req, res) => {
     };
 
     const login = await User.findOne({ where: { email, password } });
-    console.log(login);
+    
     if (!login) return res.status(CODE.BAD_REQUEST).json({ message: 'Invalid fields' });
      
     const token = jwt.sign({ data: login }, secret, jwtConfig);

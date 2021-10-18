@@ -5,8 +5,7 @@ const { Category } = require('../models');
 const createCategory = async (req, res) => {
   try {
     const { name } = req.body;
-    console.log(name);
-
+    
     const newCategory = await Category.create({ name });
 
     return res.status(CODE.CREATED).json(newCategory);

@@ -1,20 +1,27 @@
 const CODE = require('http-status-codes');
 
-const { BlogPost } = require('../models');
+const { BlogPost, Category } = require('../models');
 
 const createBlogPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
-    const { userId } = req;
-        
-    const post = await BlogPost.create({
-      title,
-      content,
-      userId,  
-    });
-    res.status(CODE.CREATED).json(post);
+    const { title, content, categoryIds } = req.body;
+    const { id: userId } = req.user;
+    const categories = await Category.findAll({ where: { id: categoryIds } });
+  
+    if (categories.length !== categoryIds.length) {
+    return res.status(CODE.BAD_REQUEST).json({
+        message: '"categoryIds" not found',
+      });
+    }
+    
+    const blogPost = await BlogPost.create({
+      title, content, userId });
+      
+    return res.status(CODE.CREATED).json(blogPost);
   } catch (error) {
-    res.status(CODE.INTERNAL_SERVER_ERROR).json(error);
+    return res.status(CODE.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
   }
 };
 
