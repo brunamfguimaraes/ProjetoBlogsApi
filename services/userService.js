@@ -63,6 +63,15 @@ const findLogin = async (email, password) => {
   return true;
 };
 
+const findUsers = (token) => {
+  if (!token) {
+    return { status: 401, message: 'Token not Found' };
+  }
+  if (token.length !== 24) {
+    return { status: 401, message: 'Expired or invalid token' };
+  }
+};
+
 module.exports = { 
   createUser,
   findLogin,
