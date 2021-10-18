@@ -8,6 +8,15 @@ const create = async ({ name }) => {
   }
 };
 
+const findAll = async () => {
+  try {
+    return await Categories.findAll({});
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   create,
+  findAll,
 };
