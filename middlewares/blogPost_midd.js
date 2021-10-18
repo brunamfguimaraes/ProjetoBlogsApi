@@ -29,16 +29,10 @@ const ValidCategoryIds = async (req, res, next) => {
 
 const ValidCategoryIdsExist = async (req, res, next) => {
     const { categoryIds } = req.body; 
-    
-    const category = await Category.findAll();
-    
-    console.log(category.id);
 
-    // Lógica feita com ajuda da Alessandra Rezende
-    const verificacao = categoryIds.every((data1) => category
-    .some((data2) => data1 === data2.id)); 
+    const category = await Category.findAll({ where: { id: categoryIds } });
 
-    if (!verificacao) {
+    if (category.length !== categoryIds.length) {
         res.status(400).json({ message: '"categoryIds" not found' });
     }
     next();

@@ -13,7 +13,7 @@ const { nameValid } = require('./middlewares/categories_middleware');
 
 const { createPost, getAllPosts } = require('./controllers/blogPost_controller');
 const { ValidTitle, ValidContent, ValidCategoryIds,
-  /* ValidCategoryIdsExist */ } = require('./middlewares/blogPost_midd');
+  ValidCategoryIdsExist } = require('./middlewares/blogPost_midd');
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,7 +32,7 @@ app.post('/post',
 ValidTitle, 
 ValidContent, 
 ValidCategoryIds, 
-/* ValidCategoryIdsExist */
+ValidCategoryIdsExist,
 tokenValidation, 
 createPost);
 

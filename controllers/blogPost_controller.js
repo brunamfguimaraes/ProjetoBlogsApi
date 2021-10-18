@@ -17,7 +17,7 @@ const createPost = async (req, res) => {
 
  const getAllPosts = async (req, res) => {
     const posts = await BlogPost.findAll({
-        include: [{ model: User, as: 'user' }, 
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
         { model: Category, as: 'categories', through: { attributes: [] } }],
     });
    // https://stackoverflow.com/questions/42661141/findall-include-more-tables-on-sequelize-query
