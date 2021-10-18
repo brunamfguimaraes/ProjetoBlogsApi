@@ -34,6 +34,12 @@ const create = async (post, token) => {
   return { title, content, userId, id };
 };
 
+const getAll = () => BlogPost.findAll({ include: [
+  { model: User, as: 'user' },
+  { model: Categorie, as: 'categories', through: { attributes: [] } },
+] });
+
 module.exports = {
   create,
+  getAll,
 };
