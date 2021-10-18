@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
 const login = require('./controllers/login');
+const categorieController = require('./controllers/categorieController');
+
 const { userMailLogin, userPsswordLogin, validateUser } = require('./midlewares');
 
 const app = express();
@@ -11,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use('/user', userController);
 app.use('/login', userMailLogin, userPsswordLogin, validateUser, login);
+app.use('/categories', categorieController);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
