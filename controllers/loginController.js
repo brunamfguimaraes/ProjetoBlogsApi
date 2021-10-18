@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 require('dotenv/config');
 
-const { required, isEmpty } = require('../middlewares/loginMiddleware');
-
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
   expiresIn: '7d',
@@ -13,14 +11,18 @@ const jwtConfig = {
 
 const router = express.Router();
 
-router.post('/', required, isEmpty, async (req, res) => {
+router.post('/', async (req, res) => {
   const { email, password } = req.body;
-  const userExist = await User.findOne({ where: { email, password } });
-  if (userExist) {
-    const userToken = jwt.sign({ data: email }, secret, jwtConfig);
-    return res.status(200).json({ userToken });
+  try {
+    const userExist = await User.findOne({ where: { email, password } });
+    if (userExist) {
+      const userToken = jwt.sign({ data: email }, secret, jwtConfig);
+      return res.status(200).json({ userToken });
+    }
+    return res.status(400).json({ message: 'Campos inválidos' });
+  } catch (e) {
+    console.log(e);
   }
-  return res.status(400).json({ message: 'Campos inválidos' });
 });
 
 module.exports = router;

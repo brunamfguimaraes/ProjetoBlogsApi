@@ -1,12 +1,13 @@
 const express = require('express');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
+const { required, isEmpty } = require('./middlewares/loginMiddleware');
 
 const app = express();
 app.use(express.json());
 
 app.use('/user', userController);
-app.use('/login', loginController);
+app.use('/login', required, isEmpty, loginController);
 // app.use('/');
 
 const port = process.env.PORT || 3000;
