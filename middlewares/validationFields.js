@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Categorie } = require('../models');
 const messages = require('../helpers/validationMessages');
 
 const validateFields = (req, res, next) => {
@@ -91,6 +91,21 @@ const userExists = async (req, res, next) => {
   }
 };
 
+const existCategories = async (categoryIds) => {
+  const getIds = await Categorie.findAll();
+  const getIdDb = getIds.map((id) => id.dataValues.id);
+
+  if (!categoryIds) return false;
+
+  const array2 = getIdDb.toString();
+  const array1 = categoryIds.toString();
+  const compare = array2.includes(array1);
+
+  if (compare === false || categoryIds.length === 0) return null;
+
+  return compare;
+}; 
+
 module.exports = {
   validateDisplayName,
   validateEmail,
@@ -99,4 +114,5 @@ module.exports = {
   emailExists,
   userExists,
   validateFields,
+  existCategories,
 };

@@ -34,7 +34,7 @@ const REQUIRED_TITLE = { message: '"title" is required' };
 
 const REQUIRED_CONTENT = { message: '"content" is required' };
 
-const REQUIRED_CATEGORY_ID = { message: '"categoryId" is required' };
+const REQUIRED_CATEGORY_ID = { message: '"categoryIds" is required' };
 
 const EDIT_CATEGORIES = { message: 'Categories cannot be edited' };
 

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { User, Categorie } = require('./models');
+const { User, Categorie, BlogPost } = require('./models');
 const messages = require('./helpers/validationMessages');
 
 const app = express();
@@ -24,7 +24,8 @@ const {
   validatePassword,
   userExists,
   emailExists,
-  validateFields } = require('./middlewares/validationFields');
+  validateFields,
+  existCategories } = require('./middlewares/validationFields');
 
   app.get('/user/:id', validationJWT, async (req, res) => {
     try {
@@ -130,6 +131,23 @@ const {
       console.log(error);
       res.status(500).json(messages.ERROR);
     }
+  });
+
+  app.post('/post', validationJWT, async (req, res) => {
+      const { title, content, categoryIds } = req.body; 
+      const getUser = req.user;
+      const userId = getUser.id;
+      const compareCategories = await existCategories(categoryIds);
+
+      if (!title) return res.status(400).json(messages.REQUIRED_TITLE);
+      if (!content) return res.status(400).json(messages.REQUIRED_CONTENT); 
+      if (!categoryIds) return res.status(400).json(messages.REQUIRED_CATEGORY_ID);
+      if (compareCategories === null) return res.status(400).json(messages.CATEGORY_IDS_NOT_FOUND);
+      
+      const createPost = await BlogPost.create({ userId, title, content });
+      const { id } = createPost;
+
+      return res.status(201).json({ id, userId, title, content });
   });
 
   // não remova esse endpoint, e para o avaliador funcionar

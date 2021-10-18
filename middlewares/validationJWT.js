@@ -1,5 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 const messages = require('../helpers/validationMessages');
 
 const secret = process.env.JWT_SECRET;
@@ -11,15 +12,19 @@ const validateJWT = async (req, res, next) => {
     return res.status(401).json(messages.TOKEN_NOT_FOUND);
   }
 
-  jwt.verify(token, secret, (error, decoded) => {
-    if (error) {
-      return res.status(401).json(messages.INVALID_TOKEN);
-    }
+  try {
+    const decoded = jwt.verify(token, secret);
+    const { email } = decoded.payload;
+    const user = await User.findOne({ where: { email } });
 
-    req.id = decoded.id;
-    
+    if (!user) return res.status(401).json(messages.INVALID_TOKEN);
+
+    req.user = user;
+
     next();
-  });
+  } catch (error) {
+    return res.status(401).json(messages.INVALID_TOKEN);
+  }
 };
 
 module.exports = validateJWT;

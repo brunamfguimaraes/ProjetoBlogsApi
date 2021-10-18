@@ -8,10 +8,6 @@ const Categorie = (sequelize, DataTypes) => {
       underscored: true,
       tableName: 'Categories',
     });
-    // categorie.associate = (models) => {
-    //   user.hasMany(models.Post,
-    //     { foreignKey: 'user_id', as: 'posts' });
-    // };
   return categorie;
 };
 
