@@ -16,4 +16,5 @@ module.exports = (errorType) => ({
   noContent: '"content" is required',
   noFiledCategoryIds: '"categoryIds" is required',
   noCategoryIds: '"categoryIds" not found',
+  noPost: 'Post does not exist',
 })[errorType];
