@@ -7,7 +7,7 @@ const requestCreateCategory = async (req, res) => {
   return res.status(201).json(create);
 };
 
-const requestCategoriesList = async (req, res) => {
+const requestCategoriesList = async (_req, res) => {
   const categories = await categoriesList();
 
   return res.status(200).json(categories);

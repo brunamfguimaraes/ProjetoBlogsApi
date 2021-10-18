@@ -13,6 +13,12 @@ const {
   passwordRequired,
   emailRequired,
 } = require('./middlewares/loginMiddlewares');
+const {
+  titleRequired,
+  contentRequired,
+  categoryRequired,
+  checkCategory,
+} = require('./middlewares/postMiddlewares');
 
 const { verifyToken } = require('./middlewares/tokenValidation');
 
@@ -52,5 +58,12 @@ app.post('/user',
   requestCreateUser);
 
 app.post('/categories', verifyToken, categoryName, requestCreateCategory);
+
+app.post('/post',
+  verifyToken,
+  titleRequired,
+  contentRequired,
+  categoryRequired,
+  checkCategory);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

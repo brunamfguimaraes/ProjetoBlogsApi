@@ -1,10 +1,12 @@
+const { Category } = require('../models');
+
 const BAD_REQUEST = 400;
 
 const postErrorMessages = {
   titleRequired: () => '"title" is required',
   contentRequired: () => '"content" is required',
-  categoryRequired: () => '"category" is required',
-  passwordField: () => '"password" is not allowed to be empty',
+  categoryRequired: () => '"categoryIds" is required',
+  categoryExistence: () => '"categoryIds" not found',
 };
 
 const titleRequired = (req, res, next) => {
@@ -36,9 +38,9 @@ const contentRequired = (req, res, next) => {
 };
 
 const categoryRequired = (req, res, next) => {
-  const { category } = req.body;
+  const { categoryIds } = req.body;
 
-  if (!category) {
+  if (!categoryIds) {
     return res.status(BAD_REQUEST).json(
       {
         message: postErrorMessages.categoryRequired(),
@@ -47,4 +49,23 @@ const categoryRequired = (req, res, next) => {
   }
 
   next();
+};
+
+const checkCategory = async (req, res, _next) => {
+  const { categoryIds } = req.body;
+
+  const categories = await Category.findAll();
+
+  if (!categories.every((el, index) => el.dataValues.id === categoryIds[index])) {
+    return res.status(400).json({ message: postErrorMessages.categoryExistence() });
+  }
+
+  return res.status(200).json(categories);
+};
+
+module.exports = {
+  titleRequired,
+  contentRequired,
+  categoryRequired,
+  checkCategory,
 };

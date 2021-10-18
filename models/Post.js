@@ -16,6 +16,4 @@ const Post = (sequelize, DataTypes) => {
   return insertPost;
 };
 
-module.exports = {
-  Post,
-};
+module.exports = Post;
