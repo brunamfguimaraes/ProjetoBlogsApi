@@ -1,4 +1,4 @@
-const { user } = require('../models');
+const { User } = require('../models/index');
 
 const validateName = (name) => {
   if (typeof (name) === 'string' && name.length > 7) {
@@ -47,7 +47,7 @@ const createUser = async (displayName, email, password) => {
   if (validate.message) {
     return validate;
   }
-  const UserExist = await user.findOne(email);
+  const UserExist = await User.findAll({ where: { email } });
   if (UserExist.length > 0) {
     return { status: 409, message: 'User already registered' };
   }

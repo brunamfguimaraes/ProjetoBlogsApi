@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { user } = require('../models');
+const { User } = require('../models/index');
 const userService = require('../services/userService');
 
 const { JWT_SECRET } = process.env;
@@ -16,7 +16,7 @@ const createUser = async (req, res, next) => {
     return next(valid);
   }
   try {
-    await user.createUser({ displayName, email, password });
+    await User.create({ displayName, email, password, image });
     const token = await jwt.sign(
       { data: { displayName, email } }, JWT_SECRET, jwfConfig,
 );
