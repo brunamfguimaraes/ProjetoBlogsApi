@@ -1,5 +1,5 @@
 const { tokenInfo } = require('./token');
-const { Post, Categories, User } = require('../models');
+const { BlogPosts, Categories, User } = require('../models');
 
 const ERROR = {
   titleErr: {
@@ -46,11 +46,10 @@ const postPostServices = async (req) => {
     const answer = await User.findOne({ where: { email: id } }); 
     id = answer.dataValues.id;
   }
-  console.log(id);
   try {
-    const post = await Post.create({ userId: id, title, content });
+    const post = await BlogPosts.create({ userId: id, title, content });
     return (post.dataValues);
-  } catch (err) { return (err); }
+  } catch (err) { console.log(err); return (err); }
 };
 
 module.exports = {
