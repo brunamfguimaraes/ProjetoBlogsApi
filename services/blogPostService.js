@@ -19,9 +19,20 @@ const checkBlogPost = async (id) => {
   return blogId;
 };
 
-// const updatePost = async (id)
+const checkUserId = async (id, user) => {
+  const updatedPost = await BlogPost.findByPk(id, {
+    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+    attributes: { exclude: ['id', 'published', 'updated'] },
+  });
+
+  if (user !== updatedPost.userId) {        
+    return { fieldError: true, message: 'Unauthorized user' };    
+  }
+  return { fieldError: false };
+};
 
 module.exports = {
   checkCategoryId,
   checkBlogPost,
+  checkUserId,
 };

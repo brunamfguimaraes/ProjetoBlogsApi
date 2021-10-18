@@ -16,7 +16,13 @@ const validateCategory = (categoryIds) => {
   if (!categoryIds) {
     return { fieldError: true, message: '"categoryIds" is required' };
   }
+  return { fieldError: false };
+};
 
+const notUpdateCategorys = (categoryIds) => {
+  if (categoryIds) {
+    return { fieldError: true, message: 'Categories cannot be edited' };
+  }
   return { fieldError: false };
 };
 
@@ -24,4 +30,5 @@ module.exports = {
   validateTitle,
   validateContent,
   validateCategory,
+  notUpdateCategorys,
 };
