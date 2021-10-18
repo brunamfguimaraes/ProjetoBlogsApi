@@ -1,6 +1,7 @@
 const { BlogPost } = require('../models');
 const { User } = require('../models');
 const { Category } = require('../models');
+require('dotenv');
 
 const createPost = async (req, res) => {
     const { title, content, categoryIds } = req.body;
