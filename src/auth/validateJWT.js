@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { UNAUTHORIZED, NOT_FOUND } = require('http-status');
+const { UNAUTHORIZED } = require('http-status');
 
 const secret = process.env.JWT_SECRET || 'semsenhabjs';
 
@@ -9,16 +9,13 @@ const validateJWT = async (req, res, next) => {
   if (!token) return res.status(UNAUTHORIZED).json({ message: 'Token not found' });
 
   try {
-    const decoded = jwt.verify(token, secret);
-    console.log(decoded);
+    const { displayName: name, loggedEmail: email, userId } = jwt.verify(token, secret);
 
-    if (!decoded.user) return res.status(NOT_FOUND).json({ message: 'User not found' });
-
-    req.user = decoded.user;
+    req.user = { name, email, userId };
     next();
   } catch (error) {
     console.log(error);
-    return res.status(UNAUTHORIZED).json({ message: error.message });
+    return res.status(UNAUTHORIZED).json({ message: 'Expired or invalid token' });
   }
 };
 
