@@ -26,12 +26,16 @@ const createBlogPostService = async (body, user) => {
   if (!validateCategory) return { message: '"categoryIds" not found' };
 
 const blogPost = BlogPost
-.create({ categoryIds, title, content, userId: user, published: new Date(), updated: new Date() });
+.create({ title, content, userId: user, published: new Date(), updated: new Date() });
 return blogPost;
 };
 
 const getAllPostsService = async () => {
-  const posts = await BlogPost.findAll();
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user' }, 
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
 
   return posts;
 };
