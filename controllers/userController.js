@@ -19,7 +19,8 @@ const addUser = async (req, res) => {
 // Falta Listar todos usuários e depois enviar o status 200
 const getAllUser = async (req, res) => {
     const allUsers = await userService.getAllUsers();
-   return res.status(statusCode.OK).json(allUsers);
+    const allUsersMapped = allUsers.map((user) => user.dataValues);
+    return res.status(statusCode.OK).json(allUsersMapped);
 };
 
 // Falta apenas Listar o usuário pelo ID Se ele não existir um 404

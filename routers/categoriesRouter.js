@@ -11,4 +11,6 @@ const {
 
 router.post('/', WrongToken, WrongName, categoriesController.addCategory); 
 
+router.get('/', WrongToken, categoriesController.getAllCategory); 
+
 module.exports = router;

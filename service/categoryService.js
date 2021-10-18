@@ -6,6 +6,9 @@ const newCategory = await Category.create({ ...name });
 return newCategory;
 };
 
+const getAllCategory = async () => Category.findAll();
+
 module.exports = {
     addCategory,
+    getAllCategory,
 };
