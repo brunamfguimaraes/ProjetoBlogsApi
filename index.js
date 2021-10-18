@@ -1,6 +1,6 @@
 const express = require('express');
 
-const route = require('./router/userRouter');
+const { user } = require('./controller/user');
 
 const app = express();
 app.use(express.json());
@@ -13,4 +13,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/', route);
+app.routes('/user').post(user);

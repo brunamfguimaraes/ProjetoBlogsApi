@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const Users = require('../models/user');
+const Users = require('../models');
 
 const isValid = (displayName, email, password, image) => {
   const user = Joi.object({
@@ -28,24 +28,6 @@ const createUser = async (displayName, email, password, image) => {
   return user;
 };
 
-const isValidLogin = (email, password) => {
-  const user = Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-  });  
-  const { error } = user.validate({ email, password });
-
-  if (error) return { message: error.details[0].message };
-  if (email.length === 0) return { message: '"email" is not allowed to be empty' };
-  if (password.length === 0) return { message: '"password" is not allowed to be empty' };
-};  
-
-const findUserById = async (id) => {
-  const findUser = await Users.findOne({ where: { id } });
-  if (!findUser) return { message: 'User does not exist' };
-  return findUser;
-};
-
 module.exports = {
-  createUser, isValidLogin, findUserById,
+  createUser,
 };
