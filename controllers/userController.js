@@ -35,16 +35,34 @@ const loginUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });
+  try {
+    const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' });
+    }
+    const getAll = await service.getAllUsers();
+    return res.status(StatusCodes.OK).json(getAll);    
+  } catch (error) {
+    console.log(error);
   }
-  const getAll = await service.getAllUsers();
-  return res.status(StatusCodes.OK).json(getAll);
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getUser = await service.getUserById({ id });
+    if (getUser.error) {
+      return res.status(StatusCodes.NOT_FOUND).json({ message: getUser.message });
+    }
+    return res.status(StatusCodes.OK).json(getUser);    
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = { 
   createUser,
   loginUser,
   getAllUsers,
+  getUserById,
 };
