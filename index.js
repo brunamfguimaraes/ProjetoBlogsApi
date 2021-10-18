@@ -1,5 +1,5 @@
 const express = require('express');
-const { requestCreateCategory } = require('./controllers/Category');
+const { requestCreateCategory, requestCategoriesList } = require('./controllers/Category');
 
 const requestLogin = require('./controllers/Login');
 
@@ -36,6 +36,8 @@ app.get('/', (request, response) => {
 app.get('/user/:id', verifyToken, requestDataUser);
 
 app.get('/user', verifyToken, requestUserList);
+
+app.get('/categories', verifyToken, requestCategoriesList);
 
 app.post('/login',
   emailRequired,
