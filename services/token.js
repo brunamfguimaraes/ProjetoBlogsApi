@@ -26,7 +26,18 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+const tokenInfo = async (req) => {
+  const token = req.headers.authorization;
+  try {
+    const answer = jwt.verify(token, secret);
+    return answer.data.id;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   generateToken,
   verifyToken,
+  tokenInfo,  
 };
