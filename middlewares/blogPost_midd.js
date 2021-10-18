@@ -1,4 +1,5 @@
 const { Category } = require('../models');
+require('dotenv');
 
 const ValidTitle = async (req, res, next) => {
     const { title } = req.body; 
