@@ -13,4 +13,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.routes('/user').post(user);
+app.route('/user').post(user);
