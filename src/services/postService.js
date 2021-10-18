@@ -1,6 +1,6 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
-const { User, BlogPost } = require('../sequelize/models');
+const { User, BlogPost, Category } = require('../sequelize/models');
 
 const secret = process.env.JWT_SECRET;
 
@@ -30,4 +30,16 @@ const create = async (post, token) => {
   return { title, content, id, userId };
 };
 
-module.exports = create;
+const get = async () => {
+  const posts = await BlogPost.findAll(
+    {
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    },
+  );
+  return posts;
+};
+
+module.exports = { create, get };

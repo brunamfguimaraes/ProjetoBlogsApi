@@ -7,6 +7,7 @@ const categoryIdExists = require('../middlewares/validations/existsCategoryIds')
 
 const router = express.Router();
 
-router.post('/', validateJWT, validationBlogPost, categoryIdExists, postController);
+router.post('/', validateJWT, validationBlogPost, categoryIdExists, postController.createPost);
+router.get('/', validateJWT, postController.getPost);
 
 module.exports = router;
