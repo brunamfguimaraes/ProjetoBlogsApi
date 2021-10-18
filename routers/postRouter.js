@@ -1,10 +1,10 @@
-// const express = require('express'); 
-// const { createBlogPost, getAllBlogPost } = require('../controller/postControllers');
-// const { verifyJWT } = require('../auth/JWToken');
+const express = require('express'); 
+const { createBlogPost, getAllBlogPost } = require('../controller/postControllers');
+const { verifyJWT } = require('../auth/JWToken');
 
-// const router = express.Router();
-// router.route('/') 
-// .post(verifyJWT, createBlogPost)
-// .get(verifyJWT, getAllBlogPost);
+const router = express.Router();
+router.route('/') 
+.post(verifyJWT, createBlogPost)
+.get(verifyJWT, getAllBlogPost);
 
-// module.exports = router;
+module.exports = router;
