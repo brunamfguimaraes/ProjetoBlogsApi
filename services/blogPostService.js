@@ -19,6 +19,8 @@ const checkBlogPost = async (id) => {
   return blogId;
 };
 
+// const updatePost = async (id)
+
 module.exports = {
   checkCategoryId,
   checkBlogPost,
