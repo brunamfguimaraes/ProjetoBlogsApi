@@ -14,7 +14,7 @@ const jwtConfig = {
 
 const router = express.Router();
 
-router.get('/', validToken, async (req, res) => {
+router.get('/', validToken, async (_req, res) => {
   const allUsers = await User.findAll();
   return res.status(200).json(allUsers);
 });

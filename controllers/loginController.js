@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
       const userToken = jwt.sign({ data: email }, secret, jwtConfig);
       return res.status(200).json({ userToken });
     }
-    return res.status(400).json({ message: 'Campos inválidos' });
+    return res.status(400).json({ message: 'Invalid fields' });
   } catch (e) {
     console.log(e);
   }
