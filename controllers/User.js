@@ -1,5 +1,5 @@
-const { User } = require('../models');
 const { CREATED, INTERNAL_SERVER_ERROR } = require('http-status');
+const { User } = require('../models');
 
 const createUser = async (req, res) => {
   try {
