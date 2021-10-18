@@ -1,4 +1,4 @@
-const { INTERNAL_SERVER_ERROR, CREATED, BAD_REQUEST } = require('http-status');
+const { INTERNAL_SERVER_ERROR, CREATED, BAD_REQUEST, OK } = require('http-status');
 const Categories = require('../services/Categories');
 
 const createCategory = async (req, res) => {
@@ -16,6 +16,18 @@ const createCategory = async (req, res) => {
   }
 };
 
+const getAllCategories = async (req, res) => {
+  try {
+    const result = await Categories.getAllCategories();
+
+    return res.status(OK).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(INTERNAL_SERVER_ERROR).json({ message: error.message }); 
+  }
+};
+
 module.exports = {
   createCategory,
+  getAllCategories,
 };

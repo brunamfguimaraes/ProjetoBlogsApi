@@ -1,10 +1,11 @@
 const express = require('express');
 const { validateJWT } = require('../auth/validateJWT');
-const { createCategory } = require('../controllers/Categories');
+const { createCategory, getAllCategories } = require('../controllers/Categories');
 
 const router = express.Router();
 
 router.route('/')
-  .post(validateJWT, createCategory);
+  .post(validateJWT, createCategory)
+  .get(validateJWT, getAllCategories);
 
 module.exports = router;
