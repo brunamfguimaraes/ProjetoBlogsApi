@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { Category } = require('../models/index');
 require('dotenv').config();
 const { User } = require('../models');
 
@@ -96,6 +97,12 @@ const loginValidate = (email, password) => {
 
 const userFinder = async (email) => User.findOne({ where: { email } });
 
+const tokenFindUserId = async (token) => {
+  const { data } = jwt.verify(token, JWT_SECRET);
+  const result = await userFinder(data);
+  return result;
+};
+
 const tokenValidator = async (req, res, next) => {
   const { authorization: token } = req.headers;
   if (!token) {
@@ -116,6 +123,34 @@ const nameValidator = (req, res, next) => {
   next();
 };
 
+const titleValidator = async (req, res, next) => {
+  const { title } = req.body;
+  if (!title) return res.status(400).json({ message: '"title" is required' });
+  next();
+};
+
+const contentValidator = async (req, res, next) => {
+  const { content } = req.body;
+  if (!content) return res.status(400).json({ message: '"content" is required' });
+next();
+};
+
+// recebi a ajuda do Cristian Bugs para incrementar a verificação da Validação de categoria id
+
+const categoryIdValidator = async (req, res, next) => {
+  const { categoryIds } = req.body;
+  if (!categoryIds || categoryIds.length === 0) {
+    return res.status(400).json({ message: '"categoryIds" is required' });
+  }
+   const allCategories = await Category.findAll();
+  const categoryResult = allCategories.map((cat) => categoryIds[0] === cat.dataValues.id);
+    
+ if (categoryResult[0] === false && categoryResult[1] === false) {
+  return res.status(400).json({ message: '"categoryIds" not found' });
+ }
+next();
+};
+
 module.exports = {
   JWTToken,
   nameValidator,
@@ -123,4 +158,8 @@ module.exports = {
   loginValidate,
   userFinder,
   tokenValidator,
+  tokenFindUserId,
+  titleValidator,
+  contentValidator,
+  categoryIdValidator,
 };
