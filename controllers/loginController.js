@@ -15,16 +15,12 @@ const router = express.Router();
 
 router.post('/', required, isEmpty, async (req, res) => {
   const { email, password } = req.body;
-  try {
-    const userExist = await User.findOne({ where: { email, password } });
-    if (userExist) {
-      const userToken = jwt.sign({ data: email, secret, jwtConfig });
-      return res.status(200).json(userToken);
-    }
-    return res.status(400).json({ message: 'Invalid fields' });
-  } catch (e) {
-    res.status(500).json({ message: e.message });
+  const userExist = await User.findOne({ where: { email, password } });
+  if (userExist) {
+    const userToken = jwt.sign({ data: email }, secret, jwtConfig);
+    return res.status(200).json({ userToken });
   }
+  return res.status(400).json({ message: 'Campos inválidos' });
 });
 
 module.exports = router;
