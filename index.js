@@ -1,5 +1,5 @@
 const express = require('express');
-const { Users, Login, Categories } = require('./src/routes');
+const { Users, Login, Categories, BlogPosts } = require('./src/routes');
 
 const app = express();
 app.use(express.json());
@@ -11,6 +11,7 @@ app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 app.use('/user', Users);
 app.use('/login', Login);
 app.use('/categories', Categories);
+app.use('/post', BlogPosts);
 
 // do not remove that endpoint, it is used by the evatuator
 app.get('/', (request, response) => {
