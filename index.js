@@ -12,6 +12,7 @@ app.use(bodyParse.json());
 // Um problema inesperado no servidor deve retornar um código de status 500;
 
 app.post('/user', userController.createUser);
+app.post('/login', userController.findLogin);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 

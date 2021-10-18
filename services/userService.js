@@ -27,9 +27,10 @@ const validateEmail = (email) => {
 };
 
 const isValid = (name, email, pass) => {
-  const isValidName = validateName(name);
-  const isValidEmail = validateEmail(email);
-  const isValidPass = validatePass(pass);
+  let isValidName; let isValidPass; let isValidEmail;
+  if (name) isValidName = validateName(name);
+  if (email) isValidEmail = validateEmail(email);
+  if (pass) isValidPass = validatePass(pass);
   let err;
   [isValidName, isValidEmail, isValidPass].forEach((oneValid) => {
     if (oneValid.message) {
@@ -54,6 +55,15 @@ const createUser = async (displayName, email, password) => {
   return true;
 };
 
+const findLogin = async (email, password) => {
+  const validate = isValid(email, password);
+  if (validate.message) {
+    return isValid;
+  }
+  return true;
+};
+
 module.exports = { 
   createUser,
+  findLogin,
  };

@@ -27,6 +27,22 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const findLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  const validate = userService.findLogin(email, password);
+  if (validate.message) {
+    return next({ status: validate.status, message: 'Campos inválidos' });
+  }
+  try {
+    const user = await User.findAll({ where: { email, password } });
+    const token = jwt.sign({ data: { user: user.displayName, email } }, JWT_SECRET, jwfConfig);
+    return res.status(200).json({ token });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   createUser,
+  findLogin,
 };
