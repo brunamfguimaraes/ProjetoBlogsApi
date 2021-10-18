@@ -5,7 +5,7 @@ const { categoryIdIsRequired } = require('../middleware/infoValidationPost');
 const { idCategoryIsRequired } = require('../middleware/infoValidationPost');
 
 const { tokenValidation } = require('../middleware/infoValidationUser');
-const { getAllBlogPosts } = require('../service/postService');
+const { getAllBlogPosts, createBlogPost } = require('../service/postService');
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ categoryIdIsRequired,
 tokenValidation,
 idCategoryIsRequired,
 rescue(async (req, res) => {
-    res.status(200).json('ok');
+    await createBlogPost(req, res);
 }));
 
 router.get('/',

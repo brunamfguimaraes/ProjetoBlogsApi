@@ -11,7 +11,9 @@ const jwtConfiguration = {
 };
 
 const createToken = async (user) => {
+    console.log('token');
     const tokenSign = jwt.sign({ data: user }, secret, jwtConfiguration);
+    console.log('tokenSign', tokenSign);
     return tokenSign;
 };
 
