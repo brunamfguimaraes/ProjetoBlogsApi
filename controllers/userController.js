@@ -12,9 +12,8 @@ const jwtConfig = {
 
 const router = express.Router();
 const ALGO_DEU_ERRADO = 'Algo deu errado';
-// const existentUserError = { message: 'User already registered' };
 
-router.get('/', valdateJwt, async (req, res) => {
+router.get('/', valdateJwt, async (_req, res) => {
   try {
     const users = await User.findAll();
     return res.status(200).json(users);
@@ -24,34 +23,19 @@ router.get('/', valdateJwt, async (req, res) => {
   }
 });
 
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const user = await Users.findByPk(id);
+router.get('/:id', valdateJwt, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
 
-//     if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+    if (!user) return res.status(404).json({ message: 'User does not exist' });
 
-//     return res.status(200).json(user);
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: ALGO_DEU_ERRADO });
-//   }
-// });
-
-// router.get('/search/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { email } = req.query;
-//     const user = await Users.findOne({ where: { id, email } });
-
-//     if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
-
-//     return res.status(200).json(user);
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: ALGO_DEU_ERRADO });
-//   }
-// });
+    return res.status(200).json(user);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: ALGO_DEU_ERRADO });
+  }
+});
 
 router.post('/', validateUserName, validateEmail, validatePassword, async (req, res) => {
   try {
@@ -65,37 +49,15 @@ router.post('/', validateUserName, validateEmail, validatePassword, async (req, 
   }
 });
 
-// router.put('/:id', async (req, res) => {
+// Este endpoint usa o método destroy do Sequelize para remover um usuário no banco.
+// router.delete('/me', valdateJwt, async (req, res) => {
+//   const token = req.header.athorization;
+//   console.log(token);
 //   try {
-//     const { id } = req.params;
-
-//     const [updateUser] = await Users.update(
-//         req.body,
-//       { where: { id } },
+//     const deleteUser = await User.destroy(
+//       { where: token }, verificar se consigo adicionar o token no objeto do user
 //     );
-
-//     console.log(updateUser); 
-
-//     if (!updateUser) return res.status(404).json({ message: 'Usuário não encontrado' });
-
-//     return res.status(200).json({ message: 'Usuário atualizado com sucesso!' });
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: ALGO_DEU_ERRADO });
-//   }
-// });
-
-// // Este endpoint usa o método destroy do Sequelize para remover um usuário no banco.
-// router.delete('/:id', async (req, res) => {
-//   try {
-//     const deleteUser = await Users.destroy(
-//       { where: req.params },
-//     );
-
-//     console.log(deleteUser);
-//     // confira o que é retornado quando o user com o id é ou não encontrado;
-
-//     return res.status(200).json({ message: 'Usuário excluído com sucesso!' });
+//     return res.status(204).json({ message: 'Usuário excluído com sucesso!' });
 //   } catch (e) {
 //     console.log(e.message);
 //     res.status(500).json({ message: ALGO_DEU_ERRADO });

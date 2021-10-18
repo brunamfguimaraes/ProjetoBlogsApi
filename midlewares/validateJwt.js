@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const segredo = 'secretToken';
-const missingAuth = { message: 'missing auth token' };
+const missingAuth = { message: 'Token not found' };
 
 module.exports = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -13,6 +13,6 @@ module.exports = async (req, res, next) => {
     req.user = decoded.data;
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'jwt malformed' });
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
