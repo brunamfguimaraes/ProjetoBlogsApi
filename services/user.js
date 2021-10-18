@@ -28,6 +28,4 @@ const createUser = async (displayName, email, password, image) => {
   return user;
 };
 
-module.exports = {
-  createUser,
-};
+module.exports = { createUser };
