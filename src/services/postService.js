@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost, User, Categorie } = require('../models/index');
+const { BlogPost, User, Category, PostsCategory } = require('../models/index');
 const { code, errorMessage } = require('../schema/index');
 
 /**
@@ -11,9 +11,7 @@ const createPost = async ({ title, content, categoryIds }, token) => {
   const secret = process.env.JWT_SECRET;
   const { email } = jwt.verify(token, secret);
 
-  const categories = await Categorie.findAll({
-    where: { id: categoryIds },
-  });
+  const categories = await Category.findAll({ where: { id: categoryIds } });
 
  if (categories.length !== categoryIds.length) {
    return {
@@ -23,7 +21,8 @@ const createPost = async ({ title, content, categoryIds }, token) => {
  }
 
   const { id } = await User.findOne({ where: { email } });
-  const newPost = await BlogPost.create({ title, content, categoryIds, userId: id });
+  const newPost = await BlogPost.create({
+    title, content, userId: id, postsCategory: categoryIds }, { include: PostsCategory });
 
   const successfullyCreated = {
     code: code.HTTP_CREATED,
@@ -33,6 +32,23 @@ const createPost = async ({ title, content, categoryIds }, token) => {
   return successfullyCreated;
 };
 
+const getPosts = async () => {
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  const allPosts = {
+    code: code.HTTP_OK_STATUS,
+    notification: posts,
+  };
+
+  return allPosts;
+};
+
 module.exports = {
   createPost,
+  getPosts,
 };

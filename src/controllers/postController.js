@@ -15,6 +15,20 @@ const createPost = async (req, res) => {
   }
 };
 
+const getPosts = async (req, res) => {
+  try {
+    // const token = req.headers.authorization;
+
+    const { code, notification } = await service.getPosts();
+
+    return res.status(code).json(notification);
+  } catch (e) {
+    console.log(e);
+    return res.status(HTTP_INTERNAL_SERVER_ERROR).json({ message: 'Internal error' });
+  }
+};
+
 module.exports = {
   createPost,
+  getPosts,
 };

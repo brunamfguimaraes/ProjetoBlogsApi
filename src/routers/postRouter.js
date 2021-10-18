@@ -17,4 +17,6 @@ router.post('/',
   validateJWT,
   controller.createPost);
 
+  router.get('/', checkToken, validateJWT, controller.getPosts);
+
 module.exports = router;

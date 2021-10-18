@@ -1,4 +1,4 @@
-const { Categorie } = require('../models/index');
+const { Category } = require('../models/index');
 const { code } = require('../schema/index');
 
 /**
@@ -7,7 +7,7 @@ const { code } = require('../schema/index');
  * @returns code, notification
  */
 const createCatagorie = async (categorie) => {
-  const newCategorie = await Categorie.create(categorie);
+  const newCategorie = await Category.create(categorie);
 
   const registeredSuccessfully = {
     code: code.HTTP_CREATED,
@@ -18,7 +18,7 @@ const createCatagorie = async (categorie) => {
 };
 
 const getCategories = async () => {
-  const findAllCategories = await Categorie.findAll();
+  const findAllCategories = await Category.findAll();
 
   const searchResults = {
     code: code.HTTP_OK_STATUS,

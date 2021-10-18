@@ -1,21 +1,23 @@
-const BlogPosts = (sequelize, DataTypes) => {
-  const PostModel = sequelize.define('BlogPost', {
+const BlogPost = (sequelize, DataTypes) => {
+  const blogPost = sequelize.define('BlogPost', {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
+    userId: DataTypes.INTEGER,
   },
   {
-    timestamps: false,
-    creatAt: 'published',
-    updateAt: 'updated',
+    timestamps: true,
+    createdAt: 'published',
+    updatedAt: 'updated',
   });
-  PostModel.associate = (models) => {
-    PostModel.belongsTo(models.User, {
-      foreignkey: 'userId',
+
+  blogPost.associate = (models) => {
+    blogPost.belongsTo(models.User, {
+      foreignKey: 'userId',
       as: 'user',
     });
   };
 
-  return PostModel;
+  return blogPost;
 };
 
-module.exports = BlogPosts;
+module.exports = BlogPost;
