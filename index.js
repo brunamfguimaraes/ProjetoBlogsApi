@@ -11,7 +11,7 @@ app.use(bodyParse.json());
 // Requisições que não seguem o formato pedido pelo servidor devem retornar um código de status 400;
 // Um problema inesperado no servidor deve retornar um código de status 500;
 
-app.get('/user');
+app.get('/user', userController.findUsers);
 app.post('/user', userController.createUser);
 app.post('/login', userController.findLogin);
 

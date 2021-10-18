@@ -67,12 +67,14 @@ const findUsers = (token) => {
   if (!token) {
     return { status: 401, message: 'Token not Found' };
   }
-  if (token.length !== 24) {
+  if (token.length < 16) {
     return { status: 401, message: 'Expired or invalid token' };
   }
+  return true;
 };
 
 module.exports = { 
   createUser,
   findLogin,
+  findUsers,
  };

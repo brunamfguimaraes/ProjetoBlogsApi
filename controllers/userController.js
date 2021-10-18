@@ -42,7 +42,24 @@ const findLogin = async (req, res, next) => {
   }
 };
 
+const findUsers = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const validate = await userService.findUsers(token);
+  console.log(validate);
+  if (validate.message) {
+    return next(validate);
+  }
+  try {
+    const users = await User.findAll();
+    console.log(users);
+    return res.status(200).json(users);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   createUser,
   findLogin,
+  findUsers,
 };
