@@ -49,9 +49,18 @@ const postPostServices = async (req) => {
   try {
     const post = await BlogPosts.create({ userId: id, title, content });
     return (post.dataValues);
-  } catch (err) { console.log(err); return (err); }
+  } catch (err) { return (err); }
+};
+
+const getAllPostServices = async () => {
+  try {
+    const post = await BlogPosts.findAll();
+    console.log(post);
+    return (post);
+  } catch (err) { return (err); }
 };
 
 module.exports = {
   postPostServices,
+  getAllPostServices,
 };

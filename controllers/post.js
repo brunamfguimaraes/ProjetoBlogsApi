@@ -1,4 +1,4 @@
-const { postPostServices } = require('../services/post');
+const { postPostServices, getAllPostServices } = require('../services/post');
 
 const STATUS = {
   OK: 201,
@@ -12,6 +12,12 @@ const postPost = async (req, res) => {
   return res.status(STATUS.OK).json(answer);
 };
 
+const getAllPost = async (req, res) => {
+  const answer = await getAllPostServices(req);
+  return res.status(STATUS.OK).json(answer);
+};
+
 module.exports = {
   postPost,
+  getAllPost,
 };
