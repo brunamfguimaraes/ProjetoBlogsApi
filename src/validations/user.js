@@ -19,7 +19,25 @@ async function emailValidation(email, Model) {
   }
 }
 
+function loginValidation(email, password) {
+  const { error } = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().length(6).required(),
+  }).validate({ email, password });
+  if (error) throw error;
+}
+
+function userCheck(user) {
+  if (!user) {
+    const error = new Error('Invalid fields');
+    error.code = 400;
+    throw error;
+  }
+}
+
 module.exports = {
   userValidation,
   emailValidation,
+  loginValidation,
+  userCheck,
 };

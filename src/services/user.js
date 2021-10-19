@@ -10,6 +10,15 @@ async function newUser(displayName, email, password, image) {
   return token;
 }
 
+async function login(email, password) {
+  validations.loginValidation(email, password);
+  const user = await User.findOne({ where: { email, password } });
+  validations.userCheck(user);
+  const token = utils.createToken({ email, password });
+  return token;
+}
+
 module.exports = {
   newUser,
+  login,
 };

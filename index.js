@@ -13,6 +13,7 @@ app.get('/', (request, response) => {
 });
 
 route.user(app);
+route.login(app);
 
 app.use(errors);
 
