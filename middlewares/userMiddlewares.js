@@ -7,8 +7,11 @@ const errors = {
   passwordLength: '"password" length must be 6 characters long',
   emailFormat: '"email" must be a valid email',
   emailRequired: '"email" is required',
+  emailEmpty: '"email" is not allowed to be empty',
   userRegistered: 'User already registered',
   passwordRequired: '"password" is required',
+  passwordEmpty: '"password" is not allowed to be empty',
+  userNotRegistered: 'Invalid fields',
 };
 
 // Comments: Valida se o campo displayName é uma string com no mínimo de 8 caracteres.
@@ -37,8 +40,19 @@ const validateEmailFormat = async (req, res, next) => {
 const validateEmailWasInformed = async (req, res, next) => {
   const { email } = req.body;
 
-  if (!email || email === '') {
+  if (!email) {
     return res.status(400).json({ message: errors.emailRequired });
+  }
+
+  next();
+};
+
+// Comments: Valida se o campo email está vazio na requisição.
+const validateEmailIsEmpty = async (req, res, next) => {
+  const { email } = req.body;
+
+  if (email === '') {
+    return res.status(400).json({ message: errors.emailEmpty });
   }
 
   next();
@@ -57,6 +71,19 @@ const validateEmailIsAlreadyRegistered = async (req, res, next) => {
     next();
 };
 
+// Comments: Valida se o usuário já existe na base de dados.
+const validateUserIsRegistered = async (req, res, next) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) {
+    return res.status(400).json({ message: errors.userNotRegistered });
+  }
+
+  next();
+};
+
 // Comments: Valida se não é possível cadastrar usuário com o campo password diferente de 6 caracteres.
 const validatePasswordLength = async (req, res, next) => {
   const { password } = req.body;
@@ -72,8 +99,19 @@ const validatePasswordLength = async (req, res, next) => {
 const validatePasswordWasInformed = async (req, res, next) => {
   const { password } = req.body;
 
-  if (!password || password === '') {
+  if (!password) {
     return res.status(400).json({ message: errors.passwordRequired }); 
+}
+
+  next();
+};
+
+// Comments: Valida se o campo password foi informado na requisição.
+const validatePasswordIsEmpty = async (req, res, next) => {
+  const { password } = req.body;
+
+  if (password === '') {
+    return res.status(400).json({ message: errors.passwordEmpty }); 
 }
 
   next();
@@ -83,7 +121,10 @@ module.exports = {
   validateDisplayNameLength,
   validateEmailFormat,
   validateEmailWasInformed,
+  validateEmailIsEmpty,
   validateEmailIsAlreadyRegistered,
   validatePasswordLength,
   validatePasswordWasInformed,
+  validatePasswordIsEmpty,
+  validateUserIsRegistered,
 };

@@ -1,18 +1,28 @@
 const express = require('express');
-
-const { User } = require('../models');
+const {
+  validateEmailIsEmpty,
+  validateEmailWasInformed,
+  validatePasswordIsEmpty,
+  validatePasswordWasInformed, 
+  validateUserIsRegistered } = require('../middlewares/userMiddlewares');
+const { generateToken } = require('../helpers/generateToken');
 
 const loginRouter = express.Router();
 
 // ---------------------------------------------------------------
-// Requisito 2: CONTROLLER responsável por realizar cadastro de usuário via sequelize e retornar usuário cadastrado.
+// Requisito 2: CONTROLLER responsável por realizar login de usuário via sequelize e retornar token.
 
-loginRouter.post('/', async (req, res) => {
+loginRouter.post('/',
+  validateEmailIsEmpty,
+  validateEmailWasInformed,
+  validatePasswordIsEmpty,
+  validatePasswordWasInformed,
+  validateUserIsRegistered, (req, res) => {
   try {
-    const { displayName, email, password, image } = req.body;
-    const newUser = await User.create({ displayName, email, password, image });
+    const { email, password } = req.body;
+    const token = generateToken({ email, password });
 
-    return res.status(201).json(newUser);
+    return res.status(200).json({ token });
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado' });
