@@ -3,7 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 const { loginUser } = require('../services/loginServices');
 require('dotenv').config();
 
-const { JWT_SECRET } = process.env;
+// const { JWT_SECRET } = process.env;
+const JWT_SECRET = 'projectBlogsAPI';
 
 const login = async (req, res) => {
   try {

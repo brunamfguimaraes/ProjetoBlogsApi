@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 
-const { JWT_SECRET } = process.env;
+// const { JWT_SECRET } = process.env;
+const JWT_SECRET = 'projectBlogsAPI';
 
 const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
