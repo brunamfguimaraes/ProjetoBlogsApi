@@ -12,6 +12,7 @@ const ERROR_MESSAGE = {
   noToken: 'Token not found',
   invalidToken: 'Expired or invalid token',
   noUser: 'User does not exist',
+  nameNull: '"name" is required',
 };
 
 module.exports = ERROR_MESSAGE;
