@@ -31,9 +31,21 @@ const findByEmailAndPassword = async (email, password) => {
     return response;
 };
 
+const findById = async (id) => {
+    const response = await User.findByPk(id).then((userInfo) => {
+        if (!userInfo) return null;
+        const { displayName, email, image } = userInfo;
+        const numberId = Number(id);
+        const publicInfo = { displayName, email, id: numberId, image };
+        return publicInfo;
+    });
+    return response;
+};
+
 module.exports = {
     createNewUser,
     findAllUsers,
     findByEmail,
     findByEmailAndPassword,
+    findById,
 };

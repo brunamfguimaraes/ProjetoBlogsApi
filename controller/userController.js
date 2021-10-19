@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { createNewUser, findAllUsers } = require('../service/userService');
+const { createNewUser, findAllUsers, findById } = require('../service/userService');
 const { 
     checkDisplayName,
     checkEmail,
@@ -11,6 +11,13 @@ const {
 const router = express.Router();
 
 router.get('/', tokenValidation, async (_req, res) => res.status(200).send(await findAllUsers()));
+
+router.get('/:id', tokenValidation, async (req, res) => {
+    const { id } = req.params;
+    const userInfo = await findById(id);
+    if (!userInfo) return res.status(404).send({ message: 'User does not exist' });
+    return res.status(200).send(userInfo);
+});
 
 router.post('/', 
     checkDisplayName, 
