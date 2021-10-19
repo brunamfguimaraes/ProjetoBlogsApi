@@ -91,7 +91,6 @@ const getAllUsers = async () => {
   return users;
 };
 
-
 const login = async ({ email, password }) => {
   if (validateEmail(email).err) return validateEmail(email);
   if (validatePassword(password).err) return validatePassword(password);

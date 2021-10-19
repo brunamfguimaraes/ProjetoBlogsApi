@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const ERROR_MESSAGE = require('../services/error');
 const { UNAUTHORIZED } = require('http-status');
+const ERROR_MESSAGE = require('../services/error');
 
 require('dotenv').config();
 

@@ -4,6 +4,6 @@ const checkToken = require('../middlewares/checkToken');
 
 const router = express.Router();
 router.post('/', createUser);
-router.get('/',checkToken, getUsers);
+router.get('/', checkToken, getUsers);
 
 module.exports = router;

@@ -10,7 +10,7 @@ const ERROR_MESSAGE = {
   invalidFields: 'Invalid fields',
   serverError: 'Internal server error',
   noToken: 'Token not found',
-  invalidToken: 'Expired or invalid token'
+  invalidToken: 'Expired or invalid token',
 };
 
 module.exports = ERROR_MESSAGE;

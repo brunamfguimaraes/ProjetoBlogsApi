@@ -31,13 +31,12 @@ const getUsers = async (_req, res) => {
     const users = await getAllUsers();
     res.status(OK).json(users);
   } catch (err) {
-    res.status(INTERNAL_SERVER_ERROR).send({ message: ERROR_MESSAGE.serverError  });
+    res.status(INTERNAL_SERVER_ERROR).send({ message: ERROR_MESSAGE.serverError });
   }
 };
-
 
 module.exports = {
   createUser,
   loginUser,
-  getUsers
+  getUsers,
 };
