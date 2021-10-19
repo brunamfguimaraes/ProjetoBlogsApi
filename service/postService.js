@@ -14,13 +14,14 @@ const createBlogPost = async (req, res) => {
     return res.status(201).json({ id, title, content, userId });
 };
 
+// Camila e Carlos me auxiliou a montar a lógica deste código getAllBlogPosts. A lógica da createBlogPost foram meus colegas Diegho, Renato e Carlos.
 const getAllBlogPosts = async () => {
     console.log('service Post');
     const check = await BlogPost.findAll({
-        include: [{ model: User, as: 'user' },
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: Category, as: 'categories' }],
     });
-    // console.log('check PostService', check, 'check postService');
+
     return check;
 };
 
