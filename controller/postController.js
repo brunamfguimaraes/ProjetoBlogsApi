@@ -25,6 +25,16 @@ router.get('/', tokenValidation, (_req, res) => {
     blogPostService.getAllPosts().then((data) => res.status(200).send(data));
 });
 
+router.get('/search', tokenValidation, async (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    const allPosts = await blogPostService.getAllPosts();
+    return res.status(200).send(allPosts);
+  }
+  const searchedPosts = await blogPostService.searchPosts(q);
+  return res.status(200).send(searchedPosts);
+});
+
 router.get('/:id', tokenValidation, checkPostId, 
   (req, res) => {
     const { id } = req.params;

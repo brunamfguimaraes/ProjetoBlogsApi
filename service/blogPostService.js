@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models/index');
 
 const createBlogPost = ({ content, title, userId }) => BlogPost.create({ content, title, userId });
@@ -35,10 +36,23 @@ const updatePost = ({ content, title, id }) => BlogPost.update(
 
 const deletePost = (id) => BlogPost.destroy({ where: { id } });
 
+const searchPosts = (q) => BlogPost.findAll({ where: {
+  [Op.or]: [
+    { title: { [Op.like]: `%${q}%` } },
+    { content: { [Op.like]: `%${q}%` } },
+  ],
+},
+include: [
+  { model: User, as: 'user' },
+  { model: Category, as: 'categories' },
+],
+}); 
+
 module.exports = { 
-    createBlogPost,
-    getAllPosts,
-    getPostById,
-    checkIfPostExist,
-    updatePost,
-    deletePost };
+  createBlogPost,
+  getAllPosts,
+  getPostById,
+  checkIfPostExist,
+  updatePost,
+  deletePost,
+  searchPosts };
