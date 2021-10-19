@@ -43,4 +43,13 @@ router.put('/:id',
     blogPostService.updatePost({ content, title, id }).then((data) => res.status(200).send(data));
 });
 
+router.delete('/:id', 
+    tokenValidation,
+    checkPostId,
+    checkPostUserId,
+    (req, res) => {
+      const { id } = req.params;
+      blogPostService.deletePost(id).then(() => res.status(204).send());
+});
+
 module.exports = router;

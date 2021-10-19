@@ -33,9 +33,12 @@ const updatePost = ({ content, title, id }) => BlogPost.update(
         return postUpdated;
     });
 
+const deletePost = (id) => BlogPost.destroy({ where: { id } });
+
 module.exports = { 
     createBlogPost,
     getAllPosts,
     getPostById,
     checkIfPostExist,
-    updatePost };
+    updatePost,
+    deletePost };
