@@ -26,7 +26,7 @@ const {
   userExists,
   emailExists,
   validateFields,
-  existCategories } = require('./middlewares/validationFields');
+  existCategories } = require('./middlewares/validationFields')
 
   app.get('/post/search', validationJWT, async (req, res) => {
       const { q } = req.query;
