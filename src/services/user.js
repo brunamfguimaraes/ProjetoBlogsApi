@@ -18,7 +18,14 @@ async function login(email, password) {
   return token;
 }
 
+async function getUsers(authorization) {
+  utils.validateToken(authorization);
+  const result = await User.findAll({});
+  return result;
+}
+
 module.exports = {
   newUser,
   login,
+  getUsers,
 };

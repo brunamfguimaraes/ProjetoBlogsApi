@@ -12,12 +12,14 @@ async function login(req, res) {
   return res.status(200).json({ token: result });
 }
 
-// async function getUsers(req, res) {
-  
-// }
+async function getUsers(req, res) {
+  const { authorization } = req.headers;
+  const result = await service.getUsers(authorization);
+  return res.status(200).json(result);
+}
 
 module.exports = {
   newUser,
   login,
-  // getUsers,
+  getUsers,
 };

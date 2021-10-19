@@ -13,6 +13,27 @@ function createToken(payload) {
   return token;
 }
 
+function checkToken(token) {
+  if (!token) {
+    const error = new Error('Token not found');
+    error.code = 401;
+    throw error;
+  }
+}
+
+function validateToken(token) {
+  checkToken(token);
+  try {
+    const payload = JWT.verify(token, secret);
+    return payload;
+  } catch (error) {
+    error.message = 'Expired or invalid token';
+    error.code = 401;
+    throw error;
+  }
+}
+
 module.exports = {
   createToken,
+  validateToken,
 };
