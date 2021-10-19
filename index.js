@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { userController, loginController } = require('./controller/index');
+const { userController,
+        loginController,
+        categoryController } = require('./controller/index');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(bodyParser.json());
 app.use('/login', loginController);
 
 app.use('/user', userController);
+
+app.use('/categories', categoryController);
 
 const PORT = process.env.PORT || 3000;
 
