@@ -3,6 +3,7 @@ const {
   contentValid,
   categoryIdsValid,
   checkCategories,
+  postExistentValidById,
 } = require('../validations');
 
 const addBlogPost = async ({ title, content, categoryIds }, categoryExist) => {
@@ -18,6 +19,17 @@ const addBlogPost = async ({ title, content, categoryIds }, categoryExist) => {
   return {};
 };
 
+const getBlogPostByID = async (BlogPostByID) => {
+  const verifyFields = postExistentValidById(BlogPostByID);
+
+  if (verifyFields) {
+    return verifyFields;
+  }
+
+  return {};
+};
+
 module.exports = { 
   addBlogPost,
+  getBlogPostByID,
 };

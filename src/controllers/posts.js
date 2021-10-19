@@ -31,7 +31,30 @@ const getAllBlogPost = rescue(async (req, res) => {
   return res.status(200).json(allBlogPost);
 });
 
+const getBlogPostByID = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const BlogPostByID = await BlogPost.findOne(
+    { 
+      where: { id },
+
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ], 
+    },
+  );
+
+  const validations = await service.getBlogPostByID(BlogPostByID);
+
+  if ('code' in validations) {
+    return next(validations);
+  }
+
+  return res.status(200).json(BlogPostByID);
+});
+
 module.exports = { 
   addBlogPost,
   getAllBlogPost,
+  getBlogPostByID,
 };

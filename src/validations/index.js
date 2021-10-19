@@ -72,6 +72,11 @@ const errors = {
     message: 'User does not exist',
     code: 404,
   },
+
+  nonExistentPostById: {
+    message: 'Post does not exist',
+    code: 404,
+  },
 };
  
 const emailValid = (value, emailExist = null) => {
@@ -175,6 +180,14 @@ const checkCategories = (value) => {
 
   return false;
 };
+
+const postExistentValidById = (value) => {
+  if (value === null) {
+    return errors.nonExistentPostById;
+  }
+
+  return false;
+};
  
 module.exports = { 
   emailValid,
@@ -187,4 +200,5 @@ module.exports = {
   contentValid,
   categoryIdsValid,
   checkCategories,
+  postExistentValidById,
 };
