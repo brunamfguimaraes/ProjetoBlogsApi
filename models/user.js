@@ -5,10 +5,10 @@ const User = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     image: DataTypes.STRING,
   }, {
-    timestamps: false, tableName: 'Users',
+    timestamps: false, tableName: 'Users', 
   });
 
   return userData;
 };
 
-module.exports = User;
+module.exports = User; 
