@@ -37,7 +37,7 @@ const {
       return res.status(200).json(user);
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({ message: 'Algo deu errado' });
+      res.status(500).json(messages.ERROR);
     }
   });
 
@@ -48,7 +48,7 @@ const {
       return res.status(200).json(users);
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({ message: 'Algo deu errado' });
+      res.status(500).json(messages.ERROR);
     }
   });
 
@@ -59,7 +59,27 @@ const {
       return res.status(200).json(users);
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({ message: 'Algo deu errado' });
+      res.status(500).json(messages.ERROR);
+    }
+  });
+
+  app.get('/post/:id', validationJWT, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const getId = await BlogPost.findByPk(id);
+      const posts = await BlogPost.findOne({
+        where: { id },
+        attributes: { exclude: ['user_id'] },
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Categorie, as: 'categories', through: { attributes: [] } }],
+      });
+
+      if (!getId) res.status(404).json(messages.POST_DOES_NOT_EXIST);
+  
+      return res.status(200).json(posts);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).json(messages.ERROR);
     }
   });
 
@@ -74,7 +94,7 @@ const {
       return res.status(200).json(posts);
     } catch (error) {
       console.log(error.message);
-      res.status(500).json({ message: 'Algo deu errado' });
+      res.status(500).json(messages.ERROR);
     }
   });
 
