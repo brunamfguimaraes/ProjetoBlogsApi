@@ -13,10 +13,7 @@ const createUserServices = async ({ displayName, email, password, image }) => {
   return { isError: false };
 };
 
-const getAllUsersServices = async () => {
-  const getALLUsers = await User.findAll();
-  console.log(getALLUsers);
-};
+const getAllUsersServices = async () => User.findAll({ attributes: { exclude: ['password'] } });
 
 module.exports = {
   createUserServices,

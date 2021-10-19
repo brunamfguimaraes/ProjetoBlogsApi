@@ -4,9 +4,6 @@ require('dotenv').config();
 const usersRoutes = require('./routers/userRoutes');
 const loginRoutes = require('./routers/loginRoutes');
 
-// const { PORT } = process.env;
-
-//
 const app = express();
 app.use(express.json());
 
