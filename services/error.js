@@ -11,7 +11,7 @@ const ERROR_MESSAGE = {
   serverError: 'Internal server error',
   noToken: 'Token not found',
   invalidToken: 'Expired or invalid token',
-  noUser:  'User does not exist'
+  noUser: 'User does not exist',
 };
 
 module.exports = ERROR_MESSAGE;

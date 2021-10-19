@@ -1,5 +1,5 @@
 const { CREATED, OK, INTERNAL_SERVER_ERROR } = require('http-status');
-const { create, login, getAllUsers, getOne} = require('../services/User');
+const { create, login, getAllUsers, getOne } = require('../services/User');
 const ERROR_MESSAGE = require('../services/error');
 
 const createUser = async (req, res) => {
@@ -51,5 +51,5 @@ module.exports = {
   createUser,
   loginUser,
   getUsers,
-  getUser
+  getUser,
 };

@@ -119,5 +119,5 @@ module.exports = {
   getToken,
   login,
   getAllUsers,
-  getOne
+  getOne,
 };
