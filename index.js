@@ -193,7 +193,7 @@ const {
 
       const updateBlog = await BlogPost.update({ title, content }, { where: { id } });
       console.log(updateBlog);
-      
+
       if (!title) res.status(400).json(messages.REQUIRED_TITLE);
       if (!content) res.status(400).json(messages.REQUIRED_CONTENT);
       if (categoryIds) res.status(400).json(messages.EDIT_CATEGORIES);
