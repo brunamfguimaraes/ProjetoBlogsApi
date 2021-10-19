@@ -54,8 +54,10 @@ const postPostServices = async (req) => {
 
 const getAllPostServices = async () => {
   try {
-    const post = await BlogPosts.findAll();
-    console.log(post);
+    const post = await BlogPosts.findAll({ include: [
+      { model: User, as: 'user' },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ] });
     return (post);
   } catch (err) { return (err); }
 };
