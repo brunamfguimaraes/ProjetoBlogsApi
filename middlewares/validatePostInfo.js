@@ -25,7 +25,7 @@ function validateContent(content) {
 
 function validateIds(categoryIds) {
   const validation = Joi.array().required().validate(categoryIds);
-  if (validation.error) return existsErr('categoryId');
+  if (validation.error) return existsErr('categoryIds');
   return false;
 }
 
