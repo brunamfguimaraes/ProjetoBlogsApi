@@ -185,6 +185,32 @@ const {
       return res.status(201).json({ id, userId, title, content });
   });
 
+  app.put('/post/:id', validationJWT, async (req, res) => {
+      const { title, content, categoryIds } = req.body;
+      const { id } = req.params;
+      const token = req.headers.authorization;
+      const { payload } = jwt.verify(token, JWT_SECRET);
+
+      const updateBlog = await BlogPost.update({ title, content }, { where: { id } });
+      console.log(updateBlog);
+      
+      if (!title) res.status(400).json(messages.REQUIRED_TITLE);
+      if (!content) res.status(400).json(messages.REQUIRED_CONTENT);
+      if (categoryIds) res.status(400).json(messages.EDIT_CATEGORIES);
+      
+      const posts = await BlogPost.findOne({
+        where: { id },
+        attributes: { exclude: ['user_id', 'id', 'published', 'updated'] },
+        include: [{ model: Categorie, as: 'categories', through: { attributes: [] } }],
+      });
+
+      const { userId } = posts;
+
+      if (userId !== payload.id) res.status(401).json(messages.UNAUTHORIZED_USER);
+  
+      return res.status(200).json(posts);
+  });
+
   // não remova esse endpoint, e para o avaliador funcionar
   app.get('/', (request, response) => {
     response.send();
