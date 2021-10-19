@@ -14,7 +14,8 @@ const createUserServices = async ({ displayName, email, password, image }) => {
 };
 
 const getAllUsersServices = async () => {
-
+  const getALLUsers = await User.findAll();
+  console.log(getALLUsers);
 };
 
 module.exports = {
