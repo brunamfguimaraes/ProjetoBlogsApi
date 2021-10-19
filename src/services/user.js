@@ -5,10 +5,10 @@ const {
   userExistentValidById,
 } = require('../validations');
 
-const userRegister = async (user, emailExist) => {
-  const verifyFields = displayNameValid(user.displayName) 
-  || emailValid(user.email, emailExist) 
-  || passwordValid(user.password);
+const userRegister = async ({ email, displayName, password }, emailExist) => {
+  const verifyFields = displayNameValid(displayName) 
+  || emailValid(email, emailExist) 
+  || passwordValid(password);
 
   if (verifyFields) {
     return verifyFields;

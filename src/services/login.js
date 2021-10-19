@@ -5,7 +5,7 @@ const {
 } = require('../validations');
 
 const loginFunction = async ({ email, password }, userExist) => {
-  const verifyFields = emailValid(email, null) 
+  const verifyFields = emailValid(email) 
   || passwordValid(password)
   || userExistentValid(userExist);
 

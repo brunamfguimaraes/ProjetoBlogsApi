@@ -6,25 +6,26 @@ const service = require('../services/user');
 const secret = process.env.JWT_SECRET;
 
 const userRegister = rescue(async (req, res, next) => {
-  const user = req.body;
-
-  const emailExist = user.email 
-  && await User.findOne({ where: { email: user.email } });
+  const { email, displayName, image, password } = req.body;
   
-  const validations = await service.userRegister(user, emailExist);
+  const emailExist = email 
+  && await User.findOne({ where: { email } });
+  
+  const validations = await service.userRegister({ email, displayName, password }, 
+  emailExist);
 
   if ('code' in validations) {
     return next(validations);
   }
 
-  await User.create(user);
+  await User.create({ email, displayName, image, password });
 
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
 
-  const token = jwt.sign({ data: user }, secret, jwtConfig);
+  const token = jwt.sign({ data: { email, displayName } }, secret, jwtConfig);
     
   return res.status(201).json({ token });
 });

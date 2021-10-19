@@ -74,7 +74,7 @@ const errors = {
   },
 };
  
-const emailValid = (value, emailExist) => {
+const emailValid = (value, emailExist = null) => {
   if (value === '') {
     return errors.invalidEmail.emptyField;
   }
