@@ -4,6 +4,8 @@ const checkIfUserExist = require('./checkifUserExist');
 const checkPassword = require('./checkPassword');
 const checkLoginInfo = require('./checkLoginInfo');
 const tokenValidation = require('./tokenValidation');
+const checkCategoryId = require('./checkCategoryId');
+const checkPostTitleAndContent = require('./checkPostTitleAndContent');
 
 module.exports = {
     checkDisplayName,
@@ -12,4 +14,6 @@ module.exports = {
     checkPassword,
     checkLoginInfo,
     tokenValidation,
+    checkCategoryId,
+    checkPostTitleAndContent,
 };

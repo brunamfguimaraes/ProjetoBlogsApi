@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { userController,
-        loginController,
-        categoryController } = require('./controller/index');
+const { 
+  userController,
+  loginController,
+  categoryController,
+  postController } = require('./controller/index');
 
 const app = express();
 
@@ -15,6 +17,8 @@ app.use('/login', loginController);
 app.use('/user', userController);
 
 app.use('/categories', categoryController);
+
+app.use('/post', postController);
 
 const PORT = process.env.PORT || 3000;
 

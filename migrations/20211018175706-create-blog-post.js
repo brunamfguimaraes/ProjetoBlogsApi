@@ -9,15 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       title: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       content: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       userId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
@@ -27,13 +27,13 @@ module.exports = {
         },
       },
       createdAt: {
-        allowNull: false,
+        allowNull: true,
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         field: 'published',
       },
       updatedAt: {
-        allowNull: false,
+        allowNull: true,
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         field: 'updated',
