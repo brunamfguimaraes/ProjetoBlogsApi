@@ -18,4 +18,6 @@ const {
 
 router.post('/', WrongToken, WrongTitle, WrongContent, WrongCategoryID, postController.addPost); 
 
+router.get('/', WrongToken, postController.getAllPost); 
+
 module.exports = router;
