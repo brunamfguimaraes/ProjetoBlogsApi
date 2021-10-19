@@ -13,7 +13,8 @@ const userListService = async () => {
 
 const loginAuth = async (email, password) => {
   const user = await User.findOne({ where: { email, password } });
-  console.log('oi');
+
+  console.log(user);
 
   if (!user) return null;
 

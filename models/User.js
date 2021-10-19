@@ -10,6 +10,12 @@ const User = (sequelize, DataTypes) => {
       timestamps: false,
     });
 
+  insertUser.associate = (models) => {
+    insertUser.hasMany(models.BlogPost, {
+      foreginKey: 'userId',
+    });
+  };
+
   return insertUser;
 };
 

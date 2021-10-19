@@ -51,16 +51,18 @@ const categoryRequired = (req, res, next) => {
   next();
 };
 
-const checkCategory = async (req, res, _next) => {
+const checkCategory = async (req, res, next) => {
   const { categoryIds } = req.body;
 
-  const categories = await Category.findAll();
+  const categories = await Category.findAll(
+    { where: { id: categoryIds } },
+  );
 
-  if (!categories.every((el, index) => el.dataValues.id === categoryIds[index])) {
+  if (categories.length !== categoryIds.length) {
     return res.status(400).json({ message: postErrorMessages.categoryExistence() });
   }
 
-  return res.status(200).json(categories);
+  next();
 };
 
 module.exports = {

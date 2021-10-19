@@ -64,6 +64,12 @@ app.post('/post',
   titleRequired,
   contentRequired,
   categoryRequired,
-  checkCategory);
+  checkCategory,
+  async (req, res) => {
+    const { title, content } = req.body;
+    const { userId } = req.user;
+
+    console.log(userId);
+  });
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
