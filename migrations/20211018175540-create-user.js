@@ -9,8 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       displayName: {
-        allowNull: false,
-        type: Sequelize.STRING
+        allowNull: true,
+        type: Sequelize.STRING,
       },
       email: {
         allowNull: false,
@@ -20,14 +20,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      image: {
+        allowNull: true,
+        type: Sequelize.STRING,
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   down: async (queryInterface, Sequelize) => {
