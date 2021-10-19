@@ -13,6 +13,11 @@ const createUserServices = async ({ displayName, email, password, image }) => {
   return { isError: false };
 };
 
+const getAllUsersServices = async () => {
+
+};
+
 module.exports = {
   createUserServices,
+  getAllUsersServices,
 };

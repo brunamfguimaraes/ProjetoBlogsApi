@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { createUserServices } = require('../services/usersServices');
+const { createUserServices, getAllUsersServices } = require('../services/usersServices');
 require('dotenv').config();
 
 // const { JWT_SECRET } = process.env;
-const JWT_SECRET = 'projectBlogsAPI';
+// const JWT_SECRET = 'projectBlogsAPI';
 
 const createUser = async (req, res) => {
   try {
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
     const response = await createUserServices(req.body);
-    const token = jwt.sign({ data: response }, JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: response }, process.env.JWT_SECRET, jwtConfig);
 
     if (response.isError) return res.status(response.code).json({ message: response.message });
 
@@ -20,14 +20,13 @@ const createUser = async (req, res) => {
   }
 };
 
-// const getAllStudents = async (_req, res) => {
-//   try {
-//     const students = await usersServices.getAll();
-//     return res.status(StatusCodes.OK).json(students);
-//   } catch (error) {
-//     return res.status(500).json({ error: error.message });
-//   }
-// };
+const getAllUsers = async (req, res) => {
+  try {
+    const response = await getAllUsersServices();
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
 
 // const editStudent = async (req, res) => {
 //   try {
@@ -55,7 +54,7 @@ const createUser = async (req, res) => {
 
 module.exports = {
   createUser,
-//   getAllStudents,
+  getAllUsers,
 //   editStudent,
 //   excludeStudent,
 };

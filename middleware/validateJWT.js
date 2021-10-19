@@ -3,13 +3,13 @@ const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 
 // const { JWT_SECRET } = process.env;
-const JWT_SECRET = 'projectBlogsAPI';
+// const JWT_SECRET = 'projectBlogsAPI';
 
 const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) { return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' }); }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findOne(
         { where: { email: decoded.data.email, password: decoded.data.password } },

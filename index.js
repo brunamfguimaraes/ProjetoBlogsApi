@@ -4,7 +4,7 @@ require('dotenv').config();
 const usersRoutes = require('./routers/userRoutes');
 const loginRoutes = require('./routers/loginRoutes');
 
-const { PORT } = process.env;
+// const { PORT } = process.env;
 
 //
 const app = express();
@@ -18,4 +18,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => console.log(`ouvindo porta ${PORT}`));
+app.listen(process.env.PORT || 3000, () => console.log(`ouvindo porta ${PORT}`));
