@@ -1,17 +1,16 @@
 const express = require('express');
 
-const { createNewUser } = require('../service/userService');
+const { createNewUser, findAllUsers } = require('../service/userService');
 const { 
     checkDisplayName,
     checkEmail,
     checkIfUserExist,
-    checkPassword } = require('../middleware/index');
+    checkPassword,
+    tokenValidation } = require('../middleware/index');
 
 const router = express.Router();
 
-// router.get('/', async (_req, res) => { 
-//     return res.status(200).send(await findAllUsers());
-// });
+router.get('/', tokenValidation, async (_req, res) => res.status(200).send(await findAllUsers()));
 
 router.post('/', 
     checkDisplayName, 
