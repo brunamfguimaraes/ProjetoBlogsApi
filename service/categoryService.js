@@ -10,7 +10,9 @@ const createCategory = async (req, res) => {
 };
 
 const getAllCategories = async (_req, res) => {
+    console.log('servicelogin');
     const check = await Category.findAll();
+    console.log('check', check[1].dataValues, 'categoryService');
     return res.status(200).json(check);
 };
 

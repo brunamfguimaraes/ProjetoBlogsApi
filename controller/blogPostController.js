@@ -20,9 +20,12 @@ rescue(async (req, res) => {
 }));
 
 router.get('/',
-rescue(async (req) => {
-    console.log(req);
-    await getAllBlogPosts();
+tokenValidation,
+rescue(async (_req, res) => {
+    console.log('controllerPostController');
+    const data = await getAllBlogPosts();
+    console.log('data', data, 'data PostController');
+    return res.status(200).json(data);
 }));
 
 module.exports = router;

@@ -2,16 +2,12 @@ const { User } = require('../models');
 const { createToken } = require('../authentication/token');
 
 const createUser = async (req, res) => {
-    console.log('createUser');
-    const user = await User.create(req.body);
-    console.log('user', user);
-    const token = await createToken(user);
-    console.log('token', token);
+    const userInfo = await User.create(req.body);
+    const token = await createToken(userInfo);
     return res.status(201).json(token);
 };
 
 const checkEmailExists = async (email, res) => {
-    console.log('checkEmailExists');
     const check = await User.findOne({ where: { email } });
     if (check !== null) {
     return res.status(409).json({

@@ -1,4 +1,5 @@
 const { BlogPost } = require('../models');
+const { Category } = require('../models');
 const { User } = require('../models');
 require('dotenv').config();
 
@@ -14,7 +15,12 @@ const createBlogPost = async (req, res) => {
 };
 
 const getAllBlogPosts = async () => {
-    const check = await BlogPost.findAll();
+    console.log('service Post');
+    const check = await BlogPost.findAll({
+        include: [{ model: User, as: 'user' },
+        { model: Category, as: 'categories' }],
+    });
+    // console.log('check PostService', check, 'check postService');
     return check;
 };
 

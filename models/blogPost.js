@@ -1,5 +1,5 @@
 module.exports = (sequelize, dataTypes) => {
-    const blogPost = sequelize.define('BlogPost', {
+    const BlogPost = sequelize.define('BlogPost', {
       title: dataTypes.STRING,
       content: dataTypes.STRING,
       userId: { type: dataTypes.INTEGER, foreignKey: true },
@@ -10,9 +10,9 @@ module.exports = (sequelize, dataTypes) => {
       updatedAt: 'updated',
     });
 
-    blogPost.associate = (models) => {
-        blogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'User' });
+    BlogPost.associate = (models) => {
+        BlogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
     };
   
-    return blogPost;
+    return BlogPost;
   };

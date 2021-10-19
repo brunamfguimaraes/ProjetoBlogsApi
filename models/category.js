@@ -4,7 +4,6 @@ name: dataTypes.STRING,
 },
 {
 timestamps: false,
-tableName: 'Categories',
 });
 return Category;
 };
