@@ -1,5 +1,12 @@
 const express = require('express');
-const { checkCategoryId, tokenValidation, checkPostTitleAndContent } = require('../middleware');
+const { 
+    checkCategoryId,
+    tokenValidation,
+    checkPostTitleAndContent,
+    checkPostId,
+    checkPostUserId,
+    blockCategoriesFromBeingEdited } = require('../middleware');
+
 const blogPostService = require('../service/blogPostService');
 
 const router = express.Router();
@@ -16,6 +23,24 @@ router.post('/',
 
 router.get('/', tokenValidation, (_req, res) => {
     blogPostService.getAllPosts().then((data) => res.status(200).send(data));
+});
+
+router.get('/:id', tokenValidation, checkPostId, 
+  (req, res) => {
+    const { id } = req.params;
+    blogPostService.getPostById(id)
+      .then((data) => res.status(200).send(data));
+});
+
+router.put('/:id', 
+    tokenValidation,
+    checkPostUserId,
+    checkPostTitleAndContent,
+    blockCategoriesFromBeingEdited,
+    (req, res) => {
+    const { title, content } = req.body;
+    const { id } = req.params;
+    blogPostService.updatePost({ content, title, id }).then((data) => res.status(200).send(data));
 });
 
 module.exports = router;
