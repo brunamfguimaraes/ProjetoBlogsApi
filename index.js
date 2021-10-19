@@ -28,25 +28,9 @@ const {
   validateFields,
   existCategories } = require('./middlewares/validationFields');
 
-  app.get('/post/search', validationJWT, async (req, res) => {
-      const { q } = req.query;
-      if (q) {
-        const posts = await BlogPost.findAll({
-          where: { [Op.or]: [{ title: q }, { content: q }] },
-          attributes: { exclude: ['user_id'] },
-          include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
-          { model: Categorie, as: 'categories', through: { attributes: [] } }],
-        });
-        res.status(200).json(posts);
-      } else if (!q) {
-        const secondPosts = await BlogPost.findAll({
-          attributes: { exclude: ['user_id'] },
-          include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
-          { model: Categorie, as: 'categories', through: { attributes: [] } }],
-        });
-        return res.status(200).json(secondPosts);
-      }
-      if (q === null) return [];
+  // não remova esse endpoint, e para o avaliador funcionar
+  app.get('/', (request, response) => {
+    response.send();
   });
   app.get('/user/:id', validationJWT, async (req, res) => {
     try {
@@ -76,6 +60,26 @@ const {
       console.log(error.message);
       res.status(500).json(messages.ERROR);
     }
+  });
+  app.get('/post/search', validationJWT, async (req, res) => {
+      const { q } = req.query;
+      if (q) {
+        const posts = await BlogPost.findAll({
+          where: { [Op.or]: [{ title: q }, { content: q }] },
+          attributes: { exclude: ['user_id'] },
+          include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Categorie, as: 'categories', through: { attributes: [] } }],
+        });
+        res.status(200).json(posts);
+      } else if (!q) {
+        const secondPosts = await BlogPost.findAll({
+          attributes: { exclude: ['user_id'] },
+          include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Categorie, as: 'categories', through: { attributes: [] } }],
+        });
+        return res.status(200).json(secondPosts);
+      }
+      if (q === null) return [];
   });
   app.get('/post/:id', validationJWT, async (req, res) => {
     try {
@@ -220,10 +224,6 @@ const {
       console.log(e.message);
       res.status(204).json();
     }
-  });
-  // não remova esse endpoint, e para o avaliador funcionar
-  app.get('/', (request, response) => {
-    response.send();
   });
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
