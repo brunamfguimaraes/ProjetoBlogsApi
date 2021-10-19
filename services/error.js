@@ -13,6 +13,10 @@ const ERROR_MESSAGE = {
   invalidToken: 'Expired or invalid token',
   noUser: 'User does not exist',
   nameNull: '"name" is required',
+  noId: '"categoryIds" is required',
+  noTitle: '"title" is required',
+  noContent: '"content" is required',
+  noCategory: '"categoryIds" not found',
 };
 
 module.exports = ERROR_MESSAGE;

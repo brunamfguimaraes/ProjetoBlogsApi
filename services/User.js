@@ -14,7 +14,7 @@ const getToken = (id, email) => {
   return token;
 };
 
-const checkEmail = async (email) => {
+const findEmail = async (email) => {
   const emailIsValid = await User.findOne({ where: { email } });
   if (emailIsValid !== null) {
     return {
@@ -27,7 +27,7 @@ const checkEmail = async (email) => {
   return false;
 };
 
-const validateName = (name) => {
+const checkName = (name) => {
   if (!name || typeof (name) !== 'string' || name.length < 8) {
     return {
       err: {
@@ -39,7 +39,7 @@ const validateName = (name) => {
   return true;
 };
 
-const validateEmail = (email) => {
+const checkEmail = (email) => {
   const regex = /\S+@\S+\.\S+/;
   if (email === '') return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.emailEmpty } };
   if (!email) return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.emailNull } };
@@ -49,7 +49,7 @@ const validateEmail = (email) => {
   return true;
 };
 
-const validatePassword = (password) => {
+const checkPassword = (password) => {
   if (password === '') {
     return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.passwordEmpty } };
   }
@@ -61,10 +61,10 @@ const validatePassword = (password) => {
 };
 
 const create = async ({ displayName, email, password, image }) => {
-  if (validateName(displayName).err) return validateName(displayName);
-  if (validateEmail(email).err) return validateEmail(email);
-  if (validatePassword(password).err) return validatePassword(password);
-  const emailExists = await checkEmail(email);
+  if (checkName(displayName).err) return checkName(displayName);
+  if (checkEmail(email).err) return checkEmail(email);
+  if (checkPassword(password).err) return checkPassword(password);
+  const emailExists = await findEmail(email);
   if (emailExists.err) return emailExists;
 
   const { id } = await User.create({ displayName, email, password, image });
@@ -106,8 +106,8 @@ const getOne = async ({ id }) => {
 };
 
 const login = async ({ email, password }) => {
-  if (validateEmail(email).err) return validateEmail(email);
-  if (validatePassword(password).err) return validatePassword(password);
+  if (checkEmail(email).err) return checkEmail(email);
+  if (checkPassword(password).err) return checkPassword(password);
   const userIsValid = await getUser(email, password);
   if (userIsValid.err) return userIsValid;
   const token = getToken(userIsValid.id, email);

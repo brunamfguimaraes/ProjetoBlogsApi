@@ -2,7 +2,7 @@ const { BAD_REQUEST } = require('http-status');
 const { Category } = require('../models');
 const ERROR_MESSAGE = require('./error');
 
-const validateCategory = (name) => {
+const checkCategory = (name) => {
   if (!name || name === '') {
     return {
       err: {
@@ -15,7 +15,7 @@ const validateCategory = (name) => {
 };
 
 const create = async ({ name }) => {
-  if (validateCategory(name).err) return validateCategory(name);
+  if (checkCategory(name).err) return checkCategory(name);
 
   const { id } = await Category.create({ name });
 
@@ -27,4 +27,15 @@ const getAllCategories = async () => {
   return categories;
 };
 
-module.exports = { create, getAllCategories };
+const getCategoryById = async (id) => {
+  const category = await Category.findByPk(id);
+  if (category === null) {
+    return { err: {
+      status: BAD_REQUEST,
+      message: ERROR_MESSAGE.noCategory,
+    } };
+  }
+  return true;
+};
+
+module.exports = { create, getAllCategories,getCategoryById };
