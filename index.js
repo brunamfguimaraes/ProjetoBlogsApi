@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.post('/user', userNameValidation, emailValidation,
 passwordValidation, userController.createUser);
 
-// não remova esse endpoint, e para o avaliador funcionar
+// não remova esse endpoint, e para o avaliador funciona
 app.get('/', (req, res) => {
   res.send();
 });
