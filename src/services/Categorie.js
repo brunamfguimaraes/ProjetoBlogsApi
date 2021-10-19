@@ -1,4 +1,4 @@
-const { Categorie } = require('../../models');
+const { Categorie } = require('../models');
 
 const create = async ({ name }) => {
   const newCategorie = await Categorie.create({ name });

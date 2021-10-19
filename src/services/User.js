@@ -1,4 +1,4 @@
-const { User } = require('../../models');
+const { User } = require('../models');
 const utils = require('../utils');
 const valid = require('../validations/User');
 

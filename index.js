@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const userRoutes = require('./src/routes/userRouter');
-const categoriesRoutes = require('./src/routes/categorieRouter');
+const route = require('./src/routes');
 
 const error = require('./src/middlewares/error');
 
@@ -14,8 +13,9 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-userRoutes(app);
-categoriesRoutes(app);
+route.user(app);
+route.categorie(app);
+route.blogPost(app);
 
 app.use(error);
 
