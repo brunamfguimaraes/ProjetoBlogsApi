@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { CONFLICT, BAD_REQUEST } = require('http-status');
+const { CONFLICT, BAD_REQUEST, NOT_FOUND } = require('http-status');
 const { User } = require('../models');
 const ERROR_MESSAGE = require('./error');
 
@@ -91,6 +91,20 @@ const getAllUsers = async () => {
   return users;
 };
 
+const getOne = async ({ id }) => {
+  const user = await User.findByPk(id, { 
+    attributes: { exclude: ['password'] } });
+  if (user === null) { 
+    return {
+      err: {
+        status: NOT_FOUND,
+        message: ERROR_MESSAGE.noUser,
+      },
+    };
+  }
+  return user;
+};
+
 const login = async ({ email, password }) => {
   if (validateEmail(email).err) return validateEmail(email);
   if (validatePassword(password).err) return validatePassword(password);
@@ -105,4 +119,5 @@ module.exports = {
   getToken,
   login,
   getAllUsers,
+  getOne
 };
