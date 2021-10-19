@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { Categories } = require('../models');
+const { Category } = require('../models');
 
   const createCategory = async (name) => {
     const schema = Joi.object({
@@ -7,10 +7,10 @@ const { Categories } = require('../models');
   }).validate({ name });
   console.log(name);
     if (schema.error) return { message: schema.error.message, status: 400 };
-    const { id } = await Categories.create({ name });
+    const { id } = await Category.create({ name });
     return { id, name };
     };
       
-  const getAllCategory = async () => Categories.findAll();
+  const getAllCategory = async () => Category.findAll();
 
   module.exports = { createCategory, getAllCategory };
