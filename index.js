@@ -2,6 +2,7 @@ const express = require('express');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const categoriesController = require('./controllers/categoriesController');
+const postController = require('./controllers/postController');
 const { required, isEmpty } = require('./middlewares/loginMiddleware');
 const { validToken } = require('./middlewares/tokenMiddleware');
 
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use('/user', userController);
 app.use('/login', required, isEmpty, loginController);
 app.use('/categories', validToken, categoriesController);
+app.use('/post', postController);
 
 const port = process.env.PORT || 3000;
 
