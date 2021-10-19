@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const user = require('./routes/user');
+const login = require('./routes/login');
 
 app.use(bodyParser.json());
 
@@ -13,3 +14,4 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/user', user);
+app.use('/login', login);

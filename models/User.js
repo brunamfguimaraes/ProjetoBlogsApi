@@ -4,10 +4,9 @@ const User = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     image: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-    
-  });
+  }, {
+    timestamps: true
+});
 
   return user;
 };

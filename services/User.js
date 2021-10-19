@@ -1,16 +1,17 @@
 const jwt = require('jsonwebtoken');
 const { CONFLICT, BAD_REQUEST } = require('http-status');
 const { User } = require('../models');
+const ERROR_MESSAGE = require('./error');
 
 require('dotenv').config();
 
-const ERROR_MESSAGE = { 
-  invalidEmail: 'User already registered',
-  invalidName: '"displayName" length must be at least 8 characters long',
-  emailNull: '"email" is required',
-  emailInvalid: '"email" must be a valid email',
-  passwordNull: '"password" is required',
-  passwordSize: '"password" length must be 6 characters long',
+const getToken = (id, email) => {
+  const payload = { id, email };
+  const token = jwt.sign({ data: payload }, process.env.JWT_SECRET, {
+    expiresIn: '15m',
+    algorithm: 'HS256',
+  });
+  return token;
 };
 
 const checkEmail = async (email) => {
@@ -40,6 +41,7 @@ const validateName = (name) => {
 
 const validateEmail = (email) => {
   const regex = /\S+@\S+\.\S+/;
+  if (email === '') return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.emailEmpty } };
   if (!email) return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.emailNull } };
   if (!regex.test(email)) {
     return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.emailInvalid } };
@@ -48,6 +50,9 @@ const validateEmail = (email) => {
 };
 
 const validatePassword = (password) => {
+  if (password === '') {
+    return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.passwordEmpty } };
+  }
   if (!password) return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.passwordNull } };
   if (password.length !== 6) {
     return { err: { status: BAD_REQUEST, message: ERROR_MESSAGE.passwordSize } };
@@ -63,15 +68,35 @@ const create = async ({ displayName, email, password, image }) => {
   if (emailExists.err) return emailExists;
 
   const { id } = await User.create({ displayName, email, password, image });
+  const token = getToken(id, email);
+  return token;
+};
 
-  const payload = { id, displayName, email };
-  const token = jwt.sign({ data: payload }, process.env.JWT_SECRET, {
-    expiresIn: '15m',
-    algorithm: 'HS256',
-  });
+const getUser = async (email, password) => {
+  const user = await User.findOne({ where: { email, password } });
+  if (user === null) {
+    return {
+      err: {
+        status: BAD_REQUEST,
+        message: ERROR_MESSAGE.invalidFields,
+      },
+    };
+  }
+
+  return user;
+};
+
+const login = async ({ email, password }) => {
+  if (validateEmail(email).err) return validateEmail(email);
+  if (validatePassword(password).err) return validatePassword(password);
+  const userIsValid = await getUser(email, password);
+  if (userIsValid.err) return userIsValid;
+  const token = getToken(userIsValid.id, email);
   return token;
 };
 
 module.exports = {
   create,
+  getToken,
+  login,
 };
