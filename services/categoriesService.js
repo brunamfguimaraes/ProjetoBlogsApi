@@ -8,13 +8,13 @@ const genericError = {
     },
 } };
 
-const categoryNotFindError = {
-  err: {
-    status: 400,
-    message: {
-      message: '"categoryIds" not found',
-    },
-} };
+// const categoryNotFindError = {
+//   err: {
+//     status: 400,
+//     message: {
+//       message: '"categoryIds" not found',
+//     },
+// } };
 
 const createCategory = async (categoryInfo) => {
   const { name } = categoryInfo;
@@ -49,15 +49,8 @@ const getAllCategories = async () => {
 
 const getCategoryById = async (id) => {
   const category = await Category.findOne({ where: { id } });
-  if (category === null) return categoryNotFindError;
-  try {
-    return {
-      resp: {
-        status: 200,
-        content: category,
-      },
-    };
-  } catch (e) { return genericError; }
+  if (category === null) return false;
+  return true;
 };
 
 module.exports = {
