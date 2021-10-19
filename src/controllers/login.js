@@ -9,8 +9,7 @@ const loginFunction = rescue(async (req, res, next) => {
   const { email, password } = req.body;
 
   const userExist = email 
-  && password 
-  && await User.findOne({ where: { email, password } });
+  && await User.findOne({ where: { email } });
   
   const validations = await service.loginFunction({ email, password }, userExist);
 
@@ -23,7 +22,7 @@ const loginFunction = rescue(async (req, res, next) => {
     algorithm: 'HS256',
   };
 
-  const token = jwt.sign({ data: { email, password } }, secret, jwtConfig);
+  const token = jwt.sign({ data: { email, userId: userExist.id } }, secret, jwtConfig);
     
   return res.status(200).json({ token });
 });

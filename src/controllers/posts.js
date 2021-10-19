@@ -4,10 +4,7 @@ const service = require('../services/posts');
 
 const addBlogPost = rescue(async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
-  const emailUser = req.user.email;
-  
-  const user = await User.findOne({ where: { email: emailUser } });
-  const userId = user.id;
+  const { userId } = req.user;
 
   const categoryExist = categoryIds 
   && await Category.findOne({ where: { id: categoryIds } });
