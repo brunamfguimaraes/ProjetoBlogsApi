@@ -1,7 +1,5 @@
 'use strict';
 
-const { uniq } = require("shelljs");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Users', {
