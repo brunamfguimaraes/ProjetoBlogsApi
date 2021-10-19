@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { createUserServices, getAllUsersServices } = require('../services/usersServices');
+const { createUserServices /* getAllUsersServices */ } = require('../services/usersServices');
 require('dotenv').config();
 
 // const { JWT_SECRET } = process.env;
@@ -22,7 +22,8 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const response = await getAllUsersServices();
+    // const response = await getAllUsersServices();
+
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
