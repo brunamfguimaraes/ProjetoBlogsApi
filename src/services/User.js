@@ -22,9 +22,14 @@ const create = async ({ displayName, email, password, image }) => {
 };
 
 const login = async ({ email, password }) => {
-  const validUser = await User.findOne({ where: { email, password } });
-  valid.checkEntries(validUser);
-  const { _password, ...payload } = validUser;
+  const validUser = await User.findOne(
+    { 
+      where: { email, password },
+      attributes: { exclude: ['password'] },
+    },
+  );
+  valid.checkUser(validUser);
+  const payload = validUser.dataValues;
   const token = utils.createToken(payload);
   return token;
 };

@@ -20,7 +20,7 @@ const checkBodyLogin = (bodyObj) => {
   if (error) throw error;
 };
 
-const checkEntries = (validUser) => {
+const checkUser = (validUser) => {
   if (!validUser) {
     const err = new Error('Invalid fields');
     err.statusCode = 400;
@@ -48,7 +48,7 @@ const checkIfUserExists = (user) => {
 module.exports = {
   checkBodyRequest,
   checkBodyLogin,
-  checkEntries,
+  checkUser,
   checkEmailExists,
   checkIfUserExists,
 };
