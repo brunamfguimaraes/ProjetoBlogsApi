@@ -1,5 +1,5 @@
 const { User, Categorie } = require('../models');
-const messages = require('../helpers/validationMessages');
+const messages = require('../helpers/validationMessages')
 
 const validateFields = (req, res, next) => {
   const { email, password } = req.body;
