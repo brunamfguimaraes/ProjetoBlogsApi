@@ -11,8 +11,8 @@ router.post('/', tokenValidation, async (req, res) => {
     return res.status(201).send(await createCategory(name));
 });
 
-router.get('/', tokenValidation, async (_req, res) => {
-    return res.status(200).send(await findAllCategories());
-});
+router.get('/', 
+    tokenValidation,
+    async (_req, res) => res.status(200).send(await findAllCategories()));
 
 module.exports = router;
