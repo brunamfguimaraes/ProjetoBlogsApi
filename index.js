@@ -1,4 +1,5 @@
 const express = require('express');
+const { requestCreateBlogPost } = require('./controllers/BlogPost');
 const { requestCreateCategory, requestCategoriesList } = require('./controllers/Category');
 
 const requestLogin = require('./controllers/Login');
@@ -65,11 +66,6 @@ app.post('/post',
   contentRequired,
   categoryRequired,
   checkCategory,
-  async (req, res) => {
-    const { title, content } = req.body;
-    const { userId } = req.user;
-
-    console.log(userId);
-  });
+  requestCreateBlogPost);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

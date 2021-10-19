@@ -40,7 +40,7 @@ module.exports = {
     return BlogPostsTable;
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('BlogPosts')
   }
 };
