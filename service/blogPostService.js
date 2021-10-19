@@ -32,10 +32,19 @@ const addBlogPost = async ({ title, content, categoryIds }, token) => {
     return newPost;
 };
 
-      const getAllPost = async () => BlogPost.findAll({ include: [
-        { model: User, as: 'user' },
-        
-      ] });
+// Consulta ao repositório de : [Letícia Galvão]
+
+const getAllPost = async () => {
+    const posts = await BlogPost.findAll(
+      { 
+        include: [ 
+          { model: User, as: 'user' },
+          { model: Category, as: 'categories', through: { attributes: [] } },
+        ],
+      },
+    );
+    return posts;
+  };
 
 module.exports = {
     addBlogPost,

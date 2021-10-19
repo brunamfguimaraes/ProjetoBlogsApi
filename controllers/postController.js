@@ -14,7 +14,8 @@ const addPost = async (req, res) => {
 
 const getAllPost = async (req, res) => {
     const allPost = await postService.getAllPost();
-   return res.status(statusCode.OK).json('allPosts');
+    console.log(allPost, 'todos os Posts');
+   return res.status(statusCode.OK).json(allPost);
 };
 
 module.exports = {

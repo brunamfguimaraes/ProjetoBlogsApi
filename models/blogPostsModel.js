@@ -6,6 +6,7 @@ const BlogPost = (sequelize, DataTypes) => {
   },
   { 
     timestamps: true,
+    tableName: 'BlogPosts',
     createdAt: 'published',
     updatedAt: 'updated',
   });
@@ -19,11 +20,3 @@ const BlogPost = (sequelize, DataTypes) => {
 };
 
 module.exports = BlogPost;
-
-// hasOne
-// belongsTo
-// hasMany
-// belongsToMany
-// No caso de relacionamentos 1:1, utilizamos os métodos hasOne e belongsTo . A tradução literal desses métodos facilita o seu entendimento.
-// hasOne = tem um
-// belongsTo = pertencente a
