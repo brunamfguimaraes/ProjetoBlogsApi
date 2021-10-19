@@ -35,9 +35,18 @@ function userCheck(user) {
   }
 }
 
+function userExists(user) {
+  if (!user) {
+    const error = new Error('User does not exist');
+    error.code = 404;
+    throw error;
+  }
+}
+
 module.exports = {
   userValidation,
   emailValidation,
   loginValidation,
   userCheck,
+  userExists,
 };

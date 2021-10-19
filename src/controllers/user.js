@@ -18,8 +18,15 @@ async function getUsers(req, res) {
   return res.status(200).json(result);
 }
 
+async function getUserById(req, res) {
+  const { id } = req.params;
+  const result = await service.getUserById(id);
+  return res.status(200).json(result);
+}
+
 module.exports = {
   newUser,
   login,
   getUsers,
+  getUserById,
 };
