@@ -10,11 +10,12 @@ const postController = require('../controllers/postController');
 // A senha deverá conter 6 caracteres. Ela é obrigatória.
 // Status OK! retornar um token JWT:
 const { 
-    WrongToken,
+    
     WrongTitle,
     WrongContent,
     WrongCategoryID,
      } = require('../middlewares/postValidate');
+const { WrongToken } = require('../middlewares/auth');
 
 router.post('/', WrongToken, WrongTitle, WrongContent, WrongCategoryID, postController.addPost); 
 

@@ -13,8 +13,9 @@ const {
     WrongdisplayName,
     WrongEmail,
     WrongPassword,
-    WrongToken,
      } = require('../middlewares/userValidate');
+     
+const { WrongToken } = require('../middlewares/auth');
 
 router.post('/', WrongdisplayName, WrongEmail, WrongPassword, userController.addUser); 
 

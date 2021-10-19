@@ -5,9 +5,10 @@ const router = express.Router();
 const categoriesController = require('../controllers/categoriesController');
 
 const { 
-    WrongToken,
     WrongName,
      } = require('../middlewares/categoriesValidate');
+const {
+    WrongToken } = require('../middlewares/auth');
 
 router.post('/', WrongToken, WrongName, categoriesController.addCategory); 
 

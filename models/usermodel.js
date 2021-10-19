@@ -12,6 +12,8 @@ const User = (sequelize, DataTypes) => {
 
   user.associate = (models) => {
     user.hasMany(models.BlogPost, { foreignKey: 'userId', as: 'blogpost' });
+    // blogpost nesse caso é variavel que armazena o model
+    // ja BlogPost é o modulo que armazena as funções
   };
 
   return user;
