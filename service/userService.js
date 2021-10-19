@@ -42,10 +42,13 @@ const findById = async (id) => {
     return response;
 };
 
+const deleteUser = (id) => User.destroy({ where: { id } });
+
 module.exports = {
     createNewUser,
     findAllUsers,
     findByEmail,
     findByEmailAndPassword,
     findById,
+    deleteUser,
 };

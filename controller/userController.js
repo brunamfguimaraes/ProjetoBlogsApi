@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { createNewUser, findAllUsers, findById } = require('../service/userService');
+const { createNewUser, findAllUsers, findById, deleteUser } = require('../service/userService');
 const { 
     checkDisplayName,
     checkEmail,
@@ -29,5 +29,8 @@ router.post('/',
     const newUserInfo = { displayname, email, password, image };
     return res.status(201).send({ token: await createNewUser(newUserInfo) });
 });
+
+router.delete('/me', tokenValidation, (req, res) => deleteUser(req.user)
+    .then(() => res.status(204).send()));
 
 module.exports = router;
