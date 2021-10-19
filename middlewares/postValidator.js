@@ -1,6 +1,6 @@
-const { Categories } = require('../models');
 const isError = require('../utils/isError');
-const { BAD_REQUEST } = require('../utils/statusCode');
+const { Categories, BlogPosts } = require('../models');
+const { BAD_REQUEST, UNAUTHORIZED } = require('../utils/statusCode');
 
 const validatePost = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
@@ -35,7 +35,38 @@ const validateCategoryExists = async (req, res, next) => {
   next();
 };
 
+const validatePostUpdate = async (req, res, next) => {
+  const { categoryIds, title, content } = req.body;
+
+  if (categoryIds) {
+    return isError(res, BAD_REQUEST, 'Categories cannot be edited');
+  }
+  if (!title) {
+    return isError(res, BAD_REQUEST, '"title" is required');
+  }
+  if (!content) {
+    return isError(res, BAD_REQUEST, '"content" is required');
+  }
+
+  next();
+};
+
+const validatePostUpdateUser = async (req, res, next) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
+
+  const post = await BlogPosts.findOne({ where: { id } });
+
+  if (Number(post.userId) !== userId) {
+    return isError(res, UNAUTHORIZED, 'Unauthorized user');
+  }
+
+  next();
+};
+
 module.exports = {
   validatePost,
   validateCategoryExists,
+  validatePostUpdate,
+  validatePostUpdateUser,
 };

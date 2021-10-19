@@ -45,8 +45,24 @@ const findByPk = async ({ id }) => {
   }
 };
 
+const update = async ({ id }, { title, content }) => {
+  try {
+    await BlogPosts.update({ title, content }, { where: { id } });
+
+    const post = await BlogPosts.findByPk(id, {
+      include: [
+        { model: Categories, as: 'categories', through: { attributes: [] } }],
+    });
+
+    return post;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   create,
   findAll,
   findByPk,
+  update,
 };

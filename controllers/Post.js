@@ -32,13 +32,25 @@ router.get('/',
     return res.status(SUCCESS).json(posts);
   });
 
-router.get('/:id',
+  router.get('/:id',
   tokenValidator.validateToken,
   async (req, res) => {
     const post = await Post.findByPk(req.params);
 
     if (!post) return res.status(NOT_FOUND).json({ message: 'Post does not exist' });
 
+    return res.status(SUCCESS).json(post);
+});
+
+router.put('/:id',
+  tokenValidator.validateToken,
+  postValidator.validatePostUpdate,
+  postValidator.validatePostUpdateUser,
+  async (req, res) => {
+    const post = await Post.update(req.params, req.body);
+
+    if (!post) return res.status(NOT_FOUND).json({ message: 'Post does not exist' });
+  
     return res.status(SUCCESS).json(post);
 });
 
