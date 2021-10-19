@@ -26,8 +26,14 @@ const findByEmail = async (email) => {
     return response;
 };
 
+const findByEmailAndPassword = async (email, password) => {
+    const response = await User.findOne({ where: { email, password } });
+    return response;
+};
+
 module.exports = {
     createNewUser,
     findAllUsers,
     findByEmail,
+    findByEmailAndPassword,
 };
