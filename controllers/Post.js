@@ -3,7 +3,7 @@ const express = require('express');
 const Post = require('../services/Post');
 const tokenValidator = require('../middlewares/tokenValidator');
 const postValidator = require('../middlewares/postValidator');
-const { CREATED, SUCCESS } = require('../utils/statusCode');
+const { CREATED, SUCCESS, NOT_FOUND } = require('../utils/statusCode');
 
 const router = express.Router();
 
@@ -31,5 +31,15 @@ router.get('/',
 
     return res.status(SUCCESS).json(posts);
   });
+
+router.get('/:id',
+  tokenValidator.validateToken,
+  async (req, res) => {
+    const post = await Post.findByPk(req.params);
+
+    if (!post) return res.status(NOT_FOUND).json({ message: 'Post does not exist' });
+
+    return res.status(SUCCESS).json(post);
+});
 
 module.exports = router;
