@@ -82,9 +82,15 @@ const getUser = async (email, password) => {
       },
     };
   }
-
   return user;
 };
+
+const getAllUsers = async () => {
+  const users = await User.findAll({ 
+    attributes: { exclude: ['password'] } });
+  return users;
+};
+
 
 const login = async ({ email, password }) => {
   if (validateEmail(email).err) return validateEmail(email);
@@ -99,4 +105,5 @@ module.exports = {
   create,
   getToken,
   login,
+  getAllUsers,
 };

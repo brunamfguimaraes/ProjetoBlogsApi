@@ -1,5 +1,5 @@
 const { CREATED, OK, INTERNAL_SERVER_ERROR } = require('http-status');
-const { create, login } = require('../services/User');
+const { create, login, getAllUsers } = require('../services/User');
 const ERROR_MESSAGE = require('../services/error');
 
 const createUser = async (req, res) => {
@@ -26,7 +26,18 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUsers = async (_req, res) => {
+  try {
+    const users = await getAllUsers();
+    res.status(OK).json(users);
+  } catch (err) {
+    res.status(INTERNAL_SERVER_ERROR).send({ message: ERROR_MESSAGE.serverError  });
+  }
+};
+
+
 module.exports = {
   createUser,
   loginUser,
+  getUsers
 };
