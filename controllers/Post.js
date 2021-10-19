@@ -3,7 +3,7 @@ const express = require('express');
 const Post = require('../services/Post');
 const tokenValidator = require('../middlewares/tokenValidator');
 const postValidator = require('../middlewares/postValidator');
-const { CREATED } = require('../utils/statusCode');
+const { CREATED, SUCCESS } = require('../utils/statusCode');
 
 const router = express.Router();
 
@@ -22,6 +22,14 @@ tokenValidator.validateToken,
     });
   
     return res.status(CREATED).json(post);
+  });
+
+router.get('/',
+  tokenValidator.validateToken,
+  async (_req, res) => {
+    const posts = await Post.findAll();
+
+    return res.status(SUCCESS).json(posts);
   });
 
 module.exports = router;
