@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { userRouter } = require('./controllers/userController');
+const { loginRouter } = require('./controllers/loginController');
 require('dotenv').config();
 
 const app = express();
@@ -13,14 +14,14 @@ app.get('/', (request, response) => {
 });
 
 // ------------------------------------------------------------------
-// Requisitos 1 Rota de Users
+// Requisitos 1 Rota de User
 
 app.use('/user', userRouter);
 
 // ------------------------------------------------------------------
 // Requisitos 2 Rota de Login
 
-app.use('/login', userRouter);
+app.use('/login', loginRouter);
 
 // ------------------------------------------------------------------
 

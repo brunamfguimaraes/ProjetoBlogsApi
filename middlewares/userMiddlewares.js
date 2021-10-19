@@ -15,7 +15,7 @@ const errors = {
 const validateDisplayNameLength = async (req, res, next) => {
   const { displayName } = req.body;
 
-  if (displayName.length < 8) {
+  if (!displayName || displayName.length < 8) {
     return res.status(400).json({ message: errors.displayNameLength });
   }
 
