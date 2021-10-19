@@ -1,6 +1,6 @@
 const CODE = require('http-status-codes');
 
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const createBlogPost = async (req, res) => {
   try {
@@ -25,6 +25,23 @@ const createBlogPost = async (req, res) => {
   }
 };
 
+const getAllBlogPosts = async (req, res) => {
+  try {
+    const blogPosts = await BlogPost.findAll({
+      include: [
+        { model: User, as: 'users' },
+      { model: Category, as: 'BlogPost' }],
+    });
+  
+    return res.status(CODE.OK).json(blogPosts);
+  } catch (error) {
+    return res.status(CODE.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createBlogPost,
+  getAllBlogPosts,
 };
