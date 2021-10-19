@@ -10,7 +10,6 @@ const postController = require('../controllers/postController');
 // A senha deverá conter 6 caracteres. Ela é obrigatória.
 // Status OK! retornar um token JWT:
 const { 
-    
     WrongTitle,
     WrongContent,
     WrongCategoryID,
