@@ -17,6 +17,9 @@ const validateToken = (req, res, next) => {
     return isError(res, UNAUTHORIZED, 'Expired or invalid token');
   }
 
+  const payload = JWT.verify(token, process.env.JWT_SECRET);
+  req.user = payload;
+
   next();
 };
 
