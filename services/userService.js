@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes'); // recomendação da glr
 // https://www.npmjs.com/package/http-status-codes coisa fina  viu
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const { Users } = require('../models');
+const { Users } = require('../models/users');
 
 const secret = 'Narguileira Monstra';
 

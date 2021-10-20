@@ -1,4 +1,4 @@
-odule.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
      id: { type: DataTypes.INTEGER, primaryKey: true },
     displayName: DataTypes.STRING,

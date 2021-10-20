@@ -1,8 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
-const UserService = require('../services/userService');
+const UserService = require('../services/userService.js');
 
-const createUser = async (req, res) => {
- console.log('[USER CONTROLLER] : CHAMOU O MÉTODO CRIAR UM USER');
+const newUser = async (req, res) => {
    try {
       const { displayName, email, password, image } = req.body;
       const result = await UserService.createUser(displayName, email, password, image);
@@ -15,5 +14,5 @@ const createUser = async (req, res) => {
 };
 
 module.exports = {
-    createUser,  
+    newUser,  
 }; 
