@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     },
     {
-      underscored: true,
-      tableName: 'Categories',
       timestamps: false,
+      tableName: 'Categories',
+      underscored: false,
     });
 
   return Category;
-}; 
+};

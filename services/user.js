@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const Users = require('../models');
+const { Users } = require('../models');
 
 const isValid = (displayName, email, password, image) => {
   const user = Joi.object({
@@ -28,4 +28,6 @@ const createUser = async (displayName, email, password, image) => {
   return user;
 };
 
-module.exports = { createUser };
+module.exports = {
+createUser,
+};
