@@ -12,7 +12,7 @@ const login = async (email, password) => {
   loginValidations.validEmail(email);
   loginValidations.validPassword(password);
   const user = await loginValidations.validLogin(email, password);
-  const token = jwt.sign(user, privateKey, jwConfig);
+  const token = jwt.sign({ data: user }, privateKey, jwConfig);
   return { token };
 };
 

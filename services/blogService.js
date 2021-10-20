@@ -7,6 +7,7 @@ const addPost = async (title, content, categoryIds, token) => {
   blogValidations.validContent(content);
   await blogValidations.validCategoryId(categoryIds);
   const { data } = blogValidations.validToken(token);
+  console.log(data, 'datassssssssssssssss');
   const createPost = await BlogPost.create({
     userId: data.id,
     title,
