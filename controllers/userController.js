@@ -25,7 +25,18 @@ const userLogin = async (req, res) => {
   }
 };
 
+const getAll = async (_req, res) => {
+ try {
+  const users = await UserService.getAllUserService();
+  return res.status(StatusCodes.OK).json(users);
+} catch (error) {
+  console.log(`[USER CONTROLLER] : buscar => ${error}`);
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
+}
+};
+
 module.exports = {
   createUser,
   userLogin,
+  getAll,
 };
