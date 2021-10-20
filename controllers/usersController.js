@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_req, res) => {
   try {
     const response = await getAllUsersServices();
     return res.status(StatusCodes.OK).json(response);
