@@ -1,4 +1,4 @@
-const { StatusCodes } = require('http-status-codes');
+// const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 
 const checkIfTheUserExists = async (email, password) => {
@@ -8,7 +8,7 @@ const checkIfTheUserExists = async (email, password) => {
     return { 
       isError: true,
       message: 'User already registered',
-      code: StatusCodes.CONFLICT,
+      code: 409,
     }; 
   }
   return { isError: false };

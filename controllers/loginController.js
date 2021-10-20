@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { StatusCodes } = require('http-status-codes');
+// const { StatusCodes } = require('http-status-codes');
 const { loginUser } = require('../services/loginServices');
 require('dotenv').config();
 
@@ -12,11 +12,11 @@ const login = async (req, res) => {
     const response = await loginUser(req.body);
     
     if (response.isError) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ message: response.message }); 
+      return res.status(400).json({ message: response.message }); 
     }
     
     const token = jwt.sign({ data: response }, JWT_SECRET, jwtConfig);
-    return res.status(StatusCodes.OK).json({ token });
+    return res.status(200).json({ token });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

@@ -1,4 +1,4 @@
-const { StatusCodes } = require('http-status-codes');
+// const { StatusCodes } = require('http-status-codes');
 
 const isValidEmail = (email) => {
   const RegexEmail = /.+@.+\..+/g;
@@ -7,7 +7,7 @@ const isValidEmail = (email) => {
     return {
       isError: true,
       message: '"email" must be a valid email',
-      code: StatusCodes.BAD_REQUEST,
+      code: 400,
     };
   }
   return { isError: false };
