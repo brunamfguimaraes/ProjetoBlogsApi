@@ -70,7 +70,7 @@ const userLogin = async (email, password) => {
 };
 
 const getAllUserService = async () => {
-  //const findAll = await Users.findAll({ where: {})
+  // const findAll = await Users.findAll({ where: {})
   const users = await Users.findAll();
 
   return users;
