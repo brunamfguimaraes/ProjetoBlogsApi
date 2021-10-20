@@ -31,6 +31,12 @@ vai la na migration do userSeila e acrescente os campos ex. vai ta la o exports 
 //BlogPosts
 title -> string, content string->, userId -> INTEGER references -> table 'Users' key Id, published e update -> Dates
 
-pronto criou as migrations go pra controllers
+
+Os seeders ja vinheram no dale então nem precisou o do seed:generate
+mas so pra deixar claro que o bulkInsert é pra Inserir vários registros em uma tabela
+
+pra executar os seeder so o basicão memo npx sequelize db:seed:all
+
+pronto criou as migrations e ja tem os seederes go pros models
 
 montando o crud de sempre so que agr cada parte do codigo com sua '''''FUNÇÃO''''' famoso quem chamou que se vire.
