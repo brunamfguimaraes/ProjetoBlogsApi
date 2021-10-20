@@ -52,15 +52,17 @@ const userRemove = async (req, res) => {
     
    return res.status(StatusCodes.NO_CONTENT).end();
   } catch (err) {
-    //console.log(err);
+    // console.log(err);
    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message });
   }
 };
+
+// alteração para poder subir
 
 module.exports = {
   createUser,
   userLogin,
   getAll,
   getUserById,
-  userRemove
+  userRemove,
 };
