@@ -18,12 +18,12 @@ module.exports = {
         allowNull: false,
       },
       published: {
-        type: Sequelize.STRING,
         allowNull: false,
+        type: Sequelize.DATE
       },
       updated: {
-        type: Sequelize.STRING,
         allowNull: false,
+        type: Sequelize.DATE
       },
       userId: {
         type: Sequelize.INTEGER,

@@ -12,7 +12,7 @@ const User = (sequelize, DataTypes) => {
 
   insertUser.associate = (models) => {
     insertUser.hasMany(models.BlogPost, {
-      foreginKey: 'userId', as: 'BlogPost',
+      foreignKey: 'userId', as: 'BlogPosts',
     });
   };
 
