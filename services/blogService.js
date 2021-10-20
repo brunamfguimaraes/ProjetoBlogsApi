@@ -1,5 +1,7 @@
 const { BlogPost, User, Category, PostsCategory } = require('../models');
 
+console.log(PostsCategory);
+
 const blogValidations = require('../validations/blogValidations');
 
 const addPost = async (title, content, categoryIds, token) => {
@@ -42,12 +44,15 @@ const getPostById = async (token, id) => {
 
 const editPost = async (token, id) => {
   blogValidations.validToken(token);
+  console.log(id);
 };
 const destroyPost = async (token, id) => {
   blogValidations.validToken(token);
+  console.log(id);
 };
 const searchPost = async (token, q) => {
   blogValidations.validToken(token);
+  console.log(q);
 };
 
 module.exports = {
