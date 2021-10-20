@@ -67,7 +67,7 @@ const validCategoryId = async (categoryIds) => {
     return dataValues.id;
   });
   const includCategories = categoryIds.every((Id) => categoryConten.includes(Id));
-  if (includCategories) {
+  if (!includCategories) {
     throw CATEGORY_NOT_FOUND;
   }
 };

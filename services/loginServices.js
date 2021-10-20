@@ -4,7 +4,7 @@ const loginValidations = require('../validations/loginValidations');
 const privateKey = process.env.JWT_SECRET;
 
 const jwConfig = {
-  expiresIn: '7d',
+  expiresIn: '5d',
   algorithm: 'HS256',
 };
 
