@@ -91,6 +91,7 @@ const getUserByIdService = async (id) => {
 };
 
 const removeUserService = async (id) => Users.destroy({ where: { id } });
+// Exclua várias instâncias ou defina seu carimbo de data / hora deleteAt para a hora atual se o paranóico estiver ativado.
 
  module.exports = {
   createUserService,
