@@ -65,7 +65,6 @@ const userLogin = async (email, password) => {
   const { password: _, ...userWithoutPassword } = login.dataValues;
 
   const token = jwt.sign(userWithoutPassword, secret, jwtConfig);
- 
   return token;
 };
 
