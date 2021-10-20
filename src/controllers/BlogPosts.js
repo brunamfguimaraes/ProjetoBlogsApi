@@ -7,6 +7,12 @@ const create = async (req, res) => {
   return res.status(201).json(newPost);
 };
 
+const getAll = async (req, res) => {
+  const posts = await service.getAll();
+  return res.status(200).json(posts);
+};
+
 module.exports = {
   create,
+  getAll,
 };

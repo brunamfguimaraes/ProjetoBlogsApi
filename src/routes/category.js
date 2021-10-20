@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const controller = require('../controllers/Categorie');
+const controller = require('../controllers/Category');
 const { checkBody, authMiddleware } = require('../middlewares');
 const { validateToken } = require('../utils');
 const { checkName } = require('../validations/Categorie');
