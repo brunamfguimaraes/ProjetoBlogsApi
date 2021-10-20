@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 // https://www.npmjs.com/package/http-status-codes coisa boa viu
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 const { Users } = require('../models');
 
 const schemaUser = Joi.object({
@@ -13,7 +14,6 @@ const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().length(6).required(),
 });
-
 
  const Err409 = { message: 'User already registered' };
 
