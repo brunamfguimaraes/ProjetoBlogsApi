@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { StatusCodes } = require('http-status-codes');
+// const { StatusCodes } = require('http-status-codes');
 
 const validLogin = (req, res, next) => {
   const { error } = Joi.object(
@@ -10,7 +10,7 @@ const validLogin = (req, res, next) => {
     ).validate(req.body);
 
     if (error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ message: error.details[0].message }); 
+      return res.status(400).json({ message: error.details[0].message }); 
     }
 
     next();
