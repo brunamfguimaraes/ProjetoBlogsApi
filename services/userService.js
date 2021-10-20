@@ -1,5 +1,5 @@
 const { conflict, notFound } = require('../errors/error');
-const { postNewUser, getAll, byId } = require('../model/userModel');
+const { postNewUser, getAll, getById } = require('../model/userModel');
 
 // Corrigindo erros com a ajuda do Joao
 const createUser = async (user) => {
@@ -11,7 +11,7 @@ const createUser = async (user) => {
 };
 
 const serviceById = async (id) => {
-  const user = await byId(id);
+  const user = await getById(id);
   if (!user) {
     return notFound('User does not exist');
   }

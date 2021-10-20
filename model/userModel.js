@@ -19,7 +19,7 @@ const getAll = async () => {
   return users; 
 };
 
-const byId = async (id) => {
+const getById = async (id) => {
   const userId = await Users.findOne({ where: { id } });
   return userId;
 };
@@ -27,5 +27,5 @@ const byId = async (id) => {
 module.exports = {
   postNewUser,
   getAll,
-  byId,
+  getById,
 };
