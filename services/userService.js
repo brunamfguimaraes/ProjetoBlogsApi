@@ -1,6 +1,7 @@
-const { conflict, notFound } = require('../helpers/error');
+const { conflict, notFound } = require('../errors/error');
 const { postNewUser, getAll, byId } = require('../model/userModel');
 
+// Corrigindo erros com a ajuda do Joao
 const createUser = async (user) => {
   const newUser = await postNewUser(user);
 

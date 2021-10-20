@@ -4,6 +4,7 @@ const error = (code, message) => ({
   message,
 });
 
+// Corrigindo pasta erros com a ajuda do Joao
 module.exports = {
   conflict: (message) => error(409, message),
   badRequest: (message) => error(400, message),

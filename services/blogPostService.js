@@ -2,7 +2,7 @@ const postModels = require('../model/blogPostModel');
 const categoryModels = require('../model/categoriesModel');
 const postsCategoryModels = require('../model/postCategory');
 
-const generateError = require('../helpers/error');
+const generateError = require('../errors/error');
 
 const checkPostCategories = async (categoryArray) => Promise
 .all(categoryArray.map((id) => categoryModels.getCategoryById(id)));
