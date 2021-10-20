@@ -9,6 +9,12 @@ const schemaUser = Joi.object({
   password: Joi.string().length(6).required(),
 });
 
+const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().length(6).required(),
+});
+
+
  const Err409 = { message: 'User already registered' };
 
  const secret = process.env.JWT_SECRET || 'narguileira';
@@ -39,7 +45,7 @@ const createUserService = async (displayName, email, password, image) => {
 };
 
 const userLogin = async (email, password) => {
-  const { error } = schemaUserLogin.validate({ email, password });
+  const { error } = loginSchema.validate({ email, password });
   if (error) {
    return {
      isError: true,
