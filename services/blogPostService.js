@@ -1,5 +1,5 @@
 const postModels = require('../model/blogPostModel');
-const categoryModels = require('../model/categoriesModel');
+const categoryModels = require('../model/categoriesModel'); 
 const postsCategoryModels = require('../model/postCategory');
 
 const generateError = require('../errors/error');
@@ -15,7 +15,7 @@ const createPostsCategory = async (postId, categoryIds) => {
 const postNewPost = async ({ userId, title, content, categoryIds }) => {
   const categoryCheck = await checkPostCategories(categoryIds);
 
-  if (categoryCheck.includes(null)) return generateError.notFound('"categoryIds" not found');
+  if (categoryCheck.includes(null)) return generateError.badRequest('"categoryIds" not found');
 
   const result = await postModels.postNewPost({ userId, title, content, categoryIds });
 
@@ -30,7 +30,18 @@ const getAllPosts = async () => {
   return result;
 };
 
+const getByIdPosts = async (id) => {
+  const result = await postModels.getByIdPosts(id);
+
+  if (!result) {
+    return generateError.notFound('Post does not exist');
+  }
+
+  return result;
+};
+
 module.exports = {
   postNewPost,
   getAllPosts,
+  getByIdPosts,
 };

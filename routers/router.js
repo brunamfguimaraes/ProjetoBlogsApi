@@ -17,7 +17,8 @@ router.get('/user/:id', validateToken, userController.getById);
 router.post('/login', validateLogin, loginController.post);
 router.post('/categories', validateCategories, validateToken, categoriesController.post);
 router.get('/categories', validateToken, categoriesController.get);
-router.post('/post', validatePost, validateToken, blogPostController.post);
-router.get('/post', validateToken, blogPostController.get);
+router.post('/post', validatePost, validateToken, blogPostController.postController);
+router.get('/post', validateToken, blogPostController.getPostController);
+router.get('/post/:id', validateToken, blogPostController.getByIdPosts);
 
 module.exports = router;
