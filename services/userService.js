@@ -90,10 +90,12 @@ const getUserByIdService = async (id) => {
   return user;
 };
 
+const removeUserService = async (id) => Users.destroy({ where: { id } });
+
  module.exports = {
   createUserService,
   userLogin,
   getAllUserService,
   getUserByIdService,
-
+  removeUserService,
 }; 
