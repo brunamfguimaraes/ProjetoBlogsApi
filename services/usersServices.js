@@ -19,6 +19,7 @@ const findUserServices = async (idImput) => {
   const user = await User.findOne({ where: { id: idImput },
     attributes: { exclude: ['password'] }, 
   });
+  
   if (!user) return { isError: true, message: 'User does not exist' };
   return user;
 };
