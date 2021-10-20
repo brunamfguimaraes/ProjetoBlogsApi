@@ -62,5 +62,5 @@ module.exports = {
   userLogin,
   getAll,
   getUserById,
-  userRemove
+  userRemove,
 };
