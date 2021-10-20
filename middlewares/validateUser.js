@@ -12,6 +12,10 @@ const messageEmailIsRequired = {
     message: '"email" is required',
 };
 
+const messageEmailEmpty = {
+    message: '"email" is not allowed to be empty',
+};
+
 const messagePassword = {
     message: '"password" length must be 6 characters long',
 };
@@ -20,13 +24,33 @@ const messagePasswordIsRequired = {
     message: '"password" is required',
 };
 
+const messagePasswordEmpty = {
+    message: '"password" is not allowed to be empty',
+};
+
 const messageEmailAlreadyExists = {
     message: 'User already registered',
 };
 
+const messageUserDoesntExist = {
+    message: 'User does not exist',
+};
+
+const verifyIfUserExists = async (req, res, next) => {
+    const { id } = req.params;
+
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+        return res.status(404).json(messageUserDoesntExist);
+    }
+
+    next();
+};
+
 const validateIfEmailIsAlreadyExists = async (req, res, next) => {
     const { email } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     const verifyEmail = await User.findOne({
         where: { email },
@@ -51,10 +75,13 @@ const validateDisplayName = (req, res, next) => {
 
 const validateEmail = (req, res, next) => {
     const { email } = req.body;
-    console.log(typeof email);
-    if (!email) {
-        console.log('cheguei');
+
+    if (typeof email === 'undefined') {
         return res.status(400).json(messageEmailIsRequired);
+    }
+
+    if (email === '') {
+        return res.status(400).json(messageEmailEmpty);
     }
     
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -70,8 +97,12 @@ const validateEmail = (req, res, next) => {
 const validatePassword = (req, res, next) => {
     const { password } = req.body;
 
-    if (!password) {
+    if (typeof password === 'undefined') {
         return res.status(400).json(messagePasswordIsRequired);
+    }
+
+    if (password === '') {
+        return res.status(400).json(messagePasswordEmpty);
     }
 
     if (password.length !== 6) {
@@ -86,4 +117,5 @@ module.exports = {
     validateDisplayName,
     validateEmail,
     validatePassword,
+    verifyIfUserExists,
 };

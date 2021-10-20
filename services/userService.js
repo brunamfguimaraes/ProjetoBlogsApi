@@ -1,22 +1,8 @@
-const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-require('dotenv').config();
-
-const SECRET = process.env.JWT_SECRET;
-
-// const jsonWebToken = async (user) => {
-//     const { displayName } = user;
-
-//     const jwtConfig = {
-//         expiresIn: '7d',
-//         algorithm: 'HS256',
-//     };
-
-//     const token = jwt.sign({ data: displayName }, SECRET.anchor, jwtConfig);
-
-//     return token;
-// };
+const messageUserNotFound = {
+    message: 'Invalid fields',
+};
 
 const addNewUser = async (displayName, email, password, image) => {
     const addUser = await User.create({
@@ -26,17 +12,37 @@ const addNewUser = async (displayName, email, password, image) => {
         image,
     });
 
-    const jwtConfig = {
-        expiresIn: '7d',
-        algorithm: 'HS256',
-    };
+    return addUser;
+};
 
-    const token = jwt.sign({ data: addUser.displayName }, SECRET, jwtConfig);
+const loginIn = async (email, password) => {
+    const login = await User.findOne({
+        where: { email, password },
+    });
 
-    return token;
+    if (!login) {
+        return messageUserNotFound;
+    }
+    // console.log(login);
+
+    return login;
+};
+
+const getAllUsers = async () => {
+    const allusers = User.findAll();
+
+    return allusers;
+};
+
+const getUserById = async (id) => {
+    const getUser = await User.findOne({ where: { id } });
+
+    return getUser;
 };
 
 module.exports = {
     addNewUser,
-    // jsonWebToken,
+    loginIn,
+    getAllUsers,
+    getUserById,
 };
