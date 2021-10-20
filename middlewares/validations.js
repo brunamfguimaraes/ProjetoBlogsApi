@@ -64,10 +64,40 @@ const validCategoryName = (req, res, next) => {
   next();
 };
 
+const validTitle = (req, res, next) => {
+  const { title } = req.body;
+  if (!title) {
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"title" is required' });
+  }
+  next();
+};
+
+const validContent = (req, res, next) => {
+  const { content } = req.body;
+  if (!content) {
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"content" is required' });
+  }
+  next();
+};
+
+const validCategoryId = (req, res, next) => {
+  const { categoryIds } = req.body;
+  if (categoryIds === undefined) {
+    return res.status(StatusCodes.BAD_REQUEST)
+    .json({ message: '"categoryIds" is required' });
+  }
+  next();
+};
+
 module.exports = {
   validName,
   validEmail,
   validPassword,
   alreadyExists,
   validCategoryName,
+  validTitle,
+  validContent,
+  validCategoryId,
 };
