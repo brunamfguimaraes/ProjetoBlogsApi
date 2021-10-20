@@ -7,6 +7,8 @@ const {
   findUserServices,
 } = require('../services/usersServices');
 
+const JWT_SECRET = 'lucas-lotar-secret';
+
 const createUser = async (req, res) => {
   try {
     const response = await createUserServices(req.body);
@@ -14,7 +16,7 @@ const createUser = async (req, res) => {
     if (response.isError) res.status(response.code).json({ message: response.message });
     
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
-    const token = jwt.sign({ data: response }, process.env.JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: response }, JWT_SECRET, jwtConfig);
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
