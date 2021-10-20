@@ -70,5 +70,5 @@ const userLogin = async (email, password) => {
 
  module.exports = {
   createUserService,
-  userLogin
+  userLogin,
 }; 
