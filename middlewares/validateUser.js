@@ -14,9 +14,7 @@ const validateUser = (req, res, next) => {
       }),
     image: Joi.string(),
   }).validate(req.body);
-  console.log('antes if');
   if (error) return res.status(400).json({ message: error.details[0].message }); 
-  console.log('depois do if ');
   next();
 };
 
