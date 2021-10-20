@@ -87,7 +87,6 @@ const validateEmail = (req, res, next) => {
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 
     if (!email.match(emailRegex)) {
-        console.log('passei');
         return res.status(400).json(messageEmail);
     }
 

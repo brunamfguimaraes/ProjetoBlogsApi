@@ -31,7 +31,7 @@ const loginIn = async (email, password) => {
 const getAllUsers = async () => User.findAll({ attributes: { exclude: ['password'] } });
 
 const getUserById = async (id) => {
-    const getUser = await User.findOne({ where: { id } });
+    const getUser = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
 
     return getUser;
 };
