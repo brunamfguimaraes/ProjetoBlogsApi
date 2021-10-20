@@ -17,7 +17,7 @@ const schemaUser = Joi.object({
 });
  const Err409 = { message: 'User already registered' };
  
-const createUser = async (displayName, email, password, image) => {
+const createUserService = async (displayName, email, password, image) => {
    const { error } = schemaUser.validate({ displayName, email, password });
     if (error) {
       return {
@@ -38,5 +38,5 @@ const createUser = async (displayName, email, password, image) => {
 };
 
  module.exports = {
-  createUser,
+  createUserService,
 }; 
