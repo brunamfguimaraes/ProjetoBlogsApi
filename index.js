@@ -14,6 +14,7 @@ app.get('/', (request, response) => {
   response.send('');
 });
 
+// app.use('/user', userRoutes.test);
 app.use('/user', userRoutes);
 
 app.listen(PORT, () => console.log(' Sequelado fino na porta 3000!'));

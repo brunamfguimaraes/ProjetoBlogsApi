@@ -2,19 +2,12 @@ const { StatusCodes } = require('http-status-codes');
 const Joi = require('joi');
 const { Users } = require('../models');
 
-const secret = process.env.JWT_SECRET || 'narguileira';
-
-const jwtConfig = {
-  expiresIn: '7d',
-  algorithm: 'HS256',
-};
-
-
 const schemaUser = Joi.object({
   displayName: Joi.string().min(8).required(),
   email: Joi.string().email().required(),
   password: Joi.string().length(6).required(),
 });
+
  const Err409 = { message: 'User already registered' };
  
 const createUserService = async (displayName, email, password, image) => {
