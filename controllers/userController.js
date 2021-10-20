@@ -38,7 +38,7 @@ const getAll = async (_req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserService.getById(id);
+    const user = await UserService.getUserByIdService(id);
     if (user.isError) return res.status(user.status).json(user.err);
     return res.status(StatusCodes.OK).json(user);
   } catch (error) {
