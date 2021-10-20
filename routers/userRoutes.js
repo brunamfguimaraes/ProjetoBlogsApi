@@ -15,8 +15,8 @@ router.get('/:id', validateJWT, findUser);
 
 router.get('/', validateJWT, getAllUsers);
 
-// router.delete();
-
 router.post('/', validCreateUser, createUser);
+
+// router.delete();
 
 module.exports = router;
