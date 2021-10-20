@@ -1,4 +1,4 @@
-const { BlogPost, User, Category } = require('../models');
+const { BlogPost, User, Category, PostsCategory } = require('../models');
 
 const blogValidations = require('../validations/blogValidations');
 
@@ -27,7 +27,34 @@ const getPost = async (token) => {
   return postId;
 };
 
+const getPostById = async (token, id) => {
+  blogValidations.validToken(token);
+  await blogValidations.validPostExist(id);
+  const result = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return result;
+};
+
+const editPost = async (token, id) => {
+  blogValidations.validToken(token);
+};
+const destroyPost = async (token, id) => {
+  blogValidations.validToken(token);
+};
+const searchPost = async (token, q) => {
+  blogValidations.validToken(token);
+};
+
 module.exports = {
   addPost,
   getPost,
+  getPostById,
+  editPost,
+  destroyPost,
+  searchPost,
 };

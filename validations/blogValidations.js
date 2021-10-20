@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { Category } = require('../models');
+const { Category, BlogPost } = require('../models');
 
 const privateKey = process.env.JWT_SECRET;
 
@@ -28,6 +28,13 @@ const CATEGORY_NOT_FOUND = {
   status: 400,
   error: {
     message: '"categoryIds" not found',
+  },
+};
+
+const POST_NOT_FOUND = {
+  status: 404,
+  error: {
+    message: 'Post does not exist',
   },
 };
 
@@ -84,9 +91,17 @@ const validToken = (token) => {
   }
 };
 
+const validPostExist = async (id) => {
+  const result = await BlogPost.findOne({ where: { id } });
+  if (!result) {
+    throw POST_NOT_FOUND;
+  }
+};
+
 module.exports = {
   validTitle,
   validContent,
   validCategoryId,
   validToken,
+  validPostExist,
 };
