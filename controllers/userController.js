@@ -9,9 +9,9 @@ const userService = require('../services/userService');
 
 router.post('/user',
 middlewares.validateEmail,
-middlewares.validateIfEmailIsAlreadyExists,
 middlewares.validateDisplayName,
 middlewares.validatePassword,
+middlewares.validateIfEmailIsAlreadyExists,
 async (req, res, next) => {
     const { displayName, email, password, image } = req.body;
     const addUser = await userService.addNewUser(displayName, email, password, image);

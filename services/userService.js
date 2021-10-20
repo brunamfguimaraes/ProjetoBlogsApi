@@ -28,11 +28,7 @@ const loginIn = async (email, password) => {
     return login;
 };
 
-const getAllUsers = async () => {
-    const allusers = User.findAll();
-
-    return allusers;
-};
+const getAllUsers = async () => User.findAll({ attributes: { exclude: ['password'] } });
 
 const getUserById = async (id) => {
     const getUser = await User.findOne({ where: { id } });

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+// const { User } = require('../models');
 
 require('dotenv').config();
 
@@ -36,16 +36,17 @@ const verifyToken = (req, res, next) => {
         }
 
         const { data } = jwt.verify(token, SECRET);
+        console.log(data);
 
-        const user = User.findOne({ where: { email: data.email } });
+        // const user = User.findOne({ where: { email: data } });
 
-        if (!user) {
-            return res.status(401).json(tokenExpired);
-        }
+        // if (!user) {
+        //     return res.status(401).json(tokenExpired);
+        // }
 
         next();
     } catch (err) {
-        console.log(err.message);
+        // console.log(err.message);
         return res.status(401).json(tokenExpired);
     }
 };
