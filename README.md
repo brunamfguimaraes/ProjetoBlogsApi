@@ -23,7 +23,7 @@ npx  sequelize-cli model:create --name categories --attributes name:string
 //Post categories  ->
 Fiz na mão pra exercitar esse trem rodei o 
 npx sequelize-cli migration:generate --name post-categories pra criar a migration e la dentro estruturei
-criei a tabela PostsCategories do requsiito e deixei ela como PK em referecia ao Id da BlogPosts e a table CategoryId tbm é PK com relação a Chave Id da Categories
+criei a tabela PostsCategories do requsiito e deixei ela como PK em referecia ao Id da BlogPosts e a CategoryId tbm é PK com relação a Chave Id da Categories
 
 se quiser fazer o bagui na mão faz assim oh
 npx sequelize-cli migration:generate --name create-column userSEila
