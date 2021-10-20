@@ -1,14 +1,14 @@
 const express = require('express');
 
-const { createUser, getAllUsers } = require('../controllers/usersController');
+const { createUser, getAllUsers, findUser } = require('../controllers/usersController');
 const validCreateUser = require('../middleware/validCreateUser');
 const validateJWT = require('../auth/validateJWT');
 
 const router = express.Router();
 
-router.get('/', validateJWT, getAllUsers);
+router.get('/:id', validateJWT, findUser);
 
-// router.put();
+router.get('/', validateJWT, getAllUsers);
 
 // router.delete();
 

@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { createUserServices, getAllUsersServices } = require('../services/usersServices');
 require('dotenv').config();
-
-// const { JWT_SECRET } = process.env;
-// const JWT_SECRET = 'projectBlogsAPI';
+const { 
+  createUserServices,
+  getAllUsersServices,
+  findUserServices,
+} = require('../services/usersServices');
 
 const createUser = async (req, res) => {
   try {
@@ -30,17 +31,15 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// const editStudent = async (req, res) => {
-//   try {
-//     const response = await usersServices.editStudent(req.params, req.body);
-//     if (response.isError) {
-//       return res.status(response.code).json({ message: response.message });
-//     }
-//     return res.status(StatusCodes.OK).json({ message: response.message });
-//   } catch (error) {
-//     return res.status(500).json({ error: error.message });
-//   }
-// };
+const findUser = async (req, res) => {
+  try {
+    const response = await findUserServices(req.params.id); 
+      if (response.isError) res.status(StatusCodes.NOT_FOUND).json({ message: response.message });
+    return res.status(StatusCodes.OK).json(response);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
 
 // const excludeStudent = async (req, res) => {
 //   try {
@@ -57,6 +56,7 @@ const getAllUsers = async (req, res) => {
 module.exports = {
   createUser,
   getAllUsers,
+  findUser,
 //   editStudent,
 //   excludeStudent,
 };
