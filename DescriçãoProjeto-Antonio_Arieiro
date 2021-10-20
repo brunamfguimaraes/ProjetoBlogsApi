@@ -32,3 +32,5 @@ vai la na migration do userSeila e acrescente os campos ex. vai ta la o exports 
 title -> string, content string->, userId -> INTEGER references -> table 'Users' key Id, published e update -> Dates
 
 pronto criou as migrations go pra controllers
+
+montando o crud de sempre so que agr cada parte do codigo com sua '''''FUNÇÃO''''' famoso quem chamou que se vire.

@@ -8,7 +8,6 @@ const newUser = async (req, res) => {
       if (result.isError) return res.status(result.status).json(result.err);
       return res.status(StatusCodes.CREATED).json({ token: result });
    } catch (error) {
-    console.log(`[USER CONTROLLER] : buscar => ${error}`);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
