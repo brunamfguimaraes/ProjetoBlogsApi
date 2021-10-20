@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -27,7 +27,7 @@ const getAllUsers = async (req, res) => {
     const response = await getAllUsersServices();
     return res.status(StatusCodes.OK).json(response);
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
@@ -37,7 +37,7 @@ const findUser = async (req, res) => {
       if (response.isError) res.status(StatusCodes.NOT_FOUND).json({ message: response.message });
     return res.status(StatusCodes.OK).json(response);
   } catch (error) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
