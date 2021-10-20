@@ -3,15 +3,13 @@ const { StatusCodes } = require('http-status-codes');
 const UserService = require('../services/userService');
 
 const create = async (req, res) => {
-  try {
-    const userData = req.body;
-    
-    const newUser = await UserService.createUser(userData);
+  const userData = req.body;
+  
+  const newUser = await UserService.createUser(userData);
 
-    return res.status(StatusCodes.CREATED).json({ message: newUser });
-  } catch (e) {
-    console.error(e);
-  }
+  if (newUser.Error) return res.status(newUser.code).json({ message: newUser.message });
+
+  return res.status(StatusCodes.CREATED).json({ message: newUser });
 };
 
 module.exports = {
