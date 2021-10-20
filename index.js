@@ -2,15 +2,15 @@ const express = require('express');
 require('dotenv').config();
 
 const usersRoutes = require('./routers/userRoutes');
-const loginRoutes = require('./routers/loginRoutes');
-const categoriesRoutes = require('./routers/categoriesRoutes');
+// const loginRoutes = require('./routers/loginRoutes');
+// const categoriesRoutes = require('./routers/categoriesRoutes');
 
 const app = express();
 app.use(express.json());
 
-app.use('/login', loginRoutes);
+// app.use('/login', loginRoutes);
 app.use('/user', usersRoutes);
-app.use('/categories', categoriesRoutes);
+// app.use('/categories', categoriesRoutes);
 //
 //
 
