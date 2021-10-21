@@ -8,8 +8,6 @@ const UserSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   image: Joi.string().required(),
-}).messages({
-  'any.required': 'O valor {{#label}} é obrigatório',
 });
 
 const createUser = async (user) => {
