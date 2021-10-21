@@ -49,14 +49,23 @@ const create = async (post, categoryIds) => {
 const update = async (postId, { title, content }, userId) => {
   const post = await getById(postId);
   valid.checkPostUserProperty(post.userId, userId);
-  await BlogPost.update({ ...BlogPost, title, content }, { where: { id: postId } });
+  await BlogPost.update({ ...post, title, content }, { where: { id: postId } });
   const updatedPost = await getById(postId);
   return updatedPost;
+};
+
+const remove = async (postId, userId) => {
+  const post = await getById(postId);
+  valid.checkIfPostExists(post);
+  valid.checkPostUserProperty(post.userId, userId);
+  const removed = await BlogPost.destroy({ where: { id: postId } });
+  return removed;
 };
 
 module.exports = {
   create,
   update,
+  remove,
   getAll,
   getById,
 };

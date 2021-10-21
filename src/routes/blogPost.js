@@ -7,7 +7,8 @@ const { blogBody, blogUpdateBody } = require('../validations/BlogPost');
 const router = (app) => {
   app.route('/post/:id')
     .get(authMiddleware(validateToken), rescue(controller.getById))
-    .put(checkBody(blogUpdateBody), authMiddleware(validateToken), rescue(controller.update));
+    .put(checkBody(blogUpdateBody), authMiddleware(validateToken), rescue(controller.update))
+    .delete(authMiddleware(validateToken), rescue(controller.remove));
 
   app.route('/post')
     .get(authMiddleware(validateToken), rescue(controller.getAll))

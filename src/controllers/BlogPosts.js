@@ -14,6 +14,13 @@ const update = async (req, res) => {
   res.status(200).json(updatedPost);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
+  const result = await service.remove(id, userId);
+  return res.status(204).json(result);
+};
+
 const getAll = async (req, res) => {
   const posts = await service.getAll();
   return res.status(200).json(posts);
@@ -27,6 +34,7 @@ const getById = async (req, res) => {
 module.exports = {
   create,
   update,
+  remove,
   getAll,
   getById,
 };
