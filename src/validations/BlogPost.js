@@ -20,7 +20,16 @@ const checkCategoryIds = async (categoryIds, Model) => {
   }
 };
 
+const checkIfPostExists = (post) => {
+  if (!post) {
+    const error = new Error('Post does not exist');
+    error.statusCode = 404;
+    throw error;
+  }
+};
+
 module.exports = {
   blogBody,
   checkCategoryIds,
+  checkIfPostExists,
 };

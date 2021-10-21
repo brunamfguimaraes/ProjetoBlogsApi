@@ -5,9 +5,11 @@ const { validateToken } = require('../utils');
 const { blogBody } = require('../validations/BlogPost');
 
 const router = (app) => {
+  app.route('/post/:id')
+    .get(authMiddleware(validateToken), rescue(controller.getById));
   app.route('/post')
     .get(authMiddleware(validateToken), rescue(controller.getAll))
     .post(checkBody(blogBody), authMiddleware(validateToken), rescue(controller.create));
-};
+  };
 
 module.exports = router;
