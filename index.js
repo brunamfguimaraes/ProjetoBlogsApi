@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const User = require('./routes/userRoutes');
 const login = require('./routes/loguin');
 const Category = require('./routes/category');
-const Post = require('./routes/Blogs');
+const Post = require('./routes/Post');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
