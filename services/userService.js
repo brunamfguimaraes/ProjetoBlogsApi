@@ -81,7 +81,7 @@ const findLogin = (email, password) => {
 
 const findUsers = (token) => {
   if (!token) {
-    return { status: 401, message: 'Token not Found' };
+    return { status: 401, message: 'Token not found' };
   }
   if (token.length < 16) {
     return { status: 401, message: 'Expired or invalid token' };

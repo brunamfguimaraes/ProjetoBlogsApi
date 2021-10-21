@@ -25,13 +25,12 @@ const createUser = async (req, res, next) => {
 
 const findLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password, 'REQUISIÇÃO');
   const validate = userService.findLogin(email, password);
   if (validate.message) {
     return next(validate);
   }
     const user = await User.findAll({ where: { email } });
-    if (!user) {
+    if (user.length < 1) {
       return next({ status: 400, message: 'Invalid fields' });
     }
 
@@ -41,7 +40,7 @@ const findLogin = async (req, res, next) => {
 
 const findUsers = async (req, res, next) => {
   const token = req.headers.authorization;
-  const validate = await userService.findUsers(token);
+  const validate = userService.findUsers(token);
   if (validate.message) {
     return next(validate);
   }
