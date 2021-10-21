@@ -23,6 +23,12 @@ const addUser = async ({ displayName, email, password, image }) => {
   return null;
 };
 
+const getAll = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
 module.exports = {
   addUser,
+  getAll,
 };

@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const SECRET = process.env;
+const secret = process.env.JWT_SECRET;
 
 const jwtConfiguration = {
   expiresIn: '7d',
@@ -14,20 +14,20 @@ const validateJWT = (req, res, next) => {
   
   if (!token) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
-      message: 'missing auth token',
+      message: 'Token not found',
     }); 
   }
   
   try {
-    const payload = jwt.verify(token, SECRET);
-    const { id, email } = payload;
+    const payload = jwt.verify(token, secret);
+    const { email } = payload;
 
-    req.user = { id, email };
+    req.user = { email };
     
     next();
   } catch (error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
-      message: 'jwt malformed',
+      message: 'Expired or invalid token',
     });
   }
 };

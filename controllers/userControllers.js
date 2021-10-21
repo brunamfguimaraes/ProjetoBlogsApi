@@ -25,6 +25,12 @@ const addUser = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  const response = await userServices.getAll();
+  if (response) return res.status(StatusCodes.OK).json(response);
+};
+
 module.exports = {
   addUser,
+  getAll,
 };
