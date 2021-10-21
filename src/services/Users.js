@@ -8,6 +8,12 @@ const UserSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   image: Joi.string().required(),
+}).messages({
+  'string.base': '{{#label}} must be a string',
+  'string.empty': '{{#label}} is required',
+  'string.email.invalid': '{{#label}} is invalid',
+  'string.min': '{{#label}} lenght must be {#limit} characters long',
+  'any.required': '{{#label}} is required',
 });
 
 const createUser = async (user) => {
