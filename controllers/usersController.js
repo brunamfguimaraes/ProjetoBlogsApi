@@ -9,6 +9,7 @@ require('dotenv').config();
 
 // const { JWT_SECRET } = process.env;
 // const JWT_SECRET = 'projectBlogsAPI';
+//
 
 const createUser = async (req, res) => {
   try {
