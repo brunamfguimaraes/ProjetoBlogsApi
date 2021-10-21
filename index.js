@@ -6,6 +6,7 @@ const loginRoutes = require('./routers/loginRoutes');
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/user', usersRoutes);
 app.use('/login', loginRoutes);
