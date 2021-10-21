@@ -11,9 +11,9 @@ const {
 
 const router = express.Router();
 
-router.get('/:id', validateJWT, findUser);
-
 router.get('/', validateJWT, getAllUsers);
+
+router.get('/:id', validateJWT, findUser);
 
 router.post('/', validCreateUser, createUser);
 
