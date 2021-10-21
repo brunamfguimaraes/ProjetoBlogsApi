@@ -5,6 +5,8 @@ const { authentication } = require('../middlewares/authentication');
 function post(app) {
   app.route('/post')
     .post(rescue(authentication), rescue(controller.createPost));
+  app.route('/post/:id')
+    .get(rescue(authentication), rescue(controller.getPostById));
   app.route('/post')
     .get(rescue(authentication), rescue(controller.getPosts));
 }

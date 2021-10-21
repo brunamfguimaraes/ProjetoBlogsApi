@@ -17,7 +17,16 @@ function categoryValidation(category) {
   }
 }
 
+function checkPost(post) {
+  if (!post) {
+    const error = new Error('Post does not exist');
+    error.code = 404;
+    throw error;
+  }
+}
+
 module.exports = {
   postValidation,
   categoryValidation,
+  checkPost,
 };

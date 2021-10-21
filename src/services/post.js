@@ -1,6 +1,6 @@
 const { in: OpIn } = require('sequelize').Op;
 const { BlogPosts, Category, User } = require('../../models');
-const { postValidation, categoryValidation } = require('../validations/post');
+const { postValidation, categoryValidation, checkPost } = require('../validations/post');
 
 async function createPost(title, content, userId, categoryIds) {
   postValidation(title, content, categoryIds);
@@ -18,7 +18,20 @@ async function getPosts() {
   return result;
 }
 
+async function getPostById(id) {
+  const result = await BlogPosts.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  checkPost(result);
+  return result;
+}
+
 module.exports = {
   createPost,
   getPosts,
+  getPostById,
 };
