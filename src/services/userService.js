@@ -10,6 +10,13 @@ const createUser = async (dataUser) => {
   return User.create(dataUser);
 };
 
+const getAll = async () => {
+  const allUsers = await User.findAll();
+
+  return allUsers;
+};
+
 module.exports = {
   createUser,
+  getAll,
 };

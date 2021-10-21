@@ -12,6 +12,13 @@ const create = async (req, res) => {
   return res.status(StatusCodes.CREATED).json({ message: newUser });
 };
 
+const getAll = async (req, res) => {
+  const allUsers = await UserService.getAll();
+
+  res.status(StatusCodes.OK).json(allUsers);
+};
+
 module.exports = {
   create,
+  getAll,
 };
