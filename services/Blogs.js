@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { BlogPosts, Categories, Users } = require('../models');
 
-const isValidPost = (data) => {
+/* const isValidPost = (data) => {
     const validation = Joi.object({
         title: Joi.string().required(),
         content: Joi.string().required(),
@@ -13,7 +13,7 @@ const isValidPost = (data) => {
             isError: true, err: { message: validation.error.details[0].message }, status: 400,
         };
     }
-};
+}; */
 
 /* const createPost = async (categoryId, postId) => {
     await categoryId.map((id) => PostsCategories.create({ categoryId: id, postId }));
