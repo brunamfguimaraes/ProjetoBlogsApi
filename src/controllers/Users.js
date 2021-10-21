@@ -1,3 +1,4 @@
+const { createToken } = require('../auth');
 const service = require('../services/Users');
 
 const createUser = async (req, res) => {
@@ -6,7 +7,11 @@ const createUser = async (req, res) => {
 
     const newUser = await service.createUser(user);
 
-    return res.status(201).json(newUser);
+    if (newUser) {
+      const token = createToken(user);
+
+      return res.status(201).json({ token });
+    }
   } catch (error) {
     return res.status(error.status).json(error);
   }
