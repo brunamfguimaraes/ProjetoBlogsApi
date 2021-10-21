@@ -8,7 +8,7 @@ const createUserServices = async ({ displayName, email, password, image }) => {
   if ((await checkIfTheUserExists(email, password)).isError) { 
     return checkIfTheUserExists(email, password); 
   }
-//
+
   const user = await User.create({ displayName, email, password, image });
   return { isError: false, newUser: user };
 };
