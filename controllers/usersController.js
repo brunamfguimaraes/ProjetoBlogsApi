@@ -17,14 +17,14 @@ const createUser = async (req, res) => {
     
     if (response.isError) return res.status(response.code).json({ message: response.message });
 
-    console.log(response);
+    // console.log(response.newUser);
     
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
     const token = jwt.sign({ data: response.newUser }, process.env.JWT_SECRET, jwtConfig);
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -33,7 +33,7 @@ const getAllUsers = async (req, res) => {
     const response = await getAllUsersServices();
     return res.status(StatusCodes.OK).json(response);
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -43,7 +43,7 @@ const findUser = async (req, res) => {
     if (response.isError) res.status(404).json({ message: response.message });
     return res.status(200).json(response);
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 

@@ -5,12 +5,20 @@ const checkIfTheUserExists = require('../validations/checkIfTheUserExists');
 
 const createUserServices = async ({ displayName, email, password, image }) => {
   if (isValidEmail(email).isError) return isValidEmail(email);
+  
   if ((await checkIfTheUserExists(email, password)).isError) { 
     return checkIfTheUserExists(email, password); 
   }
 
   const user = await User.create({ displayName, email, password, image });
-  return { isError: false, newUser: user };
+
+  const responseUser = {
+    id: user.id,
+    displayName: user.displayName,
+    email: user.email,
+    image: user.image,
+  }; 
+  return { isError: false, newUser: responseUser };
 };
 
 const getAllUsersServices = async () => User.findAll({ attributes: { exclude: ['password'] } });

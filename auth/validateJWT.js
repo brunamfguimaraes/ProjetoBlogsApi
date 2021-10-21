@@ -15,7 +15,6 @@ const validateJWT = async (req, res, next) => {
     
     const user = await User.findOne({ email: decoded.data.email });
     const validPassword = await User.findOne({ password: user.password }); 
-    console.log(validPassword, 'HAHAHAHAHAHA');
 
     if (!user || !validPassword) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Expired or invalid token' }); 
