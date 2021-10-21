@@ -6,15 +6,15 @@ const validateError = require('../middleweres/validateError');
 const UserSchema = Joi.object({
   displayName: Joi.string().min(8).required()
   .messages({
-    'string.min': '{{#label}} must be at least {{#limit}} characters long',
+    'string.min': '{{#label}} length must be at least {{#limit}} characters long',
   }),
   email: Joi.string().email().required()
   .messages({
-    'string.email': '{{#label}} must be valid email',
+    'string.email': '{{#label}} must be a valid email',
   }),
   password: Joi.string().min(6).required()
   .messages({
-    'string.min': '{{#label}} must be {{#limit}} characters long',
+    'string.min': '{{#label}} length must be {{#limit}} characters long',
   }),
   image: Joi.string(),
 }).messages({
