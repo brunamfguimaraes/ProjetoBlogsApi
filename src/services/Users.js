@@ -11,7 +11,7 @@ const UserSchema = Joi.object({
 });
 
 const createUser = async (user) => {
-  // valida as informações do body
+  // valida as informações do body usando o Joi
   const { error } = UserSchema.validate(user);
   if (error) throw validateError(400, error.message);
 
