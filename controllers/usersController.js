@@ -17,8 +17,9 @@ const createUser = async (req, res) => {
     
     if (response.isError) return res.status(response.code).json({ message: response.message });
     
+    console.log(response, 'HAHAHAHAHAHAHAHAHAHAH');
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
-    const token = jwt.sign({ data: response }, process.env.JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: response.newUser }, process.env.JWT_SECRET, jwtConfig);
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {

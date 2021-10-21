@@ -8,9 +8,9 @@ const createUserServices = async ({ displayName, email, password, image }) => {
   if ((await checkIfTheUserExists(email, password)).isError) { 
     return checkIfTheUserExists(email, password); 
   }
-
-  await User.create({ displayName, email, password, image });
-  return { isError: false };
+//
+  const user = await User.create({ displayName, email, password, image });
+  return { isError: false, newUser: user };
 };
 
 const getAllUsersServices = async () => User.findAll({ attributes: { exclude: ['password'] } });
