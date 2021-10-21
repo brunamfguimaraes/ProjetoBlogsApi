@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Category } = require('../models');
+const { Category, BlogPost, User } = require('../models');
 
 const createPost = async ({ _title, categoryIds, _content }) => {
   if (typeof categoryIds !== 'object') {
@@ -11,4 +11,15 @@ const createPost = async ({ _title, categoryIds, _content }) => {
   }
 };
 
-module.exports = { createPost };
+const getAllPosts = async () => {
+  const getAll = await BlogPost.findAll({ include: [
+    { model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ] });
+  return getAll;
+};
+
+module.exports = { 
+  createPost,
+  getAllPosts,
+};

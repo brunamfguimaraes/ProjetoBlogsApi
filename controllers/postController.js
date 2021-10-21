@@ -13,4 +13,12 @@ const createPost = async (req, res) => {
   return res.status(StatusCodes.CREATED).json({ ...dataValues, userId: id });
 };
 
-module.exports = { createPost };
+const getAllPosts = async (req, res) => {
+  const getAll = await service.getAllPosts();
+  return res.status(StatusCodes.OK).json(getAll);
+};
+
+module.exports = { 
+  createPost,
+  getAllPosts,
+};

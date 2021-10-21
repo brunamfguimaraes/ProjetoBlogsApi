@@ -21,6 +21,7 @@ app.use(express.json());
 app.get('/user', Token, userController.getAllUsers);
 app.get('/user/:id', Token, userController.getUserById);
 app.get('/categories', Token, categoryController.getAllCategories);
+app.get('/post', Token, postController.getAllPosts);
 
 app.post('/user', validName, validEmail, validPassword, alreadyExists, userController.createUser);
 app.post('/login', validEmail, validPassword, userController.loginUser);
