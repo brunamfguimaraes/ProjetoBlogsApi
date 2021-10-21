@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const User = require('./routes/userRoutes');
 const login = require('./routes/loguin');
 const Category = require('./routes/category');
-const Blog = require('./routes/Blogs');
+const Post = require('./routes/Blogs');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -21,5 +21,5 @@ app.get('/', (request, response) => {
 app.use('/user', User);
 app.use('/login', login);
 app.use('/categories', Category);
-app.use('/post', Blog);
+app.use('/post', Post);
 app.listen(PORT, () => console.log(' Sequelado fino na porta 3000!'));
