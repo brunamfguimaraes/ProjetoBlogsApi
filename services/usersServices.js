@@ -21,7 +21,10 @@ const createUserServices = async ({ displayName, email, password, image }) => {
   return { isError: false, newUser: responseUser };
 };
 
-const getAllUsersServices = async () => User.findAll({ attributes: { exclude: ['password'] } });
+const getAllUsersServices = async () => {
+  const response = User.findAll({ attributes: { exclude: ['password'] } });
+  return response;
+};
 
 const findUserServices = async (idImput) => {
   const user = await User.findByPk(idImput, { attributes: { exclude: ['password'] } });
