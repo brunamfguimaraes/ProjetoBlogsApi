@@ -69,26 +69,45 @@ blogPostRouter.get('/:id', verifyToken, async (req, res) => {
 });
 
 blogPostRouter.put('/:id', verifyToken, blogUpdateValidate, async (req, res) => {
-    const { id } = req.params;
-    const { title, content } = req.body;
-    const { user } = req;  
-    try {
-        const post = await blogPostService.checkBlogPost(id, user);
+  const { id } = req.params;
+  const { title, content } = req.body;
+  // const { user } = req;  
+  try {
+    const post = await blogPostService.checkBlogPost(id);
 
     if (post.fieldError) return res.status(404).json({ message: post.message });    
 
     await BlogPost.update(
-        { title, content }, { where: { id } },
+      { title, content }, { where: { id } },
     );
     const updatedPost = await BlogPost.findByPk(id, {
-        include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
-        attributes: { exclude: ['id', 'published', 'updated'] },
+      include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+      attributes: { exclude: ['id', 'published', 'updated'] },
     });       
 
     return res.status(200).json(updatedPost);        
     } catch (error) {
       res.status(500).json({ error });        
     }    
+});
+
+blogPostRouter.delete('/:id', verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { user } = req;
+  try {
+    const post = await blogPostService.checkBlogPost(id, user);
+
+    if (post.fieldError) return res.status(404).json({ message: post.message });
+
+    const userCheck = await blogPostService.checkUserForDelete(id, user);
+
+    if (userCheck.fieldError) return res.status(401).json({ message: userCheck.message });
+
+    await BlogPost.destroy({ where: { id } });
+    return res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error });
+}
 });
 
 module.exports = blogPostRouter;

@@ -19,13 +19,26 @@ const checkBlogPost = async (id) => {
   return blogId;
 };
 
-const checkUserId = async (id, user) => {
+const checkUserId = async (id, user) => {  
   const updatedPost = await BlogPost.findByPk(id, {
     include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
     attributes: { exclude: ['id', 'published', 'updated'] },
   });
+  
+  if (user !== updatedPost.userId) {    
+    console.log('updatepost console', updatedPost.userId, user);
+    return { fieldError: true, message: 'Unauthorized user' };    
+  }
+  return { fieldError: false };
+};
 
-  if (user !== updatedPost.userId) {        
+const checkUserForDelete = async (id, user) => {
+  console.log('id console', id);
+  
+  const deletePost = await BlogPost.findByPk(id);
+  
+  if (user.id !== deletePost.userId) {        
+    console.log('updatepost console', deletePost.userId, user.id);
     return { fieldError: true, message: 'Unauthorized user' };    
   }
   return { fieldError: false };
@@ -35,4 +48,5 @@ module.exports = {
   checkCategoryId,
   checkBlogPost,
   checkUserId,
+  checkUserForDelete,
 };
