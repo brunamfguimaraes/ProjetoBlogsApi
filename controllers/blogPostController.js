@@ -41,7 +41,50 @@ const getAllBlogPosts = async (req, res) => {
   }
 };
 
+const getBlogPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const blogPost = await BlogPost.findOne({
+      where: { id }, 
+      include: [
+        { model: User, as: 'user' }, 
+        { model: Category, as: 'categories', through: { attributes: [] } }],
+    });
+
+    if (!blogPost) {
+ return res.status(CODE.NOT_FOUND).json({
+        message: 'Post does not exist' }); 
+}
+    return res.status(CODE.OK).json(blogPost);
+  } catch (error) {
+    return res.status(CODE.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
+  }
+};
+
+const updateBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const blogPost = await BlogPost.findOne({ where: { id } });
+
+    if (!blogPost) { 
+      return res.status(CODE.NOT_FOUND).json({
+        message: 'Post does not exist' });
+      }
+    await blogPost.update({ title, content });
+    return res.status(CODE.OK).json(blogPost);
+  } catch (error) {
+    return res.status(CODE.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createBlogPost,
   getAllBlogPosts,
+  getBlogPostById,
+  updateBlogPost,
 };

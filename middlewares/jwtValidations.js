@@ -12,8 +12,9 @@ const jwtValidations = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, secret);
+    console.log(decoded, 'DECODED');
     const user = await User.findOne({ 
-      email: decoded.data.email, password: decoded.data.password, 
+      email: decoded.data.email, 
     });
     
     if (!user) {
