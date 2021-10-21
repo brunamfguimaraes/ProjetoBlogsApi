@@ -25,11 +25,16 @@ const createUser = async (req, res, next) => {
 
 const findLogin = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email, password, 'REQUISIÇÃO');
   const validate = userService.findLogin(email, password);
   if (validate.message) {
-    return next({ status: validate.status, message: 'Campos inválidos' });
+    return next(validate);
   }
-    const user = await User.findAll({ where: { email, password } });
+    const user = await User.findAll({ where: { email } });
+    if (!user) {
+      return next({ status: 400, message: 'Invalid fields' });
+    }
+
     const token = jwt.sign({ data: { user: user.displayName, email } }, JWT_SECRET, jwfConfig);
     return res.status(200).json({ token });
 };

@@ -9,30 +9,38 @@ const validateName = (name) => {
     message: '"displayName" length must be at least 8 characters long' };
 };
 
-const validatePass = (pass) => {
+const validatePass = (pass, situation) => {
+  if (pass === '') {
+    return situation;
+  }
   if (!pass) {
     return { status: 400, message: '"password" is required' };
   }
   if (pass.length !== 6) {
-    return { status: 400, message: '"password" length must be 6 characters long' };
+    return situation;
   }
   return true;
 };
 
-const validateEmail = (email) => {
+const validateEmail = (email, situation) => {
+  if (email === '') {
+    return situation;
+  }
   if (!email) {
     return { status: 400, message: '"email" is required' };
   }
   if (!(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email))) {
-    return { status: 400, message: '"email" must be a valid email' };
+    return situation;
   }
   return true;
 };
 
 const isValid = (name, email, pass) => {
   const isValidName = validateName(name); 
-  const isValidEmail = validateEmail(email); 
-  const isValidPass = validatePass(pass);
+  const isValidEmail = validateEmail(email, 
+    { status: 400, message: '"email" must be a valid email' }); 
+  const isValidPass = validatePass(pass, 
+    { status: 400, message: '"password" length must be 6 characters long' });
   if (isValidName.message) {
     return isValidName;
   }
@@ -57,10 +65,16 @@ const createUser = async (displayName, email, password) => {
   return true;
 };
 
-const findLogin = async (email, password) => {
-  const validate = isValid(email, password);
-  if (validate.message) {
-    return isValid;
+const findLogin = (email, password) => {
+  const isValidEmail = validateEmail(email, 
+    { status: 400, message: '"email" is not allowed to be empty' }); 
+  const isValidPass = validatePass(password, 
+    { status: 400, message: '"password" is not allowed to be empty' });
+  if (isValidEmail.message) {
+    return isValidEmail;
+  }
+  if (isValidPass.message) {
+    return isValidPass;
   }
   return true;
 };
