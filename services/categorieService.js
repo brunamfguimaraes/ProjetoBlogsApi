@@ -23,6 +23,9 @@ const newCategoryService = async (data) => {
     return result;
 };
 
+const allCategory = async () => Categories.findAll();
+
 module.exports = {
     newCategoryService,
+    allCategory,
 };
