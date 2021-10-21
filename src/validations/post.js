@@ -9,6 +9,15 @@ function postValidation(title, content, categoryIds) {
   if (error) throw error;
 }
 
+function categoryValidation(category) {
+  if (!category.length) {
+    const error = new Error('"categoryIds" not found');
+    error.code = 400;
+    throw error;
+  }
+}
+
 module.exports = {
   postValidation,
+  categoryValidation,
 };

@@ -1,19 +1,24 @@
 const { in: OpIn } = require('sequelize').Op;
-const { BlogPosts, Category } = require('../../models');
-const { postValidation } = require('../validations/post');
+const { BlogPosts, Category, User } = require('../../models');
+const { postValidation, categoryValidation } = require('../validations/post');
 
 async function createPost(title, content, userId, categoryIds) {
   postValidation(title, content, categoryIds);
   const category = await Category.findAll({ where: { id: { [OpIn]: categoryIds } } });
-  if (!category.length) {
-    const error = new Error('"categoryIds" not found');
-    error.code = 400;
-    throw error;
-  }
+  categoryValidation(category);
   const result = await BlogPosts.create({ title, content, userId });
+  return result;
+}
+
+async function getPosts() {
+  const result = await BlogPosts.findAll({ include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ] });
   return result;
 }
 
 module.exports = {
   createPost,
+  getPosts,
 };

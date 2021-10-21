@@ -12,9 +12,8 @@ async function login(req, res) {
   return res.status(200).json({ token: result });
 }
 
-async function getUsers(req, res) {
-  const { authorization } = req.headers;
-  const result = await service.getUsers(authorization);
+async function getUsers(_req, res) {
+  const result = await service.getUsers();
   return res.status(200).json(result);
 }
 
