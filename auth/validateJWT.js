@@ -11,10 +11,11 @@ const validateJWT = async (req, res, next) => {
   if (!token) { return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token not found' }); }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const { data } = jwt.verify(token, process.env.JWT_SECRET);
     
-    const user = await User.findOne({ email: decoded.data.email });
+    const user = await User.findOne({ email: data.email });
     // const validPassword = await User.findOne({ password: user.password });
+    console.log(user, 'OIOIOOIOIOIOIOIO');
 
     if (!user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Expired or invalid token' }); 
