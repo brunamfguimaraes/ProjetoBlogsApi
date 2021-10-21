@@ -1,8 +1,26 @@
+const Joi = require('joi');
 const { User } = require('../../models');
 
-const createUser = async (user) => {
-  const newUser = await User.create(user);
+const validateError = require('../middleweres/validateError');
 
+const UserSchema = Joi.object({
+  displayName: Joi.string().min(8).required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  image: Joi.string().required(),
+});
+
+const createUser = async (user) => {
+  // valida as informações do body
+  const { error } = UserSchema.validate(user);
+  if (error) throw validateError(400, error.message);
+
+  // valida se o usuário existe
+  const userExists = await User.findOne({ where: { email: user.email } });
+  if (userExists) throw validateError(409, 'User already registered');
+
+  // cria o novo usuário
+  const newUser = await User.create(user);
   return newUser;
 };
 
