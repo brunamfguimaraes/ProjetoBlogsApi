@@ -8,7 +8,7 @@ function user(app) {
   app.route('/user/:id')
     .get(rescue(authentication), rescue(controller.getUserById));
   app.route('/user')
-    .get(rescue(controller.getUsers));
+    .get(rescue(authentication), rescue(controller.getUsers));
 }
 
 module.exports = user;
