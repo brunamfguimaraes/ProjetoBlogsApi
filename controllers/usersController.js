@@ -24,6 +24,7 @@ const createUser = async (req, res) => {
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
+    //
     res.status(500).json({ message: error.message });
   }
 };
