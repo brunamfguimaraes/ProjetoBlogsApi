@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const { 
   createUserServices,
   getAllUsersServices,
-  findUserServices, 
+  // findUserServices, 
 } = require('../services/usersServices');
 require('dotenv').config();
 
@@ -59,6 +59,6 @@ const getAllUsers = async (req, res) => {
 module.exports = {
   createUser,
   getAllUsers,
-  findUser,
+  // findUser,
 //   excludeStudent,
 };
