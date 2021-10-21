@@ -5,7 +5,7 @@ const SECRET = process.env.JWT_SECRET;
 
 const jwtConfig = {
   algorithm: 'HS256',
-  expiresIn: '30m',
+  expiresIn: '12h',
 };
 
 const checkIfTokenExists = (token) => {
