@@ -50,4 +50,18 @@ userRouter.get('/:id', verifyToken, async (req, res) => {
   }
 });
 
+userRouter.delete('/me', verifyToken, async (req, res) => {  
+  const { id } = req.user;
+  try {
+    // const userCheck = await userService.checkUserForDelete(id);
+
+    // if (userCheck.fieldError) return res.status(401).json({ message: userCheck.message });
+
+    await User.destroy({ where: { id } });
+    return res.status(204).send();    
+  } catch (error) {
+    res.status(500).json({ error });    
+  }
+});
+
 module.exports = userRouter;

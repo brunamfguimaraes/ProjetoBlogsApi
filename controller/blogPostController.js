@@ -104,6 +104,7 @@ blogPostRouter.delete('/:id', verifyToken, async (req, res) => {
     if (userCheck.fieldError) return res.status(401).json({ message: userCheck.message });
 
     await BlogPost.destroy({ where: { id } });
+    
     return res.status(204).send();
   } catch (error) {
     res.status(500).json({ error });
