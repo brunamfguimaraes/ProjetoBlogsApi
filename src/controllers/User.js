@@ -21,9 +21,16 @@ const login = async (req, res) => {
   return res.status(200).json({ token });
 };
 
+const remove = async (req, res) => {
+  const { id } = req.user;
+  await service.remove(id);
+  return res.sendStatus(204);
+};
+
 module.exports = {
+  login,
+  create,
+  remove,
   getAll,
   getById,
-  create,
-  login,
 };

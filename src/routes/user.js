@@ -8,6 +8,9 @@ const router = (app) => {
   app.route('/user')
     .get(rescue(authMiddleware(validateToken)), rescue(controller.getAll))
     .post(checkBody(checkBodyRequest), rescue(controller.create));
+    
+  app.route('/user/me')
+    .delete(rescue(authMiddleware(validateToken)), rescue(controller.remove));
 
   app.route('/user/:id')
     .get(rescue(authMiddleware(validateToken)), rescue(controller.getById));

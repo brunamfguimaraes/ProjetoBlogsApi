@@ -21,6 +21,11 @@ const create = async ({ displayName, email, password, image }) => {
   return token;
 };
 
+const remove = async (id) => {
+  const result = await User.destroy({ where: { id } });
+  return result;
+};
+
 const login = async ({ email, password }) => {
   const validUser = await User.findOne(
     { 
@@ -35,8 +40,9 @@ const login = async ({ email, password }) => {
 };
 
 module.exports = {
+  login,
+  create,
+  remove,
   getAll,
   getById,
-  create,
-  login,
 };
