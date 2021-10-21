@@ -9,8 +9,8 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-app.use('/user', userRoutes);
 app.use('/login', loginRoutes);
+app.use('/user', userRoutes);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 

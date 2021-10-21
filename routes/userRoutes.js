@@ -4,6 +4,6 @@ const validateUser = require('../middlewares/userValidation');
 
 const router = express.Router();
 
-router.get('/', validateUser, userControllers.addUser);
+router.post('/', validateUser, userControllers.addUser);
 
 module.exports = router;
