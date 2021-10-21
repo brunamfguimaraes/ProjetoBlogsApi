@@ -40,11 +40,13 @@ const getAllUsers = async (req, res) => {
 const findUser = async (req, res) => {
   try {
     const response = await findUserServices(req.params.id); 
-    if (response.isError) res.status(404).json({ message: response.message });
+    if (response.isError) {
+      return res.status(404).json({ message: response.message }); 
+    }
+
     return res.status(200).json(response);
   } catch (error) {
-    console.log('OIOIOIOIOIOIO');
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
