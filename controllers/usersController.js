@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 const { StatusCodes } = require('http-status-codes');
 const { 
   createUserServices,
   getAllUsersServices,
-  findUserServices } = require('../services/usersServices');
+  findUserServices, 
+} = require('../services/usersServices');
+require('dotenv').config();
 
 // const { JWT_SECRET } = process.env;
 // const JWT_SECRET = 'projectBlogsAPI';
