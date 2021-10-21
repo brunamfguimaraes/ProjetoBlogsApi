@@ -34,15 +34,15 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const findUser = async (req, res) => {
-  try {
-    const response = await findUserServices(req.params.id); 
-      if (response.isError) res.status(404).json({ message: response.message });
-    return res.status(200).json(response);
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
+// const findUser = async (req, res) => {
+//   try {
+//     const response = await findUserServices(req.params.id); 
+//       if (response.isError) res.status(404).json({ message: response.message });
+//     return res.status(200).json(response);
+//   } catch (error) {
+//     return res.status(500).json({ error: error.message });
+//   }
+// };
 
 // const excludeStudent = async (req, res) => {
 //   try {
