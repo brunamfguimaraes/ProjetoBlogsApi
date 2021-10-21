@@ -19,4 +19,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(3000, () => console.log('ouvindo porta 3000'));
+app.listen(process.env.PORT, () => console.log(`ouvindo porta ${process.env.PORT}`));
