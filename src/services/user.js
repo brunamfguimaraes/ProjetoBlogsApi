@@ -2,7 +2,7 @@ const { User } = require('../../models');
 const validations = require('../validations/user');
 const utils = require('../utils');
 
-async function newUser(displayName, email, password, image) {
+async function createUser(displayName, email, password, image) {
   validations.userValidation(displayName, email, password, image);
   await validations.emailValidation(email, User);
   await User.create({ displayName, email, password, image });
@@ -30,7 +30,7 @@ async function getUserById(id) {
 }
 
 module.exports = {
-  newUser,
+  createUser,
   login,
   getUsers,
   getUserById,

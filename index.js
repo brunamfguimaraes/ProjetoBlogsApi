@@ -14,6 +14,7 @@ app.get('/', (request, response) => {
 
 route.user(app);
 route.login(app);
+route.categories(app);
 
 app.use(errors);
 

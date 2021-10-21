@@ -4,7 +4,7 @@ const { authentication } = require('../middlewares/authentication');
 
 function user(app) {
   app.route('/user')
-    .post(rescue(controller.newUser));
+    .post(rescue(controller.createUser));
   app.route('/user/:id')
     .get(rescue(authentication), rescue(controller.getUserById));
   app.route('/user')

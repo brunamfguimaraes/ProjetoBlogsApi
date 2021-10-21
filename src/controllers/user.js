@@ -1,8 +1,8 @@
 const service = require('../services/user');
 
-async function newUser(req, res) {
+async function createUser(req, res) {
   const { displayName, email, password, image } = req.body;
-  const result = await service.newUser(displayName, email, password, image);
+  const result = await service.createUser(displayName, email, password, image);
   return res.status(201).json({ token: result });
 }
 
@@ -25,7 +25,7 @@ async function getUserById(req, res) {
 }
 
 module.exports = {
-  newUser,
+  createUser,
   login,
   getUsers,
   getUserById,
