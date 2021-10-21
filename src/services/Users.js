@@ -1,14 +1,34 @@
-// const model = require('../../models');
+const { User } = require('../../models');
 
-const createUser = () => {};
+const createUser = async (user) => {
+  const newUser = await User.create(user);
 
-const getAllUsers = () => {};
+  return newUser;
+};
 
-const getUserById = () => {};
+const getAllUsers = async () => {
+  const allUsers = await User.findAll();
 
-const updateUser = () => {};
+  return allUsers;
+};
 
-const deleteUser = () => {};
+const getUserById = async (id) => {
+  const UserById = await User.findByPk(id);
+
+  return UserById;
+};
+
+const updateUser = async (name, description, id) => {
+  const updatedUser = await User.update({ name, description }, { where: { id } });
+
+  return updatedUser;
+};
+
+const deleteUser = async (id) => {
+  const deletedUser = await User.destroy({ where: { id } });
+
+  return deletedUser;
+};
 
 module.exports = {
   createUser,
