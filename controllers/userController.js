@@ -40,7 +40,7 @@ const findLogin = async (req, res, next) => {
 
 const findUsers = async (req, res, next) => {
   const token = req.headers.authorization;
-  const validate = userService.findUsers(token);
+  const validate = userService.validateToken(token);
   if (validate.message) {
     return next(validate);
   }
@@ -48,8 +48,23 @@ const findUsers = async (req, res, next) => {
     return res.status(200).json(users);
 };
 
+const findById = async (req, res, next) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const validate = userService.validateToken(token);
+  if (validate.message) {
+    return next(validate);
+  }
+  const user = await User.findByPk(id);
+  if (user === null) {
+    return next({ status: 404, message: 'User does not exist' });
+  }
+  return res.status(200).json(user);
+};
+
 module.exports = {
   createUser,
   findLogin,
   findUsers,
+  findById,
 };

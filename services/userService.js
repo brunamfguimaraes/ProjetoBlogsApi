@@ -79,7 +79,7 @@ const findLogin = (email, password) => {
   return true;
 };
 
-const findUsers = (token) => {
+const validateToken = (token) => {
   if (!token) {
     return { status: 401, message: 'Token not found' };
   }
@@ -92,5 +92,5 @@ const findUsers = (token) => {
 module.exports = { 
   createUser,
   findLogin,
-  findUsers,
+  validateToken,
  };

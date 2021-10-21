@@ -11,6 +11,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
+app.get('/user/:id', userController.findById);
 app.get('/user', userController.findUsers);
 app.post('/user', userController.createUser);
 app.post('/login', userController.findLogin);
