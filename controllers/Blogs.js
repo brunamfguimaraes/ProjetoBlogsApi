@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 // https://www.npmjs.com/package/http-status-codes coisa boa viu
-const posts = require('../services/Blogs');
+const Blogs = require('../services/Blogs');
 
 /* const createPost = async (req, res) => {
     const bodyValue = req.body;
@@ -12,7 +12,7 @@ const posts = require('../services/Blogs');
 
 const getAll = async (req, res) => {
     try {
-        const result = await posts.getAllPosts();
+        const result = await Blogs.getAllPosts();
         if (result.isError) return res.status(result.status).json(result.err);
         return res.status(StatusCodes.OK).json(result);
     } catch (error) {
@@ -20,6 +20,17 @@ const getAll = async (req, res) => {
     }
 };
 
+const postRemove = async (req, res) => {
+    try {
+     const result = await Blogs.deleteOne(req.params.id, req.user);
+     if (result.isError) return res.status(result.status).json(result.err);
+     return res.status(204).end();
+    } catch (err) {
+     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err });
+    }
+  };
+
 module.exports = {
     getAll,
+    postRemove,
 };

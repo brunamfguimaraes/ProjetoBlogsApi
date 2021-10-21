@@ -1,10 +1,11 @@
 const { Router } = require('express');
-const postController = require('../controllers/Blogs');
+const BlogsController = require('../controllers/Blogs');
 const { tokenValidation } = require('../mid/tokenValidation');
 
 const Blog = Router();
 
 Blog
-    .get('/', tokenValidation, postController.getAll);
+    .get('/', tokenValidation, BlogsController.getAll)
+    .delete('/:id', tokenValidation, BlogsController.postRemove);
 
 module.exports = Blog;
