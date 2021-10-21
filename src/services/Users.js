@@ -4,16 +4,22 @@ const { User } = require('../../models');
 const validateError = require('../middleweres/validateError');
 
 const UserSchema = Joi.object({
-  displayName: Joi.string().min(8).required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().min(6).required(),
-  image: Joi.string().required(),
+  displayName: Joi.string().min(8).required()
+  .messages({
+    'string.min': '{{#label}} must be at least {{#limit}} characters long',
+  }),
+  email: Joi.string().email().required()
+  .messages({
+    'string.email': '{{#label}} must be valid email',
+  }),
+  password: Joi.string().min(6).required()
+  .messages({
+    'string.min': '{{#label}} must be {{#limit}} characters long',
+  }),
+  image: Joi.string(),
 }).messages({
   'string.base': '{{#label}} must be a string',
   'string.empty': '{{#label}} is required',
-  'string.email.invalid': '{{#label}} is invalid',
-  'string.min': '{{#label}} lenght must be {#limit} characters long',
-  'any.required': '{{#label}} is required',
 });
 
 const createUser = async (user) => {
