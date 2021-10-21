@@ -8,6 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const port = process.env.PORT || 3000;
+
 app.use('/user', usersRoutes);
 app.use('/login', loginRoutes);
 
@@ -16,4 +18,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(process.env.PORT || 3000, () => console.log(`ouvindo porta ${process.env.PORT}`));
+app.listen(port, () => console.log(`ouvindo porta ${port}`));
