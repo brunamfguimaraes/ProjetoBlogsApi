@@ -14,7 +14,7 @@ async function login(email, password) {
   validations.loginValidation(email, password);
   const user = await User.findOne({ where: { email, password } });
   validations.userCheck(user);
-  const token = utils.createToken({ email, password });
+  const token = utils.createToken({ email, password, id: user.id });
   return token;
 }
 
