@@ -32,8 +32,12 @@ const validateJWT = (req, res, next) => {
   }
 };
 
+const generateToken = (id, email) => {
+  const token = jwt.sign({ id, email }, secret, jwtConfiguration);
+  return token;
+};
+
 module.exports = {
-  jwt,
-  jwtConfiguration,
+  generateToken,
   validateJWT,
 };

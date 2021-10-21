@@ -24,10 +24,12 @@ app.get('/', (request, response) => {
 // implementação da estrutura do sequelize, como models, migration e seeders
 // criação e população do banco de dados
 // middleware de validação do usuário (userValidation)
+// implementar o controller do login e assim gerar o token do usuário (req 2)
+// token necessário para adicionar um usuário à tabela Users (req 1)
+// função que retorna todos os usuários (req 3)s
 
 // ------------------------------------------
 
 // Próximos passos:
 
-// implementar o controller do login e assim gerar o token do usuário (req 2)
-// token necessário para adicionar um usuário à tabela Users (req 1)
+// Fazer a busca de usuário específico

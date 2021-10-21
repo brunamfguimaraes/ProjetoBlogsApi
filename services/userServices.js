@@ -18,9 +18,8 @@ const addUser = async ({ displayName, email, password, image }) => {
   const validName = validateName(displayName);
   if (validName !== null) return validName;
   
-  await User.create({ displayName, email, password, image });
-  
-  return null;
+  const user = await User.create({ displayName, email, password, image });
+  return user;
 };
 
 const getAll = async () => {
@@ -28,7 +27,14 @@ const getAll = async () => {
   return users;
 };
 
+const findUser = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  console.log(user);
+  return user;
+};
+
 module.exports = {
   addUser,
   getAll,
+  findUser,
 };
