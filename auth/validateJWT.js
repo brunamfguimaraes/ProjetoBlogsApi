@@ -18,7 +18,7 @@ const validateJWT = async (req, res, next) => {
 
     if (!user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Expired or invalid token' }); 
-    } 
+    }
     
     req.user = user;
     next();

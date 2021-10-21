@@ -44,6 +44,7 @@ const findUser = async (req, res) => {
     if (response.isError) {
       return res.status(404).json({ message: response.message }); 
     }
+    //
 
     return res.status(200).json(response);
   } catch (error) {
