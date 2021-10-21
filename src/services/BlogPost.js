@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Category, BlogPost, User } = require('../models');
 const valid = require('../validations/BlogPost');
 
@@ -29,6 +30,27 @@ const getById = async (id) => {
   valid.checkIfPostExists(post);
   
   return post;
+};
+
+const getBySearchTerm = async (term) => {
+  const result = await BlogPost.findAll(
+    { 
+      where: { 
+        [Op.or]: 
+          [
+            { title: { [Op.regexp]: term || ' ' } },
+            { content: { [Op.regexp]: term || ' ' } },
+          ],
+      },
+      include:
+        [
+          { model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Category, as: 'categories', through: { attributes: [] } },
+        ],
+    },
+  );
+  
+  return result;
 };
 
 const addToPostsCategoriesTable = async (postId, categoryIds) => {
@@ -68,4 +90,5 @@ module.exports = {
   remove,
   getAll,
   getById,
+  getBySearchTerm,
 };
