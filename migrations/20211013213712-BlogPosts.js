@@ -18,6 +18,7 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
+        defaultValue: 1,
         field: 'userId',
         references: {
           model: 'Users',
