@@ -12,4 +12,14 @@ const createCategorie = async (req, res, next) => {
   return res.status(201).json({ id, name });
 };
 
-module.exports = { createCategorie };
+const getCategories = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const validate = categorieService.getCategories(token);
+  if (validate.message) {
+    return next(validate);
+  }
+  const categories = await Categorie.findAll();
+  return res.status(200).json(categories);
+};
+
+module.exports = { createCategorie, getCategories };

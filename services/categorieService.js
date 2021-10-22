@@ -27,6 +27,15 @@ const createCategorie = (name, token) => {
   return true;
 };
 
+const getCategories = (token) => {
+  const isValidToken = validateToken(token);
+  if (isValidToken.message) {
+    return isValidToken;
+  }
+  return true;
+};
+
 module.exports = {
   createCategorie,
+  getCategories,
 };

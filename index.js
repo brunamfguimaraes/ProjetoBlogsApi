@@ -17,6 +17,7 @@ app.get('/user', userController.findUsers);
 app.post('/user', userController.createUser);
 app.post('/login', userController.findLogin);
 
+app.get('/categories', categorieController.getCategories);
 app.post('/categories', categorieController.createCategorie);
 
 app.use((err, _req, res, _next) => res.status(err.status).json({ message: err.message }));
