@@ -20,6 +20,22 @@ const createCategories = async (category) => {
   return newCategory;
 };
 
+const getAllCategories = async () => {
+  const allCategories = await Categories.findAll();
+
+  return allCategories;
+};
+
+const getCategoriesById = async () => {};
+
+const updateCategory = async () => {};
+
+const deleteCategory = async () => {};
+
 module.exports = {
   createCategories,
+  getAllCategories,
+  getCategoriesById,
+  updateCategory,
+  deleteCategory,
 };
