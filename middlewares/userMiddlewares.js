@@ -129,13 +129,30 @@ const validateJWT = async (req, res, next) => {
   
   try {
     /* Através do método verify, podemos validar e decodificar o nosso JWT. */
-    jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    /*
+      A variável decoded será um objeto semelhante ao seguinte:
+      {
+        email: 'rubinho@gmail.com',
+        password: '123456',
+        iat: 1632458690,
+        exp: 1633063490
+      }
+    */
 
     /* Caso o token esteja expirado, a própria biblioteca irá retornar um erro,
-    por isso não é necessário fazer validação do tempo. */
+       por isso não é necessário fazer validação do tempo.
+       Caso esteja tudo certo, nós então buscamos o usuário na base por EMAIL para obter seus dados atualizados */
+    const userEmail = decoded.email;
+    const user = await User.findOne({ userEmail });
+
+    // // Comments: O usuário existe! Colocamos ele em um campo no objeto req, dessa forma, o usuário estará disponível para outros middlewares que executem em sequência.
+    req.user = user;
 
     next();
   } catch (err) {
+    console.log(err.message);
     return res.status(401).json({ message: errors.expiredOrInvalidToken });
   }
 };

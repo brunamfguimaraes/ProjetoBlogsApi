@@ -3,6 +3,7 @@ const express = require('express');
 const { userRouter } = require('./controllers/userController');
 const { loginRouter } = require('./controllers/loginController');
 const { categoriesRouter } = require('./controllers/categoriesController');
+const { postRouter } = require('./controllers/postController');
 require('dotenv').config();
 
 const app = express();
@@ -25,9 +26,14 @@ app.use('/user', userRouter);
 app.use('/login', loginRouter);
 
 // ------------------------------------------------------------------
-// Requisito 5: Rota Categories
+// Requisito 5 e 6: Rota Categories
 
 app.use('/categories', categoriesRouter);
+
+// ------------------------------------------------------------------
+// Requisito 7: Rota Post
+
+app.use('/post', postRouter);
 
 // ------------------------------------------------------------------
 
