@@ -3,15 +3,15 @@ const BlogPost = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       content: DataTypes.STRING,
-      published: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      updated: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      published: DataTypes.DATE,
+      updated: DataTypes.DATE,
     },
     { timestamps: false });
 
   insertBlogPosts.associate = (models) => {
     insertBlogPosts.belongsTo(models.User,
       {
-        foreignKey: 'userId', as: 'user',
+        foreignKey: 'userId', as: 'User',
       });
   };
 

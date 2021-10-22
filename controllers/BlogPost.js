@@ -6,7 +6,7 @@ const requestCreateBlogPost = async (req, res) => {
 
   const posted = await addPost(title, content, userId);
 
-  return res.status(200).json(posted);
+  return res.status(201).json(posted);
 };
 
 module.exports = {
