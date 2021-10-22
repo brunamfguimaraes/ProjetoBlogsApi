@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
 const LoginService = require('../services/loginService');
 
-const secret = process.env.SECRET;
+const secret = process.env.JWT_SECRET;
 const jwtConfig = {
   expiresIn: '15m',
   algorithm: 'HS256',

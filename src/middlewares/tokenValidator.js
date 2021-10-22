@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const Error = require('../helpers/errors');
 require('dotenv');
 
-const secret = process.env.SECRET;
+const secret = process.env.JWT_SECRET;
 
 const tokenValidator = async (req, res, next) => {
   const { authorization } = req.headers;
