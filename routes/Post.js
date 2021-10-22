@@ -5,7 +5,8 @@ const { tokenValidation } = require('../mid/tokenValidation');
 const Post = Router();
 
 Post
-    .get('/', tokenValidation, PostController.getAll)
     .post('/', tokenValidation, PostController.newPost);
 
+Post
+    .get('/', tokenValidation, PostController.getAll);
 module.exports = Post;
