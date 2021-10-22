@@ -1,5 +1,6 @@
 // const Joi = require('joi');
 const { BlogPosts, Categories, Users } = require('../models');
+const validationPost = require('../mid/ValidationCreatePost');
 
 /* const isValidPost = (data) => {
     const validation = Joi.object({
@@ -41,25 +42,33 @@ const { BlogPosts, Categories, Users } = require('../models');
     
 }; */
 
-const getAllPosts = async () =>
+const getAllPosts = async () => {
     BlogPosts.findAll({
         include: [
             { model: Categories, as: 'categories', through: { attributes: [] } },
             { model: Users, as: 'user' },
         ],
     });
-
-const findPost = async (findTerm) => {
-    const posts = await BlogPosts.findAll({
-        include:
-            [{ model: Categories, as: 'categories', through: { attributes: [] } },
-            { model: Users, as: 'user' }],
-    });
-    const resultTerm = posts.filter((data) =>
-        data.dataValues.title.includes(findTerm) || data.dataValues.content.includes(findTerm));
-    return resultTerm;
 };
+
+const newPost = async (data, user) => {
+    const checkValidatePost = validationPost.isValidTitleAndContent(data);
+    if (checkValidatePost) { return checkValidatePost; }
+    const { id } = user;
+    const { title, content, categoryIds } = data;
+    const isValid = await validationPost.isValidCategory(categoryIds);
+    if (isValid) { return isValid; }
+    const result = await BlogPosts.create({
+        title,
+        content,
+        userId: id,
+        published: Date(),
+    });
+    await validationPost.newPostCreate(categoryIds, result.id);
+    return result;
+};
+
 module.exports = {
     getAllPosts,
-    findPost,
+    newPost,
 };

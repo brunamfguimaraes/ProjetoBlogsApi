@@ -19,28 +19,20 @@ const getAll = async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
     }
 };
-
-const postRemove = async (req, res) => {
+const newPost = async (req, res) => {
     try {
-        const result = await Post.deleteOne(req.params.id, req.user);
-        if (result.isError) return res.status(result.status).json(result.err);
-        return res.status(204).end();
+        const data = req.body;
+        const userData = req.user;
+        const response = await Post.newPost(data, userData);
+        if (response.isError) return res.status(response.status).json(response.err);
+        return res.status(StatusCodes.CREATED).json(response);
     } catch (err) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err });
+        // console.log(err)
+        res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
     }
 };
 
-const findPost = async (req, res) => {
-    try {
-      const result = await Post.findPost(req.query.q);
-        res.status(StatusCodes.OK).json(result);
-    } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
-    }
-  };
-
 module.exports = {
     getAll,
-    postRemove,
-    findPost,
+    newPost,
 };

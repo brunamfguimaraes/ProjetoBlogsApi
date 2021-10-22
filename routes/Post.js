@@ -5,10 +5,7 @@ const { tokenValidation } = require('../mid/tokenValidation');
 const Post = Router();
 
 Post
-    .get('/', tokenValidation, PostController.getAll);
-Post
-    .delete('/:id', tokenValidation, PostController.postRemove);
-Post
-    .get('/search?:searchTerm', tokenValidation, PostController.findPost);
+    .get('/', tokenValidation, PostController.getAll)
+    .post('/', tokenValidation, PostController.newPost);
 
 module.exports = Post;
