@@ -21,5 +21,19 @@ categoriesRouter.post('/', validateJWT, validateCategoryNameWasInformed, async (
 });
 
 // ---------------------------------------------------------------
+// Requisito 6: CONTROLLER responsável por realizar busca de categorias via sequelize e retornar categorias cadastradas.
+
+categoriesRouter.get('/', validateJWT, async (req, res) => {
+  try {
+    const categories = await Category.findAll();
+
+    return res.status(200).json(categories);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+// ---------------------------------------------------------------
 
 module.exports = { categoriesRouter };

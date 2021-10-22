@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const { userRouter } = require('./controllers/userController');
 const { loginRouter } = require('./controllers/loginController');
 const { categoriesRouter } = require('./controllers/categoriesController');
@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
