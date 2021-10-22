@@ -1,7 +1,7 @@
-const { User } = require('../models');
-
 const { validationEmail, validationPassword } = require('../middleware/validationUser');
-const { validationLoginEmail, validationLoginPassword, validationLoginUser } = require('../middleware/validationLogin');
+const { validationLoginEmail,
+    validationLoginPassword, 
+    validationLoginUser } = require('../middleware/validationLogin');
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
