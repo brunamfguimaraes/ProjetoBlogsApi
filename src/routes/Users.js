@@ -17,7 +17,7 @@ router.route('/')
 .post(createUser);
 
 router.route('/:id')
-.get(getUserById)
+.get(validateToken, getUserById)
 .put(updateUser)
 .delete(deleteUser);
 

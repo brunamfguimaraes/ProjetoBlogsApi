@@ -45,6 +45,8 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
   const UserById = await User.findByPk(id);
 
+  if (!UserById) throw validateError(404, 'User does not exist');
+
   return UserById;
 };
 
