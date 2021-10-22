@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { postUser } = require('./controllers/user');
+const { verifyEmail, verifyDisplayName, verifyPassword } = require('./middlewares/user');
 
 const app = express();
 
@@ -13,4 +14,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/user', async (req, res) => postUser(req, res));
+app.post('/user',
+verifyEmail,
+verifyDisplayName,
+verifyPassword, async (req, res) => postUser(req, res));
