@@ -5,10 +5,9 @@ const createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
     console.log(newUser);
-
-    // const { id, displayName, email, password, image } = newUser;
+    res.status(201).json({ ...newUser.dataValues });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     res.status(500).send('Something went Wrong. Please Try again');
   }
 };
