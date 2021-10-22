@@ -1,6 +1,6 @@
 // const Joi = require('joi');
 const { BlogPosts, Categories, Users } = require('../models');
-const { isOwner } = require('../mid/BlogsValidations');
+
 /* const isValidPost = (data) => {
     const validation = Joi.object({
         title: Joi.string().required(),
@@ -41,24 +41,14 @@ const { isOwner } = require('../mid/BlogsValidations');
     
 }; */
 
-const getAllPosts = async () => {
-    BlogPosts.findAll({
-        include: [
-            { model: Categories, as: 'categories', through: { attributes: [] } },
-            { model: Users, as: 'user' },
-        ],
-    });
-};
+const getAllPosts = async () =>
+  BlogPosts.findAll({
+    include: [
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+      { model: Users, as: 'user' },
+    ],
+  });
 
-const deleteOne = async (id, user) => {
-    const validOwner = await isOwner(id, user.id);
-    if (validOwner) {
-        return validOwner;
-    }
-    await BlogPosts.destroy({ where: { id } });
-    return { isError: false };
-};
 module.exports = {
     getAllPosts,
-    deleteOne,
 };

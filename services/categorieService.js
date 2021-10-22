@@ -3,13 +3,13 @@ const { StatusCodes } = require('http-status-codes');
 const JOI = require('joi');
 const { Categories } = require('../models');
 
-const validateInputData = (data) =>
+const isValid = (data) =>
     JOI.object({
         name: JOI.string().required(),
     }).validate(data);
 
 const newCategoryService = async (data) => {
-    const { error } = validateInputData(data);
+    const { error } = isValid(data);
     // desestruturado msm da nada não
     if (error) {
         return {
