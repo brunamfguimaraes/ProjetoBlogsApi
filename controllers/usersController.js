@@ -1,8 +1,9 @@
-const { Users } = require('../models');
+const { User } = require('../models');
+require('dotenv');
 
 const createUser = async (req, res) => {
   try {
-    const newUser = await Users.create(req.body);
+    const newUser = await User.create(req.body);
     console.log(newUser);
 
     // const { id, displayName, email, password, image } = newUser;
