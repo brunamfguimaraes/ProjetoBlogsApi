@@ -1,7 +1,10 @@
 // const Joi = require('joi');
 const { BlogPosts, Categories, Users } = require('../models');
-const validationPost = require('../mid/ValidationCreatePost');
-
+const { 
+    isValidTitleAndContent, 
+    isValidCategory, 
+    newPostCreate,
+} = require('../mid/ValidationCreatePost');
 /* const isValidPost = (data) => {
     const validation = Joi.object({
         title: Joi.string().required(),
@@ -52,11 +55,11 @@ const getAllPosts = async () => {
 };
 
 const newPost = async (data, user) => {
-    const checkValidatePost = validationPost.isValidTitleAndContent(data);
+    const checkValidatePost = isValidTitleAndContent(data);
     if (checkValidatePost) { return checkValidatePost; }
     const { id } = user;
     const { title, content, categoryIds } = data;
-    const isValid = await validationPost.isValidCategory(categoryIds);
+    const isValid = await isValidCategory(categoryIds);
     if (isValid) { return isValid; }
     const result = await BlogPosts.create({
         title,
@@ -64,7 +67,7 @@ const newPost = async (data, user) => {
         userId: id,
         published: Date(),
     });
-    await validationPost.newPostCreate(categoryIds, result.id);
+    await newPostCreate(categoryIds, result.id);
     return result;
 };
 
