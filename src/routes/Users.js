@@ -2,8 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
+const validateToken = require('../middleweres/validateToken');
+
 const {
-  createUser,
+createUser,
   getAllUsers,
   getUserById,
   updateUser,
@@ -11,7 +13,7 @@ const {
 } = require('../controllers/Users');
 
 router.route('/')
-.get(getAllUsers)
+.get(validateToken, getAllUsers)
 .post(createUser);
 
 router.route('/:id')
