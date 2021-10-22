@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { postUser, userLogin } = require('./controllers/user');
+const { postUser, userLogin, getAllUsers } = require('./controllers/user');
 const { verifyEmail, verifyDisplayName, verifyPassword } = require('./middlewares/user');
 
 const app = express();
@@ -23,3 +23,5 @@ app.post('/login',
 verifyEmail,
 verifyPassword,
 async (req, res) => userLogin(req, res));
+
+app.get('/user', async (req, res) => getAllUsers(req, res));
