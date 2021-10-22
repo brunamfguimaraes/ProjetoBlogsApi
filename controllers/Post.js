@@ -19,6 +19,7 @@ const getAll = async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
     }
 };
+
 const newPost = async (req, res) => {
     try {
         const data = req.body;
