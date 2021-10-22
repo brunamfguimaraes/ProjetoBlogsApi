@@ -16,8 +16,8 @@ router.route('/')
 .post(validateToken, createCategories);
 
 router.route('/:id')
-.get(getCategoriesById)
-.put(updateCategory)
-.delete(deleteCategory);
+.get(validateToken, getCategoriesById)
+.put(validateToken, updateCategory)
+.delete(validateToken, deleteCategory);
 
 module.exports = router;

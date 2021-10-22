@@ -26,11 +26,25 @@ const getAllCategories = async () => {
   return allCategories;
 };
 
-const getCategoriesById = async () => {};
+const getCategoriesById = async (id) => {
+  const categoryById = await Categories.findByPk(id);
 
-const updateCategory = async () => {};
+  if (!categoryById) throw validateError(404, 'Category does not exist');
 
-const deleteCategory = async () => {};
+  return categoryById;
+};
+
+const updateCategory = async (id, name) => {
+  const updatedCategory = await Categories.update({ name }, { where: { id } });
+
+  return updatedCategory;
+};
+
+const deleteCategory = async (id) => {
+  const deletedCategory = await Categories.destroy({ where: { id } });
+
+  return deletedCategory;
+};
 
 module.exports = {
   createCategories,
