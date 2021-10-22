@@ -55,6 +55,7 @@ const verifyToken = (req, res, next) => {
   if (jwtResult.message) {
     return res.status(status401).json({ message: 'Expired or invalid token' });
   }
+  req.token = jwtResult;
   next();
 };
 

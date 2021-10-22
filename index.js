@@ -6,6 +6,10 @@ const { verifyEmail,
   verifyDisplayName,
   verifyPassword,
   verifyToken } = require('./middlewares/user');
+  const { verifyTitle,
+    verifyContent,
+    verifyCategoryIds } = require('./middlewares/post');
+const { postBlogPost } = require('./controllers/blogPost');
 
 const app = express();
 
@@ -35,3 +39,10 @@ app.get('/user/:id', verifyToken, async (req, res) => userById(req, res));
 app.post('/categories', verifyToken, async (req, res) => postCategory(req, res));
 
 app.get('/categories', verifyToken, (req, res) => getAllCategories(req, res));
+
+app.post('/post',
+verifyToken,
+verifyTitle,
+verifyContent,
+verifyCategoryIds,
+async (req, res) => postBlogPost(req, res));
