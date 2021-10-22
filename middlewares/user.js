@@ -14,6 +14,9 @@ next();
 const verifyEmail = (req, res, next) => {
   const { email } = req.body;
   const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  if (email === '') {
+    return res.status(status400).json({ message: '"email" is not allowed to be empty' });
+  }
   if (!email) {
     return res.status(status400).json({ message: '"email" is required' });
   }
@@ -26,6 +29,9 @@ const verifyEmail = (req, res, next) => {
 const verifyPassword = (req, res, next) => {
   const { password } = req.body;
   
+  if (password === '') {
+    return res.status(status400).json({ message: '"password" is not allowed to be empty' });
+  }
   if (!password) {
   return res.status(status400).json({ message: '"password" is required' });
 }
