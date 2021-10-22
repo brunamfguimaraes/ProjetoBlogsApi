@@ -1,10 +1,10 @@
-const { createPost } = require('../services/blogPost');
+const { createPost, findAllPosts } = require('../services/blogPost');
 const { findAllCategories } = require('../services/category');
 const { getUserByEmail } = require('../services/user');
 
 const status400 = 400;
 const status201 = 201;
-// const status200 = 200;
+const status200 = 200;
 
 const postBlogPost = async (req, res) => {
   console.log(req.token);
@@ -21,6 +21,12 @@ const postBlogPost = async (req, res) => {
   return res.status(status201).json(result);
 };
 
+const getAllPosts = async (req, res) => {
+  const result = await findAllPosts();
+  return res.status(status200).json(result);
+};
+
 module.exports = {
   postBlogPost,
+  getAllPosts,
 };

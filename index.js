@@ -9,7 +9,7 @@ const { verifyEmail,
   const { verifyTitle,
     verifyContent,
     verifyCategoryIds } = require('./middlewares/post');
-const { postBlogPost } = require('./controllers/blogPost');
+const { postBlogPost, getAllPosts } = require('./controllers/blogPost');
 
 const app = express();
 
@@ -46,3 +46,7 @@ verifyTitle,
 verifyContent,
 verifyCategoryIds,
 async (req, res) => postBlogPost(req, res));
+
+app.get('/post',
+verifyToken,
+async (req, res) => getAllPosts(req, res));
