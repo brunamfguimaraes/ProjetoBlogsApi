@@ -66,9 +66,13 @@ const getBlogPostById = async (req, res) => {
 const updateBlogPost = async (req, res) => {
   try {
     const { id } = req.params;
+       
     const { title, content } = req.body;
-    const blogPost = await BlogPost.findOne({ where: { id } });
-
+    const blogPost = await BlogPost.findOne({ where: { id },
+    include: [
+        { model: Category, as: 'categories', through: { attributes: [] } }],
+    });
+    
     if (!blogPost) { 
       return res.status(CODE.NOT_FOUND).json({
         message: 'Post does not exist' });

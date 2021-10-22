@@ -1,7 +1,7 @@
 const CODE = require('http-status-codes');
 
 const fieldValidations = (req, res, next) => {
-  const { title, content, categoryIds } = req.body;
+  const { title, content } = req.body;
   
   if (!title) {
  return res.status(CODE.BAD_REQUEST).json({
@@ -13,12 +13,17 @@ const fieldValidations = (req, res, next) => {
   message: '"content" is required',
   }); 
 }
-  if (!categoryIds) {
- return res.status(CODE.BAD_REQUEST).json({
-  message: '"categoryIds" is required',
-  }); 
-}
   next();
+};
+
+const categoryIdValidation = (req, res, next) => {
+  const { categoryIds } = req.body;
+  if (!categoryIds) {
+    return res.status(CODE.BAD_REQUEST).json({
+     message: '"categoryIds" is required',
+     }); 
+   }
+     next();
 };
 
 /* continuar a validação do usuário */
@@ -34,8 +39,8 @@ const fieldValidations = (req, res, next) => {
 //   next();
 // };
 
-
 module.exports = {
   fieldValidations,
-  userValidations,
+  categoryIdValidation,
+  // userValidations,
 };

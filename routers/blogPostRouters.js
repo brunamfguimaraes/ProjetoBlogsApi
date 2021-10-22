@@ -7,13 +7,13 @@ const {
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
- } = require('../controllers/blogPostController');
+} = require('../controllers/blogPostController');
 const jwtValidations = require('../middlewares/jwtValidations');
-const { fieldValidations } = require('../middlewares/blogPostValidations');
+const { fieldValidations, categoryIdValidation } = require('../middlewares/blogPostValidations');
  
-router.put('/:id', updateBlogPost);
+router.put('/:id', jwtValidations, fieldValidations, categoryIdValidation, updateBlogPost);
 router.get('/:id', jwtValidations, getBlogPostById);
-router.post('/', jwtValidations, fieldValidations, createBlogPost);
+router.post('/', jwtValidations, categoryIdValidation, fieldValidations, createBlogPost);
 router.get('/', jwtValidations, getAllBlogPosts);
 
 module.exports = router;
