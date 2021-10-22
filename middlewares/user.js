@@ -1,3 +1,6 @@
+const { jwtVerify } = require('./jwt');
+
+const status401 = 401;
 const status400 = 400;
 // const status201 = 201;
 // const status409 = 409;
@@ -43,8 +46,21 @@ const verifyPassword = (req, res, next) => {
 next();
 };
 
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(status401).json({ message: 'Token not found' });
+  }
+  const jwtResult = jwtVerify(token);
+  if (jwtResult.message) {
+    return res.status(status401).json({ message: 'Expired or invalid token' });
+  }
+  next();
+};
+
 module.exports = {
   verifyDisplayName,
   verifyEmail,
   verifyPassword,
+  verifyToken,
 };
