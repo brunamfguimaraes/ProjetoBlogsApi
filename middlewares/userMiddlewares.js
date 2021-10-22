@@ -1,5 +1,7 @@
+const jwt = require('jsonwebtoken');
 const regexEmail = require('../helpers/regexEmail');
 const { User } = require('../models');
+require('dotenv').config();
 
 // Comments: Lista de erros
 const errors = {
@@ -12,6 +14,8 @@ const errors = {
   passwordRequired: '"password" is required',
   passwordEmpty: '"password" is not allowed to be empty',
   userNotRegistered: 'Invalid fields',
+  missingAuthToken: 'Token not found',
+  expiredOrInvalidToken: 'Expired or invalid token',
 };
 
 // Comments: Valida se o campo displayName é uma string com no mínimo de 8 caracteres.
@@ -117,6 +121,25 @@ const validatePasswordIsEmpty = async (req, res, next) => {
   next();
 };
 
+// Source: https://app.betrybe.com/course/back-end/autenticacao-e-upload-de-arquivos/nodejs-jwt-json-web-token/acf1c24f-d531-4cf0-be9b-2384e37799d7/conteudos/096ab7ca-bfa4-41d2-9b14-fe5a42aa956c/implementando-jwt/e8ebbc5b-1a0d-4baa-97df-d355be493891?use_case=side_bar
+const validateJWT = async (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token || token === '') return res.status(401).json({ message: errors.missingAuthToken });
+  
+  try {
+    /* Através do método verify, podemos validar e decodificar o nosso JWT. */
+    jwt.verify(token, process.env.JWT_SECRET);
+
+    /* Caso o token esteja expirado, a própria biblioteca irá retornar um erro,
+    por isso não é necessário fazer validação do tempo. */
+
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: errors.expiredOrInvalidToken });
+  }
+};
+
 module.exports = {
   validateDisplayNameLength,
   validateEmailFormat,
@@ -127,4 +150,5 @@ module.exports = {
   validatePasswordWasInformed,
   validatePasswordIsEmpty,
   validateUserIsRegistered,
+  validateJWT,
 };
