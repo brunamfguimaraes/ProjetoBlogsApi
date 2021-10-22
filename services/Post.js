@@ -42,13 +42,24 @@ const { BlogPosts, Categories, Users } = require('../models');
 }; */
 
 const getAllPosts = async () =>
-  BlogPosts.findAll({
-    include: [
-      { model: Categories, as: 'categories', through: { attributes: [] } },
-      { model: Users, as: 'user' },
-    ],
-  });
+    BlogPosts.findAll({
+        include: [
+            { model: Categories, as: 'categories', through: { attributes: [] } },
+            { model: Users, as: 'user' },
+        ],
+    });
 
+const findPost = async (findTerm) => {
+    const posts = await BlogPosts.findAll({
+        include:
+            [{ model: Categories, as: 'categories', through: { attributes: [] } },
+            { model: Users, as: 'user' }],
+    });
+    const resultTerm = posts.filter((data) =>
+        data.dataValues.title.includes(findTerm) || data.dataValues.content.includes(findTerm));
+    return resultTerm;
+};
 module.exports = {
     getAllPosts,
+    findPost,
 };

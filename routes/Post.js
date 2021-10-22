@@ -8,5 +8,7 @@ Post
     .get('/', tokenValidation, PostController.getAll);
 Post
     .delete('/:id', tokenValidation, PostController.postRemove);
+Post
+    .get('/search?:searchTerm', tokenValidation, PostController.findPost);
 
 module.exports = Post;
