@@ -12,7 +12,7 @@ const addPost = async (req, res) => {
    return res.status(statusCode.CREATED).json(newPost);
 };
 
-const getAllPost = async (req, res) => {
+const getAllPost = async (_req, res) => {
     const allPost = await postService.getAllPost();
     console.log(allPost, 'todos os Posts');
    return res.status(statusCode.OK).json(allPost);

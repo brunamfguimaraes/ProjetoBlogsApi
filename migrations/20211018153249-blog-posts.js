@@ -10,12 +10,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      content: {
-        type: Sequelize.STRING
-      },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -26,6 +20,13 @@ module.exports = {
           key: 'id',
         },
       },
+      title: {
+        type: Sequelize.STRING
+      },
+      content: {
+        type: Sequelize.STRING
+      },
+
       published: {
         type: Sequelize.DATE
       },
