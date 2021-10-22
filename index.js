@@ -10,10 +10,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/user', router.User);
+app.use('/login', router.Login);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => console.log(`ouvindo porta ${PORT}}!`));
+app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
