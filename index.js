@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-const { controllerUser, controllerLogin } = require('./controller/controllerUser');
+const { controllerUser } = require('./controller/controllerUser');
+const { controllerLogin } = require('./controller/controllerLogin');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

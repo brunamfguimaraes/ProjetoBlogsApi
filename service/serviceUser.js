@@ -9,6 +9,8 @@ const {
 
 const serviceUserValidation = async (req, res) => {
     const { displayName, email, password, image } = req.body;
+    validationEmail(res, email);
+    await validationEmailExist(res, email);
     validationName(res, displayName);
     validationPassword(res, password);
     const { id } = await User.create({ displayName, email, password, image });
