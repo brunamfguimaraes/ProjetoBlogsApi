@@ -8,7 +8,9 @@ const BlogPost = (sequelize, DataTypes) => {
     timestamps: true,
     tableName: 'BlogPosts',
     createdAt: 'published',
+    // Renomeando os Campos
     updatedAt: 'updated',
+    // Renomeando os Campos
   });
 
   blogpost.associate = (models) => {

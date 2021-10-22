@@ -13,7 +13,7 @@ const verifyCategories = (categories) => categories.filter((validate) => !valida
 const addBlogPost = async ({ title, content, categoryIds }, token) => {
     // Promise.all torna-se fundamental para resolução de promise de varias consultas no banco
     // SRC https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/all 
-    // Nunca havia utilizado essa função, então recebi uma ajuda da kyssila
+    // Não lembro de ter utilizado essa função, então recebi uma ajuda da kyssila
     const getAllCategories = await Promise.all(categoryIds.map((categoryID) => 
     findCategoryId(categoryID)));
 
@@ -32,7 +32,8 @@ const addBlogPost = async ({ title, content, categoryIds }, token) => {
     return newPost;
 };
 
-// Consulta ao repositório de : [Letícia Galvão]
+// Consulta ao repositório de : [Letícia Galvão] Vulgo legalvao
+// Estava tendo dificuldades para entender a documentação do sequelize de como fazer um inner join
 
 const getAllPost = async () => {
     const posts = await BlogPost.findAll(
@@ -45,6 +46,9 @@ const getAllPost = async () => {
     );
     return posts;
   };
+// Estamos trabalhando com banco de dados relacional, a tabela blogpost tem ligação com a tabela de usuarios
+// e também a tabela de intermediaria post categories
+// https://sequelize.org/master/manual/eager-loading.html
 
 module.exports = {
     addBlogPost,
