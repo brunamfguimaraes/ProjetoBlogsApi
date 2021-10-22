@@ -1,8 +1,9 @@
 const RequestError = require('../helper/customErrors');
+const { User } = require('../models');
 
 let err;
 
-const validationEmail = (res, email) => {
+const validationEmail = async (res, email) => {
     if (!email) {
         err = {
             status: 400,
@@ -15,6 +16,17 @@ const validationEmail = (res, email) => {
         err = {
             status: 400,
             message: '"email" must be a valid email',
+            };
+        RequestError(res, err);
+    }
+};
+
+const validationEmailExist = async (res, email) => {
+    const user = await User.findOne({ where: { email } });
+    if (user) {
+        err = {
+            status: 409,
+            message: 'User already registered',
             };
         RequestError(res, err);
     }
@@ -51,4 +63,4 @@ const validationPassword = (res, password) => {
     
 // }
 
-module.exports = { validationEmail, validationName, validationPassword };
+module.exports = { validationEmail, validationName, validationPassword, validationEmailExist };

@@ -4,16 +4,17 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-const { controllerUser } = require('./controller/controllerUser');
+const { controllerUser, controllerLogin } = require('./controller/controllerUser');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
 
-const PORT = 3001;
+const PORT = 3000;
 
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
 
 app.post('/user', controllerUser);
-// SELECT * FROM blogs_api.Users;
+
+app.post('/login', controllerLogin);
