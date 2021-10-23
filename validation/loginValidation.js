@@ -1,22 +1,18 @@
-const validateField = (field) => {
-  // SOURCE: https://stackoverflow.com/questions/47468361/get-variable-name-into-string-in-javascript/47468674
-  const varToString = (varObj) => Object.keys(varObj)[0];
-  //---------------------------
-  
-  if (!field) {
+const validateField = (field, fieldname) => {
+  if (!field && field !== '') {
     return {
       error: {
         status: 400,
-        message: `"${varToString(field)}" is required`,
+        message: `"${fieldname}" is required`,
       },
     };
   }
 
-  if (field.length <= 0) {
+  if (field.length === 0) {
     return {
       error: {
         status: 400,
-        message: `"${varToString(field)}" is not allowed to be empty`,
+        message: `"${fieldname}" is not allowed to be empty`,
       },
     };
   }

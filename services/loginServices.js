@@ -11,16 +11,16 @@ const invalidFields = {
   },
 };
 
-const login = (credentials) => {
+const login = async (credentials) => {
   const { email, password } = credentials;
 
-  const validatingEmail = validateField(email);
+  const validatingEmail = validateField(email, 'email');
   if (validatingEmail.error) return validatingEmail;
 
-  const validatingPassword = validateField(password);
+  const validatingPassword = validateField(password, 'password');
   if (validatingPassword.error) return validatingPassword;
 
-  const foundUser = User.foundOne({ where: { email } });
+  const foundUser = await User.findOne({ where: { email } });
   if (!foundUser) return invalidFields;
 
   return { ...foundUser.dataValues };

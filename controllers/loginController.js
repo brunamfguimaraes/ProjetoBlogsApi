@@ -8,7 +8,7 @@ const login = async (req, res) => {
       const { status, message } = newUser.error;
       return res.status(status).json({ message });
     }
-    res.status(201).json({ ...newUser });
+    res.status(200).json({ ...newUser });
   } catch (error) {
     console.log(error);
     res.status(500).send('Something went Wrong. Please Try again');
