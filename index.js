@@ -23,3 +23,4 @@ app.get('/user', validateJWT, userController);
 app.post('/categories', validateJWT, categoriesController); 
 app.get('/categories', validateJWT, categoriesController);
 app.post('/post', validateJWT, postController);
+app.get('/post', validateJWT, postController);
