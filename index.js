@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-const { controllerUser } = require('./controller/controllerUser');
+const validateToken = require('./token/validateToken');
+const { controllerUser, getUserId } = require('./controller/controllerUser');
 const { controllerLogin, userLoginController } = require('./controller/controllerLogin');
 
 // não remova esse endpoint, e para o avaliador funcionar
@@ -20,4 +21,6 @@ app.post('/user', controllerUser);
 
 app.post('/login', controllerLogin);
 
-app.get('/user', userLoginController);
+app.get('/user', validateToken, userLoginController);
+
+app.get('/user/:id', validateToken, getUserId);
