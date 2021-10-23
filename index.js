@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const userController = require('./controllers/userController');
+const categoryController = require('./controllers/categoryController');
 
 const app = express();
 
@@ -18,3 +19,5 @@ app.get('/', (request, response) => {
 app.listen(PORT, () => console.log('ouvindo porta 3000!'));
 
 app.use(userController);
+
+app.use(categoryController);
