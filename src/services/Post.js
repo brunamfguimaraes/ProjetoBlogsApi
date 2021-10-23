@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-// const { Op } = require('sequelize');
+const { Op } = require('sequelize');
 const { Category, BlogPost, User } = require('../../models');
 const validateError = require('../middleweres/validateError');
 
@@ -20,8 +20,8 @@ const createPost = async (post) => {
   const { error } = PostSchema.validate(post);
   if (error) throw validateError(400, error.message);
 
-  // const findCategory = await Category.findAll({ where: { id: { [Op.in]: categoryIds } } });
-  // if (findCategory.length === 0) throw validateError(400, '"categoryIds" not found');
+  const findCategory = await Category.findAll({ where: { id: { [Op.in]: categoryIds } } });
+  if (findCategory.length === 0) throw validateError(400, '"categoryIds" not found');
 
   const { dataValues } = await BlogPost.create({ title, content, categoryIds });
   const newPost = { ...dataValues };

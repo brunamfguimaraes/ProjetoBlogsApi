@@ -2,7 +2,7 @@ const service = require('../services/Post');
 
 const createPost = async (req, res) => {
   try {
-    // const { id } = await req.user;
+    // const { id } = req.user;
     const post = req.body;
 
     const newPost = await service.createPost(post);
