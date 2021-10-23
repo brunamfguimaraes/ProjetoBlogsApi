@@ -1,6 +1,6 @@
 const express = require('express');
 const statusCode = require('http-status-codes');
-/* const { BlogPost, Categorie } = require('../models'); */
+const { BlogPost, User, Categorie } = require('../models');
 const { createPost } = require('../services/postService');
 
 const router = express.Router();
@@ -23,6 +23,16 @@ router.post('/post', async (req, res) => {
         title,
         content,
     });
+});
+
+router.get('/post', async (req, res) => {
+    const blogPosts = await BlogPost.findAll({
+        include: [
+        { model: User, as: 'user' },
+        { model: Categorie, as: 'categories', through: { attributes: [] } }], 
+    });
+  
+    return res.status(statusCode.OK).json(blogPosts);
 });
 
 module.exports = router;
