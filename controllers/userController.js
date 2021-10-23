@@ -3,6 +3,7 @@ const { User } = require('../models');
 
 const OK = 200;
 const CREATED = 201;
+const NOT_FOUND = 404;
 const INTERNAL_SERVER_ERROR = 500;
 
 const secret = 'mySuperPassword';
@@ -24,7 +25,7 @@ const createUser = async (req, res) => {
   return res.status(CREATED).json({ token });
 };
 
-const findAllUsers = async (req, res) => {
+const findAllUsers = async (_req, res) => {
   const allUsers = await User.findAll();
   if (!allUsers) {
     return res.status(INTERNAL_SERVER_ERROR);
@@ -33,4 +34,15 @@ const findAllUsers = async (req, res) => {
   return res.status(OK).json(allUsers);
 };
 
-module.exports = { createUser, findAllUsers };
+const findUserById = async (req, res) => {
+  const { id } = req.params;
+  const userById = await User.findByPk(id);
+
+  if (!userById) {
+    return res.status(NOT_FOUND).json({ message: 'User does not exist' });
+  }
+
+  return res.status(OK).json(userById);
+};
+
+module.exports = { createUser, findAllUsers, findUserById };

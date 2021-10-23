@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { createUser, findAllUsers } = require('./controllers/userController');
+const { createUser, findAllUsers, findUserById } = require('./controllers/userController');
 const { jwtValidation } = require('./services/jwtValidation');
 const { findUserLogin } = require('./controllers/loginController');
 const { userNameValidation,
@@ -24,6 +24,8 @@ passwordValidation, createUser); // req 1
 app.post('/login', loginEmailValidation, loginPasswordValidation, loginValidation, findUserLogin); // req 2
 
 app.get('/user', jwtValidation, findAllUsers); // req 3
+
+app.get('/user/:id', jwtValidation, findUserById); // req 4
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (req, res) => {
