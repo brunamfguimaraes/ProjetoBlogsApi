@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-const { Op } = require('sequelize');
+// const { Op } = require('sequelize');
 const { Category, BlogPost, User } = require('../../models');
 const validateError = require('../middleweres/validateError');
 
