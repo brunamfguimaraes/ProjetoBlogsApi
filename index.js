@@ -3,7 +3,7 @@ const express = require('express');
 const { user, login, getUsers, findUser } = require('./controller/user');
 const { category, allCategories } = require('./controller/category');
 const validateToken = require('./auth/validateJWT');
-const { createPost } = require('./controller/post');
+const { createPost, getAllPosts } = require('./controller/post');
 
 const app = express();
 app.use(express.json());
@@ -24,4 +24,6 @@ app.route('/user/:id').get(validateToken, findUser);
 
 app.route('/categories').post(validateToken, category);
 app.route('/categories').get(validateToken, allCategories);
+
 app.route('/post').post(validateToken, createPost);
+app.route('/post').get(validateToken, getAllPosts);

@@ -1,5 +1,5 @@
 const { StatusCodes: {
-  BAD_REQUEST, CREATED } } = require('http-status-codes');
+  BAD_REQUEST, CREATED, OK } } = require('http-status-codes');
 const { isValid } = require('../services/post');
 const { BlogPosts, Categories, Users } = require('../models');
 
@@ -22,4 +22,17 @@ const createPost = async (req, res) => {
   return res.status(CREATED).json({ id, title, content, userId });
 };
 
-module.exports = { createPost };
+const getAllPosts = async (req, res) => {
+  const posts = await BlogPosts.findAll({
+    include: [
+      { model: Users, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  
+  return res.status(OK).json(posts);
+};
+
+module.exports = { 
+  createPost, getAllPosts,
+};
