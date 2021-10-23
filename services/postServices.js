@@ -1,14 +1,28 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, PostCategory, Category } = require('../models');
 
 const createPostServices = async ({ title, content, categoryIds, id: userId }) => {
-  const searchCategories = await Category.findAll({ where: { id: categoryIds } });
+  /*
+    Realizado com ajuda Lucas Martins da Silva e Dangelo Silva miranda 
+  */
+  const resultIdsInput = categoryIds.map(async (id) => Category.findByPk(id));
+  const resultPromiseAll = await Promise.all(resultIdsInput); 
   
-  if (categoryIds.length !== searchCategories.length) {
-    return { isError: true, message: '"categoryIds" not found' };
-  }
-  console.log(userId, 'OIOIOOOIOIOIOIOIOIOIO');
+  const isNull = resultPromiseAll.some((e) => !e);
+
+  if (isNull) return { isError: true, message: '"categoryIds" not found' };
+
+  const { id: postId } = await BlogPost.create({ title, content, userId });
   
-  const a = await BlogPost.create(title, content, userId);
+  categoryIds.forEach(async (categoryId) => {
+    await PostCategory.create({ postId, categoryId });
+  });
+  
+  return {
+    id: postId,
+    userId,
+    title,
+    content,
+  };
 };
 
 module.exports = { createPostServices };

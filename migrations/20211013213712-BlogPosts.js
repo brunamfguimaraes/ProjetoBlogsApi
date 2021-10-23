@@ -3,8 +3,8 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('BlogPosts', {
       id: {
-        allowNull: false,
         autoIncrement: true,
+        allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
@@ -18,16 +18,13 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        defaultValue: 1,
-        field: 'userId',
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        primaryKey: true,
-        allowNull: false,
       },
       published: {
         allowNull: false,

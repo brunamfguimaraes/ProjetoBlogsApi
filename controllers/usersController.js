@@ -16,8 +16,6 @@ const createUser = async (req, res) => {
     const response = await createUserServices(req.body);
     
     if (response.isError) return res.status(response.code).json({ message: response.message });
-
-    // console.log(response.newUser);
     
     const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
     const token = jwt.sign({ data: response.newUser }, process.env.JWT_SECRET, jwtConfig);

@@ -7,7 +7,7 @@ const createUserServices = async ({ displayName, email, password, image }) => {
   if (isValidEmail(email).isError) return isValidEmail(email);
 
   if ((await checkIfTheUserExists(email, password)).isError) { 
-    return checkIfTheUserExists(email, password); 
+    return checkIfTheUserExists(email, password);
   }
 
   const user = await User.create({ displayName, email, password, image });

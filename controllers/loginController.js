@@ -15,7 +15,9 @@ const login = async (req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).json({ message: response.message }); 
     }
     
-    const token = jwt.sign({ data: response }, process.env.JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: { userID: response.userId } },
+      process.env.JWT_SECRET,
+      jwtConfig);
     return res.status(StatusCodes.OK).json({ token });
   } catch (error) {
     return res.status(500).json({ message: error.message });
