@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const { bodyValidator, userExistsValidator } = require('./userValidator');
+const MyError = require('./errorClass');
 
 async function createUser(user) {
   await bodyValidator(user);
@@ -13,7 +14,14 @@ async function getUser() {
   return user;
 }
 
+async function getUserById(id) {
+  const user = await User.findByPk(id);
+  if (!user) throw new MyError('User does not exist', 404);
+  return user;
+}
+
 module.exports = {
   createUser,
   getUser,
+  getUserById,
 };

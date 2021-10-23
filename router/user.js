@@ -6,6 +6,7 @@ const checkToken = require('../middlewares/checkToken');
 const router = express.Router();
 
 router.get('/', checkToken, rescue(controllers.getUser));
+router.get('/:id', checkToken, rescue(controllers.getUserById));
 router.post('/', rescue(controllers.createUser));
 
 module.exports = router;
