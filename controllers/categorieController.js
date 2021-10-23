@@ -1,7 +1,7 @@
 // const jwt = require('jsonwebtoken');
 const { Categorie } = require('../models');
 
-// const OK = 200;
+const OK = 200;
 const CREATED = 201;
 // const NOT_FOUND = 404;
 const INTERNAL_SERVER_ERROR = 500;
@@ -23,14 +23,14 @@ const createCategorie = async (req, res) => {
   return res.status(CREATED).json({ name });
 };
 
-// const findAllUsers = async (_req, res) => {
-//   const allUsers = await User.findAll();
-//   if (!allUsers) {
-//     return res.status(INTERNAL_SERVER_ERROR);
-//   }
+const findAllCategories = async (_req, res) => {
+  const allCategories = await Categorie.findAll();
+  if (!allCategories) {
+    return res.status(INTERNAL_SERVER_ERROR);
+  }
 
-//   return res.status(OK).json(allUsers);
-// };
+  return res.status(OK).json(allCategories);
+};
 
 // const findUserById = async (req, res) => {
 //   const { id } = req.params;
@@ -44,4 +44,4 @@ const createCategorie = async (req, res) => {
 // };
 
 // module.exports = { createUser, findAllUsers, findUserById };
-module.exports = { createCategorie };
+module.exports = { createCategorie, findAllCategories };
