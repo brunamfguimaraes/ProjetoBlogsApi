@@ -12,18 +12,29 @@ const createUser = async (req, res) => {
     return res.status(newUser.status).json({ message: newUser.message });
   }
 
+  const data = {
+    displayName,
+    email,
+    image,
+  };
+
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
 
-  delete newUser.password;
-
-  const token = jwt.sign({ data: newUser }, secret, jwtConfig);
+  const token = jwt.sign({ data }, secret, jwtConfig);
 
   return res.status(201).json({ token });
 };
 
+const getAllUsers = async (req, res) => {
+  const getAll = await userService.getAllUsers();
+
+  return res.status(200).json(getAll);
+};  
+
 module.exports = {
   createUser,
+  getAllUsers,
 };

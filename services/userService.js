@@ -92,6 +92,13 @@ const createUser = async (displayName, email, password, image) => {
   return newUser;
 };
 
+const getAllUsers = async () => {
+  const getAll = await User.findAll();
+
+  return getAll;
+};
+
 module.exports = {
   createUser,
+  getAllUsers,
 };

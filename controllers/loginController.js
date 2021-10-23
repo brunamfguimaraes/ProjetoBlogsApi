@@ -17,9 +17,11 @@ const login = async (req, res) => {
     algorithm: 'HS256',
   };
 
-  delete loginUser.password;
+ const data = {
+  email,
+ };
 
-  const token = jwt.sign({ data: loginUser }, secret, jwtConfig);
+  const token = jwt.sign({ data }, secret, jwtConfig);
   return res.status(200).json({ token });
 };
 
