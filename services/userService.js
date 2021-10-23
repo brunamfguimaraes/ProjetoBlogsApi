@@ -79,7 +79,7 @@ const createUser = async (displayName, email, password, image) => {
 
   if (validateParams.message) return validateParams;
   
-  const emailIsNotUnique = await User.findOne({ email });
+  const emailIsNotUnique = await User.findOne({ where: { email } });
   if (emailIsNotUnique) {
     const objResp = {
       message: 'User already registered',
@@ -92,6 +92,6 @@ const createUser = async (displayName, email, password, image) => {
   return newUser;
 };
 
-module.export = {
+module.exports = {
   createUser,
 };
