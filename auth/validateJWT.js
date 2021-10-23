@@ -1,6 +1,8 @@
 const { StatusCodes: {
   UNAUTHORIZED } } = require('http-status-codes');
+
 const jwt = require('jsonwebtoken');
+
 require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
@@ -16,4 +18,5 @@ const validateJWT = async (req, res, next) => {
     return res.status(UNAUTHORIZED).json({ message: 'Expired or invalid token' });
   }
 };
+
 module.exports = validateJWT;

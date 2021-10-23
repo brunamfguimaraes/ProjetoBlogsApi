@@ -12,7 +12,7 @@ module.exports = {
       displayName: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'displayName'
+        field: 'display_name'
       },
       email: {
         allowNull: false,

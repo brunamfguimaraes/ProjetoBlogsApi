@@ -1,5 +1,6 @@
 const { StatusCodes: {
-  BAD_REQUEST, CREATED, OK } } = require('http-status-codes');
+  BAD_REQUEST, CREATED, OK, NOT_FOUND } } = require('http-status-codes');
+
 const { isValid } = require('../services/post');
 const { BlogPosts, Categories, Users } = require('../models');
 
@@ -29,10 +30,22 @@ const getAllPosts = async (req, res) => {
       { model: Categories, as: 'categories', through: { attributes: [] } },
     ],
   });
-  
   return res.status(OK).json(posts);
 };
 
-module.exports = { 
-  createPost, getAllPosts,
+const findPost = async (req, res) => {
+  const { id } = req.params;
+  const post = await BlogPosts.findOne({
+    where: { id },
+    include: [
+      { model: Users, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  if (!post) return res.status(NOT_FOUND).json({ message: 'Post does not exist' });
+  return res.status(OK).json(post);
+};
+
+module.exports = {
+  createPost, getAllPosts, findPost,
 };

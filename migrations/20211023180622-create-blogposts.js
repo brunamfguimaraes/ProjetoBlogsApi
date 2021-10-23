@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        field: 'userid',
+        field: 'user_id',
         references: {
           model: 'Users',
           key: 'id',

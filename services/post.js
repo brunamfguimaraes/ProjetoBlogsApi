@@ -6,8 +6,11 @@ const isValid = (title, content, categoryIds) => {
       content: Joi.string().required(),
       categoryIds: Joi.array().required(),
   });  
+  
   const { error } = user.validate({ title, content, categoryIds });
+  
   if (error) return { message: error.details[0].message, error: true };
+  
   return false;
 };
 

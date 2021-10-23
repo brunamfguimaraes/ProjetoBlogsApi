@@ -1,5 +1,6 @@
 const { StatusCodes: {
   BAD_REQUEST, CREATED, OK } } = require('http-status-codes');
+
 const { createCategory } = require('../services/category');
 const { Categories } = require('../models');
 
