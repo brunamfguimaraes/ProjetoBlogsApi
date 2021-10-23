@@ -1,20 +1,28 @@
 const express = require('express');
 const statusCode = require('http-status-codes');
-/* const jwt = require('jsonwebtoken'); */
-const { BlogPost } = require('../models');
-/* const { createCategory } = require('../services/categoriesService'); */
+/* const { BlogPost, Categorie } = require('../models'); */
+const { createPost } = require('../services/postService');
 
 const router = express.Router();
 
 router.post('/post', async (req, res) => {
     const { title, content, categoryIds } = req.body;
-    const post = await BlogPost.create({ 
+    const { id: userId } = req.user;
+   
+    const { id, message } = await createPost({ title, content, userId, categoryIds });
+    /* console.log({ id, message }); */
+    if (message) {
+        return res.status(statusCode.BAD_REQUEST).json({
+            message,
+        });
+    }
+
+    return res.status(statusCode.CREATED).json({ 
+        id,
+        userId,
         title,
-        content, 
-        categoryIds,
-        include: [{ model: 'Categorie', as: 'Category' }] });
-    console.log(post);    
-    return res.status(statusCode.CREATED).json(post);
+        content,
+    });
 });
 
 module.exports = router;

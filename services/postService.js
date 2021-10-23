@@ -25,18 +25,19 @@ const notFoundCategory = async (categoryIds) => {
     return true;
 };
 
-const createPost = async (title, content, userId, categoryIds) => {
+const createPost = async ({ title, content, userId, categoryIds }) => {
     const fields = validateField(title, content, categoryIds);
     if (fields !== true) return { message: fields.message };
     
-    const notCategory = notFoundCategory(categoryIds);
+    const notCategory = await notFoundCategory(categoryIds);
+    console.log(notCategory, 'validação');
     if (notCategory !== true) return { message: notCategory.message };
 
-    const post = await BlogPost.create({
+    const { id } = await BlogPost.create({
         title, content, userId,
     });
 
-    return post;    
+    return { id };    
 };
 
 module.exports = {
