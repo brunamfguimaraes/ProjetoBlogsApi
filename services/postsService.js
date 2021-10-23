@@ -20,11 +20,11 @@ const validateToken = (token) => {
   return true;
 };
 
-const isValidCategory = (ids) => {
+const isValidCategory = async (ids) => {
   let categories;
   let exist = 0;
-  ids.forEach((id) => {
-    categories = Blogpost.findAll({ where: { id } });
+  ids.forEach(async (id) => {
+    categories = await Blogpost.findAll({ where: { id } });
     if (categories.length > 0) {
       exist += 1;
     }
@@ -32,7 +32,7 @@ const isValidCategory = (ids) => {
   return exist;
 };
 
-const isValid = (title, content, categoryIds, token) => {
+const isValid = async (title, content, categoryIds, token) => {
   const valids = validate(title, content);
   if (valids.message) {
     return valids;
@@ -41,7 +41,7 @@ const isValid = (title, content, categoryIds, token) => {
   if (validToken.message) {
     return validToken;
   }
-  const validCategory = isValidCategory(categoryIds);
+  const validCategory = await isValidCategory(categoryIds);
   console.log(validCategory, 'VALID-CATEGORY');
   if (validCategory !== 2) {
     return { status: 400, message: '"categoryIds" not found' };
@@ -49,8 +49,8 @@ const isValid = (title, content, categoryIds, token) => {
   return true;
 };
 
-const createPost = ({ title, content, categoryIds }, token) => {
-  const validateAll = isValid(title, content, categoryIds, token);
+const createPost = async ({ title, content, categoryIds }, token) => {
+  const validateAll = await isValid(title, content, categoryIds, token);
   if (validateAll.message) {
     return validateAll;
   }
