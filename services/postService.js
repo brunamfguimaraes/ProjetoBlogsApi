@@ -30,7 +30,7 @@ const createPost = async ({ title, content, userId, categoryIds }) => {
     if (fields !== true) return { message: fields.message };
     
     const notCategory = await notFoundCategory(categoryIds);
-    console.log(notCategory, 'validação');
+    
     if (notCategory !== true) return { message: notCategory.message };
 
     const { id } = await BlogPost.create({

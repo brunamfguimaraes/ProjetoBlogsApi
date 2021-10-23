@@ -10,7 +10,7 @@ router.post('/post', async (req, res) => {
     const { id: userId } = req.user;
    
     const { id, message } = await createPost({ title, content, userId, categoryIds });
-    /* console.log({ id, message }); */
+
     if (message) {
         return res.status(statusCode.BAD_REQUEST).json({
             message,
