@@ -8,8 +8,7 @@ router.route('/')
 
 router.route('/:id')
     .get()
-
-    router.route('/user/me')
+    .put()
     .delete()
 
 module.exports = router;
