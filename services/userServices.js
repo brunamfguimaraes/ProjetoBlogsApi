@@ -9,6 +9,13 @@ const {
   validateUniqueUser,
 } = require('../validation/userValidation');
 
+const USER_NOT_FOUND = {
+  error: {
+    status: 404,
+    message: 'User does not exist',
+  },
+};
+
 const createUser = async (userData) => {
   const {
     displayName,
@@ -32,6 +39,20 @@ const createUser = async (userData) => {
   return { ...newUser.dataValues };
 };
 
+const getAllUsers = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
+const getUserById = async (id) => {
+  const user = await User.findByPk(id);
+  if (!user) return USER_NOT_FOUND;
+
+  return { ...user.dataValues };
+};
+
 module.exports = {
   createUser,
+  getAllUsers,
+  getUserById,
 };

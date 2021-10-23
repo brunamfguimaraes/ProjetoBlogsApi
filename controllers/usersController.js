@@ -15,8 +15,35 @@ const createUser = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await userServices.getAllUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userServices.getUserById(id);
+    if (user.error) {
+      const { status, message } = user.error;
+      return res.status(status).json({ message });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
 module.exports = {
   createUser,
+  getAllUsers,
+  getUserById,
 };
 
 // getAll (findAll)
