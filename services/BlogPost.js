@@ -1,5 +1,5 @@
 const { BAD_REQUEST } = require('http-status');
-const { Category, BlogPost } = require('../models');
+const { Category, User, BlogPost } = require('../models');
 const ERROR_MESSAGE = require('./error');
 const { getCategoryById } = require('./Category');
 
@@ -66,6 +66,19 @@ const create = async ({ title, content, categoryIds }, { id: userId }) => {
   return { id, userId, title, content };
 };
 
+const getAllPosts = async () => {
+  const result = await BlogPost.findAll(
+    { 
+      include: [ 
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    },
+  );
+  return result;
+};
+
 module.exports = {
   create,
+  getAllPosts
 };
