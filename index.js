@@ -20,6 +20,8 @@ app.post('/login', userController.findLogin);
 app.get('/categories', categorieController.getCategories);
 app.post('/categories', categorieController.createCategorie);
 
+app.post('/post');
+
 app.use((err, _req, res, _next) => res.status(err.status).json({ message: err.message }));
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
