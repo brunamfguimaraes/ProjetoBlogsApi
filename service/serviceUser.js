@@ -17,4 +17,8 @@ const serviceUserValidation = async (req, res) => {
     return id;
 };
 
-module.exports = { serviceUserValidation };
+const serviceUserAll = async () => {
+    
+};
+
+module.exports = { serviceUserValidation, serviceUserAll };

@@ -1,5 +1,7 @@
 const { loginUser } = require('../service/serviceLogin');
 const genereteToken = require('../token/generetToken');
+const validateToken = require('../token/validateToken');
+const { User } = require('../models');
 
 const creatSuccess = 200;
 
@@ -9,4 +11,14 @@ const controllerLogin = async (req, res) => {
     res.status(creatSuccess).json({ token: tokengeret });
 };
 
-module.exports = { controllerLogin };
+const userLoginController = async (req, res) => {
+    await validateToken(req, res);
+    try {
+        const users = await User.findAll();
+        res.status(200).json(users);
+      } catch (e) {
+        res.status(404).json(e.message);
+      }
+};
+
+module.exports = { controllerLogin, userLoginController };
