@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     image: DataTypes.STRING
   }, {
-    timestamps: false,
     sequelize,
     modelName: 'Users',
   });
