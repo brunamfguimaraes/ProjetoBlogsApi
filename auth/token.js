@@ -9,7 +9,10 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-const token = async (id, displayName, email) =>
-(jwt.sign({ data: { id, displayName, email } }, secret, jwtConfig));
+const token = async (body) => {
+  const { id, displayName, email } = body;
+  const newToken = jwt.sign({ id, displayName, email }, secret, jwtConfig);
+  return newToken;
+};
 
 module.exports = { token };
