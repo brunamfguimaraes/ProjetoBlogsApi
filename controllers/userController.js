@@ -31,4 +31,20 @@ router.get('/', validateToken, async (req, res) => {
   }
 });
 
+router.get('/:id', validateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userById = await NewUser.getUserById(id);
+
+    if (typeof userById.message === 'string') {
+      return res.status(404).json(userById);
+    }
+
+    return res.status(200).json(userById);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
+ 
 module.exports = router;
