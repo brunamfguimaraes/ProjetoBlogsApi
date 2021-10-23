@@ -3,7 +3,7 @@ const express = require('express');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const categoriesController = require('./controllers/categoriesController');
-const postController = require('./controllers/loginController');
+const postController = require('./controllers/postController');
 const validateJWT = require('./middlewares/validateJWT');
 
 const app = express();

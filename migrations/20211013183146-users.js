@@ -2,39 +2,43 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const userTable = queryInterface.createTable("Users", {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        field: 'id',
       },
 
       displayName: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        field: 'displayName',
       },
 
       email: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        field: 'email',
       },
 
       password: {
         allowNull: false,
         type: Sequelize.STRING,
+        field: 'password',
       },
 
       image: {
+        allowNull: true,
         type: Sequelize.STRING,
+        field: 'image',
       }
     });
-
-    return userTable;
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.dropTable("Users")
+    await queryInterface.dropTable('Users')
   }
 };
