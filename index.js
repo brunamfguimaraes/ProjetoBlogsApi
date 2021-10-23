@@ -17,10 +17,9 @@ app.get('/', (request, response) => {
 
 app.route('/login').post(login);
 
+app.route('/user').post(user);
+app.route('/user').get(validateToken, getUsers);
 app.route('/user/:id').get(validateToken, findUser);
-app.route('/user')
-  .post(user)
-  .get(validateToken, getUsers);
 
 app.route('/categories')
   .post(validateToken, category);

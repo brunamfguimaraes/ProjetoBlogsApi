@@ -10,8 +10,8 @@ const jwtConfig = {
 };
 
 const token = async (body) => {
-  const { id, displayName, email } = body;
-  const newToken = jwt.sign({ id, displayName, email }, secret, jwtConfig);
+  const { displayName, email } = body;
+  const newToken = jwt.sign({ displayName, email }, secret, jwtConfig);
   return newToken;
 };
 
