@@ -11,8 +11,7 @@ app.use(bodyParser.json());
 
 app.use('/user', router.User);
 app.use('/login', router.Login);
-app.use('/categories', router.Categories);
-app.use('/post', router.blogPost);
+app.use('/categories', router.Category);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

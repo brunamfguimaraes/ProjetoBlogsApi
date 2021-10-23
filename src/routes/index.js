@@ -1,11 +1,11 @@
 const User = require('./Users');
 const Login = require('./Login');
-const Categories = require('./Categories');
+const Category = require('./Categories');
 const blogPost = require('./blogPost');
 
 module.exports = {
   User,
   Login,
-  Categories,
+  Category,
   blogPost,
 };

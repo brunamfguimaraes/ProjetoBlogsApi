@@ -18,5 +18,4 @@ const BlogPost = (sequelize, DataTypes) => {
    };
    return blogPost;
 };
-
 module.exports = BlogPost;

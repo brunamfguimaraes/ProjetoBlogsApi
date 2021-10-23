@@ -1,12 +1,12 @@
 const service = require('../services/Categories');
 
-const createCategories = async (req, res) => {
+const createCategory = async (req, res) => {
   try {
     const category = req.body;
 
-    const newCategorie = await service.createCategories(category);
+    const newCategory = await service.createCategory(category);
 
-    return res.status(201).json(newCategorie);
+    return res.status(201).json(newCategory);
   } catch (error) {
     return res.status(error.status).json({ message: error.message });
   }
@@ -25,11 +25,11 @@ const getAllCategories = async (_req, res) => {
   }
 };
 
-const getCategoriesById = async (req, res) => {
+const getCategoryById = async (req, res) => {
   try {
     const { id } = req.body;
 
-    const categoryById = await service.getCategoriesById(id);
+    const categoryById = await service.getCategoryById(id);
 
     return res.status(200).json(categoryById);
   } catch (error) {
@@ -37,35 +37,8 @@ const getCategoriesById = async (req, res) => {
   }
 };
 
-const updateCategory = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    const updatedCategory = await service.updateCategory(id, name);
-
-    return res.status(200).json(updatedCategory);
-  } catch (error) {
-    return res.status(error.status).json(error.message);
-  }
-};
-
-const deleteCategory = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    await service.deleteCategory(id);
-
-    return res.status(204).end();
-  } catch (error) {
-    return res.status(error.status).json(error.message);
-  }
-};
-
 module.exports = {
-  createCategories,
+  createCategory,
   getAllCategories,
-  getCategoriesById,
-  updateCategory,
-  deleteCategory,
+  getCategoryById,
 };
