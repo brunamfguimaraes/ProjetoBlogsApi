@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory, Category } = require('../models');
+const { BlogPost, Category } = require('../models');
 
 const createPostServices = async ({ title, content, categoryIds, id: userId }) => {
   /*
