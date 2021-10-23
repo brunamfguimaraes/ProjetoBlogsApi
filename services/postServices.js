@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const createPostServices = async ({ title, content, categoryIds, id: userId }) => {
   /*
@@ -17,18 +17,21 @@ const createPostServices = async ({ title, content, categoryIds, id: userId }) =
   }
 
   const { id: postId } = await BlogPost.create({ title, content, userId });
-
-  // console.log(PostCategory);
-  // const a = await categoryIds.map(async (categoryId) => {
-  //   await PostCategory.create({ postId, categoryId });
-  // });
-
-  // const B = await Promise.all(a); 
-
-  // const isNullb = B.some((e) => !e);
-  // console.log(isNullb, 'OIOIOIOIOIOIOI');
   
   return { id: postId, userId, title, content };
 };
 
-module.exports = { createPostServices };
+const getAllPosts = async () => {
+  /*
+    Realizado com ajuda de Felippe Correa
+  */
+  const response = await BlogPost.findAll({
+    include: [
+    { model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } }], 
+  });
+
+  return response;
+};
+
+module.exports = { createPostServices, getAllPosts };

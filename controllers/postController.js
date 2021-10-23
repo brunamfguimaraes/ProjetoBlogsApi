@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { createPostServices } = require('../services/postServices');
+const { createPostServices, getAllPosts } = require('../services/postServices');
 
 const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -11,11 +11,17 @@ const createPost = async (req, res) => {
     } 
     return res.status(StatusCodes.CREATED).json(response);
   } catch (error) {
-    // console.log('PASSEI NO CATCH');
-    // console.log(error);
-
     return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
   }
 };
 
-module.exports = { createPost };
+const getPost = async (req, res) => {
+  try {
+    const response = await getAllPosts();
+    return res.status(StatusCodes.OK).json(response);
+  } catch (error) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+  }
+};
+
+module.exports = { createPost, getPost };

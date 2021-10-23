@@ -16,7 +16,6 @@ const createCategory = async (req, res) => {
 const getAllCategories = async (_req, res) => {
   try {
     const response = await getAllCategoriesServices();
-    // console.log(response);
     return res.status(StatusCodes.OK).json(response);
   } catch (error) {
     return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
