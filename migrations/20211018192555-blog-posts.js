@@ -16,9 +16,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      categoryIds: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+        }
       },
       published: {
         allowNull: false,
