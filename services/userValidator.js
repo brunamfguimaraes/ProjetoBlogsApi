@@ -21,7 +21,17 @@ async function userExistsValidator({ email }) {
   if (user.length) throw new MyError('User already registered', 409);
 }
 
+async function loginValidator(login) {
+  const { error } = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+  }).validate(login);
+  
+  if (error) throw new MyError(error.details[0].message, 400);
+}
+
 module.exports = {
   userExistsValidator,
   bodyValidator,
+  loginValidator,
 };
