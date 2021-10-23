@@ -46,8 +46,8 @@ module.exports = {
   getUserById,
 };
 
-// getAll (findAll)
-// getById (findByPk)
-// create (create)
+// getAll (findAll) - OK
+// getById (findByPk) - OK
+// create (create) - OK
 // update (update)
 // remove (destroy)
