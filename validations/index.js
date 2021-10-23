@@ -42,8 +42,53 @@ const passwordIsValid = (password) => {
   return {};
 };
 
+const isEmailLoginValid = (email) => {
+  if (email === '') {
+    return {
+      message: '"email" is not allowed to be empty',
+    };
+  }
+  
+ if (!email) {
+    return {
+      message: '"email" is required',
+    };
+  }
+
+  return {};
+};
+
+const passwordLoginIsValid = (password) => {
+  if (password === '') {
+    return {
+      message: '"password" is not allowed to be empty',
+    };
+  }
+  
+  if (!password) {
+    return {
+      message: '"password" is required',
+    };
+  }
+
+  return {};
+};
+
+// const validateLogin = (email, password) => {
+//   const reg = new RegExp(/^[\w.]+@[a-z]+.\w{2,3}$/g);
+//   if (!email || !reg.test(email) || !password || password.length < 6) {
+//     return {
+//       message: 'Campos inválidos',
+//     };
+//   }
+
+//   return {};
+// };
+
 module.exports = {
   validateName,
   isEmailValid,
   passwordIsValid,
+  isEmailLoginValid,
+  passwordLoginIsValid,
 };
