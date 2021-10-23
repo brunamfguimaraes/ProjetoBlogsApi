@@ -80,5 +80,5 @@ const getAllPosts = async () => {
 
 module.exports = {
   create,
-  getAllPosts
+  getAllPosts,
 };

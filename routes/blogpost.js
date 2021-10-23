@@ -1,5 +1,5 @@
 const express = require('express');
-const { createPost, getPosts  } = require('../controllers/BlogPost');
+const { createPost, getPosts } = require('../controllers/BlogPost');
 
 const checkToken = require('../middlewares/checkToken');
 

@@ -38,4 +38,4 @@ const getCategoryById = async (id) => {
   return true;
 };
 
-module.exports = { create, getAllCategories,getCategoryById };
+module.exports = { create, getAllCategories, getCategoryById };
