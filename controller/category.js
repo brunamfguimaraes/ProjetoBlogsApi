@@ -1,5 +1,5 @@
 const { StatusCodes: {
-  BAD_REQUEST, CREATED } } = require('http-status-codes');
+  BAD_REQUEST, CREATED, OK } } = require('http-status-codes');
 const { createCategory } = require('../services/category');
 const { Categories } = require('../models');
 
@@ -13,6 +13,11 @@ const category = async (req, res) => {
   return res.status(CREATED).json(findCategory);
 };
 
+const allCategories = async (req, res) => {
+  const categories = await Categories.findAll();
+  return res.status(OK).json(categories);
+};
+
 module.exports = {
-  category,
+  category, allCategories,
 };

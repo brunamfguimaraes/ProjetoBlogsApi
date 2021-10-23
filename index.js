@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { user, login, getUsers, findUser } = require('./controller/user');
-const { category } = require('./controller/category');
+const { category, allCategories } = require('./controller/category');
 const validateToken = require('./auth/validateJWT');
 
 const app = express();
@@ -21,5 +21,5 @@ app.route('/user').post(user);
 app.route('/user').get(validateToken, getUsers);
 app.route('/user/:id').get(validateToken, findUser);
 
-app.route('/categories')
-  .post(validateToken, category);
+app.route('/categories').post(validateToken, category);
+app.route('/categories').get(validateToken, allCategories);
