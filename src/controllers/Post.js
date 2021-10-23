@@ -2,9 +2,10 @@ const service = require('../services/Post');
 
 const createPost = async (req, res) => {
   try {
+    const { id } = req.user;
     const post = req.body;
 
-    const newPost = await service.createPost(post);
+    const newPost = await service.createPost(id, post);
 
     return res.status(201).json(newPost);
   } catch (error) {
@@ -12,7 +13,7 @@ const createPost = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (_req, res) => {
   try {
     const allPosts = await service.getAllPosts();
 

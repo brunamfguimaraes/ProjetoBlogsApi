@@ -2,12 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const router = require('./src/routes');
+const middlewere = require('./src/middleweres');
 
 const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(middlewere.error);
 
 app.use('/user', router.User);
 app.use('/login', router.Login);

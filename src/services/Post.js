@@ -11,8 +11,8 @@ const PostSchema = Joi.object({
   'any.required': '{{#label}} is required',
 });
 
-const createPost = async (post) => {
-  const { categoryIds } = post;
+const createPost = async (id, post) => {
+  const { title, content, categoryIds } = post;
 
   const { error } = PostSchema.validate(post);
   if (error) throw validateError(400, error.message);
@@ -20,8 +20,12 @@ const createPost = async (post) => {
   if (typeof categoryIds !== 'object') throw validateError(400, 'Not a object');
 
   const findCategory = await Category.findAll({ where: { id: { [Op.in]: categoryIds } } });
-
   if (findCategory.length === 0) throw validateError(400, '"categoryIds" not found');
+
+  const { dataValues } = await BlogPost.create({ title, content, categoryIds });
+  const newPost = { ...dataValues, userId: id };
+
+  return newPost;
 };
 
 const getAllPosts = async () => {
