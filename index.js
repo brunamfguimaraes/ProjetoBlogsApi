@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParse = require('body-parser');
 const userController = require('./controllers/userController');
 const categorieController = require('./controllers/categorieController');
+const postController = require('./controllers/postsController');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -20,7 +21,7 @@ app.post('/login', userController.findLogin);
 app.get('/categories', categorieController.getCategories);
 app.post('/categories', categorieController.createCategorie);
 
-app.post('/post');
+app.post('/post', postController.createPost);
 
 app.use((err, _req, res, _next) => res.status(err.status).json({ message: err.message }));
 
