@@ -7,8 +7,6 @@ const {
   } = require('../validations/index');
 
 const login = async (email, password) => {
-  // const loginIsValid = validateLogin(email, password);
-  // if (loginIsValid.message) return loginIsValid;
   const validateEmail = isEmailLoginValid(email);
   if (validateEmail.message) return validateEmail;
 
