@@ -2,9 +2,12 @@ const { BlogPost, PostCategory, Category } = require('../models');
 
 const createPostServices = async ({ title, content, categoryIds, id: userId }) => {
   /*
-    Realizado com ajuda Lucas Martins da Silva e Dangelo Silva miranda 
+    Realizado com ajuda de Lucas Martins da Silva e Dangelo Silva Miranda 
   */
-  const resultIdsInput = await categoryIds.map(async (id) => Category.findByPk(id));
+  const resultIdsInput = await categoryIds.map(async (id) => { 
+    const result = await Category.findByPk(id); 
+    return result;
+  });
   const resultPromiseAll = await Promise.all(resultIdsInput); 
   
   const isNull = resultPromiseAll.some((e) => !e);
@@ -19,8 +22,7 @@ const createPostServices = async ({ title, content, categoryIds, id: userId }) =
     await PostCategory.create({ postId, categoryId });
   });
   
-  return {
-    id: postId,
+  return { id: postId,
     userId,
     title,
     content,
