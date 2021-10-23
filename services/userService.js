@@ -3,7 +3,7 @@ const { User } = require('../models');
 const existsPassword = (password) => {
   if (!password) {
     const objResp = {
-      message: '"email" is required',
+      message: '"password" is required',
       status: 400,
     };
     return objResp;
