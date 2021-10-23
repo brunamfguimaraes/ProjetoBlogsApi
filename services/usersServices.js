@@ -29,7 +29,9 @@ const getAllUsersServices = async () => {
 const findUserServices = async (idImput) => {
   const user = await User.findByPk(idImput, { attributes: { exclude: ['password'] } });
   
-  if (!user) return { isError: true, message: 'User does not exist' };
+  if (!user) {
+     return { isError: true, message: 'User does not exist' }; 
+  }
   return user;
 };
 

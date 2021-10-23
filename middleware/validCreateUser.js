@@ -12,7 +12,9 @@ const validCreateUser = (req, res, next) => {
     },
   ).validate(req.body);
   
-  if (error) return res.status(StatusCodes.BAD_REQUEST).json({ message: error.details[0].message });
+  if (error) { 
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: error.details[0].message }); 
+  }
   
   next();
 };

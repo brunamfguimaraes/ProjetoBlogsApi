@@ -9,7 +9,9 @@ const createPostServices = async ({ title, content, categoryIds, id: userId }) =
   
   const isNull = resultPromiseAll.some((e) => !e);
 
-  if (isNull) return { isError: true, message: '"categoryIds" not found' };
+  if (isNull) {
+     return { isError: true, message: '"categoryIds" not found' }; 
+  }
 
   const { id: postId } = await BlogPost.create({ title, content, userId });
 

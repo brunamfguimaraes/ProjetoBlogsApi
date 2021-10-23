@@ -6,7 +6,9 @@ const validCreateCategory = (req, res, next) => {
     { name: Joi.string().required().not().empty() },
   ).validate(req.body);
   
-  if (error) return res.status(400).json({ message: error.details[0].message });
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
   
   next();
 };

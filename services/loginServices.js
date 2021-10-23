@@ -10,7 +10,9 @@ const isUserExists = async ({ email, password }) => {
 const loginUser = async ({ email, password }) => {
   const { response, userId } = await isUserExists({ email, password });
 
-  if (!response) return { isError: true, message: 'Invalid fields' };
+  if (!response) { 
+    return { isError: true, message: 'Invalid fields' }; 
+  }
   return { isError: false, userId };
 };
 
