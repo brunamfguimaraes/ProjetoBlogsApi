@@ -3,10 +3,10 @@ const validateToken = require('../middleweres/validateToken');
 
 const router = express.Router();
 
-const { getAllPosts, createPost } = require('../controllers/Post');
+const { createPost, getAllPosts } = require('../controllers/Post');
 
 router.route('/')
 .get(validateToken, getAllPosts)
-.post(createPost);
+.post(validateToken, createPost);
 
 module.exports = router;

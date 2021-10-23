@@ -2,10 +2,10 @@ const service = require('../services/Post');
 
 const createPost = async (req, res) => {
   try {
-    const { id } = req.user;
+    // const { id } = await req.user;
     const post = req.body;
 
-    const newPost = await service.createPost(id, post);
+    const newPost = await service.createPost(post);
 
     return res.status(201).json(newPost);
   } catch (error) {

@@ -9,8 +9,9 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-const createToken = (data) => {
-  const token = jwt.sign(data, secret, jwtConfig);
+const createToken = (param) => {
+  const token = jwt.sign(param, secret, jwtConfig);
+
   return token;
 };
 
