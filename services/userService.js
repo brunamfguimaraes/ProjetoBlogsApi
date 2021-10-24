@@ -1,7 +1,5 @@
 const { User } = require('../models');
 
-// const ifNoExist = (array) => array.find((entrie) => Object.values(entrie) === null);
-
 const isValid = (email) => ((/\S+@\S+\.\S+/).test(email));
 
 const validCharacters = (value, character) => {
@@ -10,6 +8,8 @@ const validCharacters = (value, character) => {
   }
   return false;
 };
+
+// const ifNoExist = (array) => array.find((entrie) => Object.values(entrie) === null);
 
 // const createUser = async ({ displayName, email, password, image }) => {
 //   const userExist = await User.findOne({ where: { email } });
@@ -42,7 +42,7 @@ const validateEmail = async (email) => {
   return 'valid';
 };
 
-const validateName = async (displayName) => {
+const validateName = (displayName) => {
   if (!displayName) return { erro: { code: 400, message: '"displayName" is required' } };
 
   const validName = validCharacters(displayName, 8);
@@ -51,7 +51,7 @@ const validateName = async (displayName) => {
   return 'valid';
 };
 
-const validatePassword = async (password) => {
+const validatePassword = (password) => {
   if (!password) return { erro: { code: 400, message: '"password" is required' } };
 
   const validPassword = validCharacters(password, 6);
@@ -62,12 +62,15 @@ const validatePassword = async (password) => {
 
 const createUser = async ({ displayName, email, password, image }) => {
   const validEmail = validateEmail(email);
-  const validName = validateName(displayName);
-  const validPassword = validatePassword(password);
+  if (validEmail.erro) return validEmail;
 
-  if (validEmail === 'valid' && validName === 'valid' && validPassword === 'valid') {
-    return User.create({ displayName, email, password, image });
-  }
+  const validName = validateName(displayName);
+  if (validName.erro) return validEmail;
+
+  const validPassword = validatePassword(password);
+  if (validPassword.erro) return validEmail;
+
+  return User.create({ displayName, email, password, image });
 };
 
 module.exports = { createUser };

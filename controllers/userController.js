@@ -11,6 +11,11 @@ router.post('/', async (req, res) => {
 
   try {
     const newUser = await userService.createUser(req.body);
+
+    if (newUser.erro) {
+      return res.status(newUser.erro.code).json({ message: newUser.erro.message });
+    }
+
     const token = auth.createJWT(newUser.email);
     return res.status(201).json({ token });
   } catch (e) {
