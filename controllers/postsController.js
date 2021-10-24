@@ -6,6 +6,13 @@ const createPost = async (req, res) => {
   return res.status(newPost.resp.status).json(newPost.resp.content);
 };
 
+const getAll = async (req, res) => {
+  const allPosts = await postsServices.getAllPosts();
+  if (allPosts.err) return res.status(allPosts.err.status).json(allPosts.err.message);
+  return res.status(allPosts.resp.status).json(allPosts.resp.content);
+};
+
 module.exports = {
   createPost,
+  getAll,
 };

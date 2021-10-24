@@ -36,3 +36,5 @@ app.get('/user', validateJWT, usersController.getAll);
 app.get('/user/:id', validateJWT, usersController.getById);
 
 app.get('/categories', validateJWT, categoriesController.getAll);
+
+app.get('/post', validateJWT, postsController.getAll);
