@@ -5,6 +5,6 @@ const nameValidator = require('../middlewares/categoryValidator');
 const { tokenValidator } = require('../middlewares/tokenValidator');
 
 router.post('/', nameValidator, tokenValidator, CategoryController.createCategory);
-router.get('/', CategoryController.getAll);
+router.get('/', tokenValidator, CategoryController.getAll);
 
 module.exports = router;
