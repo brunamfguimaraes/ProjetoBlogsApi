@@ -22,6 +22,18 @@ const createPost = async (req, res, next) => {
   return res.status(201).json({ id, ...body, userId });
 };
 
+const getPosts = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const validate = await postService.getPosts(token);
+  if (validate.message) {
+    return next(validate);
+  }
+  const findPosts = await BlogPost.findAll();
+  console.log(findPosts, 'FIND');
+  return res.status(200).json(findPosts);
+};
+
 module.exports = {
   createPost,
+  getPosts,
 };

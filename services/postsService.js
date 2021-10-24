@@ -56,6 +56,15 @@ const createPost = async ({ title, content, categoryIds }, token) => {
   return true;
 };
 
+const getPosts = async (token) => {
+  const validToken = await validateToken(token);
+  if (validToken.message) {
+    return validToken;
+  }
+  return true;
+};
+
 module.exports = {
   createPost,
+  getPosts,  
 };
