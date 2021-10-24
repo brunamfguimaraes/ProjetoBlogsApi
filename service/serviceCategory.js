@@ -8,4 +8,9 @@ const serviceCreateCategory = async (req, res) => {
     return category;
 };
 
-module.exports = { serviceCreateCategory };
+const getAllCategories = async () => {
+    const category = await Category.findAll();
+    return category;
+};
+
+module.exports = { serviceCreateCategory, getAllCategories };
