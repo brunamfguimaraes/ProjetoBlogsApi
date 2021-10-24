@@ -1,5 +1,5 @@
-const { User } = require('../models');
 const jwt = require('jsonwebtoken');
+const { User } = require('../models');
 
 const segredo = 'meusupersegredo';
 
@@ -14,9 +14,8 @@ const createUser = async (req, res) => {
   };
 
   const token = jwt.sign({ data: user }, segredo, jwtConfig);
-  return res.status(200).json({token});
+  return res.status(200).json({ token });
 };
-
 
 module.exports = {
   createUser,

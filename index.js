@@ -1,6 +1,6 @@
 const express = require('express');
 const userController = require('./controllers/userController');
-const jwt = require('./middlewares/jwt');
+// const jwt = require('./middlewares/jwt');
 
 const app = express();
 
