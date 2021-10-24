@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost, User } = require('../models/index');
+const { BlogPost, User, Categorie } = require('../models/index');
 const postService = require('../services/postsService');
 const { jwtConfig } = require('./userController');
 
@@ -29,7 +29,11 @@ const getPosts = async (req, res, next) => {
     return next(validate);
   }
   // https://sequelize.org/master/manual/eager-loading.html
-  const findPosts = await BlogPost.findAll({ include: [{ model: User, as: 'user' }] });
+  const findPosts = await BlogPost.findAll({ include: 
+    [
+      { model: User, as: 'User' },
+      { model: Categorie, as: 'Categorie' },
+    ] });
   console.log(findPosts, 'FIND');
   return res.status(200).json(findPosts);
 };
