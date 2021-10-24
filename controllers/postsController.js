@@ -28,7 +28,8 @@ const getPosts = async (req, res, next) => {
   if (validate.message) {
     return next(validate);
   }
-  const findPosts = await BlogPost.findAll();
+  // https://sequelize.org/master/manual/eager-loading.html
+  const findPosts = await BlogPost.findAll({ include: [{ model: User, as: 'user' }] });
   console.log(findPosts, 'FIND');
   return res.status(200).json(findPosts);
 };
