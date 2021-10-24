@@ -45,8 +45,14 @@ const validateCategoryWasInformed = async (req, res, next) => {
 const validateCategoryIdAlreadyRegistered = async (req, res, next) => {
     const { categoryIds } = req.body;
 
+    /**
+     * Constante que armazena uma lista com todas as categories que seus Ids estejam contidos na variável categoryIds.
+     */
     const categories = await Category.findAll({ where: { id: categoryIds } });
 
+    /**
+     * Condição que verifica de a quantidade de categorias armazenadas na variável "categories" é diferente da quantidade armazenada em categoryIds, o que valida se todos os Ids informados existem na base, ou não.
+     */
     if (categories.length !== categoryIds.length) {
       return res.status(400).json({ message: errors.categoryIdsNotFound });
     }
