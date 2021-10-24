@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 require('dotenv/config');
 
-const { validName, validEmail, validPassword } = require('../middlewares/userMiddleware.js');
-const { validToken } = require('../middlewares/tokenMiddleware.js');
+const { validName, validEmail, validPassword } = require('../middlewares/userMiddleware');
+const validToken = require('../middlewares/tokenMiddleware');
 
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
@@ -33,6 +33,12 @@ router.post('/', validName, validEmail, validPassword, async (req, res) => {
   await User.create({ displayName, email, password, image });
   const userToken = jwt.sign({ data: email }, secret, jwtConfig);
   return res.status(201).json({ userToken });
+});
+
+router.delete('/me', validToken, async (req, res) => {
+  const { email } = req;
+  await User.destroy({ where: { email } });
+  return res.sendStatus(204);
 });
 
 module.exports = router;

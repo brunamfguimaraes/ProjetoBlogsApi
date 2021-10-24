@@ -1,13 +1,16 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const categoriesController = require('./controllers/categoriesController');
 const postController = require('./controllers/postController');
 const { required, isEmpty } = require('./middlewares/loginMiddleware');
-const { validToken } = require('./middlewares/tokenMiddleware');
+const validToken = require('./middlewares/tokenMiddleware');
 
 const app = express();
-app.use(express.json());
+
+app.use(bodyParser.json());
 
 app.use('/user', userController);
 app.use('/login', required, isEmpty, loginController);

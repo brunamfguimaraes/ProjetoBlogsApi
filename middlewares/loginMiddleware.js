@@ -3,7 +3,7 @@ const required = (req, res, next) => {
   if (email === undefined && password) {
     return res.status(400).json({ message: '"email" is required' });
   }
-  if (password === undefined && email) {
+  if (email && password === undefined) {
     return res.status(400).json({ message: '"password" is required' });
   }
   return next();

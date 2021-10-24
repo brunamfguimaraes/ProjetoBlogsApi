@@ -13,21 +13,21 @@ const tokenExist = (token) => {
 const validToken = async (req, res, next) => {
   const { authorization } = req.headers;
   let user;
-  if (!tokenExist(authorization)) return res.status(401).json({ message: 'Token not found' });
+  if (!tokenExist(authorization)) {
+    return res.status(401).json({ message: 'Token not found' });
+  }
   try {
     const decoded = jwt.verify(authorization, secret);
-    if (decoded) {
-      user = await User.findOne({ where: { email: decoded } });
+    if (decoded.data) {
+      user = await User.findOne({ where: { email: decoded.data } });
     }
     if (user) {
-      req.email = decoded;
+      req.email = decoded.data;
       next();
     }
-  } catch (e) {
+  } catch (_e) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
-module.exports = {
-  validToken,
-};
+module.exports = validToken;
