@@ -6,6 +6,8 @@ const categoriesRouter = require('./router/categories');
 const postRouter = require('./router/post');
 const errorMiddleware = require('./middlewares/error');
 
+// PROJETO FEITO COM AUXÍLIO DO COLEGA ANTENOR ZAPATA (TURMA 10 B)
+
 const app = express();
 
 app.use(bodyParser.json());

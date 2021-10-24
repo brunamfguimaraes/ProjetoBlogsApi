@@ -12,15 +12,18 @@ async function createPost(post, user) {
     published: Date.now(),
     updated: Date.now(),
   });
-  post.categoryIds.forEach((categoryId) => PostCategory.create({
+
+  const promises = post.categoryIds.map(async (categoryId) => PostCategory.create({
     postId: result.id,
     categoryId,
   }));
+
+  Promise.all(promises);
+
   return result;
 }
 
 async function getPosts() {
-  // const posts = await BlogPost.findAll();
   const posts = await BlogPost.findAll({
     include: [
       { model: User, as: 'user' },
