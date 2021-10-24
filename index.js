@@ -1,5 +1,6 @@
 const express = require('express');
 const userController = require('./controllers/userController');
+const createUserValidation = require('./middlewares/createUser');
 // const jwt = require('./middlewares/jwt');
 
 const app = express();
@@ -13,4 +14,4 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/user', userController.createUser);
+app.post('/user', createUserValidation, userController.createUser);
