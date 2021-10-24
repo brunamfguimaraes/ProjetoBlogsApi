@@ -16,8 +16,11 @@ app.post('/user', userController.userCreate);
 // Login do usuário
 app.post('/login', loginController.userLogin);
 
-// listar usuários
+// Listar usuários
 app.get('/user', jwtValidate, userController.findUser);
+
+// Pesquisa pelo Id
+app.get('/user/:id', jwtValidate, userController.findById);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
