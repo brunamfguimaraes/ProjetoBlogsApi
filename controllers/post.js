@@ -10,6 +10,13 @@ async function createPost(req, res) {
   });
 }
 
+async function getPosts(req, res) {
+  // console.log('controllers');
+  const result = await services.getPosts();
+  return res.status(200).json(result);
+}
+
 module.exports = {
   createPost,
+  getPosts,
 };

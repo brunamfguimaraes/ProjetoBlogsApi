@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const MyError = require('./errorClass');
-const { BlogPost, Category } = require('../models');
+const { Category } = require('../models');
 
 async function bodyPostValidator(post) {
   const { error } = Joi.object({
@@ -19,9 +19,6 @@ async function checkCategories(categoryIds) {
   const validCategories = categoryIds.every((categoryId) => arrIds.includes(categoryId));
 
   if (!validCategories) throw new MyError('"categoryIds" not found', 400);
-  /*
-    [ {id, name}, {id, name} ]
-  */
 }
 
 module.exports = {
