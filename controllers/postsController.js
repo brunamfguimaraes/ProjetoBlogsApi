@@ -31,10 +31,9 @@ const getPosts = async (req, res, next) => {
   // https://sequelize.org/master/manual/eager-loading.html
   const findPosts = await BlogPost.findAll({ include: 
     [
-      { model: User, as: 'User' },
-      { model: Categorie, as: 'categories' },
+      { model: User, as: 'user' },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
     ] });
-  console.log(findPosts, 'FIND');
   return res.status(200).json(findPosts);
 };
 
