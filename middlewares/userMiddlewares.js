@@ -145,7 +145,7 @@ const validateJWT = async (req, res, next) => {
        por isso não é necessário fazer validação do tempo.
        Caso esteja tudo certo, nós então buscamos o usuário na base por EMAIL para obter seus dados atualizados */
     const userEmail = decoded.email;
-    const user = await User.findOne({ userEmail });
+    const user = await User.findOne({ where: { email: userEmail } });
 
     // // Comments: O usuário existe! Colocamos ele em um campo no objeto req, dessa forma, o usuário estará disponível para outros middlewares que executem em sequência.
     req.user = user;
