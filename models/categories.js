@@ -1,9 +1,9 @@
 const Categories = (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
-    name: DataTypes.STRING
+  const categories = sequelize.define('Categories', {
+    name: DataTypes.STRING,
   }, { timestamps: false });
 
-  return Categories;
+  return categories;
 };
 
 module.exports = Categories;

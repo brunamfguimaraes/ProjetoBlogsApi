@@ -1,14 +1,15 @@
 const express = require('express');
+
 const router = express.Router();
 
-const middleware = require('../middlewares/post');
+// const middleware = require('../middlewares/post');
 router.route('/')
     .get()
-    .post()
+    .post();
 
 router.route('/:id')
     .get()
     .put()
-    .delete()
+    .delete();
 
 module.exports = router;

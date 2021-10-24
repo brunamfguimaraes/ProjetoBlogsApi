@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const middleware = require('../middlewares/login');
+// const middleware = require('../middlewares/login');
 
 router.route('/')
-    .post()
+    .post();
 
 module.exports = router;

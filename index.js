@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/user', user);
 app.use('login', login);
 app.use('post', post);
-app.use('categories', categories)
+app.use('categories', categories);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 

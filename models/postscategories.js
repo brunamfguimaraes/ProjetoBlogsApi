@@ -1,10 +1,10 @@
 const PostsCategories = (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
+  const postsCategories = sequelize.define('PostsCategories', {
     postId: DataTypes.INTEGER,
-    categoryId: DataTypes.INTEGER
+    categoryId: DataTypes.INTEGER,
   }, { timestamps: false });
 
-  return User;
+  return postsCategories;
 };
 
 module.exports = PostsCategories;
