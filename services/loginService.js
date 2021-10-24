@@ -4,11 +4,15 @@ const validateEmailPassword = (email, password) => {
   if (!email) {
     return { code: 400, message: '"email" is required' };
   }
-  if (email === '') {
-    return { code: 400, message: '"email" is not allowed to be empty' };
-  }
   if (!password) {
     return { code: 400, message: '"password" is required' };
+  }
+  return true;
+};
+
+const validateEmptyEmailPassword = (email, password) => {
+  if (email === '') {
+    return { code: 400, message: '"email" is not allowed to be empty' };
   }
   if (password === '') {
     return { code: 400, message: '"password" is not allowed to be empty' };
@@ -16,22 +20,18 @@ const validateEmailPassword = (email, password) => {
   return true;
 };
 
-const validateExistingEmail = async (email, password) => {
+const validateLogin = async ({ email, password }) => {
+  const validEmpty = validateEmptyEmailPassword(email, password);
+  if (validEmpty !== true) {
+    return { code: validEmpty.code, message: validEmpty.message };
+  }
+  const validEmailPassword = validateEmailPassword(email, password);
+  if (validEmailPassword !== true) {
+    return { code: validEmailPassword.code, message: validEmailPassword.message };
+  }
   const existingEmail = await User.findOne({ where: { email, password } });
   if (!existingEmail) {
     return { code: 400, message: 'Invalid fields' };
-  }
-  return true;
-};
-
-const validateLogin = async (email, password) => {
-  const validEmailPassword = validateEmailPassword(email, password);
-  const validExist = await validateExistingEmail(email, password);
-  if (!validEmailPassword) {
-    return { code: validEmailPassword.code, message: validEmailPassword.message };
-  }
-  if (!validExist) {
-    return { code: validExist.code, message: validExist.message };
   }
   const userLogin = await User.findOne({ where: { email, password } });
   return userLogin;

@@ -72,6 +72,12 @@ const validateCreate = async ({ displayName, email, password, image }) => {
   return userCreate;
 };
 
+const validateFindUser = async () => {
+  const findUser = await User.findAll();
+  return findUser;
+};
+
 module.exports = {
   validateCreate,
+  validateFindUser,
 };

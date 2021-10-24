@@ -4,10 +4,11 @@ require('dotenv').config();
 
 const userLogin = async (req, res) => {
   const { email, password } = req.body;
-  const login = await validateLogin(email, password);
-  const { message } = login;
+  const login = await validateLogin({ email, password });
+  const { code, message } = login;
+  console.log(message);
   if (message) {
-    return res.status(400).json({ message });
+    return res.status(code).json({ message });
   }
   const jwtConfig = {
     expiresIn: '7d',
