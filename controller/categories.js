@@ -1,9 +1,9 @@
+const rescue = require('express-rescue');
 const { serviceCreateCategory } = require('../service/serviceCategory');
 
-const createCategory = async (req, res) => {
-    // const result = await serviceCreateCategory(req, res);
-    const { name } = req.body;
-    res.status(201).json(req);
-};
+const createCategory = rescue(async (req, res) => {
+    const result = await serviceCreateCategory(req, res);
+    res.status(201).json(result);
+  });
 
 module.exports = { createCategory };
