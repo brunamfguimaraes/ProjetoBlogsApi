@@ -4,7 +4,7 @@ const { User } = require('../models/index');
 const userService = require('../services/userService');
 
 const { JWT_SECRET } = process.env;
-const jwfConfig = {
+const jwtConfig = {
   expiresIn: '7d',
   algorithm: 'HS256',
 };
@@ -17,7 +17,7 @@ const createUser = async (req, res, next) => {
   }
   await User.create({ displayName, email, password, image });
   const token = jwt.sign(
-    { data: { displayName, email } }, JWT_SECRET, jwfConfig,
+    { data: { displayName, email } }, JWT_SECRET, jwtConfig,
   );
   console.log(token);
   return res.status(201).json({ token });
@@ -34,7 +34,7 @@ const findLogin = async (req, res, next) => {
       return next({ status: 400, message: 'Invalid fields' });
     }
 
-    const token = jwt.sign({ data: { user: user.displayName, email } }, JWT_SECRET, jwfConfig);
+    const token = jwt.sign({ data: { user: user.displayName, email } }, JWT_SECRET, jwtConfig);
     return res.status(200).json({ token });
 };
 
@@ -67,4 +67,5 @@ module.exports = {
   findLogin,
   findUsers,
   findById,
+  jwtConfig,
 };

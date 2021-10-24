@@ -1,6 +1,6 @@
 const { BlogPost } = require('../models/index');
 
-const validate = (title, content) => {
+const validate = async (title, content) => {
   if (!title) {
     return { status: 400, message: '"title" is required' };
   }
@@ -10,7 +10,7 @@ const validate = (title, content) => {
   return true;
 };
 
-const validateToken = (token) => {
+const validateToken = async (token) => {
   if (!token) {
     return { status: 401, message: 'Token not found' };
   }
@@ -21,35 +21,28 @@ const validateToken = (token) => {
 };
 
 const isValidCategory = async (ids) => {
-  let categories;
-  let exist = 0;
   if (!ids) {
     return { status: 400, message: '"categoryIds" is required' };
   }
-  ids.forEach(async (id) => {
-    categories = await BlogPost.findAll({ where: { id } });
-    if (categories.length > 0) {
-      exist += 1;
-    }
-  });
-  return exist;
+  const categories = await BlogPost.findAll({ where: { id: ids } });
+  
+  return categories;
 };
 
 const isValid = async (title, content, categoryIds, token) => {
-  const valids = validate(title, content);
+  const valids = await validate(title, content);
   if (valids.message) {
     return valids;
   }
-  const validToken = validateToken(token);
+  const validToken = await validateToken(token);
   if (validToken.message) {
     return validToken;
   }
   const validCategory = await isValidCategory(categoryIds);
-  console.log(validCategory, 'VALID-CATEGORY');
   if (validCategory.message) {
     return validCategory;
   }
-  if (validCategory !== 2) {
+  if (validCategory.length < 1) {
     return { status: 400, message: '"categoryIds" not found' };
   }
   return true;
