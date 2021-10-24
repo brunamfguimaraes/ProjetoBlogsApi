@@ -29,7 +29,6 @@ postRouter.post('/',
   try {
     const { title, content, categoryIds } = req.body;
     const { id } = req.user;
-    // console.log(`Log Id: ${id}`);
 
     const newPost = await BlogPost.create({ title, content, userId: id }, { transaction: t });
 
@@ -38,13 +37,13 @@ postRouter.post('/',
       { transaction: t },
     ));
 
-    await Promise.all(postCategories);
+    await Promise.all(postCategories); // Comments: Resolve "as" promises armazenadas em postcategories.
 
-    await t.commit();
+    await t.commit(); // Comments: Commita a transaction no banco de dados caso não haja erros.
     
     return res.status(201).json({ id: newPost.id, userId: id, title, content });
   } catch (e) {
-    await t.rollback();
+    await t.rollback(); // Comments: Executa o rollback da transaction caso haja erros.
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado' });
   }
