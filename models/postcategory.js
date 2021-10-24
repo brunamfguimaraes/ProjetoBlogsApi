@@ -3,20 +3,21 @@
 module.exports = (sequelize, _DataTypes) => {
   const PostCategory = sequelize.define('PostCategory',
     {},
-    { timestamps: false });
+    { timestamps: false, tableName: 'PostsCategories' });
+    // Comments: TableName usado para indicar ao Model o nome correto da tabela no banco de dados, criada como "PostsCategories" de acordo com requisitos anteriores.
 
   PostCategory.associate = (models) => {
     models.BlogPost.belongsToMany(models.Category, {
       as: 'categories',
       through: PostCategory,
-      foreignKey: 'blogPostId',
+      foreignKey: 'postId', // Comments: Por padrão seria "blogPostId", mas foi criado como "postId" conforme requisitos anteriores.
       otherKey: 'categoryId',
     });
     models.Category.belongsToMany(models.BlogPost, {
       as: 'blogPosts',
       through: PostCategory,
       foreignKey: 'categoryId',
-      otherKey: 'blogPostId',
+      otherKey: 'postId', // Comments: Por padrão seria "blogPostId", mas foi criado como "postId" conforme requisitos anteriores.
     });
   };
 
