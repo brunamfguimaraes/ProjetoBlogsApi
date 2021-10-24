@@ -74,16 +74,15 @@ const passwordLoginIsValid = (password) => {
   return {};
 };
 
-// const validateLogin = (email, password) => {
-//   const reg = new RegExp(/^[\w.]+@[a-z]+.\w{2,3}$/g);
-//   if (!email || !reg.test(email) || !password || password.length < 6) {
-//     return {
-//       message: 'Campos inválidos',
-//     };
-//   }
+const validateCategorieName = (name) => {
+  if (!name) {
+    return {
+      message: '"name" is required',
+    };
+  }
 
-//   return {};
-// };
+  return {};
+};
 
 module.exports = {
   validateName,
@@ -91,4 +90,5 @@ module.exports = {
   passwordIsValid,
   isEmailLoginValid,
   passwordLoginIsValid,
+  validateCategorieName,
 };
