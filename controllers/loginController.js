@@ -17,7 +17,7 @@ loginRouter.post('/',
   validateEmailWasInformed,
   validatePasswordIsEmpty,
   validatePasswordWasInformed,
-  validateUserIsRegistered, (req, res) => {
+  validateUserIsRegistered, async (req, res) => {
   try {
     const { email, password } = req.body;
     const token = generateToken({ email, password });
