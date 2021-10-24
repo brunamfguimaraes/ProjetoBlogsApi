@@ -30,9 +30,16 @@ async function getUserById(req, res) {
   return res.status(200).json(user);  
 }
 
+async function deleteUser(req, res) {
+  const { user } = req;
+  await services.deleteUser(user);
+  return res.status(204).end();
+}
+
 module.exports = {
   createUser,
   generateToken,
   getUser,
   getUserById,
+  deleteUser,
 };

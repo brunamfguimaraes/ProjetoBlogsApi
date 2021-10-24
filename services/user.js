@@ -20,8 +20,13 @@ async function getUserById(id) {
   return user;
 }
 
+async function deleteUser(user) {
+  User.destroy({ where: { id: user.id } });
+}
+
 module.exports = {
   createUser,
   getUser,
   getUserById,
+  deleteUser,
 };
