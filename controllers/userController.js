@@ -1,5 +1,6 @@
 const express = require('express');
 const userService = require('../services/userService');
+const { User } = require('../models');
 const auth = require('../auth/jwtFunctions');
 const { authValidation } = require('../auth/authMiddleware');
 
@@ -27,8 +28,20 @@ router.post('/', async (req, res) => {
 
 router.get('/', authValidation, async (_req, res) => {
   try {
-    const users = await userService.findAll();
+    const users = await User.findAll();
     res.status(200).json(users);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.get('/:id', authValidation, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (user === null) { 
+      return res.status(404).send({ message: 'User does not exist' }); 
+    }
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
