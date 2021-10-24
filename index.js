@@ -1,5 +1,4 @@
 const express = require('express');
-// const bodyParser = require('body-parser');
 const { userRouter } = require('./controllers/userController');
 const { loginRouter } = require('./controllers/loginController');
 const { categoriesRouter } = require('./controllers/categoriesController');

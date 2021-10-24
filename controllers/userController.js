@@ -33,6 +33,20 @@ userRouter.post('/',
 });
 
 // ---------------------------------------------------------------
+// Requisito 3: CONTROLLER responsável por realizar busca de usuários via sequelize e retornar usuários cadastrados.
+
+userRouter.get('/', validateJWT, async (req, res) => {
+  try {
+    const users = await User.findAll();
+
+    return res.status(200).json(users);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+// ---------------------------------------------------------------
 // Requisito 4: CONTROLLER responsável por realizar busca de usuário por ID via sequelize e retornar o usuário cadastrado.
 
 userRouter.get('/:id', validateJWT, async (req, res) => {
@@ -48,20 +62,6 @@ userRouter.get('/:id', validateJWT, async (req, res) => {
   } catch (e) {
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado' });
-  }
-});
-
-// ---------------------------------------------------------------
-// Requisito 3: CONTROLLER responsável por realizar busca de usuários via sequelize e retornar usuários cadastrados.
-
-userRouter.get('/', validateJWT, async (req, res) => {
-  try {
-    const users = await User.findAll();
-
-    return res.status(200).json(users);
-  } catch (e) {
-    console.log(e.message);
-    return res.status(500).json({ message: 'Algo deu errado' });
   }
 });
 
