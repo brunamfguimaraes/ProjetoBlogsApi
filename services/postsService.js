@@ -1,4 +1,4 @@
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 const categoriesService = require('./categoriesService');
 
 const genericError = {
@@ -48,7 +48,12 @@ const createPost = async (postInfo, userInfo) => {
 };
 
 const getAllPosts = async () => {
-  const allPosts = await BlogPost.findAll();
+  const allPosts = await BlogPost.findAll({ 
+    include: [ 
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
   try {
     return {
       resp: {
