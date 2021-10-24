@@ -1,11 +1,11 @@
-const Category = require('../models');
+const { Category } = require('../models');
 
 // Comments: Lista de erros
 const errors = {
   titleRequired: '"title" is required',
   contentRequired: '"content" is required',
   categoryIdsRequired: '"categoryIds" is required',
-  categoryIdsNotFound: '"categoryids" not found',
+  categoryIdsNotFound: '"categoryIds" not found',
 };
 
 // Comments: Valida se o campo title foi informado na requisição.
@@ -44,9 +44,9 @@ const validateCategoryWasInformed = async (req, res, next) => {
 // Comments: Valida se as categoryids informadas na requisição existem na base de dados.
 const validateCategoryIdAlreadyRegistered = async (req, res, next) => {
     const { categoryIds } = req.body;
-    console.log(categoryIds);
 
-    const categories = await Category.findAll({ in: { categoryIds } });
+    const categories = await Category.findAll({ where: { id: categoryIds } });
+    console.log(categories.length);
 
     if (categories.length !== categoryIds.length) {
       return res.status(400).json({ message: errors.categoryIdsNotFound });
