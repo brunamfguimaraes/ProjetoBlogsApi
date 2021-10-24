@@ -10,8 +10,7 @@ const requestCreateBlogPost = async (req, res) => {
 };
 
 const requestBlogPostsList = async (req, res) => {
-  const { userId } = req.user;
-  const allPosts = await getAllPosts(userId);
+  const allPosts = await getAllPosts();
 
   console.log(allPosts);
 
