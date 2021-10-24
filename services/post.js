@@ -5,6 +5,7 @@ const { bodyPostValidator, checkCategories } = require('./postValidator');
 async function createPost(post, user) {
   await bodyPostValidator(post);
   await checkCategories(post.categoryIds);
+
   const result = await BlogPost.create({
     title: post.title,
     content: post.content,
@@ -13,12 +14,17 @@ async function createPost(post, user) {
     updated: Date.now(),
   });
 
-  const promises = post.categoryIds.map(async (categoryId) => PostCategory.create({
+  await post.categoryIds.forEach(async (categoryId) => PostCategory.create({
     postId: result.id,
     categoryId,
   }));
 
-  Promise.all(promises);
+  // const promises = post.categoryIds.map(async (categoryId) => PostCategory.create({
+  //   postId: result.id,
+  //   categoryId,
+  // }));
+
+  // Promise.all(promises);
 
   return result;
 }
