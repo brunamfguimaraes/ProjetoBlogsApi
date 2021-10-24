@@ -29,6 +29,7 @@ postRouter.post('/',
   try {
     const { title, content, categoryIds } = req.body;
     const { id } = req.user;
+    // console.log(`Log Id: ${id}`);
 
     const newPost = await BlogPost.create({ title, content, userId: id }, { transaction: t });
 
