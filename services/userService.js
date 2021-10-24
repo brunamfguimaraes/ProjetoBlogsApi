@@ -2,11 +2,16 @@ const { User } = require('../models');
 
 const isValid = (email) => ((/\S+@\S+\.\S+/).test(email));
 
-const validCharacters = (value, character) => {
-  if (value.length <= character) { 
-    return `${value} length must be at least ${character} characters long`; 
+const validCharacters = (value, character, type) => {
+  if (value.length < character) { 
+    return `"${type}" length must be at least ${character} characters long`; 
   }
-  return false;
+};
+
+const validCharacters2 = (value, character, type) => {
+  if (value.length < character) { 
+    return `"${type}" length must be ${character} characters long`; 
+  }
 };
 
 // const ifNoExist = (array) => array.find((entrie) => Object.values(entrie) === null);
@@ -42,35 +47,37 @@ const validateEmail = async (email) => {
   return 'valid';
 };
 
-const validateName = (displayName) => {
-  if (!displayName) return { erro: { code: 400, message: '"displayName" is required' } };
-
-  const validName = validCharacters(displayName, 8);
-  if (validName) return { erro: { code: 400, message: validName } };
-
-  return 'valid';
-};
-
-const validatePassword = (password) => {
+const validatePassword = (password, email) => {
   if (!password) return { erro: { code: 400, message: '"password" is required' } };
 
-  const validPassword = validCharacters(password, 6);
+  const validPassword = validCharacters2(password, 6, 'password');
   if (validPassword) return { erro: { code: 400, message: validPassword } };
 
-  return 'valid';
+  return validateEmail(email);
+};
+
+const validateName = (displayName, password, email) => {
+  if (!displayName) return { erro: { code: 400, message: '"displayName" is required' } };
+
+  const validName = validCharacters(displayName, 8, 'displayName');
+  if (validName) return { erro: { code: 400, message: validName } };
+
+  return validatePassword(password, email);
 };
 
 const createUser = async ({ displayName, email, password, image }) => {
-  const validEmail = validateEmail(email);
-  if (validEmail.erro) return validEmail;
+  const validName = await validateName(displayName, password, email);
+  if (validName.erro) return validName;
 
-  const validName = validateName(displayName);
-  if (validName.erro) return validEmail;
+  // const validPassword = validatePassword(password);
+  // if (validPassword.erro) return validPassword;
+  // console.log(validPassword);
 
-  const validPassword = validatePassword(password);
-  if (validPassword.erro) return validEmail;
+  // const validEmail = await validateEmail(email);
+  // if (validEmail.erro) return validEmail;
+  // console.log(validEmail);
 
-  return User.create({ displayName, email, password, image });
+  if (validName === 'valid') return User.create({ displayName, email, password, image });
 };
 
 module.exports = { createUser };
