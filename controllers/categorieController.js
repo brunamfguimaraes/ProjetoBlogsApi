@@ -21,4 +21,15 @@ router.post('/', validateToken, async (req, res) => {
   }
 });
 
+router.get('/', validateToken, async (req, res) => {
+  try {
+    const getCategories = await categorie.getAllCategories();
+    
+    return res.status(200).json(getCategories);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
+
 module.exports = router;
