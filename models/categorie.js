@@ -2,7 +2,7 @@ const Categorie = (sequelize, DataTypes) => {
   const table = sequelize.define('Categorie', {
     name: DataTypes.STRING,
   },
-  { timestamp: false });
+  { timestamps: false });
 
   return table;
 };

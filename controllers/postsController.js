@@ -32,7 +32,7 @@ const getPosts = async (req, res, next) => {
   const findPosts = await BlogPost.findAll({ include: 
     [
       { model: User, as: 'User' },
-      { model: Categorie, as: 'categories', through: { attributes: [] } },
+      { model: Categorie, as: 'categories' },
     ] });
   console.log(findPosts, 'FIND');
   return res.status(200).json(findPosts);
