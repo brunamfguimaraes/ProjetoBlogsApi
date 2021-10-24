@@ -47,6 +47,19 @@ const createPost = async (postInfo, userInfo) => {
   } catch (e) { return genericError; } 
 };
 
+const getAllPosts = async () => {
+  const allPosts = await BlogPost.findAll();
+  try {
+    return {
+      resp: {
+        status: 200,
+        content: allPosts,
+      },
+    };
+  } catch (e) { return genericError; }
+};
+
 module.exports = {
   createPost,
+  getAllPosts,
 };
