@@ -9,14 +9,14 @@ const createCategory = async (req, res) => {
   const create = await validateCreateCategory({ name });
   const { code, message } = create;
   if (message) {
-    res.status(code).json({ message });
+    return res.status(code).json({ message });
   }
-  res.status(201).json(create);
+  return res.status(201).json(create);
 };
 
 const findCategories = async (_req, res) => {
   const find = await validateFindCategories();
-  res.status(200).json(find);
+  return res.status(200).json(find);
 };
 
 module.exports = {
