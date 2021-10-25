@@ -78,9 +78,6 @@ const validateFindUser = async () => {
 };
 
 const validateFindById = async (id) => {
-  // if (!id) {
-  //   return { code: 404, message: 'User does not exist' };
-  // }
   const findUserById = await User.findByPk(id);
   if (!findUserById) {
     return { code: 404, message: 'User does not exist' };

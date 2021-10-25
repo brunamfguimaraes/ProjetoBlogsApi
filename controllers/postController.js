@@ -3,7 +3,7 @@ const { validateCreatePost, validateFindPost } = require('../services/postServic
 const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { id: userId } = req.user;
-  console.log(userId);
+  console.log(req.user);
   const create = await validateCreatePost({ title, content, userId, categoryIds });
   const { id, code, message } = create;
   if (message) {

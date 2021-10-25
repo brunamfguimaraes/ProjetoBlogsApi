@@ -14,7 +14,7 @@ const userCreate = async (req, res) => {
     algorithm: 'HS256',
   };
   const token = jwt.sign({ data: create }, process.env.JWT_SECRET, jwtConfig);
-  return res.status(201).json(token);
+  return res.status(201).json({ token });
 };
 
 const findUser = async (req, res) => {
