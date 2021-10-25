@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const userController = require('./controllers/userController');
 const categoriesController = require('./controllers/CategoriesController');
 const blogPostController = require('./controllers/blogPostController');
@@ -20,3 +19,4 @@ app.get('/user/:id', validateJWT, userController.getUserById);
 app.post('/categories', validateJWT, categoriesController.createCategories);
 app.get('/categories', validateJWT, categoriesController.getAllCategories);
 app.post('/post', validateJWT, blogPostController.createBlogPost);
+app.get('/post', validateJWT, blogPostController.getAllBlogPosts);

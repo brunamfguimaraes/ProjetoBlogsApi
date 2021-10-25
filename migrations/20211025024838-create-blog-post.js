@@ -7,7 +7,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        field: 'id',
       },
       title: {
         type: Sequelize.STRING
@@ -16,7 +15,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +34,7 @@ module.exports = {
         type: Sequelize.DATE,
         field: 'updated',
       }
+
     });
   },
   down: async (queryInterface, Sequelize) => {
