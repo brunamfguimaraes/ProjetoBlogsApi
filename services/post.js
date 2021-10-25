@@ -1,4 +1,4 @@
-const { BlogPost, Category, User, PostCategory } = require('../models');
+const { BlogPost, Category, User, PostsCategory } = require('../models');
 const { bodyPostValidator, checkCategories } = require('./postValidator');
 // const MyError = require('./errorClass');
 
@@ -14,17 +14,14 @@ async function createPost(post, user) {
     updated: Date.now(),
   });
 
-  await post.categoryIds.forEach(async (categoryId) => PostCategory.create({
-    postId: result.id,
-    categoryId,
-  }));
-
-  // const promises = post.categoryIds.map(async (categoryId) => PostCategory.create({
+  // await post.categoryIds.forEach(async (categoryId) => PostCategory.create({
   //   postId: result.id,
   //   categoryId,
   // }));
-
-  // Promise.all(promises);
+  post.categoryIds.forEach((categoryId) => PostsCategory.create({
+    postId: result.id,
+    categoryId,
+  }));
 
   return result;
 }

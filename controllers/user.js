@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken');
 const services = require('../services/user');
 
-const secret = 'tigre';
+const secret = process.env.JWT_SECRET;
 
 async function generateToken(body) {
   const { displayName, email } = body;

@@ -12,7 +12,7 @@ async function checkToken(req, res, next) {
   if (!authorization) return next(new MyError('Token not found', 401));
 
   try {
-    const decoded = JWT.verify(authorization, 'tigre');
+    const decoded = JWT.verify(authorization, process.env.JWT_SECRET);
     const user = await userExists(decoded.email);
     if (!user) return next(new MyError('Expired or invalid token', 404));
     req.user = user;
