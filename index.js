@@ -17,10 +17,10 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => console.log('ouvindo porta 3000!'));
-
 app.use(userController);
 
 app.use(categoryController);
 
 app.use(blogPostController);
+
+app.listen(PORT, () => console.log('ouvindo porta 3000!'));
