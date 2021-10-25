@@ -4,7 +4,6 @@ const { User } = require('../models');
 const secret = 'mySuperPassword';
 const OK = 200;
 const BAD_REQUEST = 400;
-// const INTERNAL_SERVER_ERROR = 500;
 
 const jwtConfig = {
   expiresIn: '15d',
