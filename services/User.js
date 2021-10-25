@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-const SECRET = 'secret';
+const SECRET = process.env.JWT_SECRET;
 
 const userListService = async () => {
   const userList = await User.findAll();

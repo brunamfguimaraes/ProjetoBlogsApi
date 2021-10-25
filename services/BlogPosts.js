@@ -9,10 +9,16 @@ const addPost = async (title, content, userId) => {
 const getAllPosts = async () => {
   const postsLists = await BlogPost.findAll({
     include: [{
-      model: User, as: 'user', attributes: { exclude: ['password'] },
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    },
+    {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
     }],
   });
-  // const categories = await Categories.findAll({ where});
 
   return postsLists;
 };

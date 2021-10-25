@@ -12,8 +12,6 @@ const requestCreateBlogPost = async (req, res) => {
 const requestBlogPostsList = async (req, res) => {
   const allPosts = await getAllPosts();
 
-  console.log(allPosts);
-
   return res.status(200).json(allPosts);
 };
 
