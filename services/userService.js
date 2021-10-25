@@ -14,7 +14,7 @@ const addNewUser = async (displayName, email, password, image) => {
     });
     console.log(addUser);
     const payload = {
-        // id: String(addUser.id),
+        id: addUser.id,
         displayName,
         email,
         image,

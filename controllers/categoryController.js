@@ -16,4 +16,12 @@ async (req, res) => {
     return res.status(201).json(addCategory);
 });
 
+router.get('/categories',
+auth.verifyToken,
+async (req, res) => {
+    const getCategories = await categoryService.getAllCategories();
+
+    return res.status(200).json(getCategories);
+});
+
 module.exports = router;

@@ -48,6 +48,8 @@ const verifyToken = async (req, res, next) => {
         //     return tokenExpired;
         // }
 
+        req.user = result;
+
         next();
         // return user;
     } catch (err) {
