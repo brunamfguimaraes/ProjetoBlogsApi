@@ -1,7 +1,7 @@
 const express = require('express');
 const blogPostService = require('../services/blogPostService');
 const { authValidation, authValid } = require('../auth/authMiddleware');
-const { User, BlogPost } = require('../models');
+const { User, BlogPost, Category } = require('../models');
 
 const router = express.Router();
 
@@ -13,7 +13,6 @@ router.post('/', authValidation, async (req, res) => {
   const findUser = await User.findOne({ where: { email: payload } });
   const userId = findUser.dataValues.id;
 
-  console.log('USERID', userId);
   try {
     const category = await blogPostService.create(title, content, userId, categoryIds);
 
@@ -30,9 +29,10 @@ router.post('/', authValidation, async (req, res) => {
 
 router.get('/', authValidation, async (_req, res) => {
   try {
-    const categories = await BlogPost.findAll({
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-    });
+    const categories = await BlogPost.findAll({ include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+      ] });
     return res.status(200).json(categories);
   } catch (error) {
     return res.status(500).send({ message: error.message });
