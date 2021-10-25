@@ -10,7 +10,7 @@ const validateJWT = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, segredo);
     const user = await User.findOne(
-        { where: { email: decoded.data.email, password: decoded.data.password } },
+        { where: { id: decoded.data } },
     );
     if (!user) {
         return res.status(401).json({ message: 'Expired or invalid token' }); 
