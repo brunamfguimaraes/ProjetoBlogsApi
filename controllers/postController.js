@@ -1,4 +1,8 @@
-const { validateCreatePost, validateFindPost } = require('../services/postService');
+const {
+  validateCreatePost,
+  validateFindPost,
+  validateFindPostById,
+} = require('../services/postService');
 
 const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -17,7 +21,18 @@ const findPost = async (_req, res) => {
   return res.status(200).json(find);
 };
 
+const findPostById = async (req, res) => {
+  const { id } = req.params;
+  const findById = await validateFindPostById(id);
+  const { code, message } = findById;
+  if (message) {
+    return res.status(code).json({ message });
+  }
+  res.status(200).json(findById);
+};
+
 module.exports = {
   createPost,
   findPost,
+  findPostById,
 };
