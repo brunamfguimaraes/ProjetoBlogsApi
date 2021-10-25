@@ -6,11 +6,14 @@ const middleware = require('../middlewares/categories');
 const token = require('../middlewares/token');
 const controller = require('../controllers/categories');
 
+router.use(
+    token.haveToken,
+    token.validToken,
+    );
+
 router.route('/')
-    .get()
+    .get(controller.getAll)
     .post(
-        token.haveToken,
-        token.validToken,
         middleware.haveName,
         controller.create,
     );
