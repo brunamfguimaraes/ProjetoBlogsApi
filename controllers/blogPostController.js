@@ -6,6 +6,7 @@ const createBlogPost = async (req, res) => {
   try {
     const { title, content, categoryIds } = req.body;
     const { id: userId } = req.user;
+    
     const categories = await Category.findAll({ where: { id: categoryIds } });
   
     if (categories.length !== categoryIds.length) {

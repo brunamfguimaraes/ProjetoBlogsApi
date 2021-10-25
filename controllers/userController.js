@@ -44,7 +44,7 @@ const getById = async (req, res) => {
       attributes: { exclude: ['password'] },
     });
     
-    if (!user) return res.status(404).json({ message: 'User does not exist' });
+    if (!user) return res.status(CODE.NOT_FOUND).json({ message: 'User does not exist' });
 
     return res.status(200).json(user);
   } catch (e) {
@@ -58,13 +58,3 @@ module.exports = {
   getAll,
   getById,
 };
-
-/* Alguns exemplos:
-
-Requisições que precisam de token mas não o receberam devem retornar um código de status 401;
-
-Requisições que não seguem o formato pedido pelo servidor devem retornar um código de status 400;
-
-Um problema inesperado no servidor deve retornar um código de status 500;
-
-Um acesso ao criar um recurso, no nosso caso usuário ou post, deve retornar um código de status 201. */
