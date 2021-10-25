@@ -6,6 +6,8 @@ const validateFields = require('../middlewares/validateFields');
 
 const router = express.Router();
 
+router.get('/', validateJWT, postControllers.getAll);
+
 router.post(
   '/',
   validateJWT,
