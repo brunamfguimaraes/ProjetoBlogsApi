@@ -6,15 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     image: DataTypes.STRING,
   },
-  { timestamps: false,
-    tableName: 'Users', // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
-  // }, {sequelize,modelName: 'user'},
+  {
+    timestamps: false,
+    tableName: 'Users',
   });
+
   User.associate = (models) => {
-    User.hasMany(models.BlogPosts, {
-      as: 'BlogPosts',
+    User.hasMany(models.BlogPost, {
       foreignKey: 'userId',
+      as: 'posts',
     });
   };
+
   return User;
 };
