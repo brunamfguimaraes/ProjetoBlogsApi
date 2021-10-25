@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
-  
+  console.log(req.body);
+
   try {
     const validatePass = loginService.validatePassword(password);
     if (validatePass.erro) {
@@ -18,11 +19,11 @@ router.post('/', async (req, res) => {
       return res.status(validateEmail.erro.code).json({ message: validateEmail.erro.message });
     }
     
-    const token = auth.createJWT(email);
+    const token = auth.createJWT({ email });
     return res.status(200).json({ token });
   } catch (e) {
-    // console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    console.log(e);
+    return res.status(500).json({ message: 'Algo deu errado' });
   }
 });
 

@@ -6,20 +6,21 @@ const validateEmail = async (email) => {
   if (!email) return { erro: { code: 400, message: '"email" is required' } };
 
   const userExist = await User.findOne({ where: { email } });
-  // console.log(userExist);
+  // console.log('DADOS AQUI', userExist.dataValues);
   if (!userExist) return { erro: { code: 400, message: 'Invalid fields' } };
 
-  return 'valid';
+  return true;
 };
 
 const validatePassword = (password) => {
+  console.log('PASSWORD', password);
   if (password === '') { 
     return { erro: { code: 400, message: '"password" is not allowed to be empty' } }; 
   }
 
   if (!password) return { erro: { code: 400, message: '"password" is required' } };
 
-  return 'valid';
+  return true;
 };
 
 module.exports = { validateEmail, validatePassword };

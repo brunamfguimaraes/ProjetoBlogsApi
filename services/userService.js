@@ -44,7 +44,7 @@ const validateEmail = async (email) => {
   const validEmail = isValid(email);
   if (!validEmail) return { erro: { code: 400, message: '"email" must be a valid email' } };
 
-  return 'valid';
+  return true;
 };
 
 const validatePassword = (password, email) => {
@@ -77,7 +77,7 @@ const createUser = async ({ displayName, email, password, image }) => {
   // if (validEmail.erro) return validEmail;
   // console.log(validEmail);
 
-  if (validName === 'valid') return User.create({ displayName, email, password, image });
+  if (validName) return User.create({ displayName, email, password, image });
 };
 
 module.exports = { createUser };
