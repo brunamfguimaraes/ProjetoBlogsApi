@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {   
-  categoryRouter,
-  loginRouter,
-  userCRouter,
-  blogPostRouter,
- } = require('./controllers');
+categoryRouter,
+loginRouter,
+userCRouter,
+blogPostRouter,
+} = require('./controllers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

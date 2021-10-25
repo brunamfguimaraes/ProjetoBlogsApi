@@ -25,13 +25,12 @@ router.get('/', valdateJwt, async (_req, res) => {
 });
 
 router.post('/',
-valdateJwt, 
+// valdateJwt, 
 validateTitle, 
 validateContent,
 validateCategoryKey,
 async (req, res) => {
   const { user } = req;
-  console.log(user);
   try {
     const dataValues = await BlogPost.create({ userId: user.id, ...req.body });
     return res.status(201).json(dataValues);

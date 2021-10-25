@@ -20,6 +20,7 @@ router.post('/', userMailLogin, userPasswordLogin, validateUser, async (req, res
       const { dataValues } = await User.findOne({ where: { email } });
       delete dataValues.password;
       const token = jwt.sign({ data: dataValues }, secret, jwtConfig);
+      console.log(token);
       return res.status(200).json({ token });
     } catch (e) {
       console.log(e.message);
