@@ -5,8 +5,14 @@ const router = express.Router();
 const middleware = require('../middlewares/user');
 const controller = require('../controllers/users');
 
+const token = require('../middlewares/token');
+
 router.route('/')
-    .get()
+    .get(
+        token.haveToken,
+        token.validToken,
+        controller.getAll,
+    )
     .post(
         middleware.displayNameVerify,
         middleware.existEmail,

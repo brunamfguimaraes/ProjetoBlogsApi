@@ -9,4 +9,9 @@ const create = async (req, res) => {
     res.status(201).json({ token });
 };
 
-module.exports = { create };
+const getAll = async (req, res) => {
+    const user = await User.findAll();
+    res.status(200).json(user);
+};
+
+module.exports = { create, getAll};
