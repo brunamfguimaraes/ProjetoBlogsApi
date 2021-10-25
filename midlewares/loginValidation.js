@@ -16,7 +16,7 @@ const userMailLogin = (req, res, next) => {
   next();
 };
 
-const userPsswordLogin = (req, res, next) => {
+const userPasswordLogin = (req, res, next) => {
   const { password } = req.body;
   if (password === '') res.status(400).json(emptyPassword);
   if (!password) return res.status(400).json(passwordRequiredError);
@@ -36,4 +36,4 @@ const validateUser = async (req, res, next) => {
   next();
 };
 
-module.exports = { userMailLogin, userPsswordLogin, validateUser };
+module.exports = { userMailLogin, userPasswordLogin, validateUser };
