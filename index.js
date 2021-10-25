@@ -1,8 +1,10 @@
 const express = require('express');
 require('dotenv').config();
+
 const userRoutes = require('./routes/userRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
+const blogPostRoutes = require('./routes/blogpostRoutes');
 
 const app = express();
 
@@ -13,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/login', loginRoutes);
 app.use('/user', userRoutes);
 app.use('/categories', categoriesRoutes);
+app.use('/post', blogPostRoutes);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
@@ -20,18 +23,3 @@ app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 app.get('/', (request, response) => {
   response.send();
 });
-
-// O que já foi feito:
-
-// implementação da estrutura do sequelize, como models, migration e seeders
-// criação e população do banco de dados
-// middleware de validação do usuário (userValidation)
-// implementar o controller do login e assim gerar o token do usuário (req 2)
-// token necessário para adicionar um usuário à tabela Users (req 1)
-// função que retorna todos os usuários (req 3)s
-// Fazer a busca de usuário específico
-
-// ------------------------------------------
-
-// Próximos passos:
-// Criar rota Categories

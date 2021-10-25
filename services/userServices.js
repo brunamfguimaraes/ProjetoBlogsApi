@@ -29,7 +29,7 @@ const getAll = async () => {
 
 const findUser = async (id) => {
   const user = await User.findOne({ where: { id } });
-  console.log(user);
+  console.log('=========', user);
   return user;
 };
 

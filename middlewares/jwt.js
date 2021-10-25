@@ -4,11 +4,6 @@ require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
 
-const jwtConfiguration = {
-  expiresIn: '7d',
-  algorithm: 'HS256',
-};
-
 const validateJWT = (req, res, next) => {
   const token = req.headers.authorization;
   
@@ -20,9 +15,9 @@ const validateJWT = (req, res, next) => {
   
   try {
     const payload = jwt.verify(token, secret);
-    const { email } = payload;
+    const { id, email } = payload;
 
-    req.user = { email };
+    req.user = { id, email };
     
     next();
   } catch (error) {
@@ -32,12 +27,4 @@ const validateJWT = (req, res, next) => {
   }
 };
 
-const generateToken = (id, email) => {
-  const token = jwt.sign({ id, email }, secret, jwtConfiguration);
-  return token;
-};
-
-module.exports = {
-  generateToken,
-  validateJWT,
-};
+module.exports = { validateJWT };

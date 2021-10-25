@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const userServices = require('../services/userServices');
 const { User } = require('../models');
-const { generateToken } = require('../middlewares/jwt');
+const generateToken = require('../middlewares/jwtGenerate');
 
 const addUser = async (req, res) => {
   try {
@@ -12,11 +12,12 @@ const addUser = async (req, res) => {
     }
 
     const response = await userServices.addUser(user);
+    // console.log('+++++++++++', response);
     if (!response.id) {
       return res.status(StatusCodes.BAD_REQUEST).json(response);
     }
-
-    const token = generateToken(response.id, response.email);
+    const { id, email } = response;
+    const token = generateToken({ id, email });
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
