@@ -6,7 +6,7 @@ const {
   validateCategoryWasInformed, 
   validateCategoryIdAlreadyRegistered } = require('../middlewares/blogPostMiddlewares');
 const { validateJWT } = require('../middlewares/userMiddlewares');
-const { BlogPost, PostCategory } = require('../models');
+const { User, Category, BlogPost, PostCategory } = require('../models');
 
 const config = require('../config/config');
 
@@ -46,6 +46,25 @@ postRouter.post('/',
     await t.rollback(); // Comments: Executa o rollback da transaction caso haja erros.
     console.log(e.message);
     res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+// ---------------------------------------------------------------
+// Requisito 8: CONTROLLER responsável por realizar busca de BlogPosts via sequelize e retornar posts cadastrados.
+
+postRouter.get('/', validateJWT, async (req, res) => {
+  try {
+    const posts = await BlogPost.findAll(
+      { include: [
+        { model: User, as: 'user' },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ] },
+    );
+
+    return res.status(200).json(posts);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: 'Algo deu errado' });
   }
 });
 
