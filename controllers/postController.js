@@ -14,7 +14,7 @@ const createPost = async (req, res) => {
 
 const findPost = async (_req, res) => {
   const find = await validateFindPost();
-  res.status(200).json(find);
+  return res.status(200).json(find);
 };
 
 module.exports = {
