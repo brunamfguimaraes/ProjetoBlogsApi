@@ -10,9 +10,9 @@ const blogPostController = require('./controllers/blogPostController');
 const app = express();
 
 app.use(bodyParser.json());
-const { PORT } = process.env || 3000;
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log('ouvindo porta 3000!'));
+app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
 app.use(userController);
 
