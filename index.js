@@ -21,7 +21,7 @@ app.post('/login', loginController.userLogin);
 app.post('/categories', jwtValidate, categoryController.createCategory);
 
 // Listar Categorias
-app.get('/categories', categoryController.findCategories);
+app.get('/categories', jwtValidate, categoryController.findCategories);
 
 // Listar usuários
 app.get('/user', jwtValidate, userController.findUser);
