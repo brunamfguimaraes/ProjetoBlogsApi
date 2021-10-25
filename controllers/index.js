@@ -4,8 +4,8 @@ const userCRouter = require('./userController');
 const blogPostRouter = require('./blogPosts');
 
 module.exports = {
-    categoryRouter,
-    loginRouter,
-    userCRouter,
-    blogPostRouter,
+categoryRouter,
+loginRouter,
+userCRouter,
+blogPostRouter,
 };

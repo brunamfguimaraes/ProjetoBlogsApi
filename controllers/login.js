@@ -14,7 +14,11 @@ const jwtConfig = {
 
 const ALGO_DEU_ERRADO = 'Algo deu errado';
 
-router.post('/', userMailLogin, userPasswordLogin, validateUser, async (req, res) => {
+router.post('/', 
+userMailLogin, 
+userPasswordLogin, 
+validateUser, 
+async (req, res) => {
     const { email } = req.body;
     try {
       const { dataValues } = await User.findOne({ where: { email } });

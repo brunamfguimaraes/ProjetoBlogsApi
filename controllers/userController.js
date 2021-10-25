@@ -13,7 +13,9 @@ const jwtConfig = {
 const router = express.Router();
 const ALGO_DEU_ERRADO = 'Algo deu errado';
 
-router.get('/', valdateJwt, async (_req, res) => {
+router.get('/', 
+valdateJwt, 
+async (_req, res) => {
   try {
     const users = await User.findAll();
     return res.status(200).json(users);
@@ -23,7 +25,9 @@ router.get('/', valdateJwt, async (_req, res) => {
   }
 });
 
-router.get('/:id', valdateJwt, async (req, res) => {
+router.get('/:id', 
+valdateJwt, 
+async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -37,7 +41,11 @@ router.get('/:id', valdateJwt, async (req, res) => {
   }
 });
 
-router.post('/', validateUserName, validateEmail, validatePassword, async (req, res) => {
+router.post('/', 
+validateUserName, 
+validateEmail, 
+validatePassword, 
+async (req, res) => {
   try {
     const { dataValues } = await User.create(req.body);
     delete dataValues.password;

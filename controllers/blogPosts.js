@@ -1,16 +1,18 @@
 const express = require('express');
 const { BlogPost, User, Category } = require('../models');
 const { 
-    valdateJwt, 
-    validateTitle,
-    validateContent,
-    validateCategoryKey,
+valdateJwt, 
+validateTitle,
+validateContent,
+validateCategoryKey,
 } = require('../midlewares');
 
 const router = express.Router();
 const ALGO_DEU_ERRADO = 'Algo deu errado';
 
-router.get('/', valdateJwt, async (_req, res) => {
+router.get('/', 
+valdateJwt, 
+async (_req, res) => {
   try {
     const posts = await BlogPost.findAll({
       include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
