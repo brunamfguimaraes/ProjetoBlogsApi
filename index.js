@@ -11,9 +11,9 @@ const categories = require('./routes/categories');
 app.use(express.json());
 
 app.use('/user', user);
-app.use('login', login);
-app.use('post', post);
-app.use('categories', categories);
+app.use('/login', login);
+app.use('/post', post);
+app.use('/categories', categories);
 
 const PORT = process.env.PORT || 3000;
 
