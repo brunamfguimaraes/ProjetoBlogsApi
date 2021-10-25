@@ -5,6 +5,8 @@ const {
   validateContentWasInformed, 
   validateCategoryWasInformed, 
   validateCategoryIdAlreadyRegistered } = require('../middlewares/blogPostMiddlewares');
+const {
+  validatePostOwner } = require('../middlewares/postMiddleware');
 const { validateJWT } = require('../middlewares/userMiddlewares');
 const { User, Category, BlogPost, PostCategory } = require('../models');
 
@@ -50,7 +52,7 @@ postRouter.post('/',
 });
 
 // ---------------------------------------------------------------
-// Requisito 8: CONTROLLER responsável por realizar busca de BlogPosts via sequelize e retornar posts cadastrados.
+// Requisito 8: CONTROLLER responsável por realizar busca de BlogPosts via sequelize e retornar BlogPosts cadastrados.
 
 postRouter.get('/', validateJWT, async (req, res) => {
   try {
@@ -69,7 +71,7 @@ postRouter.get('/', validateJWT, async (req, res) => {
 });
 
 // ---------------------------------------------------------------
-// Requisito 9: CONTROLLER responsável por realizar busca de BlogPosts por ID via sequelize e retornar o post cadastrado.
+// Requisito 9: CONTROLLER responsável por realizar busca de BlogPosts por ID via sequelize e retornar o BlogPosts cadastrado.
 
 postRouter.get('/:id', validateJWT, async (req, res) => {
   try {
@@ -87,6 +89,34 @@ postRouter.get('/:id', validateJWT, async (req, res) => {
 
     if (!post) return res.status(404).json({ message: 'Post does not exist' });
 
+    return res.status(200).json(post);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+// ---------------------------------------------------------------
+// Requisito 10: CONTROLLER responsável por realizar a atualização de um BlogPosts via sequelize e retornar o BlogPosts atualizado.
+
+postRouter.put('/:id', validateJWT, validatePostOwner, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    const post = await BlogPost.findOne({
+      where: { id },
+      include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+    });
+
+    // Source: https://sequelize.org/master/manual/model-instances.html
+    post.title = title;
+    post.content = content;
+    // Campos ainda estão originais da base de dados
+
+    await post.save();
+    // Agora os campos foram atualizados na base de dados!
+    
     return res.status(200).json(post);
   } catch (e) {
     console.log(e.message);
