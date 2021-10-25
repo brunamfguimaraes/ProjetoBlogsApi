@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 const secret = 'meutoken';
+
  const validateJWT = async (req, res, next) => {
+   console.log(req.headers);
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -15,5 +17,4 @@ const secret = 'meutoken';
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
-
 module.exports = validateJWT;
