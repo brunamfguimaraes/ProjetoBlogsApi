@@ -1,5 +1,7 @@
 const Joi = require('@hapi/joi');
+const { StatusCodes } = require('http-status-codes');
 const Error = require('../helpers/errors');
+const { Category } = require('../sequelize/models');
 
 const postValidator = async (req, res, next) => {
   const { error } = Joi.object().keys({
@@ -15,4 +17,17 @@ const postValidator = async (req, res, next) => {
   next();
 };
 
-module.exports = postValidator;
+const existsCategories = async (req, res, next) => {
+  const { categoryIds } = req.body;
+  const categories = await Category.findAll({ where: { id: categoryIds } });
+  if (categories.length !== categoryIds.length) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: '"categoryIds" not found' });
+  }
+
+  next();
+};
+
+module.exports = {
+  postValidator,
+  existsCategories,
+};
