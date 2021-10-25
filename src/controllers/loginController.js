@@ -6,7 +6,7 @@ const LoginService = require('../services/loginService');
 
 const secret = process.env.JWT_SECRET;
 const jwtConfig = {
-  expiresIn: '15m',
+  expiresIn: '7d',
   algorithm: 'HS256',
 };
 

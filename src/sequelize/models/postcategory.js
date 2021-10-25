@@ -1,14 +1,14 @@
-const PostCategory = (sequelize, _DataTypes) => {
-  const postCategory = sequelize.define('PostCategory',
+module.exports = (sequelize, _DataTypes) => {
+  const PostCategory = sequelize.define('PostCategory',
     {},
     { timestamps: false, tableName: 'PostsCategories' });
 
   PostCategory.associate = (models) => {
     models.BlogPost.belongsToMany(models.Category, {
-        as: 'categories',
-        through: PostCategory,
-        foreignKey: 'postId',
-        otherKey: 'categoryId',
+      as: 'categories',
+      through: PostCategory,
+      foreignKey: 'postId',
+      otherKey: 'categoryId',
     });
     models.Category.belongsToMany(models.BlogPost, {
       as: 'blogPosts',
@@ -18,7 +18,5 @@ const PostCategory = (sequelize, _DataTypes) => {
     });
   };
 
-  return postCategory;
+  return PostCategory;
 };
-
-module.exports = PostCategory;

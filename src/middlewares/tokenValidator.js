@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { User } = require('../sequelize/models');
 const Error = require('../helpers/errors');
 require('dotenv');
 
@@ -13,7 +14,11 @@ const tokenValidator = async (req, res, next) => {
   try {
     const decoded = jwt.verify(authorization, secret);
 
-    req.user = decoded.data;
+    const { email } = decoded.data;
+
+    const user = await User.findOne({ where: { email } });
+
+    req.user = user;
 
     next();
   } catch (error) {
