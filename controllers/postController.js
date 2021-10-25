@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 
+const OK = 200;
 const CREATED = 201;
 const INTERNAL_SERVER_ERROR = 500;
 
@@ -10,18 +11,6 @@ const jwtConfig = {
   expiresIn: '15d',
   algorithm: 'HS256',
 };
-
-// const createPost = async (req, res) => {
-//   const { user } = req;
-//   const { title, content } = req.body;
-//   try {
-//     const dataValues = await BlogPost.create({ title, content, userId: user.id });
-//     return res.status(CREATED).json(dataValues);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(INTERNAL_SERVER_ERROR);
-//   }
-// };
 
 const createPost = async (req, res) => {
   const { user } = req;
@@ -35,4 +24,18 @@ const createPost = async (req, res) => {
   return res.status(CREATED).json(dataValues);
 };
 
-module.exports = { createPost };
+const findAllPosts = async (req, res) => {
+  const allPosts = await BlogPost.findAll({
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
+
+  if (!allPosts) {
+    return res.status(INTERNAL_SERVER_ERROR);
+  }
+
+  return res.status(OK).json(allPosts);
+};
+
+module.exports = { createPost, findAllPosts };

@@ -14,7 +14,7 @@ const { loginEmailValidation,
   loginPasswordValidation,
   loginValidation } = require('./services/loginValidation');
 
-const { createPost } = require('./controllers/postController');
+const { createPost, findAllPosts } = require('./controllers/postController');
 const { titleValidation,
   contentValidation, categoryKeyValidation } = require('./services/postValidation');
 
@@ -40,7 +40,7 @@ app.get('/categories', jwtValidation, findAllCategories); // req 6
 app.post('/post',
 jwtValidation, titleValidation, contentValidation, categoryKeyValidation, createPost); // req 7
 
-// app.get('/post', jwtValidation); // req 8
+app.get('/post', jwtValidation, findAllPosts); // req 8
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (req, res) => {
