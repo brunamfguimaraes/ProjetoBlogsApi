@@ -27,6 +27,12 @@ const validateCreatePost = async ({ title, content, userId, categoryIds }) => {
   return createPost;
 };
 
+const validateFindPost = async () => {
+  const findPost = await BlogPost.findAll();
+  return findPost;
+};
+
 module.exports = {
   validateCreatePost,
+  validateFindPost,
 };
