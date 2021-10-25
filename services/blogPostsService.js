@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const validateExists = (title, content, categoryIds) => {
   if (!title) return { message: '"title" is required' };
@@ -29,7 +29,19 @@ const createPost = async (userId, title, content, categoryIds) => {
   return create;
 };
 
+const getAll = async () => {
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  return posts;
+};
+
 module.exports = {
   createPost,
   categoryIdExists,
+  getAll,
 };
