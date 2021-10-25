@@ -8,7 +8,7 @@ const login = async (req, res) => {
     if (user.length === 0) return res.status(400).json({ message: 'Campos inválidos' });
 
     const token = jwt.sign(user.dataValues, process.env.JWT_SECRET);
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
 };
 
 module.exports = { login };

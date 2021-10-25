@@ -6,12 +6,12 @@ const create = async (req, res) => {
     await User.create(req.body);
     const data = req.body;
     const token = jwt.sign(data, process.env.JWT_SECRET);
-    res.status(201).json({ token });
+    return res.status(201).json({ token });
 };
 
 const getAll = async (req, res) => {
     const user = await User.findAll();
-    res.status(200).json(user);
+    return res.status(200).json(user);
 };
 
 const getUser = async (req, res) => {
@@ -19,7 +19,7 @@ const getUser = async (req, res) => {
     const user = await User.findOne({ where: { id } });
 
     if (!user) {
- return res
+    return res
         .status(404).json({ message: 'User does not exist' }); 
 }
     return res
