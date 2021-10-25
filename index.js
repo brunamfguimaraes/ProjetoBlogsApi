@@ -27,6 +27,9 @@ app.post('/post', jwtValidate, postController.createPost);
 // Listar Posts
 app.get('/post', jwtValidate, postController.findPost);
 
+// Pesquisar Post pelo Id
+app.get('/post/:id', jwtValidate, postController.findPostById);
+
 // Listar Categorias
 app.get('/categories', jwtValidate, categoryController.findCategories);
 

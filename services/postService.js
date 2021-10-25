@@ -37,7 +37,11 @@ const validateFindPost = async () => {
 };
 
 const validateFindPostById = async (id) => {
-  const findPostById = await BlogPost.findByPk(id);
+  const findPostById = await BlogPost.findByPk(id, {
+    include: [
+    { model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } }], 
+});
   if (!findPostById) {
     return { code: 404, message: 'Post does not exist' };
   }
