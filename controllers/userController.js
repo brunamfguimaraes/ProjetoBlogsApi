@@ -7,14 +7,14 @@ const userCreate = async (req, res) => {
   const create = await validateCreate({ displayName, email, password, image });
   const { code, message } = create;
   if (message) {
-    res.status(code).json({ message });
+    return res.status(code).json({ message });
   }
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
   const token = jwt.sign({ data: create }, process.env.JWT_SECRET, jwtConfig);
-  res.status(201).json(token);
+  return res.status(201).json(token);
 };
 
 const findUser = async (req, res) => {
@@ -22,7 +22,7 @@ const findUser = async (req, res) => {
   const noPassword = find.map(
   ({ id, displayName, email, image }) => ({ id, displayName, email, image }),
   );
-  res.status(200).json(noPassword);
+  return res.status(200).json(noPassword);
 };
 
 const findById = async (req, res) => {
@@ -30,9 +30,9 @@ const findById = async (req, res) => {
   const byId = await validateFindById(id);
   const { code, message } = byId;
   if (message) {
-    res.status(code).json({ message });
+    return res.status(code).json({ message });
   }
-  res.status(200).json(byId);
+  return res.status(200).json(byId);
 };
 
 module.exports = {
