@@ -10,15 +10,15 @@ const EMAIL_REGEX = /\S+@\S+\.\S+/;
 
 const userMailLogin = (req, res, next) => {
   const { email } = req.body;
-  if (email === '') res.status(400).json(emptyMail);
+  if (email === '') return res.status(400).json(emptyMail);
   if (!email) return res.status(400).json(emailRequiredError);
-  if (!email.match(EMAIL_REGEX)) { return res.status(400).json(invalidFields); }
+  if (!email.match(EMAIL_REGEX)) return res.status(400).json(invalidFields);
   next();
 };
 
 const userPasswordLogin = (req, res, next) => {
   const { password } = req.body;
-  if (password === '') res.status(400).json(emptyPassword);
+  if (password === '') return res.status(400).json(emptyPassword);
   if (!password) return res.status(400).json(passwordRequiredError);
   next();
 };

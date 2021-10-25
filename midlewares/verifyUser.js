@@ -16,7 +16,7 @@ function validateUserName(req, res, next) {
   
 async function validateEmail(req, res, next) {
   const { email } = req.body;
-  if (!email) { return res.status(400).json(mailRequiredError); }
+  if (!email) return res.status(400).json(mailRequiredError);
   if (!email.match(/\S+@\S+\.\S+/)) { 
     return res.status(400).json(invalidEmailError); 
   }
@@ -27,7 +27,7 @@ async function validateEmail(req, res, next) {
 
 function validatePassword(req, res, next) {
     const { password } = req.body;
-    if (!password) { return res.status(400).json(passwordError); }
+    if (!password) return res.status(400).json(passwordError); 
     if (password.length < 6) { 
       return res.status(400).json(passwordLengthError); 
     }

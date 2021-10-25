@@ -27,7 +27,7 @@ router.get('/', valdateJwt, async (_req, res) => {
 router.post('/',
 valdateJwt, 
 validateTitle, 
-validateContent, 
+validateContent,
 validateCategoryKey,
 async (req, res) => {
   const { user } = req;
