@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const userService = require('../services/userService');
 const statusCode = require('http-status-codes');
+const userService = require('../services/userService');
 
 const segredo = 'meusupersegredo';
 
