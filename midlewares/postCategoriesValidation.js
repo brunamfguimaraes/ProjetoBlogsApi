@@ -20,15 +20,10 @@ function validateContent(req, res, next) {
 function validateCategoryKey(req, res, next) {
     const { categoryIds } = req.body;
     if (!categoryIds) res.status(400).json(categoryIdRequiredError);
-    try {
-        categoryIds.forEach(async (category) => {
-            const categoryFound = await Category.findByPk(category);
-            console.log('Eh isso aqui!!', categoryFound);
-            if (!categoryFound) res.status(400).json(categoryIdNotFoundError);
-        });
-    } catch (error) {
-        return res.status(400).json(categoryIdNotFoundError);
-    }
+    categoryIds.forEach(async (category) => {
+        const categoryFound = await Category.findByPk(category);
+        if (!categoryFound) res.status(400).json(categoryIdNotFoundError);
+    });
     next();
 }
 
