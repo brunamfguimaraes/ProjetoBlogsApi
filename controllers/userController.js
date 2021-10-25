@@ -7,7 +7,7 @@ require('dotenv').config();
 const userCreate = async (req, res) => {
   const { displayName, email, password, image } = req.body;
   const create = await validateCreate({ displayName, email, password, image });
-  const { id, code, message } = create;
+  const { code, message } = create;
   if (message) {
     res.status(code).json({ message });
   }
@@ -15,7 +15,7 @@ const userCreate = async (req, res) => {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ data: id }, process.env.JWT_SECRET, jwtConfig);
+  const token = jwt.sign({ data: create }, process.env.JWT_SECRET, jwtConfig);
   res.status(201).json({ token });
 };
 
