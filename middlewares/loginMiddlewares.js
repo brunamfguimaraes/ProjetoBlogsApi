@@ -17,7 +17,7 @@ const emailRequired = (req, res, next) => {
   }
 
   if (!email) {
-    res.status(BAD_REQUEST).json({
+    return res.status(BAD_REQUEST).json({
       message: loginMessages.emailField(),
     });
   }
@@ -35,7 +35,7 @@ const passwordRequired = (req, res, next) => {
   }
 
   if (!password) {
-    res.status(BAD_REQUEST).json({
+    return res.status(BAD_REQUEST).json({
       message: loginMessages.passwordField(),
     });
   }

@@ -8,7 +8,7 @@ const requestCreateUser = async (req, res) => {
 
     return res.status(201).json(createUser);
   } catch (e) {
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: 'Algo deu errado' });
   }
 };
 
