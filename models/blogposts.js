@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) => {
-  const BlogPosts = sequelize.define('BlogPost', {
+const BlogPosts = (sequelize, DataTypes) => {
+  const blogPost = sequelize.define('BlogPost', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
     underscored: false,
   });
 
-  BlogPosts.associate = (models) => {
-    BlogPosts.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-    BlogPosts.hasMany(models.PostCategory, { foreignKey: 'id', as: 'postId' });
+  blogPost.associate = (models) => {
+    blogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+    blogPost.hasMany(models.PostCategory, { foreignKey: 'id', as: 'postId' });
   };
 
-  return BlogPosts;
+  return blogPost;
 };
+
+module.exports = BlogPosts;
