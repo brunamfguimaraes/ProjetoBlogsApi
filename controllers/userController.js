@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const statusCode = require('http-status-codes');
+const { User } = require('../models');
 const userService = require('../services/userService');
 
 const segredo = 'meusupersegredo';
@@ -26,6 +27,12 @@ const createUser = async (req, res) => {
   return res.status(statusCode.CREATED).json({ token });
 };
 
+  const getAll = async (req, res) => {
+    const user = await User.findAll();
+    res.status(statusCode.OK).json(user);
+  };
+
 module.exports = {
   createUser,
+  getAll,
 };

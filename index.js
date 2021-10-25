@@ -3,7 +3,7 @@ const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const createUserValidation = require('./middlewares/createUser');
 const loginValidation = require('./middlewares/login');
-// const jwt = require('./middlewares/jwt');
+const jwt = require('./middlewares/jwt');
 
 const app = express();
 
@@ -19,3 +19,5 @@ app.get('/', (request, response) => {
 app.post('/user', createUserValidation, userController.createUser);
 
 app.post('/login', loginValidation, loginController.login);
+
+app.get('/user', jwt, userController.getAll);
