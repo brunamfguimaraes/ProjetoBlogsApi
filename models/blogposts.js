@@ -1,5 +1,5 @@
 const BlogPosts = (sequelize, DataTypes) => {
-  const blogPosts = sequelize.define('BlogPosts', {
+  const blogPosts = sequelize.define('BlogPost', {
     title: DataTypes.STRING,
     content: DataTypes.TEXT,
     userId: DataTypes.INTEGER,
