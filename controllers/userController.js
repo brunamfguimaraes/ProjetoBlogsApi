@@ -32,7 +32,19 @@ const createUser = async (req, res) => {
     res.status(statusCode.OK).json(user);
   };
 
+  const getById = async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(statusCode.NOT_FOUND).json({
+      message: 'User does not exist',
+      });
+    }
+    res.status(statusCode.OK).json(user);
+  };
+
 module.exports = {
   createUser,
   getAll,
+  getById,
 };
