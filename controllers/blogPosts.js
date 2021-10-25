@@ -25,7 +25,7 @@ router.get('/', valdateJwt, async (_req, res) => {
 });
 
 router.post('/',
-// valdateJwt, 
+valdateJwt, 
 validateTitle, 
 validateContent,
 validateCategoryKey,
