@@ -57,7 +57,6 @@ const uniqueEmail = async (req, res, next) => {
  return res
         .status(409).json({ message: 'User already registered' }); 
 }
-
     next();
 };
 

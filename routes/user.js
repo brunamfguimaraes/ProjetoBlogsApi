@@ -24,7 +24,11 @@ router.route('/')
     );
 
 router.route('/:id')
-    .get();
+    .get(
+        token.haveToken,
+        token.validToken,
+        controller.getUser,
+    );
 
     router.route('/user/me')
     .delete();
