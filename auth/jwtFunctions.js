@@ -7,7 +7,7 @@ const createJWT = (user) => {
   const { id, email } = user;
   const jwtConfig = {
     algorithm: 'HS256',
-    expiresIn: '1h',
+    expiresIn: '7d',
   };
   const token = jwt.sign({ id, email }, secret, jwtConfig);
   return token;

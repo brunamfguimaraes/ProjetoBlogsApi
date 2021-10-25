@@ -12,9 +12,9 @@ router.post('/', authValidation, async (req, res) => {
     if (category.erro) {
       return res.status(category.erro.code).json({ message: category.erro.message });
     }
-    res.status(201).json({ id: category.id, name: category.name });
+    return res.status(201).json({ id: category.id, name: category.name });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send({ message: error.message });
   }
 });
 
@@ -24,9 +24,9 @@ router.get('/', authValidation, async (_req, res) => {
     const categories = await Category.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
     });
-    res.status(200).json(categories);
+    return res.status(200).json(categories);
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    return res.status(500).send({ message: error.message });
   }
 });
 

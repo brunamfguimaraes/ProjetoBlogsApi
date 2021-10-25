@@ -8,8 +8,17 @@ const authValidation = (req, res, next) => {
     req.payload = payload;
     return next();
   } catch (error) {
-    res.status(401).json({ message: 'Expired or invalid token' });
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
-module.exports = { authValidation };
+const authValid = async (token) => {
+  try {
+    const payload = await verifyJWT(token);
+    return payload.email;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { authValidation, authValid };
