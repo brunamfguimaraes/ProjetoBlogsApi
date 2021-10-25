@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { BlogPost, User } = require('../models');
+const { BlogPost, User, Categories } = require('../models');
 
 const create = async (req, res) => {
     const response = await BlogPost.create(req.body);
@@ -10,7 +10,11 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
     const response = await BlogPost
-    .findAll({ include: { model: User, as: 'user', attributes: { exclude: ['password'] } } });
+    .findAll({ include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Categories,
+        as: 'categories' },
+    ] });
     return res.status(200).json(response);
 };
 
