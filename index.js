@@ -28,6 +28,8 @@ app.post('/categories', jwt, categoryValidation, categoryController.createCatego
 app.get('/categories', jwt, categoryController.getAll);
 
 app.post('/post', jwt, postValidation, postController.createPost);
+
+app.get('/post', jwt, postController.getAllPosts);
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
