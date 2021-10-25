@@ -24,6 +24,9 @@ app.post('/categories', jwtValidate, categoryController.createCategory);
 // Criando Post
 app.post('/post', jwtValidate, postController.createPost);
 
+// Listar Posts
+app.get('/post', jwtValidate, postController.findPost);
+
 // Listar Categorias
 app.get('/categories', jwtValidate, categoryController.findCategories);
 

@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const validateTitContCatId = (title, content, categoryIds) => {
   if (!title) {
@@ -28,7 +28,11 @@ const validateCreatePost = async ({ title, content, userId, categoryIds }) => {
 };
 
 const validateFindPost = async () => {
-  const findPost = await BlogPost.findAll();
+  const findPost = await BlogPost.findAll({
+    include: [
+    { model: User, as: 'user' },
+    { model: Category, as: 'categories', through: { attributes: [] } }], 
+});
   return findPost;
 };
 
