@@ -13,8 +13,10 @@ const haveCategory = async (req, res, next) => {
     const have = await categoryIds
     .map((category) => Categories.findOne({ where: { id: category } }));
     const result = await Promise.all(have);
-    if (result.includes(null)) { return res
-        .status(400).json({ message: '"categoryIds" not found' }); }
+    if (result.includes(null)) {
+ return res
+        .status(400).json({ message: '"categoryIds" not found' }); 
+}
     next();
 };
 
