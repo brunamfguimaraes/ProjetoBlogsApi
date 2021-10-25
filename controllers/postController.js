@@ -69,5 +69,31 @@ postRouter.get('/', validateJWT, async (req, res) => {
 });
 
 // ---------------------------------------------------------------
+// Requisito 9: CONTROLLER responsável por realizar busca de BlogPosts por ID via sequelize e retornar o post cadastrado.
+
+postRouter.get('/:id', validateJWT, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await BlogPost.findOne(
+      {
+        where: { id },
+        include: [
+          { model: User, as: 'user' },
+          { model: Category, as: 'categories', through: { attributes: [] } },
+        ],
+      },
+    );
+
+    if (!post) return res.status(404).json({ message: 'Post does not exist' });
+
+    return res.status(200).json(post);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+});
+
+// ---------------------------------------------------------------
 
 module.exports = { postRouter };
