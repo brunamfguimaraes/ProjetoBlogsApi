@@ -23,7 +23,7 @@ router.post('/', userMailLogin, userPasswordLogin, validateUser, async (req, res
       return res.status(200).json({ token });
     } catch (e) {
       console.log(e.message);
-      res.status(500).json({ message: ALGO_DEU_ERRADO });
+      return res.status(500).json({ message: ALGO_DEU_ERRADO });
     }
   });
   

@@ -19,7 +19,7 @@ router.get('/', valdateJwt, async (_req, res) => {
     return res.status(200).json(users);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
 
@@ -33,7 +33,7 @@ router.get('/:id', valdateJwt, async (req, res) => {
     return res.status(200).json(user);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
 
@@ -45,23 +45,8 @@ router.post('/', validateUserName, validateEmail, validatePassword, async (req, 
     return res.status(201).json({ token });
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
-
-// Este endpoint usa o método destroy do Sequelize para remover um usuário no banco.
-// router.delete('/me', valdateJwt, async (req, res) => {
-//   const token = req.header.athorization;
-//   console.log(token);
-//   try {
-//     const deleteUser = await User.destroy(
-//       { where: token }, verificar se consigo adicionar o token no objeto do user
-//     );
-//     return res.status(204).json({ message: 'Usuário excluído com sucesso!' });
-//   } catch (e) {
-//     console.log(e.message);
-//     res.status(500).json({ message: ALGO_DEU_ERRADO });
-//   }
-// });
 
 module.exports = router;

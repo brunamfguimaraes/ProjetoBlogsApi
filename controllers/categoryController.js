@@ -11,7 +11,7 @@ router.get('/', valdateJwt, async (_req, res) => {
     return res.status(200).json(categories);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
 
@@ -21,7 +21,7 @@ router.post('/', valdateJwt, validateCategorieName, async (req, res) => {
     return res.status(201).json({ name });
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
 

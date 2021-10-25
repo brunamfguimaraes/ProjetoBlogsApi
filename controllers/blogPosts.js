@@ -20,7 +20,7 @@ router.get('/', valdateJwt, async (_req, res) => {
     return res.status(200).json(posts);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
 
@@ -37,7 +37,7 @@ async (req, res) => {
     return res.status(201).json(dataValues);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: ALGO_DEU_ERRADO });
+    return res.status(500).json({ message: ALGO_DEU_ERRADO });
   }
 });
 
