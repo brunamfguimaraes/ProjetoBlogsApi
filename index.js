@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const userController = require('./controllers/userController');
 const validateJWT = require('./auth/validateJWT');
 
@@ -11,7 +10,7 @@ app.listen(3000, () => console.log('ouvindo porta 3000!'));
 app.get('/', (request, response) => {
   response.send();
 });
-
 app.post('/user', userController.create);
 app.post('/login', userController.login);
 app.get('/user', validateJWT, userController.getAllUsers);
+app.get('/user/:id', validateJWT, userController.getUserById);

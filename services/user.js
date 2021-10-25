@@ -18,7 +18,7 @@ const validateEmail = (email) => {
     if (!email || typeof email !== 'string') {
         return EmailIsRequired;
     }
-
+   
     if (!reg.test(email)) {
         return {
             status: 400, message: '"email" must be a valid email', 
@@ -42,13 +42,13 @@ const verifyPassword = (password) => {
 };
 
 const verifyLoginPassword = (password) => {
-    console.log(password);
+      console.log(password);
     if (password === undefined) {
         return {
             status: 400, message: '"password" is required',
         };
     }
-
+    
     if (password.length === 0) {
         return {
             status: 400, message: '"password" is not allowed to be empty',
@@ -66,7 +66,7 @@ const validateIfEmailExists = async (email) => {
         return { status: 409, message: 'User already registered' };
     }
     return true;
-  };
+};
 
 const validateIfLoginEmailExists = async (email) => {
     if (email === undefined || typeof email !== 'string') {
@@ -89,7 +89,6 @@ const validateFilds = async (displayName, email, password) => {
     if (resultvalidateEmail !== true) return resultvalidateEmail;
     if (resultverifyPassword !== true) return resultverifyPassword;
     if (resultvalidateIfEmailExists !== true) return resultvalidateIfEmailExists;  
-
     return true;
 };
 
@@ -99,7 +98,7 @@ const create = async (displayName, email, password, image) => {
         return resultValidateFilds;
     } 
     await User.create({ displayName, email, password, image });
-
+  
     return { status: 201 };
 };
 
