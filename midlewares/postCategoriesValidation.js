@@ -17,13 +17,14 @@ function validateContent(req, res, next) {
     next();
 }
 
-function validateCategoryKey(req, res, next) {
+async function validateCategoryKey(req, res, next) {
     const { categoryIds } = req.body;
     if (!categoryIds) return res.status(400).json(categoryIdRequiredError);
-    categoryIds.forEach(async (category) => {
-        const categoryFound = await Category.findByPk(category);
-        if (!categoryFound) return res.status(400).json(categoryIdNotFoundError);
-    });
+    const categories = categoryIds.map((category) => Category.findByPk(category));
+    const promiseResolves = await Promise.all(categories);
+      if (!promiseResolves.every((category) => category)) {
+        return res.status(400).json(categoryIdNotFoundError);
+      }
     next();
 }
 
