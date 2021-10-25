@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 const { validateCreate, validateFindUser, validateFindById } = require('../services/userService');
 require('dotenv').config();
 
-// const secret = 'seusecretdetoken';
-
 const userCreate = async (req, res) => {
   const { displayName, email, password, image } = req.body;
   const create = await validateCreate({ displayName, email, password, image });
