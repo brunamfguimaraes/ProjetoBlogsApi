@@ -1,23 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {   
-  categoryController,
-  login,
-  userController,
-  blogPost,
+  categoryRouter,
+  loginRouter,
+  userCRouter,
+  blogPostRouter,
  } = require('./controllers');
-
-const { userMailLogin, userPasswordLogin, validateUser } = require('./midlewares');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use('/user', userController);
-app.use('/login', userMailLogin, userPasswordLogin, validateUser, login);
-app.use('/categories', categoryController);
-app.use('/post', blogPost);
+app.use('/user', userCRouter);
+app.use('/login', loginRouter);
+app.use('/categories', categoryRouter);
+app.use('/post', blogPostRouter);
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 

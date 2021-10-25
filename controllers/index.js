@@ -1,11 +1,11 @@
-const categoryController = require('./categoryController');
-const login = require('./login');
-const userController = require('./userController');
-const blogPost = require('./blogPosts');
+const categoryRouter = require('./categoryController');
+const loginRouter = require('./login');
+const userCRouter = require('./userController');
+const blogPostRouter = require('./blogPosts');
 
 module.exports = {
-    categoryController,
-    login,
-    userController,
-    blogPost,
+    categoryRouter,
+    loginRouter,
+    userCRouter,
+    blogPostRouter,
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const { userMailLogin, userPasswordLogin, validateUser } = require('../midlewares');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ const jwtConfig = {
 
 const ALGO_DEU_ERRADO = 'Algo deu errado';
 
-router.post('/', async (req, res) => {
+router.post('/', userMailLogin, userPasswordLogin, validateUser, async (req, res) => {
     const { email } = req.body;
     try {
       const { dataValues } = await User.findOne({ where: { email } });

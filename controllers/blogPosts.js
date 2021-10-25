@@ -1,5 +1,5 @@
 const express = require('express');
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 const { 
     valdateJwt, 
     validateTitle,
@@ -12,7 +12,11 @@ const ALGO_DEU_ERRADO = 'Algo deu errado';
 
 router.get('/', valdateJwt, async (_req, res) => {
   try {
-    const posts = await BlogPost.findAll();
+    const posts = await BlogPost.findAll({
+      include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+    });
     return res.status(200).json(posts);
   } catch (e) {
     console.log(e.message);
