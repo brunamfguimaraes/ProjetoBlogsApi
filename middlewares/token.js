@@ -11,7 +11,7 @@ const haveToken = (req, res, next) => {
 
 const validToken = (req, res, next) => {
     try {
-        jwt.verify(req.headers.authorization, process.env.SECRET);
+        jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
         next();
     } catch (err) {
         return res.status(401).json({ message: 'Expired or invalid token' });

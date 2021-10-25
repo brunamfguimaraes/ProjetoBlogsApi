@@ -4,7 +4,16 @@ const User = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     image: DataTypes.STRING,
-  }, { timestamps: false });
+  }, { 
+      timestamps: false,
+      tableName: 'Users',
+      underscored: true });
+
+  user.associate = (models) => {
+    user.hasMany(models.BlogPosts,
+      { foreginKey: 'userId',
+        as: 'user' });
+  };
 
   return user;
 };
