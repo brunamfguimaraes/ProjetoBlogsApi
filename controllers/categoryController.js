@@ -1,5 +1,5 @@
 const statusCode = require('http-status-codes');
-// const { User } = require('../models');
+const { Category } = require('../models');
 const categoryService = require('../services/categoryService');
 
 const createCategory = async (req, res) => {
@@ -14,10 +14,10 @@ const createCategory = async (req, res) => {
   return res.status(statusCode.CREATED).json(category);
 };
 
-// const getAll = async (req, res) => {
-//   const user = await User.findAll();
-//   res.status(statusCode.OK).json(user);
-// };
+const getAll = async (req, res) => {
+  const category = await Category.findAll();
+  res.status(statusCode.OK).json(category);
+};
 
 // const getById = async (req, res) => {
 //   const { id } = req.params;
@@ -32,4 +32,5 @@ const createCategory = async (req, res) => {
 
 module.exports = {
   createCategory,
+  getAll,
 };
