@@ -7,7 +7,9 @@ const token = require('../middlewares/token');
 const controller = require('../controllers/post');
 
 router.route('/')
-    .get()
+    .get(token.haveToken,
+        token.validToken,
+        controller.getAll)
     .post(
         token.haveToken,
         token.validToken,
