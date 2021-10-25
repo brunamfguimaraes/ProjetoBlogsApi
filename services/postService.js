@@ -36,7 +36,16 @@ const validateFindPost = async () => {
   return findPost;
 };
 
+const validateFindPostById = async (id) => {
+  const findPostById = await BlogPost.findByPk(id);
+  if (!findPostById) {
+    return { code: 404, message: 'Post does not exist' };
+  }
+  return findPostById;
+};
+
 module.exports = {
   validateCreatePost,
   validateFindPost,
+  validateFindPostById,
 };
