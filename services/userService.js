@@ -12,7 +12,7 @@ const addNewUser = async (displayName, email, password, image) => {
         password,
         image,
     });
-    console.log(addUser);
+
     const payload = {
         id: addUser.id,
         displayName,
@@ -33,7 +33,7 @@ const loginIn = async (em, pass) => {
     if (!login) {
         return messageUserNotFound;
     }
-    console.log(login);
+    
     const { id, displayName, email, image } = login;
 
     const payload = {
@@ -49,12 +49,6 @@ const loginIn = async (em, pass) => {
 };
 
 const getAllUsers = async () => {
-    // const validateToken = verifyToken(token);
-
-    // if (validateToken.messege) {
-    //     return validateToken;
-    // }
-
     const users = User.findAll({ attributes: { exclude: ['password'] } });
 
     return users;

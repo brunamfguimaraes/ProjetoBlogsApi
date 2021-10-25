@@ -50,7 +50,6 @@ const verifyIfUserExists = async (req, res, next) => {
 
 const validateIfEmailIsAlreadyExists = async (req, res, next) => {
     const { email } = req.body;
-    // console.log(req.body);
 
     const verifyEmail = await User.findOne({
         where: { email },

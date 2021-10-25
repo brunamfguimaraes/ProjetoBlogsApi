@@ -43,16 +43,13 @@ const validateCategoryId = (req, res, next) => {
     next();
 };
 
-// const findIds = categoryIds.every(async (id) => Category.findOne({ where: { id } }));
 const validateIfCategoryIdExist = async (req, res, next) => {
     const { categoryIds } = req.body;
     const result = categoryIds.map(async (id) => {
-        console.log('entrei no loop');
         const respon = await Category.findOne({ where: { id } });
         return respon;
     });
     Promise.all(result).then((resp) => {
-        console.log(resp);
         for (let i = 0; i < resp.length; i += 1) {
             if (resp[i] === null) {
                 return res.status(400).json(messageCategoryIdNotFound);
