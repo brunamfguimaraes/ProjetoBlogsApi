@@ -3,6 +3,7 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
+const categoryController = require('./controllers/categoryConstroller');
 const jwtValidate = require('./middleware/validateJWT');
 
 const app = express();
@@ -15,6 +16,12 @@ app.post('/user', userController.userCreate);
 
 // Login do usuário
 app.post('/login', loginController.userLogin);
+
+// Criando Categorias
+app.post('/categories', jwtValidate, categoryController.createCategory);
+
+// Listar Categorias
+app.get('/categories', categoryController.findCategories);
 
 // Listar usuários
 app.get('/user', jwtValidate, userController.findUser);
