@@ -14,17 +14,18 @@ const PostSchema = Joi.object({
   'string.empty': '{{#label}} is not allowed to be empty',
 });
 
-const createPost = async (post) => {
+const createPost = async (id, post) => {
   const { title, content, categoryIds } = post;
 
   const { error } = PostSchema.validate(post);
   if (error) throw validateError(400, error.message);
 
   const findCategory = await Category.findAll({ where: { id: { [Op.in]: categoryIds } } });
+  // const findCategory = await Category.findAll({ where: { id: categoryIds } });
   if (findCategory.length === 0) throw validateError(400, '"categoryIds" not found');
 
   const { dataValues } = await BlogPost.create({ title, content, categoryIds });
-  const newPost = { ...dataValues };
+  const newPost = { ...dataValues, userId: id };
 
   return newPost;
 };
