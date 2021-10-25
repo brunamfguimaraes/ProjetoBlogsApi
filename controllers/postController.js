@@ -12,6 +12,12 @@ const createPost = async (req, res) => {
   return res.status(201).json({ id, userId, title, content });
 };
 
+const findPost = async (_req, res) => {
+  const find = await validateFindPost();
+  res.status(200).json(find);
+};
+
 module.exports = {
   createPost,
+  findPost,
 };
