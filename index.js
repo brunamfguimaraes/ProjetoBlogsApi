@@ -14,9 +14,9 @@ const { loginEmailValidation,
   loginPasswordValidation,
   loginValidation } = require('./services/loginValidation');
 
-const { createPost } = require('./controllers/blogPostController');
+const { createPost } = require('./controllers/postController');
 const { titleValidation,
-  contentValidation, categoryKeyValidation } = require('./services/postCategoriesValidation');
+  contentValidation, categoryKeyValidation } = require('./services/postValidation');
 
 const app = express();
 
@@ -38,10 +38,9 @@ app.post('/categories', jwtValidation, categoryNameValidation, createCategory); 
 app.get('/categories', jwtValidation, findAllCategories); // req 6
 
 app.post('/post',
-  jwtValidation,
-  titleValidation, contentValidation, categoryKeyValidation, createPost); // req 7
+jwtValidation, titleValidation, contentValidation, categoryKeyValidation, createPost); // req 7
 
-app.get('/post', jwtValidation); // req 8
+// app.get('/post', jwtValidation); // req 8
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (req, res) => {
