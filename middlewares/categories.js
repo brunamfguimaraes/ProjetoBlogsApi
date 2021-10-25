@@ -5,4 +5,4 @@ const haveName = (req, res, next) => {
 
 module.exports = {
     haveName,
-}
+};
