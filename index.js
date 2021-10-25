@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const categoryController = require('./controllers/categoryConstroller');
+const postController = require('./controllers/postController');
 const jwtValidate = require('./middleware/validateJWT');
 
 const app = express();
@@ -19,6 +20,9 @@ app.post('/login', loginController.userLogin);
 
 // Criando Categorias
 app.post('/categories', jwtValidate, categoryController.createCategory);
+
+// Criando Post
+app.post('/post', jwtValidate, postController.createPost);
 
 // Listar Categorias
 app.get('/categories', jwtValidate, categoryController.findCategories);
