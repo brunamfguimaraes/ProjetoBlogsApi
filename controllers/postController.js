@@ -6,7 +6,10 @@ const {
   validateCategoryWasInformed, 
   validateCategoryIdAlreadyRegistered } = require('../middlewares/blogPostMiddlewares');
 const {
-  validatePostOwner } = require('../middlewares/postMiddleware');
+  validatePostOwner,
+  validateNotEditCategory,
+  validatePostTitleWasInformed,
+  validatePostContentWasInformed } = require('../middlewares/postMiddleware');
 const { validateJWT } = require('../middlewares/userMiddlewares');
 const { User, Category, BlogPost, PostCategory } = require('../models');
 
@@ -99,7 +102,12 @@ postRouter.get('/:id', validateJWT, async (req, res) => {
 // ---------------------------------------------------------------
 // Requisito 10: CONTROLLER responsável por realizar a atualização de um BlogPosts via sequelize e retornar o BlogPosts atualizado.
 
-postRouter.put('/:id', validateJWT, validatePostOwner, async (req, res) => {
+postRouter.put('/:id',
+  validateJWT,
+  validatePostOwner,
+  validateNotEditCategory,
+  validatePostTitleWasInformed,
+  validatePostContentWasInformed, async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
