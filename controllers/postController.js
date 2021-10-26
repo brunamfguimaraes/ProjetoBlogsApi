@@ -2,6 +2,7 @@ const {
   validateCreatePost,
   validateFindPost,
   validateFindPostById,
+  validateUpdatePost,
 } = require('../services/postService');
 
 const createPost = async (req, res) => {
@@ -31,8 +32,16 @@ const findPostById = async (req, res) => {
   res.status(200).json(findById);
 };
 
+const postUpdate = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const update = await validateUpdatePost({ id, title, content });
+  return res.status(200).json(update);
+};
+
 module.exports = {
   createPost,
   findPost,
   findPostById,
+  postUpdate,
 };

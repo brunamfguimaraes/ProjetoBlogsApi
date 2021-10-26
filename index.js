@@ -5,6 +5,9 @@ const loginController = require('./controllers/loginController');
 const categoryController = require('./controllers/categoryConstroller');
 const postController = require('./controllers/postController');
 const jwtValidate = require('./middleware/validateJWT');
+const validateCatNotEdit = require('./middleware/validateCategoryNotEdit');
+const validateTitContent = require('./middleware/validateTitleContent');
+const validateUserPost = require('./middleware/validateUserPost');
 
 const app = express();
 app.use(bodyparser.json());
@@ -25,6 +28,14 @@ app.post('/post', jwtValidate, postController.createPost);
 
 // Listar Posts
 app.get('/post', jwtValidate, postController.findPost);
+
+// Atualizar Posts
+app.put('/post/:id',
+jwtValidate,
+validateCatNotEdit,
+validateTitContent,
+validateUserPost,
+postController.postUpdate);
 
 // Pesquisar Post pelo Id
 app.get('/post/:id', jwtValidate, postController.findPostById);

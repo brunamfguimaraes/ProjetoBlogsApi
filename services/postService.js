@@ -1,22 +1,22 @@
 const { BlogPost, Category, User } = require('../models');
 
-const validateTitContCatId = (title, content, categoryIds) => {
+const validateTitContCatId = (title, content) => {
   if (!title) {
     return { code: 400, message: '"title" is required' };
   }
   if (!content) {
     return { code: 400, message: '"content" is required' };
   }
-  if (!categoryIds) {
-    return { code: 400, message: '"categoryIds" is required' };
-  }
   return true;
 };
 
 const validateCreatePost = async ({ title, content, userId, categoryIds }) => {
-  const validTitleContCat = validateTitContCatId(title, content, categoryIds);
+  const validTitleContCat = validateTitContCatId(title, content);
   if (validTitleContCat !== true) {
     return { code: validTitleContCat.code, message: validTitleContCat.message };
+  }
+  if (!categoryIds) {
+    return { code: 400, message: '"categoryIds" is required' };
   }
   const validNotCategory = await Category.findAll({ where: { id: categoryIds } });
   // Desenvolvido com ajuda de Felippe Correa
@@ -48,27 +48,26 @@ const validateFindPostById = async (id) => {
   return findPostById;
 };
 
-const validateUpdatePost = async ({ id, title, content, categoryIds }) => {
-  const validTitleContCat = validateTitContCatId(title, content, categoryIds);
-  if (validTitleContCat !== true) {
-    return { code: validTitleContCat.code, message: validTitleContCat.message };
-  }
-  const updatePost = await BlogPost.update({
-    title, content },
-    { where: { id } }).then(async () => {
+const validateUpdatePost = async ({ id, title, content }) => BlogPost.update(
+  { title, content },
+  { where: { id } },
+  ).then(async () => {
       const update = await BlogPost.findOne({ 
         where: { id },
         include: [
           { model: Category, as: 'categories' },
       ] });
       return update;
-    });
-  return updatePost;
-};
+  });
+
+  const validateDeletePost = (id) => {
+    BlogPost.destroy({ where: { id } });
+  };
 
 module.exports = {
   validateCreatePost,
   validateFindPost,
   validateFindPostById,
   validateUpdatePost,
+  validateDeletePost,
 };
