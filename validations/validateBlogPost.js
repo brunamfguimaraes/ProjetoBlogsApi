@@ -45,10 +45,7 @@ const validateCategoryId = (req, res, next) => {
 
 const validateIfCategoryIdExist = async (req, res, next) => {
     const { categoryIds } = req.body;
-    const result = categoryIds.map(async (id) => {
-        const respon = await Category.findOne({ where: { id } });
-        return respon;
-    });
+    const result = categoryIds.map((id) => Category.findOne({ where: { id } }));
     Promise.all(result).then((resp) => {
         for (let i = 0; i < resp.length; i += 1) {
             if (resp[i] === null) {
