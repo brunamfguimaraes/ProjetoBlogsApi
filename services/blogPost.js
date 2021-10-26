@@ -4,9 +4,9 @@ const messagePostNotFound = {
     message: 'Post does not exist',
 };
 
-const messageCategoryIdsEdit = {
-    message: 'Categories cannot be edited',
-};
+// const messageCategoryIdsEdit = {
+//     message: 'Categories cannot be edited',
+// };
 
 const addNewPost = async (userId, title, content) => {
     const addPost = await BlogPost.create({ userId, title, content });
@@ -36,23 +36,38 @@ const getPostById = async (id) => {
     return post;
 };
 
-const updatePost = async (id, title, content, categoriesIds) => {
-    if (categoriesIds) {
-        return messageCategoryIdsEdit;
-    }
-    const updatedPost = await BlogPost
+const updatePost = async (id, title, content) => {
+    // if (categoriesIds) {
+    //     return messageCategoryIdsEdit;
+    // }
+    await BlogPost
         .update({ title, content }, { where: { id } });
-    console.log('post atualizado', updatedPost);
 
     const getPostUpdated = await BlogPost
     .findOne({
         where: { id },
-        include: [{ model: Category, as: 'categories' }],
+        include: [{ model: Category,
+            as: 'categories',
+            through: { attributes: [] } }],
+        attributes: { exclude: ['id', 'published', 'updated'] },
     });
 
-    console.log('O  post depois de atualizado', getPostUpdated);
-
     return getPostUpdated;
+};
+
+const deletePost = async (id) => {
+    // const getPost = await BlogPost
+    // .findOne({
+    //     where: { id },
+    // });
+    // console.log('peguei o post antes de deletar', getPost);
+    // if (!getPost) {
+    //     return messagePostNotFound;
+    // }
+    const deletedPost = await BlogPost.destroy({ where: { id } });
+    console.log(deletedPost);
+
+    return deletedPost;
 };
 
 module.exports = {
@@ -60,4 +75,5 @@ module.exports = {
     getAllPosts,
     getPostById,
     updatePost,
+    deletePost,
 };
