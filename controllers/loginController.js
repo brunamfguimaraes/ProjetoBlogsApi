@@ -1,28 +1,27 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
-require('dotenv/config');
+const { validLogin } = require('../middlewares/userMiddleware');
 
 const secret = process.env.JWT_SECRET;
-const jwtConfig = {
-  expiresIn: '2h',
-  algorithm: 'HS256',
-};
 
-const router = express.Router();
-
-router.post('/', async (req, res) => {
-  const { email, password } = req.body;
+module.exports = async (req, res) => {
+  const message = validLogin(req.body);
+  if (message) return res.status(400).json({ message });
   try {
-    const userExist = await User.findOne({ where: { email, password } });
-    if (userExist) {
-      const userToken = jwt.sign({ data: email }, secret, jwtConfig);
-      return res.status(200).json({ userToken });
+    const user = await User.findOne({ where: { email: req.body.email } });
+    if (!user || user.password !== req.body.password) {
+      return res.status(400).json({ message: 'Invalid fields' }); 
     }
-    return res.status(400).json({ message: 'Invalid fields' });
-  } catch (e) {
-    console.log(e);
-  }
-});
+    const jwtConfig = {
+      expiresIn: '2h',
+      algorithm: 'HS256',
+    };
 
-module.exports = router;
+    const token = jwt.sign({ data: user }, secret, jwtConfig);
+
+    res.status(200).json({ token });
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};

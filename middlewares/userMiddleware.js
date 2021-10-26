@@ -25,6 +25,13 @@ const validUser = ({ displayName, email, password }) => {
   return validPassword(password);
 };
 
+const validLogin = ({ email, password }) => {
+  const invalidEmail = validEmail(email);
+  if (invalidEmail) return invalidEmail;
+  return validPassword(password);
+};
+
 module.exports = {
   validUser,
+  validLogin,
 };

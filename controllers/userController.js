@@ -8,8 +8,14 @@ const tokenMiddleware = require('../middlewares/tokenMiddleware');
 const router = express.Router();
 
 router.get('/', tokenMiddleware, async (_req, res) => {
-  const allUsers = await User.findAll();
-  return res.status(200).json(allUsers);
+  try {
+    const allUsers = await User.findAll({ attributes: { exclude: ['password'] } });
+
+    return res.status(200).json(allUsers);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 router.get('/:id', tokenMiddleware, async (req, res) => {
@@ -31,7 +37,7 @@ router.post('/', async (req, res) => {
     return res.status(201).json(newUser);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: e.message });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
