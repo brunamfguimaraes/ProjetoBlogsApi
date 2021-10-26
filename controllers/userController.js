@@ -54,4 +54,14 @@ async (req, res) => {
     return res.status(200).json(getUser);
 });
 
+router.delete('/user/me',
+auth.verifyToken,
+async (req, res) => {
+    const { id } = req.user;
+    console.log('meu id para excluir', id);
+    const deletedUser = await userService.deleteUser(id);
+    console.log(deletedUser);
+    return res.status(204).send();
+});
+
 module.exports = router;

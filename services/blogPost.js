@@ -4,10 +4,6 @@ const messagePostNotFound = {
     message: 'Post does not exist',
 };
 
-// const messageCategoryIdsEdit = {
-//     message: 'Categories cannot be edited',
-// };
-
 const addNewPost = async (userId, title, content) => {
     const addPost = await BlogPost.create({ userId, title, content });
 
@@ -56,14 +52,6 @@ const updatePost = async (id, title, content) => {
 };
 
 const deletePost = async (id) => {
-    // const getPost = await BlogPost
-    // .findOne({
-    //     where: { id },
-    // });
-    // console.log('peguei o post antes de deletar', getPost);
-    // if (!getPost) {
-    //     return messagePostNotFound;
-    // }
     const deletedPost = await BlogPost.destroy({ where: { id } });
     console.log(deletedPost);
 
