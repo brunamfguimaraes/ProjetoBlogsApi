@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
 });
 
 // ------------------------------------------------------------------
-// Requisitos 1, 3 e 4: Rota User
+// Requisitos 1, 3, 4 e 12: Rota User
 
 app.use('/user', userRouter);
 
@@ -25,12 +25,12 @@ app.use('/user', userRouter);
 app.use('/login', loginRouter);
 
 // ------------------------------------------------------------------
-// Requisito 5 e 6: Rota Categories
+// Requisitos 5 e 6: Rota Categories
 
 app.use('/categories', categoriesRouter);
 
 // ------------------------------------------------------------------
-// Requisito 7: Rota Post
+// Requisitos 7, 8, 9, 10, 11 e 13: Rota Post
 
 app.use('/post', postRouter);
 
