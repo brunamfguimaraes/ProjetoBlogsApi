@@ -43,4 +43,24 @@ async (req, res) => {
     return res.status(200).json(getPost);
 });
 
+router.put('/post/:id',
+// validate.verifyFieldCategoriesIds,
+auth.verifyToken,
+validate.verifyIfIsRightUser,
+validate.validateTitle,
+validate.validateContent,
+async (req, res) => {
+    const { id } = req.params;
+    const { title, content, categoriesIds } = req.body;
+    console.log('id', id, 'title', title, 'content', content);
+
+    const updatedPost = await blogPostService.updatePost(id, title, content, categoriesIds);
+
+    if (updatedPost.message) {
+        return res.status(200).json(updatedPost);
+    }
+
+    return res.status(200).json(updatedPost);
+});
+
 module.exports = router;

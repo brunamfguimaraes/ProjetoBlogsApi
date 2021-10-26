@@ -4,6 +4,10 @@ const messagePostNotFound = {
     message: 'Post does not exist',
 };
 
+const messageCategoryIdsEdit = {
+    message: 'Categories cannot be edited',
+};
+
 const addNewPost = async (userId, title, content) => {
     const addPost = await BlogPost.create({ userId, title, content });
 
@@ -32,8 +36,28 @@ const getPostById = async (id) => {
     return post;
 };
 
+const updatePost = async (id, title, content, categoriesIds) => {
+    if (categoriesIds) {
+        return messageCategoryIdsEdit;
+    }
+    const updatedPost = await BlogPost
+        .update({ title, content }, { where: { id } });
+    console.log('post atualizado', updatedPost);
+
+    const getPostUpdated = await BlogPost
+    .findOne({
+        where: { id },
+        include: [{ model: Category, as: 'categories' }],
+    });
+
+    console.log('O  post depois de atualizado', getPostUpdated);
+
+    return getPostUpdated;
+};
+
 module.exports = {
     addNewPost,
     getAllPosts,
     getPostById,
+    updatePost,
 };
