@@ -1,4 +1,3 @@
-// iniciando o project blogs api
 const express = require('express');
 const bodyparser = require('body-parser');
 const userController = require('./controllers/userController');
