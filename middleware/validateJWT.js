@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 require('dotenv').config();
 
-const secret = 'secret';
+const secret = process.env.JWT_SECRET;
 
 const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
