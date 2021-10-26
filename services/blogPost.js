@@ -1,5 +1,9 @@
 const { BlogPost, User, Category } = require('../models');
 
+const messagePostNotFound = {
+    message: 'Post does not exist',
+};
+
 const addNewPost = async (userId, title, content) => {
     const addPost = await BlogPost.create({ userId, title, content });
 
@@ -14,7 +18,22 @@ const getAllPosts = async () => {
     return posts;
 };
 
+const getPostById = async (id) => {
+    const post = await BlogPost
+    .findOne({
+        where: { id },
+        include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }],
+    });
+
+    if (!post) {
+        return messagePostNotFound;
+    }
+
+    return post;
+};
+
 module.exports = {
     addNewPost,
     getAllPosts,
+    getPostById,
 };

@@ -29,4 +29,18 @@ async (req, res) => {
     return res.status(200).json(posts);
 });
 
+router.get('/post/:id',
+auth.verifyToken,
+async (req, res) => {
+    const { id } = req.params;
+
+    const getPost = await blogPostService.getPostById(id);
+
+    if (getPost.message) {
+        return res.status(404).json(getPost);
+    }
+
+    return res.status(200).json(getPost);
+});
+
 module.exports = router;

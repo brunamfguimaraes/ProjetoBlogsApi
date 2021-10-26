@@ -16,6 +16,10 @@ const messageCategoryIdNotFound = {
     message: '"categoryIds" not found',
 };
 
+// const messagePostNotFound = {
+//     message: 'Post does not exist',
+// };
+
 const validateTitle = (req, res, next) => {
     const { title } = req.body;
     if (!title) {
@@ -53,6 +57,11 @@ const validateIfCategoryIdExist = async (req, res, next) => {
     
     next();
 };
+
+// const verifyIfPostExist = async (req, res, next) => {
+//     const { id } = req.body;
+//     const post = await BlogPost.findOne({ where: { id } });
+// };
 
 module.exports = {
     validateCategoryId,
