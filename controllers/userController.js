@@ -13,7 +13,7 @@ const userCreate = async (req, res) => {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ data: create }, process.env.JWT_SECRET, jwtConfig);
+  const token = jwt.sign({ data: create }, 'secret', jwtConfig);
   return res.status(201).json({ token });
 };
 
