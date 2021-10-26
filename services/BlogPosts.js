@@ -1,5 +1,11 @@
 const { BlogPost, User, Category } = require('../models');
 
+const getUserId = async (email) => {
+  const { id } = await User.findOne({ email });
+
+  return id;
+};
+
 const addPost = async (title, content, userId) => {
   const post = await BlogPost.create({ title, content, userId });
 
@@ -26,4 +32,5 @@ const getAllPosts = async () => {
 module.exports = {
   addPost,
   getAllPosts,
+  getUserId,
 };
