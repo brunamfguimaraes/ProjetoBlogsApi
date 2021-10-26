@@ -48,8 +48,27 @@ const validateFindPostById = async (id) => {
   return findPostById;
 };
 
+const validateUpdatePost = async ({ id, title, content, categoryIds }) => {
+  const validTitleContCat = validateTitContCatId(title, content, categoryIds);
+  if (validTitleContCat !== true) {
+    return { code: validTitleContCat.code, message: validTitleContCat.message };
+  }
+  const updatePost = await BlogPost.update({
+    title, content },
+    { where: { id } }).then(async () => {
+      const update = await BlogPost.findOne({ 
+        where: { id },
+        include: [
+          { model: Category, as: 'categories' },
+      ] });
+      return update;
+    });
+  return updatePost;
+};
+
 module.exports = {
   validateCreatePost,
   validateFindPost,
   validateFindPostById,
+  validateUpdatePost,
 };
