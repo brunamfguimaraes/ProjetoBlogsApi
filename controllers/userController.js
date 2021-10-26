@@ -1,41 +1,41 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 require('dotenv/config');
 
-const { validName, validEmail, validPassword } = require('../middlewares/userMiddleware');
-const validToken = require('../middlewares/tokenMiddleware');
-
-const secret = process.env.JWT_SECRET;
-const jwtConfig = {
-  expiresIn: '1d',
-  algorithm: 'HS256',
-};
+const { validUser } = require('../middlewares/userMiddleware');
+const tokenMiddleware = require('../middlewares/tokenMiddleware');
 
 const router = express.Router();
 
-router.get('/', validToken, async (_req, res) => {
+router.get('/', tokenMiddleware, async (_req, res) => {
   const allUsers = await User.findAll();
   return res.status(200).json(allUsers);
 });
 
-router.get('/:id', validToken, async (req, res) => {
+router.get('/:id', tokenMiddleware, async (req, res) => {
   const { id } = req.params;
   const userId = await User.findOne({ where: { id } });
   if (!userId) return res.status(404).json({ message: 'User does not exist' });
   return res.status(200).json(userId);
 });
 
-router.post('/', validName, validEmail, validPassword, async (req, res) => {
-  const { displayName, email, password, image } = req.body;
-  const userExist = await User.findOne({ where: { email } });
+router.post('/', async (req, res) => {
+  const message = validUser(req.body);
+  if (message) return res.status(400).json({ message });
+  const userExist = await User.findOne({ where: { email: req.body.email } });
   if (userExist) return res.status(409).json({ message: 'User already registered' });
-  await User.create({ displayName, email, password, image });
-  const userToken = jwt.sign({ data: email }, secret, jwtConfig);
-  return res.status(201).json({ userToken });
+
+  try {
+    const newUser = await User.create(req.body);
+
+    return res.status(201).json(newUser);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: e.message });
+  }
 });
 
-router.delete('/me', validToken, async (req, res) => {
+router.delete('/me', tokenMiddleware, async (req, res) => {
   const { email } = req;
   await User.destroy({ where: { email } });
   return res.sendStatus(204);
