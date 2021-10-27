@@ -5,6 +5,10 @@ const messagePostNotFound = {
     message: 'Post does not exist',
 };
 
+const messageCategoryIdsEdit = {
+    message: 'Categories cannot be edited',
+};
+
 const addNewPost = async (userId, title, content) => {
     const addPost = await BlogPost.create({ userId, title, content });
 
@@ -33,10 +37,9 @@ const getPostById = async (id) => {
     return post;
 };
 
-const updatePost = async (id, title, content) => {
-    // if (categoriesIds) {
-    //     return messageCategoryIdsEdit;
-    // }
+const updatePost = async (id, title, content, categoriesIds) => {
+    if (categoriesIds) return messageCategoryIdsEdit;
+
     await BlogPost
         .update({ title, content }, { where: { id } });
 

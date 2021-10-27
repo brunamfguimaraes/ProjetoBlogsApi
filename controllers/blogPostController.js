@@ -60,20 +60,16 @@ async (req, res) => {
 });
 
 router.put('/post/:id',
-validate.verifyFieldCategoriesIds,
 auth.verifyToken,
 validate.verifyIfIsRightUser,
 validate.validateTitle,
 validate.validateContent,
+validate.verifyFieldCategoriesIds,
 async (req, res) => {
     const { id } = req.params;
     const { title, content } = req.body;
 
     const updatedPost = await blogPostService.updatePost(id, title, content);
-
-    if (updatedPost.message) {
-        return res.status(400).json(updatedPost);
-    }
 
     return res.status(200).json(updatedPost);
 });

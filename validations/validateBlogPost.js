@@ -82,10 +82,10 @@ const validateIfCategoryIdExist = async (req, res, next) => {
 };
 
 const verifyFieldCategoriesIds = (req, res, next) => {
-    const { categoriesIds } = req.body;
-    console.log('categoriesIds', categoriesIds);
+    const { categoryIds } = req.body;
+    console.log('categoriesIds', categoryIds);
 
-    if (categoriesIds) {
+    if (categoryIds) {
         return res.status(400).json(messageCategoryIdsEdit);
     }
 
