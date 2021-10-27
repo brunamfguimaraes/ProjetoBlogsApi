@@ -150,7 +150,7 @@ postRouter.delete('/:id', validateJWT, async (req, res) => {
 
     // if (!post) return res.status(404).json({ message: 'Post does not exist' });
 
-    return res.status(204);
+    return res.status(204).end();
   } catch (e) {
     console.log(e.message);
     return res.status(500).json({ message: errors.somethingIsWrong });
