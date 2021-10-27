@@ -1,5 +1,9 @@
 const express = require('express');
-const { requestCreateBlogPost, requestBlogPostsList } = require('./controllers/BlogPost');
+const {
+  requestCreateBlogPost,
+  requestBlogPostsList,
+  requestPostById,
+} = require('./controllers/BlogPost');
 const { requestCreateCategory, requestCategoriesList } = require('./controllers/Category');
 
 const requestLogin = require('./controllers/Login');
@@ -41,6 +45,8 @@ app.get('/', (request, response) => {
 });
 
 app.get('/user/:id', verifyToken, requestDataUser);
+
+app.get('/post/:id', verifyToken, requestPostById);
 
 app.get('/user', verifyToken, requestUserList);
 
