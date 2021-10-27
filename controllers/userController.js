@@ -11,6 +11,11 @@ const { User } = require('../models');
 
 const userRouter = express.Router();
 
+const errors = {
+  somethingIsWrong: 'Algo deu errado',
+  userDoesNotExist: 'User does not exist',
+};
+
 // ---------------------------------------------------------------
 // Requisito 1: CONTROLLER responsável por realizar cadastro de usuário via sequelize e retornar usuário cadastrado.
 
@@ -28,7 +33,7 @@ userRouter.post('/',
     return res.status(201).json(newUser);
   } catch (e) {
     console.log(e.message);
-    return res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 
@@ -42,7 +47,7 @@ userRouter.get('/', validateJWT, async (req, res) => {
     return res.status(200).json(users);
   } catch (e) {
     console.log(e.message);
-    return res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 
@@ -54,14 +59,32 @@ userRouter.get('/:id', validateJWT, async (req, res) => {
     const { id } = req.params;
     const user = await User.findOne({ where: { id } });
 
+    // Comments: refatorar para utlizar middleware
     if (!user) {
-      return res.status(404).json({ message: 'User does not exist' });
+      return res.status(404).json({ message: errors.userDoesNotExist });
     }
 
     return res.status(200).json(user);
   } catch (e) {
     console.log(e.message);
-    return res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
+  }
+});
+
+// ---------------------------------------------------------------
+// Requisito 12: CONTROLLER responsável por deletar o usuário requisitante, via sequelize.
+
+userRouter.delete('/me', validateJWT, async (req, res) => {
+  try {
+    const { user } = req;
+
+    // Source: https://sequelize.org/master/manual/model-instances.html
+    await user.destroy(); 
+
+    return res.status(204).end();
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 
