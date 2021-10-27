@@ -1,4 +1,10 @@
-const { addPost, getAllPosts, getUserId, getPostById } = require('../services/BlogPost');
+const {
+  addPost,
+  getAllPosts,
+  getUserId,
+  getPostById,
+  updatePost,
+} = require('../services/BlogPost');
 
 const requestCreateBlogPost = async (req, res) => {
   const { title, content } = req.body;
@@ -14,6 +20,8 @@ const requestCreateBlogPost = async (req, res) => {
 const requestBlogPostsList = async (_req, res) => {
   const allPosts = await getAllPosts();
 
+  console.log(allPosts);
+
   return res.status(200).json(allPosts);
 };
 
@@ -21,6 +29,8 @@ const requestPostById = async (req, res) => {
   const { id } = req.params;
 
   const postById = await getPostById(id);
+
+  console.log(postById);
 
   if (!postById) {
     return res.status(404).json({ message: 'Post does not exist' });
@@ -30,13 +40,17 @@ const requestPostById = async (req, res) => {
 };
 
 const requestUpdatePost = async (req, res) => {
-  // const { id } = req.params;
-  // const { email } = req.user;
-  // // const { body } = req;
+  const { id } = req.params;
+  const { email } = req.user;
+  const { body } = req;
 
-  // const postUpdated = await checkPostOwner(id, email);
+  const updatedBlogPost = await updatePost(id, email, body);
 
-  return res.status(200).json('oi');
+  if (!updatedBlogPost) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  return res.status(200).json(updatedBlogPost);
 };
 
 module.exports = {

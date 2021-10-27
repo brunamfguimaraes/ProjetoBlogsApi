@@ -1,8 +1,6 @@
-const { Category, BlogPost } = require('../models');
-const { getUserId } = require('../services/BlogPost');
+const { Category } = require('../models');
 
 const BAD_REQUEST = 400;
-const UNAUTHORIZED_REQUEST = 401;
 
 const postErrorMessages = {
   titleRequired: () => '"title" is required',
@@ -75,27 +73,10 @@ const notUpdateCategories = async (req, res, next) => {
   next();
 };
 
-const checkPostOwner = async (req, res, next) => {
-  try {
-    const { email } = req.user;
-    const { id } = req.params;
-
-    const userId = await getUserId(email);
-    const postOwner = await BlogPost.findOne({ where: { userId: id } });
-
-    if (userId === postOwner.userId) {
-      next();
-    }
-  } catch (err) {
-    return res.status(UNAUTHORIZED_REQUEST).json({ message: 'Unauthorized user' });
-  }
-};
-
 module.exports = {
   titleRequired,
   contentRequired,
   categoryRequired,
   checkCategory,
   notUpdateCategories,
-  checkPostOwner,
 };
