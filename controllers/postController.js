@@ -20,6 +20,10 @@ const sequelize = new Sequelize(config.development);
 
 const postRouter = express.Router();
 
+const errors = {
+  somethingIsWrong: 'Algo deu errado',
+};
+
 // ---------------------------------------------------------------
 // Requisito 7: CONTROLLER responsável por realizar cadastro de posts via sequelize e retornar o post cadastrada.
 
@@ -50,7 +54,7 @@ postRouter.post('/',
   } catch (e) {
     await t.rollback(); // Comments: Executa o rollback da transaction caso haja erros.
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 
@@ -69,7 +73,7 @@ postRouter.get('/', validateJWT, async (req, res) => {
     return res.status(200).json(posts);
   } catch (e) {
     console.log(e.message);
-    return res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 
@@ -95,7 +99,7 @@ postRouter.get('/:id', validateJWT, async (req, res) => {
     return res.status(200).json(post);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 
@@ -128,7 +132,28 @@ postRouter.put('/:id',
     return res.status(200).json(post);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: errors.somethingIsWrong });
+  }
+});
+
+// ---------------------------------------------------------------
+// Requisito 11: CONTROLLER responsável por deletar BlogPosts por ID, via sequelize.
+
+postRouter.delete('/:id', validateJWT, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await BlogPost.findOne({ where: { id } });
+
+    // Source: https://sequelize.org/master/manual/model-instances.html
+    await post.destroy();
+
+    // if (!post) return res.status(404).json({ message: 'Post does not exist' });
+
+    return res.status(204);
+  } catch (e) {
+    console.log(e.message);
+    return res.status(500).json({ message: errors.somethingIsWrong });
   }
 });
 

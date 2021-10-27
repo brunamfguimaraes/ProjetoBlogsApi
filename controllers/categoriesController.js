@@ -16,7 +16,7 @@ categoriesRouter.post('/', validateJWT, validateCategoryNameWasInformed, async (
     return res.status(201).json(newCategory);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: 'Algo deu errado' });
   }
 });
 
@@ -30,7 +30,7 @@ categoriesRouter.get('/', validateJWT, async (req, res) => {
     return res.status(200).json(categories);
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({ message: 'Algo deu errado' });
+    return res.status(500).json({ message: 'Algo deu errado' });
   }
 });
 
