@@ -6,14 +6,26 @@ const errors = {
   categoryNotEdited: 'Categories cannot be edited',
   titleRequired: '"title" is required',
   contentRequired: '"content" is required',
+  postDoesnotExist: 'Post does not exist',
+};
+
+// Comments: Valida se o Post a ser deletado existe.
+const validatePostExist = async (req, res, next) => {
+  const { id } = req.params;
+  
+  const post = await BlogPost.findOne({ where: { id } });
+
+  if (!post) return res.status(404).json({ message: errors.postDoesnotExist });
+
+  req.post = post;
+
+  next();
 };
 
 // Comments: Valida se o Post a ser alterado pertence ao usuário da requisição.
 const validatePostOwner = async (req, res, next) => {
-  const { id } = req.params;
+  const { post } = req;
   const userId = req.user.id;
-  
-  const post = await BlogPost.findOne({ where: { id } });
   
   if (post.userId !== userId) return res.status(401).json({ message: errors.unauthorizeduser });
 
@@ -52,6 +64,7 @@ const validatePostContentWasInformed = async (req, res, next) => {
 };
 
 module.exports = {
+  validatePostExist,
   validatePostOwner,
   validateNotEditCategory,
   validatePostTitleWasInformed,

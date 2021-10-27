@@ -6,6 +6,7 @@ const {
   validateCategoryWasInformed, 
   validateCategoryIdAlreadyRegistered } = require('../middlewares/blogPostMiddlewares');
 const {
+  validatePostExist,
   validatePostOwner,
   validateNotEditCategory,
   validatePostTitleWasInformed,
@@ -94,7 +95,7 @@ postRouter.get('/:id', validateJWT, async (req, res) => {
       },
     );
 
-    if (!post) return res.status(404).json({ message: 'Post does not exist' });
+    if (!post) return res.status(404).json({ message: errors.postDoesnotExist });
 
     return res.status(200).json(post);
   } catch (e) {
@@ -139,16 +140,12 @@ postRouter.put('/:id',
 // ---------------------------------------------------------------
 // Requisito 11: CONTROLLER responsável por deletar BlogPosts por ID, via sequelize.
 
-postRouter.delete('/:id', validateJWT, async (req, res) => {
+postRouter.delete('/:id', validateJWT, validatePostExist, validatePostOwner, async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const post = await BlogPost.findOne({ where: { id } });
+    const { post } = req;
 
     // Source: https://sequelize.org/master/manual/model-instances.html
     await post.destroy();
-
-    // if (!post) return res.status(404).json({ message: 'Post does not exist' });
 
     return res.status(204).end();
   } catch (e) {
