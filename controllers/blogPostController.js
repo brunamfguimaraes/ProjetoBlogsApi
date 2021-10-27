@@ -29,6 +29,22 @@ async (req, res) => {
     return res.status(200).json(posts);
 });
 
+router.get('/post/search',
+auth.verifyToken,
+async (req, res) => {
+    const { q } = req.query;
+
+    if (!q) {
+        const allPosts = await blogPostService.getAllPosts();
+
+        return res.status(200).json(allPosts);
+    }
+
+    const getPost = await blogPostService.getPostByTitleOrContent(q);
+
+    return res.status(200).json(getPost);
+});
+
 router.get('/post/:id',
 auth.verifyToken,
 async (req, res) => {

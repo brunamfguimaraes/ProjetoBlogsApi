@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 
 const messagePostNotFound = {
@@ -58,10 +59,35 @@ const deletePost = async (id) => {
     return deletedPost;
 };
 
+// Aprendi a fazer essa busca mais complexa na própria biblioteca do sequelize: https://sequelize.org/master/manual/model-querying-basics.html;
+const getPostByTitleOrContent = async (searchTerm) => {
+    console.log('o termo', searchTerm);
+    const getByTitleOrContent = await BlogPost
+    .findOne({
+        where: {
+            [Op.or]: [
+                {
+                    title: { [Op.like]: `%${searchTerm}%` },
+            },
+                {
+                    content: { [Op.like]: `%${searchTerm}%` } },
+            ],
+        },
+        include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' }],
+    });
+
+    if (getByTitleOrContent === null) {
+        return [];
+    }
+
+    return [getByTitleOrContent];
+};
+
 module.exports = {
     addNewPost,
     getAllPosts,
     getPostById,
     updatePost,
     deletePost,
+    getPostByTitleOrContent,
 };
