@@ -81,7 +81,7 @@ postRouter.get('/', validateJWT, async (req, res) => {
 // ---------------------------------------------------------------
 // Requisito 9: CONTROLLER responsável por realizar busca de BlogPosts por ID via sequelize e retornar o BlogPosts cadastrado.
 
-postRouter.get('/:id', validateJWT, async (req, res) => {
+postRouter.get('/:id', validateJWT, validatePostExist, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -109,6 +109,7 @@ postRouter.get('/:id', validateJWT, async (req, res) => {
 
 postRouter.put('/:id',
   validateJWT,
+  validatePostExist,
   validatePostOwner,
   validateNotEditCategory,
   validatePostTitleWasInformed,
