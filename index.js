@@ -25,6 +25,7 @@ const {
   categoryRequired,
   checkCategory,
   notUpdateCategories,
+  checkPostOwner,
 } = require('./middlewares/postMiddlewares');
 
 const { verifyToken } = require('./middlewares/tokenValidation');
@@ -80,9 +81,10 @@ app.post('/post',
 
 app.put('/post/:id',
   verifyToken,
+  notUpdateCategories,
+  checkPostOwner,
   titleRequired,
   contentRequired,
-  notUpdateCategories,
   requestUpdatePost);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

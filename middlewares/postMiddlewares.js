@@ -1,4 +1,4 @@
-const { Category } = require('../models');
+const { Category, BlogPost } = require('../models');
 
 const BAD_REQUEST = 400;
 
@@ -73,10 +73,24 @@ const notUpdateCategories = async (req, res, next) => {
   next();
 };
 
+const checkPostOwner = async (req, res, next) => {
+  const { userId } = req.user;
+  const { id } = req.params;
+
+  const postOwner = await BlogPost.findOne({ where: { userId: id } });
+
+  if (userId !== postOwner.userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  next();
+};
+
 module.exports = {
   titleRequired,
   contentRequired,
   categoryRequired,
   checkCategory,
   notUpdateCategories,
+  checkPostOwner,
 };

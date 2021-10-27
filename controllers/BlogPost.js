@@ -1,16 +1,13 @@
 const {
   addPost,
   getAllPosts,
-  getUserId,
   getPostById,
   updatePost,
 } = require('../services/BlogPost');
 
 const requestCreateBlogPost = async (req, res) => {
   const { title, content } = req.body;
-  const { email } = req.user;
-
-  const userId = await getUserId(email);
+  const { userId } = req.user;
 
   const posted = await addPost(title, content, userId);
 
@@ -41,10 +38,9 @@ const requestPostById = async (req, res) => {
 
 const requestUpdatePost = async (req, res) => {
   const { id } = req.params;
-  const { email } = req.user;
   const { body } = req;
 
-  const updatedBlogPost = await updatePost(id, email, body);
+  const updatedBlogPost = await updatePost(id, body);
 
   if (!updatedBlogPost) {
     return res.status(401).json({ message: 'Unauthorized user' });
