@@ -1,4 +1,4 @@
-const { addPost, getAllPosts, getUserId, getPostById } = require('../services/BlogPosts');
+const { addPost, getAllPosts, getUserId, getPostById } = require('../services/BlogPost');
 
 const requestCreateBlogPost = async (req, res) => {
   const { title, content } = req.body;
@@ -29,8 +29,19 @@ const requestPostById = async (req, res) => {
   return res.status(200).json(postById);
 };
 
+const requestUpdatePost = async (req, res) => {
+  // const { id } = req.params;
+  // const { email } = req.user;
+  // // const { body } = req;
+
+  // const postUpdated = await checkPostOwner(id, email);
+
+  return res.status(200).json('oi');
+};
+
 module.exports = {
   requestCreateBlogPost,
   requestBlogPostsList,
   requestPostById,
+  requestUpdatePost,
 };

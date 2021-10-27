@@ -3,6 +3,7 @@ const {
   requestCreateBlogPost,
   requestBlogPostsList,
   requestPostById,
+  requestUpdatePost,
 } = require('./controllers/BlogPost');
 const { requestCreateCategory, requestCategoriesList } = require('./controllers/Category');
 
@@ -23,6 +24,8 @@ const {
   contentRequired,
   categoryRequired,
   checkCategory,
+  notUpdateCategories,
+  checkPostOwner,
 } = require('./middlewares/postMiddlewares');
 
 const { verifyToken } = require('./middlewares/tokenValidation');
@@ -75,5 +78,13 @@ app.post('/post',
   categoryRequired,
   checkCategory,
   requestCreateBlogPost);
+
+app.put('/post/:id',
+  verifyToken,
+  titleRequired,
+  contentRequired,
+  notUpdateCategories,
+  checkPostOwner,
+  requestUpdatePost);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

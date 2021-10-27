@@ -1,6 +1,8 @@
-const { Category } = require('../models');
+const { Category, BlogPost } = require('../models');
+const { getUserId } = require('../services/BlogPost');
 
 const BAD_REQUEST = 400;
+const UNAUTHORIZED_REQUEST = 401;
 
 const postErrorMessages = {
   titleRequired: () => '"title" is required',
@@ -59,10 +61,34 @@ const checkCategory = async (req, res, next) => {
   );
 
   if (categories.length !== categoryIds.length) {
-    return res.status(400).json({ message: postErrorMessages.categoryExistence() });
+    return res.status(BAD_REQUEST).json({ message: postErrorMessages.categoryExistence() });
   }
 
   next();
+};
+
+const notUpdateCategories = async (req, res, next) => {
+  if (req.body.categoryIds) {
+    return res.status(BAD_REQUEST).json({ message: 'Categories cannot be edited' });
+  }
+
+  next();
+};
+
+const checkPostOwner = async (req, res, next) => {
+  try {
+    const { email } = req.user;
+    const { id } = req.params;
+
+    const userId = await getUserId(email);
+    const postOwner = await BlogPost.findOne({ where: { userId: id } });
+
+    if (userId === postOwner.userId) {
+      next();
+    }
+  } catch (err) {
+    return res.status(UNAUTHORIZED_REQUEST).json({ message: 'Unauthorized user' });
+  }
 };
 
 module.exports = {
@@ -70,4 +96,6 @@ module.exports = {
   contentRequired,
   categoryRequired,
   checkCategory,
+  notUpdateCategories,
+  checkPostOwner,
 };
