@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { userListService, userDataService } = require('../services/User');
+const { userListService, userDataService, deleteUser } = require('../services/User');
 
 const requestCreateUser = async (req, res) => {
   try {
@@ -28,8 +28,17 @@ const requestDataUser = async (req, res) => {
   return res.status(200).json(userData);
 };
 
+const requestDeleteUser = async (req, res) => {
+  const { userId } = req.user;
+
+  await deleteUser(userId);
+
+  return res.status(204).end();
+};
+
 module.exports = {
   requestCreateUser,
   requestUserList,
   requestDataUser,
+  requestDeleteUser,
 };

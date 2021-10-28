@@ -18,8 +18,6 @@ const requestCreateBlogPost = async (req, res) => {
 const requestBlogPostsList = async (_req, res) => {
   const allPosts = await getAllPosts();
 
-  console.log(allPosts);
-
   return res.status(200).json(allPosts);
 };
 
@@ -27,8 +25,6 @@ const requestPostById = async (req, res) => {
   const { id } = req.params;
 
   const postById = await getPostById(id);
-
-  console.log(postById);
 
   if (!postById) {
     return res.status(404).json({ message: 'Post does not exist' });

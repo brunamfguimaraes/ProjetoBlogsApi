@@ -16,8 +16,6 @@ const loginAuth = async (email, password) => {
 
   if (!user) return null;
 
-  console.log(user.id);
-
   const newToken = jwt.sign(
     {
       email,
@@ -37,8 +35,13 @@ const userDataService = async (id) => {
   return user;
 };
 
+const deleteUser = async (userId) => {
+  await User.destroy({ where: { id: userId } });
+};
+
 module.exports = {
   loginAuth,
   userListService,
   userDataService,
+  deleteUser,
 };

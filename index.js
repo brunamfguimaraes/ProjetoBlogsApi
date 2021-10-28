@@ -17,6 +17,7 @@ const {
   requestCreateUser,
   requestUserList,
   requestDataUser,
+  requestDeleteUser,
 } = require('./controllers/User');
 
 const {
@@ -97,5 +98,7 @@ app.delete('/post/:id',
   postDoesNotExists,
   checkPostOwner,
   requestDeletePost);
+
+app.delete('/user/me', verifyToken, requestDeleteUser);
 
 app.listen(PORT, () => console.log(`Ouvindo na porta ${PORT}`));
