@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { validLogin } = require('../middlewares/userMiddleware');
 
-const secret = process.env.JWT_SECRET;
+const secret = 'meutoken';
 
 module.exports = async (req, res) => {
   const message = validLogin(req.body);
