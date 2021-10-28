@@ -7,6 +7,9 @@ const postErrorMessages = {
   contentRequired: () => '"content" is required',
   categoryRequired: () => '"categoryIds" is required',
   categoryExistence: () => '"categoryIds" not found',
+  categoryCannotBeEdited: () => 'Categories cannot be edited',
+  unauthorizedUser: () => 'Unauthorized user',
+  postDoesNotExists: () => 'Post does not exist',
 };
 
 const titleRequired = (req, res, next) => {
@@ -67,7 +70,7 @@ const checkCategory = async (req, res, next) => {
 
 const notUpdateCategories = async (req, res, next) => {
   if (req.body.categoryIds) {
-    return res.status(BAD_REQUEST).json({ message: 'Categories cannot be edited' });
+    return res.status(BAD_REQUEST).json({ message: postErrorMessages.categoryCannotBeEdited() });
   }
 
   next();
@@ -80,7 +83,19 @@ const checkPostOwner = async (req, res, next) => {
   const postOwner = await BlogPost.findOne({ where: { userId: id } });
 
   if (userId !== postOwner.userId) {
-    return res.status(401).json({ message: 'Unauthorized user' });
+    return res.status(401).json({ message: postErrorMessages.unauthorizedUser() });
+  }
+
+  next();
+};
+
+const postDoesNotExists = async (req, res, next) => {
+  const { id } = req.params;
+
+  const post = await BlogPost.findOne({ where: { id } });
+
+  if (!post) {
+    return res.status(404).json({ message: postErrorMessages.postDoesNotExists() });
   }
 
   next();
@@ -93,4 +108,5 @@ module.exports = {
   checkCategory,
   notUpdateCategories,
   checkPostOwner,
+  postDoesNotExists,
 };

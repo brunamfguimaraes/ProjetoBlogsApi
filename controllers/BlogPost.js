@@ -3,6 +3,7 @@ const {
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 } = require('../services/BlogPost');
 
 const requestCreateBlogPost = async (req, res) => {
@@ -49,9 +50,18 @@ const requestUpdatePost = async (req, res) => {
   return res.status(200).json(updatedBlogPost);
 };
 
+const requestDeletePost = async (req, res) => {
+  const { id } = req.params;
+
+  await deletePost(id);
+
+  return res.status(204).end();
+};
+
 module.exports = {
   requestCreateBlogPost,
   requestBlogPostsList,
   requestPostById,
   requestUpdatePost,
+  requestDeletePost,
 };

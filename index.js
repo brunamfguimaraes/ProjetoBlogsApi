@@ -1,9 +1,13 @@
 const express = require('express');
+
+const PORT = 3000;
+
 const {
   requestCreateBlogPost,
   requestBlogPostsList,
   requestPostById,
   requestUpdatePost,
+  requestDeletePost,
 } = require('./controllers/BlogPost');
 const { requestCreateCategory, requestCategoriesList } = require('./controllers/Category');
 
@@ -26,6 +30,7 @@ const {
   checkCategory,
   notUpdateCategories,
   checkPostOwner,
+  postDoesNotExists,
 } = require('./middlewares/postMiddlewares');
 
 const { verifyToken } = require('./middlewares/tokenValidation');
@@ -87,4 +92,10 @@ app.put('/post/:id',
   contentRequired,
   requestUpdatePost);
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+app.delete('/post/:id',
+  verifyToken,
+  postDoesNotExists,
+  checkPostOwner,
+  requestDeletePost);
+
+app.listen(PORT, () => console.log(`Ouvindo na porta ${PORT}`));
