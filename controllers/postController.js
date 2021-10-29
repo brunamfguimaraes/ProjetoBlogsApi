@@ -9,7 +9,6 @@ const {
 const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { id: userId } = req.user;
-  console.log(req.user);
   const create = await validateCreatePost({ title, content, userId, categoryIds });
   const { id, code, message } = create;
   if (message) {
@@ -35,8 +34,16 @@ const findPostById = async (req, res) => {
 
 const postUpdate = async (req, res) => {
   const { id } = req.params;
-  const { title, content } = req.body;
-  const update = await validateUpdatePost({ id, title, content });
+  const { id: userId } = req.user;
+  const { categoryIds, title, content } = req.body;
+  if (categoryIds) {
+    return res.status(400).send({ message: 'Categories cannot be edited' });
+  }
+  const update = await validateUpdatePost(id, { title, content }, userId);
+  const { code, message } = update;
+  if (message) {
+    return res.status(code).json({ message });
+  }
   return res.status(200).json(update);
 };
 

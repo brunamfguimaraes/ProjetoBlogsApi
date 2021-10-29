@@ -5,8 +5,8 @@ const loginController = require('./controllers/loginController');
 const categoryController = require('./controllers/categoryConstroller');
 const postController = require('./controllers/postController');
 const jwtValidate = require('./middleware/validateJWT');
-const validateCatNotEdit = require('./middleware/validateCategoryNotEdit');
-const validateTitContent = require('./middleware/validateTitleContent');
+// const validateCatNotEdit = require('./middleware/validateCategoryNotEdit');
+// const validateTitContent = require('./middleware/validateTitleContent');
 const validateUserPost = require('./middleware/validateUserPost');
 
 const app = express();
@@ -32,9 +32,9 @@ app.get('/post', jwtValidate, postController.findPost);
 // Atualizar Posts
 app.put('/post/:id',
 jwtValidate,
-validateCatNotEdit,
-validateTitContent,
-validateUserPost,
+// validateCatNotEdit,
+// validateTitContent,
+// validateUserPost,
 postController.postUpdate);
 // Deletar Post
 app.delete('/post/:id', 

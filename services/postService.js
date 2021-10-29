@@ -48,17 +48,31 @@ const validateFindPostById = async (id) => {
   return findPostById;
 };
 
-const validateUpdatePost = async ({ id, title, content }) => BlogPost.update(
-  { title, content },
-  { where: { id } },
-  ).then(async () => {
-      const update = await BlogPost.findOne({ 
-        where: { id },
-        include: [
-          { model: Category, as: 'categories' },
-      ] });
-      return update;
-  });
+// const validateUpdatePost = async ({ id, title, content }) => BlogPost.update(
+//   { title, content },
+//   { where: { id } },
+//   ).then(async () => {
+//       const update = await BlogPost.findOne({ 
+//         where: { id },
+//         include: [
+//           { model: Category, as: 'categories' },
+//       ] });
+//       return update;
+//   });
+
+const validateUpdatePost = async (idPost, { title, content }, idUser) => {
+  const validFields = await validateTitContCatId(title, content);
+  if (validFields !== true) {
+    return { code: validFields.code, message: validFields.message };
+  }
+  const requestPostById = validateFindPostById(idPost);
+  if (requestPostById.userId !== idUser) {
+    return { code: 401, message: 'Unauthorized user' };
+  }
+  await BlogPost.update({ title, content }, { where: { id: idPost } });
+  const postAlreadyUpdate = validateFindPostById(idPost);
+  return postAlreadyUpdate;
+};
 
   const validateDeletePost = async (id) => {
     const exist = await BlogPost.findOne({ where: { id } });
