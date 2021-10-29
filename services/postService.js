@@ -60,8 +60,13 @@ const validateUpdatePost = async ({ id, title, content }) => BlogPost.update(
       return update;
   });
 
-  const validateDeletePost = (id) => {
-    BlogPost.destroy({ where: { id } });
+  const validateDeletePost = async (id) => {
+    const exist = await BlogPost.findOne({ where: { id } });
+    if (!exist) {
+      return { code: 404, message: 'Post does not exist' };
+    }
+    const deletedPost = await BlogPost.destroy({ where: { id } });
+    return deletedPost;
   };
 
 module.exports = {

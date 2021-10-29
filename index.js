@@ -36,6 +36,11 @@ validateCatNotEdit,
 validateTitContent,
 validateUserPost,
 postController.postUpdate);
+// Deletar Post
+app.delete('/post/:id', 
+validateUserPost,
+jwtValidate,
+postController.deletePost);
 
 // Pesquisar Post pelo Id
 app.get('/post/:id', jwtValidate, postController.findPostById);

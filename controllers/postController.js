@@ -3,6 +3,7 @@ const {
   validateFindPost,
   validateFindPostById,
   validateUpdatePost,
+  validateDeletePost,
 } = require('../services/postService');
 
 const createPost = async (req, res) => {
@@ -39,9 +40,15 @@ const postUpdate = async (req, res) => {
   return res.status(200).json(update);
 };
 
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+  validateDeletePost(id).then(() => res.status(204).send());
+};
+
 module.exports = {
   createPost,
   findPost,
   findPostById,
   postUpdate,
+  deletePost,
 };
