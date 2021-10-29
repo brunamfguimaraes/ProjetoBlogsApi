@@ -48,17 +48,11 @@ const validateFindPostById = async (id) => {
   return findPostById;
 };
 
-// const validateUpdatePost = async ({ id, title, content }) => BlogPost.update(
-//   { title, content },
-//   { where: { id } },
-//   ).then(async () => {
-//       const update = await BlogPost.findOne({ 
-//         where: { id },
-//         include: [
-//           { model: Category, as: 'categories' },
-//       ] });
-//       return update;
-//   });
+// const validateIfPostExists = (id) => {
+//   if (!id) {
+//     return { code: 404, message: 'Post does not exist' };
+//   }
+// };
 
 const validateUpdatePost = async (idPost, { title, content }, idUser) => {
   const validFields = await validateTitContCatId(title, content);
@@ -74,13 +68,17 @@ const validateUpdatePost = async (idPost, { title, content }, idUser) => {
   return postAlreadyUpdate;
 };
 
-  const validateDeletePost = async (id) => {
-    const exist = await BlogPost.findOne({ where: { id } });
-    if (!exist) {
+  const validateDeletePost = async (idPost, idUser) => {
+    const requestPostById = validateFindPostById(idPost);
+    console.log(requestPostById);
+    if (!requestPostById) {
       return { code: 404, message: 'Post does not exist' };
     }
-    const deletedPost = await BlogPost.destroy({ where: { id } });
-    return deletedPost;
+    if (requestPostById.userId !== idUser) {
+      return { code: 401, message: 'Unauthorized user' };
+    }
+    const removed = await BlogPost.destroy({ where: { id: idPost } });
+    return removed;
   };
 
 module.exports = {
