@@ -84,6 +84,28 @@ const validateCategorieName = (name) => {
   return {};
 };
 
+const validateBlogPosts = (title, content, categoryIds) => {
+  if (!title) {
+    return {
+      message: '"title" is required',
+    };
+  }
+
+  if (!content) {
+    return {
+      message: '"content" is required',
+    };
+  }
+
+  if (!categoryIds) {
+    return {
+      message: '"categoryIds" is required',
+    };
+  }
+
+  return {};
+};
+
 module.exports = {
   validateName,
   isEmailValid,
@@ -91,4 +113,5 @@ module.exports = {
   isEmailLoginValid,
   passwordLoginIsValid,
   validateCategorieName,
+  validateBlogPosts,
 };
