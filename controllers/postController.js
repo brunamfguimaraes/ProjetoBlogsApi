@@ -14,6 +14,7 @@ const createPost = async (req, res) => {
   if (message) {
     return res.status(code).json({ message });
   }
+  
   return res.status(201).json({ id, userId, title, content });
 };
 
@@ -29,6 +30,7 @@ const findPostById = async (req, res) => {
   if (message) {
     return res.status(code).json({ message });
   }
+
   res.status(200).json(findById);
 };
 
@@ -39,11 +41,13 @@ const postUpdate = async (req, res) => {
   if (categoryIds) {
     return res.status(400).send({ message: 'Categories cannot be edited' });
   }
+
   const update = await validateUpdatePost(id, { title, content }, userId);
   const { code, message } = update;
   if (message) {
     return res.status(code).json({ message });
   }
+
   return res.status(200).json(update);
 };
 
@@ -51,6 +55,7 @@ const deletePost = async (req, res) => {
   const { id } = req.params;
   const { id: userId } = req.user;
   const result = await validateDeletePost(id, userId);
+
   return res.status(204).json(result);
 };
 

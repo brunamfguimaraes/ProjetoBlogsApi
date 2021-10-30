@@ -1,28 +1,33 @@
 const { BlogPost, Category, User } = require('../models');
 
-const validateTitContCatId = (title, content) => {
+const validateTitCont = (title, content) => {
   if (!title) {
     return { code: 400, message: '"title" is required' };
   }
+
   if (!content) {
     return { code: 400, message: '"content" is required' };
   }
+
   return true;
 };
 
 const validateCreatePost = async ({ title, content, userId, categoryIds }) => {
-  const validTitleContCat = validateTitContCatId(title, content);
+  const validTitleContCat = validateTitCont(title, content);
   if (validTitleContCat !== true) {
     return { code: validTitleContCat.code, message: validTitleContCat.message };
   }
+
   if (!categoryIds) {
     return { code: 400, message: '"categoryIds" is required' };
   }
-  const validNotCategory = await Category.findAll({ where: { id: categoryIds } });
+
   // Desenvolvido com ajuda de Felippe Correa
+  const validNotCategory = await Category.findAll({ where: { id: categoryIds } });
   if (validNotCategory.length !== categoryIds.length) {
     return { code: 400, message: '"categoryIds" not found' };
   }
+
   const createPost = await BlogPost.create({ title, content, userId });
   return createPost;
 };
@@ -33,6 +38,7 @@ const validateFindPost = async () => {
     { model: User, as: 'user' },
     { model: Category, as: 'categories', through: { attributes: [] } }], 
 });
+
   return findPost;
 };
 
@@ -42,41 +48,42 @@ const validateFindPostById = async (id) => {
     { model: User, as: 'user' },
     { model: Category, as: 'categories', through: { attributes: [] } }], 
 });
+
   if (!findPostById) {
     return { code: 404, message: 'Post does not exist' };
   }
+
   return findPostById;
 };
 
-// const validateIfPostExists = (id) => {
-//   if (!id) {
-//     return { code: 404, message: 'Post does not exist' };
-//   }
-// };
-
 const validateUpdatePost = async (idPost, { title, content }, idUser) => {
-  const validFields = await validateTitContCatId(title, content);
+  const validFields = await validateTitCont(title, content);
   if (validFields !== true) {
     return { code: validFields.code, message: validFields.message };
   }
-  const requestPostById = validateFindPostById(idPost);
+
+  const requestPostById = await validateFindPostById(idPost);
+  console.log(requestPostById, idUser);
   if (requestPostById.userId !== idUser) {
     return { code: 401, message: 'Unauthorized user' };
   }
+
   await BlogPost.update({ title, content }, { where: { id: idPost } });
-  const postAlreadyUpdate = validateFindPostById(idPost);
+
+  const postAlreadyUpdate = await validateFindPostById(idPost);
   return postAlreadyUpdate;
 };
 
   const validateDeletePost = async (idPost, idUser) => {
-    const requestPostById = validateFindPostById(idPost);
-    console.log(requestPostById);
+    const requestPostById = await validateFindPostById(idPost);
     if (!requestPostById) {
       return { code: 404, message: 'Post does not exist' };
     }
+
     if (requestPostById.userId !== idUser) {
       return { code: 401, message: 'Unauthorized user' };
     }
+
     const removed = await BlogPost.destroy({ where: { id: idPost } });
     return removed;
   };
