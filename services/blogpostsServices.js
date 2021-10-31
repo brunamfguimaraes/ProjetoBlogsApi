@@ -23,7 +23,7 @@ const createPost = async (postData) => {
   const validatingContent = validateContent(content);
   if (validatingContent.error) return validatingContent;
 
-  const validatingCategory = validateCategory(categoryIds, async () => hasCategories(categoryIds));
+  const validatingCategory = await validateCategory(categoryIds, () => hasCategories(categoryIds));
   if (validatingCategory.error) return validatingCategory;
 
   const newPost = await BlogPost.create(postData);

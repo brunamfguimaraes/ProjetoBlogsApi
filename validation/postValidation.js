@@ -20,7 +20,7 @@ const validateContent = (content) => {
   };
 };
 
-const validateCategory = (categories, fnHasCategories) => {
+const validateCategory = async (categories, fnHasCategories) => {
   if (!categories) {
     return dataIsRequired('categoryId');
   }
@@ -34,7 +34,8 @@ const validateCategory = (categories, fnHasCategories) => {
     };
   }
 
-  if (!fnHasCategories) {
+  const hasCategories = await fnHasCategories();
+  if (!hasCategories) {
     return { error: { status: 400, message: '"categoryIds" not found' } };
   }
   
