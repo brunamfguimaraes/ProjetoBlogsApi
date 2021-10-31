@@ -17,7 +17,25 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { createPost };
+const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await blogpostsServices.getPostById(id);
+    if (post.error) {
+      const { status, message } = post.error;
+      return res.status(status).json({ message });
+    }
+    res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
+module.exports = { 
+  createPost, 
+  getPostById, 
+};
 // getAll (findAll)
 // getById (findByPk)
 // create (create) - OK
