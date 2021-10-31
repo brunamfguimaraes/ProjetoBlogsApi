@@ -23,7 +23,7 @@ const getAllCategories = async () => {
 };
 
 const hasCategoryById = async (id) => {
-  const category = Category.findByPk(id);
+  const category = await Category.findByPk(id);
   if (!category) {
     return false;
   }

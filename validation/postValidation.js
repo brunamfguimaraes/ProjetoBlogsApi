@@ -1,6 +1,6 @@
 const { dataIsRequired } = require('../helper/helpers');
 
-const titleValidation = (title) => {
+const validateTitle = (title) => {
   if (!title) {
     return dataIsRequired('title');
   }
@@ -10,7 +10,7 @@ const titleValidation = (title) => {
   };
 };
 
-const contentValidation = (content) => {
+const validateContent = (content) => {
   if (!content) {
     return dataIsRequired('content');
   }
@@ -20,7 +20,7 @@ const contentValidation = (content) => {
   };
 };
 
-const categoryValidation = (categories, fnHasCategories) => {
+const validateCategory = (categories, fnHasCategories) => {
   if (!categories) {
     return dataIsRequired('categoryId');
   }
@@ -42,7 +42,7 @@ const categoryValidation = (categories, fnHasCategories) => {
 };
 
 module.exports = {
-  titleValidation,
-  contentValidation,
-  categoryValidation,
+  validateTitle,
+  validateContent,
+  validateCategory,
 };
