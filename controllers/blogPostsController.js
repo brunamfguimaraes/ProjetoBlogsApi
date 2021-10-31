@@ -3,7 +3,9 @@ require('dotenv');
 
 const createPost = async (req, res) => {
   try {
-    const newPost = await blogpostsServices.createPost(req.body);
+    const { user } = req;
+    const postData = { ...req.body, userId: user.id };
+    const newPost = await blogpostsServices.createPost(postData);
     if (newPost.error) {
       const { status, message } = newPost.error;
       return res.status(status).json({ message });
@@ -18,6 +20,6 @@ const createPost = async (req, res) => {
 module.exports = { createPost };
 // getAll (findAll)
 // getById (findByPk)
-// create (create)
+// create (create) - OK
 // update (update)
 // remove (destroy)
