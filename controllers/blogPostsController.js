@@ -17,6 +17,16 @@ const createPost = async (req, res) => {
   }
 };
 
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await blogpostsServices.getAllPosts();
+    res.status(200).json(posts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
 const getPostById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -33,11 +43,12 @@ const getPostById = async (req, res) => {
 };
 
 module.exports = { 
-  createPost, 
+  createPost,
+  getAllPosts,
   getPostById, 
 };
-// getAll (findAll)
-// getById (findByPk)
+// getAll (findAll) - OK
+// getById (findOne) - OK
 // create (create) - OK
 // update (update)
 // remove (destroy)
