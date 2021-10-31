@@ -22,7 +22,7 @@ const validateContent = (content) => {
 
 const validateCategory = async (categories, fnHasCategories) => {
   if (!categories) {
-    return dataIsRequired('categoryId');
+    return dataIsRequired('categoryIds');
   }
 
   if (!Array.isArray(categories)) {
