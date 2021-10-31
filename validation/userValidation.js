@@ -1,11 +1,8 @@
+const { dataIsRequired } = require('../helper/helpers');
+
 const validateEmail = (email) => {
   if (!email) {
-    return {
-      error: {
-        status: 400,
-        message: '"email" is required',
-      },
-    };
+    return dataIsRequired('email');
   }
 
   const emailRegex = new RegExp(/^[\w.]+@[a-z]+.\w{2,3}$/g);
@@ -23,12 +20,7 @@ const validateEmail = (email) => {
 
 const validateName = (name) => {
   if (!name) {
-    return {
-      error: {
-        status: 400,
-        message: '"displayName" is required',
-      },
-    };
+    return dataIsRequired('displayName');
   }
   
   if (name.length < 8) {
@@ -45,12 +37,7 @@ const validateName = (name) => {
 
 const validatePassword = (password) => {
   if (!password) {
-    return {
-      error: {
-        status: 400,
-        message: '"password" is required',
-      },
-    };
+    return dataIsRequired('password');
   }
   
   if (password.length < 6) {

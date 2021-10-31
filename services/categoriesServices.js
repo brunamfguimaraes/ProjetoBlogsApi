@@ -22,7 +22,17 @@ const getAllCategories = async () => {
   return categories;
 };
 
+const hasCategoryById = async (id) => {
+  const category = Category.findByPk(id);
+  if (!category) {
+    return false;
+  }
+
+  return true;
+};
+
 module.exports = {
   createCategory,
   getAllCategories,
+  hasCategoryById,
 };
