@@ -1,26 +1,23 @@
 const categoriesServices = require('../services/categoriesServices');
 
-const createCategory = async (req, res) => {
+const createCategory = async (req, res, next) => {
   try {
     const newCategory = await categoriesServices.createCategory(req.body);
-    if (newCategory.error) {
-      const { status, message } = newCategory.error;
-      return res.status(status).json({ message });
-    }
+    if (newCategory.error) next(newCategory);
     res.status(201).json(newCategory);
   } catch (error) {
     console.log(error);
-    res.status(500).send('Something went Wrong. Please Try again');
+    next(500);
   }
 };
 
-const getAllCategories = async (req, res) => {
+const getAllCategories = async (req, res, next) => {
   try {
     const users = await categoriesServices.getAllCategories();
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
-    res.status(500).send('Something went wrong. Please try again');
+    next(500);
   }
 };
 
@@ -29,8 +26,5 @@ module.exports = {
   getAllCategories,
 };
 
-// getAll (findAll)
-// getById (findByPk)
-// create (create)
-// update (update)
-// remove (destroy)
+// getAll (findAll) - OK
+// create (create) - OK

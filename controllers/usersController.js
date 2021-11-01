@@ -1,42 +1,36 @@
 const userServices = require('../services/userServices');
 require('dotenv');
 
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
   try {
     const newUser = await userServices.createUser(req.body);
-    if (newUser.error) {
-      const { status, message } = newUser.error;
-      return res.status(status).json({ message });
-    }
+    if (newUser.error) next(newUser);
     res.status(201).json({ ...newUser });
   } catch (error) {
     console.log(error);
-    res.status(500).send('Something went Wrong. Please Try again');
+    next(500);
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
   try {
     const users = await userServices.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
-    res.status(500).send('Something went wrong. Please try again');
+    next(500);
   }
 };
 
-const getUserById = async (req, res) => {
+const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await userServices.getUserById(id);
-    if (user.error) {
-      const { status, message } = user.error;
-      return res.status(status).json({ message });
-    }
+    if (user.error) next(user);
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.status(500).send('Something went wrong. Please try again');
+    next(500);
   }
 };
 

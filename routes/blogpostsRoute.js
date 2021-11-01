@@ -3,6 +3,7 @@ const express = require('express');
 const blogPostsController = require('../controllers/blogPostsController');
 const JWTValidation = require('../middlewares/JWTValidation');
 const verifyUser = require('../middlewares/verifyUser');
+const errorMiddleware = require('../middlewares/error');
 
 const route = express.Router();
 
@@ -12,5 +13,7 @@ route
   .get('/', JWTValidation, blogPostsController.getAllPosts)
   .put('/:id', JWTValidation, verifyUser, blogPostsController.updatePost)
   .delete('/:id', JWTValidation, verifyUser, blogPostsController.deletePost);
+
+route.use(errorMiddleware);
 
 module.exports = route;
