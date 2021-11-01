@@ -42,13 +42,36 @@ const getPostById = async (req, res) => {
   }
 };
 
+const updatePost = async (req, res) => {
+  try {
+    const {
+      user: { id: tokenUserId },
+      params: { id: paramsId },
+    } = req;
+    const postData = { ...req.body, tokenUserId, paramsId };
+
+    const post = await blogpostsServices.updatePost(postData);
+    
+    if (post.error) {
+      const { status, message } = post.error;
+      return res.status(status).json({ message });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
 module.exports = { 
   createPost,
   getAllPosts,
-  getPostById, 
+  getPostById,
+  updatePost,
 };
 // getAll (findAll) - OK
 // getById (findOne) - OK
 // create (create) - OK
-// update (update)
+// update (update) - OK
 // remove (destroy)

@@ -8,6 +8,7 @@ const route = express.Router();
 route
   .post('/', JWTValidation, blogPostsController.createPost)
   .get('/:id', JWTValidation, blogPostsController.getPostById)
-  .get('/', JWTValidation, blogPostsController.getAllPosts);
+  .get('/', JWTValidation, blogPostsController.getAllPosts)
+  .put('/:id', JWTValidation, blogPostsController.updatePost);
 
 module.exports = route;

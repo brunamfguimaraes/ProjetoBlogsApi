@@ -13,6 +13,20 @@ const POST_NOT_FOUND = {
   },
 };
 
+const CANNOT_EDIT_CATEGORIES = {
+  error: {
+    status: 400,
+    message: 'Categories cannot be edited',
+  },
+};
+
+const UNAUTHORIZED_USER = {
+  error: { 
+    status: 401, 
+    message: 'Unauthorized user', 
+  }, 
+};
+
 const hasCategories = (categories) => {
   const arrayOfPromises = categories.map((category) => hasCategoryById(category));
   const isAllCategoriesValid = Promise.all(arrayOfPromises).then(
@@ -62,8 +76,42 @@ const getPostById = async (id) => {
   return post;
 };
 
+const findUpdatedPosts = async (paramId) => {
+  const foundUpdatedPost = await BlogPost.findOne({
+    where: { id: paramId },
+    include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  return foundUpdatedPost;
+};
+
+const updatePost = async (postData) => {
+  const { paramsId, tokenUserId, title, content, categoryIds } = postData;
+
+  if (categoryIds) return CANNOT_EDIT_CATEGORIES; 
+
+  const validatingTitle = validateTitle(title);
+  if (validatingTitle.error) return validatingTitle;
+
+  const validatingContent = validateContent(content);
+  if (validatingContent.error) return validatingContent;
+
+  const [updatedPost] = await BlogPost.update(
+    { title, content },
+    { where: { id: paramsId, userId: tokenUserId } },
+  );
+
+  if (!updatedPost) return UNAUTHORIZED_USER;
+  
+  const foundUpdatedPost = await findUpdatedPosts(paramsId);
+  return foundUpdatedPost;
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };
