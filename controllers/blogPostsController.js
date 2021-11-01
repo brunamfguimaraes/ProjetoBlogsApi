@@ -63,11 +63,22 @@ const updatePost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    await blogpostsServices.deletePost(req.params.id);
+    res.status(204).send();
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something went wrong. Please try again');
+  }
+};
+
 module.exports = { 
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
 // getAll (findAll) - OK
 // getById (findOne) - OK

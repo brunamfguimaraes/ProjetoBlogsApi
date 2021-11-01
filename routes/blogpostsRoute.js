@@ -10,6 +10,7 @@ route
   .post('/', JWTValidation, blogPostsController.createPost)
   .get('/:id', JWTValidation, blogPostsController.getPostById)
   .get('/', JWTValidation, blogPostsController.getAllPosts)
-  .put('/:id', JWTValidation, verifyUser, blogPostsController.updatePost);
+  .put('/:id', JWTValidation, verifyUser, blogPostsController.updatePost)
+  .delete('/:id', JWTValidation, verifyUser, blogPostsController.deletePost);
 
 module.exports = route;

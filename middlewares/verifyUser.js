@@ -6,9 +6,13 @@ module.exports = async (req, res, next) => {
     params: { id: paramsId },
   } = req;
 
-  const foundPost = await BlogPost.findOne({ where: { id: paramsId, userId: tokenUserId } });
+  const foundPost = await BlogPost.findOne({ where: { id: paramsId } });
 
-  if (!foundPost) return res.status(401).json({ message: 'Unauthorized user' });
+  if (!foundPost) return res.status(404).json({ message: 'Post does not exist' });
+
+  if (foundPost.userId !== tokenUserId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
 
   next();
 };
