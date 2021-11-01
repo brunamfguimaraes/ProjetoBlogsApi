@@ -4,14 +4,14 @@ const usersController = require('../controllers/usersController');
 const JWTValidation = require('../middlewares/JWTValidation');
 const errorMiddleware = require('../middlewares/error');
 
-const route = express.Router();
+const router = express.Router();
 
-route
+router
   .post('/', usersController.createUser)
   .get('/', JWTValidation, usersController.getAllUsers)
   .get('/:id', JWTValidation, usersController.getUserById)
   .delete('/me', JWTValidation, usersController.deleteUser);
 
-route.use(errorMiddleware);
+router.use(errorMiddleware);
 
-module.exports = route;
+module.exports = router;

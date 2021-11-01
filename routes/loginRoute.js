@@ -3,10 +3,10 @@ const express = require('express');
 const loginController = require('../controllers/loginController');
 const errorMiddleware = require('../middlewares/error');
 
-const route = express.Router();
+const router = express.Router();
 
-route.post('/', loginController.login);
+router.post('/', loginController.login);
 
-route.use(errorMiddleware);
+router.use(errorMiddleware);
 
-module.exports = route;
+module.exports = router;

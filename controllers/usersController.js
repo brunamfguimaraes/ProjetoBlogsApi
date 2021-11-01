@@ -51,8 +51,7 @@ module.exports = {
   deleteUser,
 };
 
-// getAll (findAll) - OK
-// getById (findByPk) - OK
-// create (create) - OK
-// update (update)
-// remove (destroy) - OK
+// getAll - OK
+// getById - OK
+// create - OK
+// remove - OK

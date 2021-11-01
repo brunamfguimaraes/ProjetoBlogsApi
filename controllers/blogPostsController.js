@@ -61,15 +61,29 @@ const deletePost = async (req, res, next) => {
   }
 };
 
+const searchPosts = async (req, res, next) => {
+  try {
+    const { q: query } = req.query;
+    const posts = await blogpostsServices.searchPosts(query);
+    res.status(200).json(posts);
+  } catch (error) {
+    console.log(error);
+    next(500);
+  }
+};
+
 module.exports = { 
   createPost,
   getAllPosts,
   getPostById,
   updatePost,
   deletePost,
+  searchPosts,
 };
-// getAll (findAll) - OK
-// getById (findOne) - OK
-// create (create) - OK
-// update (update) - OK
-// remove (destroy) - OK
+
+// getAll - OK
+// getById - OK
+// create - OK
+// update - OK
+// remove - OK
+// search - OK

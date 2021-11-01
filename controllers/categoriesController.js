@@ -26,5 +26,5 @@ module.exports = {
   getAllCategories,
 };
 
-// getAll (findAll) - OK
-// create (create) - OK
+// getAll - OK
+// create - OK

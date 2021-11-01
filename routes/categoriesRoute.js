@@ -4,12 +4,12 @@ const categoriesController = require('../controllers/categoriesController');
 const JWTValidation = require('../middlewares/JWTValidation');
 const errorMiddleware = require('../middlewares/error');
 
-const route = express.Router();
+const router = express.Router();
 
-route
+router
   .post('/', JWTValidation, categoriesController.createCategory)
   .get('/', JWTValidation, categoriesController.getAllCategories);
 
-route.use(errorMiddleware);
+router.use(errorMiddleware);
 
-module.exports = route;
+module.exports = router;
