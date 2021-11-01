@@ -1,24 +1,19 @@
 const { BlogPost, User, Category } = require('../models');
 const { hasCategoryById } = require('./categoriesServices');
+
 const {
   validateTitle,
   validateContent,
   validateCategory,
 } = require('../validation/postValidation');
 
-const POST_NOT_FOUND = {
-  error: {
-    status: 404,
-    message: 'Post does not exist',
-  },
-};
+const { 
+  CANNOT_EDIT_CATEGORIES, 
+} = require('../helper/errorObjects');
 
-const CANNOT_EDIT_CATEGORIES = {
-  error: {
-    status: 400,
-    message: 'Categories cannot be edited',
-  },
-};
+const { dataNotFound } = require('../helper/errorFunctions');
+
+// ----------------------------------------------------------
 
 const hasCategories = (categories) => {
   const arrayOfPromises = categories.map((category) => hasCategoryById(category));
@@ -64,7 +59,7 @@ const getPostById = async (id) => {
     ],
   });
 
-  if (!post) return POST_NOT_FOUND;
+  if (!post) return dataNotFound('Post');
 
   return post;
 };

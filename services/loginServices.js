@@ -4,12 +4,9 @@ const {
 
 const { validateField } = require('../validation/loginValidation');
 
-const invalidFields = {
-  error: {
-    status: 400,
-    message: 'Invalid fields',
-  },
-};
+const { INVALID_FIELDS } = require('../helper/errorObjects');
+
+// ----------------------------------------------------------------
 
 const login = async (credentials) => {
   const { email, password } = credentials;
@@ -21,7 +18,7 @@ const login = async (credentials) => {
   if (validatingPassword.error) return validatingPassword;
 
   const foundUser = await User.findOne({ where: { email } });
-  if (!foundUser) return invalidFields;
+  if (!foundUser) return INVALID_FIELDS;
 
   return { ...foundUser.dataValues };
 };

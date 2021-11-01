@@ -1,4 +1,4 @@
-const { dataIsRequired } = require('../helper/helpers');
+const { dataIsRequired } = require('../helper/errorFunctions');
 
 const validateEmail = (email) => {
   if (!email) {

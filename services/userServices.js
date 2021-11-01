@@ -9,12 +9,9 @@ const {
   validateUniqueUser,
 } = require('../validation/userValidation');
 
-const USER_NOT_FOUND = {
-  error: {
-    status: 404,
-    message: 'User does not exist',
-  },
-};
+const { dataNotFound } = require('../helper/errorFunctions');
+
+// ----------------------------------------------------------
 
 const createUser = async (userData) => {
   const {
@@ -46,7 +43,7 @@ const getAllUsers = async () => {
 
 const getUserById = async (id) => {
   const user = await User.findByPk(id);
-  if (!user) return USER_NOT_FOUND;
+  if (!user) return dataNotFound('User');
 
   return { ...user.dataValues };
 };

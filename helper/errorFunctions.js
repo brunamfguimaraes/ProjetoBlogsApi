@@ -5,4 +5,14 @@ const dataIsRequired = (data) => ({
     },
   });
 
-module.exports = { dataIsRequired };
+const dataNotFound = (data) => ({
+  error: {
+    status: 404,
+    message: `${data} does not exist`,
+  },
+});
+
+module.exports = {
+  dataIsRequired,
+  dataNotFound,
+};

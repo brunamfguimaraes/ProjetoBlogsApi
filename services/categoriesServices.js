@@ -1,15 +1,9 @@
 const { Category } = require('../models');
-
-const NAME_IS_REQUIRED = {
-  error: {
-    status: 400,
-    message: '"name" is required',
-  },
-};
+const { dataIsRequired } = require('../helper/errorFunctions');
 
 const createCategory = async (categoryData) => {
   const { name } = categoryData;
-  if (!name) return NAME_IS_REQUIRED;
+  if (!name) return dataIsRequired('name');
 
   const newCategory = await Category.create(categoryData);
 

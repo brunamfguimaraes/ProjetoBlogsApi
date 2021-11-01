@@ -1,4 +1,7 @@
 const { BlogPost } = require('../models');
+const { dataNotFound } = require('../helper/errorFunctions');
+
+const { error: { status: postStatus, message: postMessage } } = dataNotFound('Post');
 
 module.exports = async (req, res, next) => {
   const {
@@ -8,7 +11,7 @@ module.exports = async (req, res, next) => {
 
   const foundPost = await BlogPost.findOne({ where: { id: paramsId } });
 
-  if (!foundPost) return res.status(404).json({ message: 'Post does not exist' });
+  if (!foundPost) return res.status(postStatus).json({ message: postMessage });
 
   if (foundPost.userId !== tokenUserId) {
     return res.status(401).json({ message: 'Unauthorized user' });
