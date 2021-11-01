@@ -45,10 +45,9 @@ const getPostById = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const {
-      user: { id: tokenUserId },
       params: { id: paramsId },
     } = req;
-    const postData = { ...req.body, tokenUserId, paramsId };
+    const postData = { ...req.body, paramsId };
 
     const post = await blogpostsServices.updatePost(postData);
     

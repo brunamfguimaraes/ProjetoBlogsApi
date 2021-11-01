@@ -20,13 +20,6 @@ const CANNOT_EDIT_CATEGORIES = {
   },
 };
 
-const UNAUTHORIZED_USER = {
-  error: { 
-    status: 401, 
-    message: 'Unauthorized user', 
-  }, 
-};
-
 const hasCategories = (categories) => {
   const arrayOfPromises = categories.map((category) => hasCategoryById(category));
   const isAllCategoriesValid = Promise.all(arrayOfPromises).then(
@@ -88,7 +81,7 @@ const findUpdatedPosts = async (paramId) => {
 };
 
 const updatePost = async (postData) => {
-  const { paramsId, tokenUserId, title, content, categoryIds } = postData;
+  const { paramsId, title, content, categoryIds } = postData;
 
   if (categoryIds) return CANNOT_EDIT_CATEGORIES; 
 
@@ -98,12 +91,10 @@ const updatePost = async (postData) => {
   const validatingContent = validateContent(content);
   if (validatingContent.error) return validatingContent;
 
-  const [updatedPost] = await BlogPost.update(
+  await BlogPost.update(
     { title, content },
-    { where: { id: paramsId, userId: tokenUserId } },
+    { where: { id: paramsId } },
   );
-
-  if (!updatedPost) return UNAUTHORIZED_USER;
   
   const foundUpdatedPost = await findUpdatedPosts(paramsId);
   return foundUpdatedPost;
