@@ -9,7 +9,8 @@ const route = express.Router();
 route
   .post('/', usersController.createUser)
   .get('/', JWTValidation, usersController.getAllUsers)
-  .get('/:id', JWTValidation, usersController.getUserById);
+  .get('/:id', JWTValidation, usersController.getUserById)
+  .delete('/me', JWTValidation, usersController.deleteUser);
 
 route.use(errorMiddleware);
 

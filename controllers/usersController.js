@@ -34,14 +34,25 @@ const getUserById = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    await userServices.deleteUser(req.user.id);
+    res.status(204).send();
+  } catch (error) {
+    console.log(error);
+    next(500);
+  }
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   getUserById,
+  deleteUser,
 };
 
 // getAll (findAll) - OK
 // getById (findByPk) - OK
 // create (create) - OK
 // update (update)
-// remove (destroy)
+// remove (destroy) - OK
