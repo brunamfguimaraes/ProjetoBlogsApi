@@ -1,14 +1,20 @@
 const Categorie = (sequelize, DataTypes) => {
-  const CategorieModel = sequelize.define('Categorie', {
+  const category = sequelize.define('Category', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
-  }, {
+  },
+  {
     timestamps: false,
+    tableName: 'Categories',
+    underscored: false,
   });
-  CategorieModel.associate = (models) => {
-    CategorieModel.hasMany(models.PostsCategorie,
-    { foreignKey: 'categoryId', as: 'categories' });
+
+  category.associate = (models) => {
+    category.hasMany(models.PostsCategorie,
+      { foreignKey: 'id', as: 'categoryId' });
   };
-  return CategorieModel;
+
+  return category;
 };
 
 module.exports = Categorie;
