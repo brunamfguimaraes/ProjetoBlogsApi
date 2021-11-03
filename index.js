@@ -1,16 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const routes = require('./routes');
+const Middlewares = require('./middlewares');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use((error, _req, res, _next) => {
-  console.log(error);
-  res.status(error.status).json({ message: error.message });
-});
+app.use('/user', routes.RoutesUsers);
+
+app.use(Middlewares.errorMiddlewares);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
