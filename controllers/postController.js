@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 require('dotenv/config');
 const validPost = require('../middlewares/postMiddleware');
 const validToken = require('../middlewares/tokenMiddleware');
-const { PostsCategorie, User, BlogPost, Categorie } = require('../models');
+const { PostCategory, User, BlogPost, Category } = require('../models');
 const editPoster = require('../middlewares/editmiddleware');
 const authorPost = require('../middlewares/authorMidleware');
 
@@ -14,7 +14,7 @@ const createPostCategories = (postId, categories) => {
   categories.forEach(async (element) => {
     console.log(postId);
     console.log(element);
-    await PostsCategorie.create({ postId, categoryId: element });
+    await PostCategory.create({ postId, categoryId: element });
   });
 };
 
@@ -22,7 +22,7 @@ router.get('/', validToken, async (_req, res) => {
   const allPosts = await BlogPost.findAll({
     include: [
       { model: User, as: 'user' },
-      { model: Categorie, as: 'categories', through: { attributes: [] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
   return res.status(200).json(allPosts);
@@ -39,7 +39,7 @@ router.get('/search', validToken, async (req, res) => {
         ],
       },
       include: [{ model: User, as: 'user' },
-        { model: Categorie, as: 'categories', through: { attributes: [] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
       ] });
     return res.status(200).json(results);
   } catch (e) {
@@ -53,7 +53,7 @@ router.get('/:id', validToken, async (req, res) => {
     where: { id },
     include: [
       { model: User, as: 'user' },
-      { model: Categorie, as: 'categories', through: { attributes: [] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
   if (!getPost) return res.status(404).json({ message: 'Post does not exist' });
@@ -84,7 +84,7 @@ router.put('/:id', validToken, editPoster, async (req, res) => {
       where: { id },
       include: [
         { model: User, as: 'user' },
-        { model: Categorie, as: 'categories', through: { attributes: [] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
       ],
     });
     console.log(updatedPost);

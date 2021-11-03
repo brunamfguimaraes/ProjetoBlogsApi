@@ -1,4 +1,4 @@
-const Categorie = (sequelize, DataTypes) => {
+const Category = (sequelize, DataTypes) => {
   const category = sequelize.define('Category', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
@@ -10,11 +10,11 @@ const Categorie = (sequelize, DataTypes) => {
   });
 
   category.associate = (models) => {
-    category.hasMany(models.PostsCategorie,
+    category.hasMany(models.PostCategory,
       { foreignKey: 'id', as: 'categoryId' });
   };
 
   return category;
 };
 
-module.exports = Categorie;
+module.exports = Category;

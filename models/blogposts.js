@@ -4,7 +4,7 @@ const BlogPost = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     categoryIds: DataTypes.STRING,
-    userId: { type: DataTypes.INTEGER, foreignKey: true },
+    // userId: { type: DataTypes.INTEGER, foreignKey: true },
     published: DataTypes.DATE,
     updated: DataTypes.DATE,
   }, {
@@ -14,8 +14,8 @@ const BlogPost = (sequelize, DataTypes) => {
   });
 
   blogPost.associate = (models) => {
-    blogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-    blogPost.hasMany(models.PostsCategorie, { foreignKey: 'id', as: 'postId' });
+    blogPost.belongsTo(models.User, { foreignKey: 'id', as: 'user' });
+    blogPost.hasMany(models.PostCategory, { foreignKey: 'id', as: 'postId' });
   };
 
   return blogPost;
