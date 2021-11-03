@@ -6,6 +6,8 @@ const required = (req, res, next) => {
   if (email && password === undefined) {
     return res.status(400).json({ message: '"password" is required' });
   }
+  req.email = email;
+  
   return next();
 };
 const isEmpty = (req, res, next) => {

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use('/user', userController);
 app.use('/login', loginController);
 app.use('/categories', tokenMiddleware, categoriesController);
-app.use('/post', postController);
+app.use('/post', tokenMiddleware, postController);
 
 const port = process.env.PORT || 3000;
 
