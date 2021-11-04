@@ -16,6 +16,7 @@ app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 app.post('/login', Login.login);
 
 app.get('/user', validateToken, User.getAllUsers);
+app.get('/user/:id', validateToken, User.getUserById);
 app.post('/user', User.registerNewUser);
 
 // não remova esse endpoint, ele é necessário para fazer o avaliador funcionar

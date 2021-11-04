@@ -20,7 +20,19 @@ const getAllUsers = async (req, res, next) => {
   res.status(StatusCodes.OK).json(allUsers);
 };
 
+const getUserById = async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.getUserById(id);
+  if (user.errMsg) {
+    return next({ codeErr: user.codeErr, errMsg: user.errMsg });
+  }
+
+  res.status(StatusCodes.OK).json(user);
+};
+
 module.exports = {
   registerNewUser,
   getAllUsers,
+  getUserById,
 };

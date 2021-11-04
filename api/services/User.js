@@ -3,6 +3,8 @@ const { User } = require('../../models/index');
 const { displayNameIsValid, emailIsValid, passwordIsValid } = require('../validations/user');
 const { generateToken } = require('../tools/generateToken');
 
+const NOT_FOUND = 'not_found';
+
 const validatingBodyData = async (displayName, email, password) => {
   const validDisplayName = displayNameIsValid(displayName);
   if (validDisplayName.errMsg) {
@@ -31,21 +33,42 @@ const registerNewUser = async (displayName, email, password, image) => {
     };
   }
 
-  // Fazer com try catch amanhã para tratar os possíveis erros
-  await User.create({ displayName, email, password, image });
+  try {
+    await User.create({ displayName, email, password, image });
+  } catch (error) {
+    return { errMsg: error.message };
+  }
 
   const token = generateToken({ email });
   return { token };
 };
 
 const getAllUsers = async () => {
-  // Fazer com try catch amanhã para tratar os possíveis erros
-  const allUsers = await User.findAll();
+  try {
+    const allUsers = await User.findAll();
 
-  return allUsers;
+    return allUsers;
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+};
+
+const getUserById = async (id) => {
+  let user = null;
+
+  try {
+    user = await User.findByPk(id);
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+
+  if (!user) return { codeErr: NOT_FOUND, errMsg: 'User does not exist' };
+
+  return user;
 };
 
 module.exports = {
   registerNewUser,
   getAllUsers,
+  getUserById,
 };
