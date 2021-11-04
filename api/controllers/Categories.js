@@ -13,12 +13,12 @@ const addNewCategory = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json(addedCategory);
 };
 
-// const getAllUsers = async (req, res, next) => {
-//   const allUsers = await User.getAllUsers();
-//   if (allUsers.errMsg) return next({ errMsg: allUsers.errMsg });
+const getAllCategories = async (req, res, next) => {
+  const allCategories = await Categories.getAllCategories();
+  if (allCategories.errMsg) return next({ errMsg: allCategories.errMsg });
 
-//   res.status(StatusCodes.OK).json(allUsers);
-// };
+  res.status(StatusCodes.OK).json(allCategories);
+};
 
 // const getUserById = async (req, res, next) => {
 //   const { id } = req.params;
@@ -33,6 +33,6 @@ const addNewCategory = async (req, res, next) => {
 
 module.exports = {
   addNewCategory,
-  // getAllUsers,
+  getAllCategories,
   // getUserById,
 };
