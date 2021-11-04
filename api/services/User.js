@@ -31,12 +31,21 @@ const registerNewUser = async (displayName, email, password, image) => {
     };
   }
 
+  // Fazer com try catch amanhã para tratar os possíveis erros
   await User.create({ displayName, email, password, image });
 
   const token = generateToken({ email });
   return { token };
 };
 
+const getAllUsers = async () => {
+  // Fazer com try catch amanhã para tratar os possíveis erros
+  const allUsers = await User.findAll();
+
+  return allUsers;
+};
+
 module.exports = {
   registerNewUser,
+  getAllUsers,
 };

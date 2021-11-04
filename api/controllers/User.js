@@ -7,30 +7,20 @@ const registerNewUser = async (req, res, next) => {
 
   const token = await User.registerNewUser(displayName, email, password, image);
   if (token.errMsg) {
-    return next({
-      codeErr: token.codeErr,
-      errMsg: token.errMsg,
-    });
+    return next({ codeErr: token.codeErr, errMsg: token.errMsg });
   }
 
   res.status(StatusCodes.CREATED).json(token);
 };
 
-// const loginUser = async (req, res, next) => {
-//   const { email, password } = req.body;
+const getAllUsers = async (req, res, next) => {
+  const allUsers = await User.getAllUsers();
+  if (allUsers.errMsg) return next({ errMsg: allUsers.errMsg });
 
-//   const token = await Users.loginUser(email, password);
-//   if (token.isErrorMessage) {
-//     return next({
-//       codeError: token.codeError,
-//       isErrorMessage: token.isErrorMessage,
-//     });
-//   }
-
-//   res.status(StatusCodes.OK).json(token);
-// };
+  res.status(StatusCodes.OK).json(allUsers);
+};
 
 module.exports = {
   registerNewUser,
-  // loginUser,
+  getAllUsers,
 };
