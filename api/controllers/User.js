@@ -31,8 +31,18 @@ const getUserById = async (req, res, next) => {
   res.status(StatusCodes.OK).json(user);
 };
 
+const deleteMyself = async ({ user }, res, next) => {
+  const deleted = await User.deleteMyself(user);
+  if (deleted.errMsg) {
+    return next({ errMsg: deleted.errMsg });
+  }
+
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
 module.exports = {
   registerNewUser,
   getAllUsers,
   getUserById,
+  deleteMyself,
 };

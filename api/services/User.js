@@ -67,8 +67,19 @@ const getUserById = async (id) => {
   return user;
 };
 
+const deleteMyself = async ({ id }) => {
+  try {
+    await User.destroy({ where: { id } });
+
+    return true;
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+};
+
 module.exports = {
   registerNewUser,
   getAllUsers,
   getUserById,
+  deleteMyself,
 };
