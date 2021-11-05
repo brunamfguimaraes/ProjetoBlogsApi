@@ -42,9 +42,21 @@ const editPost = async (req, res, next) => {
   res.status(StatusCodes.OK).json(editedPost);
 };
 
+const deletePost = async (req, res, next) => {
+  const postId = req.params.id;
+
+  const deletedPost = await BlogPost.deletePost(postId, req.user);
+  if (deletedPost.errMsg) {
+    return next({ codeErr: deletedPost.codeErr, errMsg: deletedPost.errMsg });
+  }
+
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
 module.exports = {
   addNewPost,
   getAllPosts,
   getPostById,
   editPost,
+  deletePost,
 };

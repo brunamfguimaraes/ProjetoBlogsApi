@@ -21,6 +21,7 @@ app.post('/login', Login.login);
 app.get('/categories', validateToken, Categories.getAllCategories);
 app.post('/categories', validateToken, Categories.addNewCategory);
 
+app.delete('/post/:id', validateToken, BlogPost.deletePost);
 app.get('/post', validateToken, BlogPost.getAllPosts);
 app.get('/post/:id', validateToken, BlogPost.getPostById);
 app.post('/post', validateToken, BlogPost.addNewPost);
