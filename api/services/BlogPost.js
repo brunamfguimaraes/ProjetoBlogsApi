@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory } = require('../../models/index');
+const { Category, BlogPost, PostCategory, User } = require('../../models/index');
 
 const { titleIsValid, contentIsValid, categoryIdsAreValid } = require('../validations/post');
 
@@ -46,6 +46,22 @@ const addNewPost = async (title, content, categoryIds, user) => {
   return addedPost;
 };
 
+const include = {
+  include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+{ model: Category, as: 'categories', through: { attributes: [] } }],
+};
+
+const getAllPosts = async () => {
+  try {
+    const allPosts = await BlogPost.findAll(include);
+
+    return allPosts;
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+};
+
 module.exports = {
   addNewPost,
+  getAllPosts,
 };

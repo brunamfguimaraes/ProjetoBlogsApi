@@ -13,6 +13,14 @@ const addNewPost = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json(addedPost);
 };
 
+const getAllPosts = async (req, res, next) => {
+  const allPosts = await BlogPost.getAllPosts();
+  if (allPosts.errMsg) return next({ errMsg: allPosts.errMsg });
+
+  res.status(StatusCodes.OK).json(allPosts);
+};
+
 module.exports = {
   addNewPost,
+  getAllPosts,
 };
