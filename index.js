@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 
+const BlogPost = require('./api/controllers/BlogPost');
 const Login = require('./api/controllers/Login');
 const Categories = require('./api/controllers/Categories');
 const User = require('./api/controllers/User');
@@ -19,6 +20,8 @@ app.post('/login', Login.login);
 
 app.get('/categories', validateToken, Categories.getAllCategories);
 app.post('/categories', validateToken, Categories.addNewCategory);
+
+app.post('/post', validateToken, BlogPost.addNewPost);
 
 app.get('/user', validateToken, User.getAllUsers);
 app.get('/user/:id', validateToken, User.getUserById);

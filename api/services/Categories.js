@@ -18,7 +18,7 @@ const addNewCategory = async (name) => {
 
 const getAllCategories = async () => {
   try {
-    // o order abaixo é uma solução paliativa pois não consegui por qual motivo não estava trazendo conforme esperado
+    // o order abaixo é uma solução paliativa, pois não consegui descobrir o motivo pelo qual não está retornando as categorias conforme esperado
     const allCategories = await Category.findAll({ order: [['id', 'ASC']] });
 
     return allCategories;
