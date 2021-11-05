@@ -1,10 +1,16 @@
 const { Category, BlogPost, PostCategory, User } = require('../../models/index');
 
-const { titleIsValid, contentIsValid, categoryIdsAreValid } = require('../validations/post');
+const {
+  titleIsValid,
+  contentIsValid,
+  categoryIdsAreValid,
+  categoryIdsDoesntExist,
+  userIsValid,
+} = require('../validations/post');
 
 const NOT_FOUND = 'not_found';
 
-const validatingBodyData = async (title, content, categoryIds) => {
+const validateTitleAndContent = (title, content) => {
   const validTitle = titleIsValid(title);
   if (validTitle.errMsg) {
     return { codeErr: validTitle.codeErr, errMsg: validTitle.errMsg };
@@ -15,9 +21,37 @@ const validatingBodyData = async (title, content, categoryIds) => {
     return { codeErr: validContent.codeErr, errMsg: validContent.errMsg };
   }
 
+  return true;
+};
+
+const validatingBodyData = async (title, content, categoryIds) => {
+  const validTitleAndContent = validateTitleAndContent(title, content);
+  if (validTitleAndContent.errMsg) {
+    return { codeErr: validTitleAndContent.codeErr, errMsg: validTitleAndContent.errMsg };
+  }
+
   const validCategoryIds = await categoryIdsAreValid(categoryIds);
   if (validCategoryIds.errMsg) {
     return { codeErr: validCategoryIds.codeErr, errMsg: validCategoryIds.errMsg };
+  }
+
+  return true;
+};
+
+const validateBodyEditPost = async ({ title, content, categoryIds }, postId, user) => {
+  const validTitleAndContent = validateTitleAndContent(title, content);
+  if (validTitleAndContent.errMsg) {
+    return { codeErr: validTitleAndContent.codeErr, errMsg: validTitleAndContent.errMsg };
+  }
+
+  const validCategoryIds = await categoryIdsDoesntExist(categoryIds);
+  if (validCategoryIds.errMsg) {
+    return { codeErr: validCategoryIds.codeErr, errMsg: validCategoryIds.errMsg };
+  }
+
+  const validUser = await userIsValid(postId, user);
+  if (validUser.errMsg) {
+    return { codeErr: validUser.codeErr, errMsg: validUser.errMsg };
   }
 
   return true;
@@ -78,8 +112,33 @@ const getPostById = async (id) => {
   return post;
 };
 
+const editPost = async (body, postId, user) => {
+  const bodyDataIsValid = await validateBodyEditPost(body, postId, user);
+  if (bodyDataIsValid.errMsg) {
+    return { codeErr: bodyDataIsValid.codeErr, errMsg: bodyDataIsValid.errMsg };
+  }
+
+  try {
+    await BlogPost.update({ title: body.title, content: body.content }, { where: { id: postId } });
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+
+  try {
+    const editedPost = await BlogPost.findOne({
+      where: { id: postId },
+      include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+    });
+
+    return editedPost;
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+};
+
 module.exports = {
   addNewPost,
   getAllPosts,
   getPostById,
+  editPost,
 };
