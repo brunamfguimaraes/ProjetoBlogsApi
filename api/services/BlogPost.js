@@ -2,6 +2,8 @@ const { Category, BlogPost, PostCategory, User } = require('../../models/index')
 
 const { titleIsValid, contentIsValid, categoryIdsAreValid } = require('../validations/post');
 
+const NOT_FOUND = 'not_found';
+
 const validatingBodyData = async (title, content, categoryIds) => {
   const validTitle = titleIsValid(title);
   if (validTitle.errMsg) {
@@ -46,14 +48,12 @@ const addNewPost = async (title, content, categoryIds, user) => {
   return addedPost;
 };
 
-const include = {
-  include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
-{ model: Category, as: 'categories', through: { attributes: [] } }],
-};
+const include = [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+{ model: Category, as: 'categories', through: { attributes: [] } }];
 
 const getAllPosts = async () => {
   try {
-    const allPosts = await BlogPost.findAll(include);
+    const allPosts = await BlogPost.findAll({ include });
 
     return allPosts;
   } catch (error) {
@@ -61,7 +61,25 @@ const getAllPosts = async () => {
   }
 };
 
+const getPostById = async (id) => {
+  let post = null;
+
+  try {
+    post = await BlogPost.findOne({
+      where: { id },
+      include,
+    });
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+
+  if (!post) return { codeErr: NOT_FOUND, errMsg: 'Post does not exist' };
+
+  return post;
+};
+
 module.exports = {
   addNewPost,
   getAllPosts,
+  getPostById,
 };
