@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
-const { validateCreate, validateFindUser, validateFindById } = require('../services/userService');
+const {
+  validateCreate,
+  validateFindUser,
+  validateFindById,
+  validateDeleteUser,
+} = require('../services/userService');
 require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
@@ -37,8 +42,14 @@ const findById = async (req, res) => {
   return res.status(200).json(byId);
 };
 
+const deleteUser = async ({ user }, res) => {
+  await validateDeleteUser(user);
+  return res.status(204).json();
+};
+
 module.exports = {
   userCreate,
   findUser,
   findById,
+  deleteUser,
 };

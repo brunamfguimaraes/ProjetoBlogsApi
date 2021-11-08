@@ -87,7 +87,7 @@ const validateUpdatePost = async (idPost, { title, content }, idUser) => {
     const removed = await BlogPost.destroy({ where: { id: idPost } });
     return removed;
   };
-
+  
 module.exports = {
   validateCreatePost,
   validateFindPost,

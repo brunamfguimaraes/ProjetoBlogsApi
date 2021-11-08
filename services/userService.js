@@ -85,8 +85,14 @@ const validateFindById = async (id) => {
   return findUserById;
 };
 
+const validateDeleteUser = async ({ id }) => {
+  const removed = await User.destroy({ where: { id } });
+  return removed;
+};
+
 module.exports = {
   validateCreate,
   validateFindUser,
   validateFindById,
+  validateDeleteUser,
 };

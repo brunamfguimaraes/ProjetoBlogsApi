@@ -43,6 +43,8 @@ app.get('/user', jwtValidate, userController.findUser);
 
 // Pesquisa pelo Id
 app.get('/user/:id', jwtValidate, userController.findById);
+// Deletar Usuário
+app.delete('/user/me', jwtValidate, userController.deleteUser);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
