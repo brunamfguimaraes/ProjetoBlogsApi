@@ -75,12 +75,12 @@ const validateUpdatePost = async (idPost, { title, content }, idUser) => {
 };
 
   const validateDeletePost = async (idPost, idUser) => {
-    const requestPostById = await validateFindPostById(idPost);
-    if (!requestPostById) {
-      return { code: 404, message: 'Post does not exist' };
+    const { code, message, userId } = await validateFindPostById(idPost);
+    if (message) {
+      return { code, message };
     }
 
-    if (requestPostById.userId !== idUser) {
+    if (userId !== idUser) {
       return { code: 401, message: 'Unauthorized user' };
     }
 

@@ -54,9 +54,11 @@ const postUpdate = async (req, res) => {
 const deletePost = async (req, res) => {
   const { id } = req.params;
   const { id: userId } = req.user;
-  const result = await validateDeletePost(id, userId);
-
-  return res.status(204).json(result);
+  const { code, message } = await validateDeletePost(id, userId);
+  if (message) {
+    return res.status(code).json({ message });
+  }
+  return res.status(204).json();
 };
 
 module.exports = {
