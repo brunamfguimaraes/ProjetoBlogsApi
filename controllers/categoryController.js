@@ -10,7 +10,7 @@ const checkNameValidation = (req, res, next) => {
     }    
     next();
   };
-
+// getAllCategories
 const getAllCategories = async (_req, res) => {
   try {
     const newCategory = await Category.findAll();
