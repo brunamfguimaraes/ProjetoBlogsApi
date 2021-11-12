@@ -23,6 +23,7 @@ const {
   validateEmail,
   checkDisplayName,
   checkPassword,
+  checkNameValidation,
 } = require('./routes');
 
 // não remova esse endpoint, e para o avaliador funcionar
@@ -34,5 +35,7 @@ apiRoutes.get('/user', authMiddleware, routes.getAllUsers);
 apiRoutes.post('/user', validateEmail, checkDisplayName, checkPassword, routes.createUser);
 apiRoutes.post('/login', validateEmail, checkPassword, routes.login);
 apiRoutes.get('/user/:id', authMiddleware, routes.getUserById);
+apiRoutes.post('/categories', authMiddleware, checkNameValidation, routes.createCategory);
+apiRoutes.get('/categories', authMiddleware, routes.getAllCategories);
 
 app.listen(3000, () => console.log('Ouvindo na porta 3000!'));
