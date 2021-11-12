@@ -132,6 +132,20 @@ const getAllUsers = async (_req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+    if (!user || user.password !== password) {  
+      return res.status(400).json({ message: 'Invalid fields' }); 
+    }
+    const token = jwtTokenFunc(email);
+    return res.status(200).json({ token });
+} catch (error) {
+  return res.status(500).json({ message: error.message });
+}
+};
+
 module.exports = {
   validateEmail,
   checkPassword,
@@ -145,4 +159,5 @@ module.exports = {
   createUser,
   jwtTokenFunc,
   loginFunction,
+  login,
 };

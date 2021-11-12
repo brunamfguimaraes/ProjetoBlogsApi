@@ -32,5 +32,6 @@ app.get('/', (request, response) => {
 
 apiRoutes.get('/user', authMiddleware, routes.getAllUsers);
 apiRoutes.post('/user', validateEmail, checkDisplayName, checkPassword, routes.createUser);
+apiRoutes.post('/login', validateEmail, checkPassword, routes.login);
 
 app.listen(3000, () => console.log('Ouvindo na porta 3000!'));
