@@ -1,4 +1,4 @@
-const User = require('../../models/User');
+const { User } = require('../../models/index');
 
 const { displayNameIsValid, emailIsValid, passwordIsValid } = require('../validations/user');
 const { generateToken } = require('../tools/generateToken');
@@ -18,6 +18,7 @@ const validatingBodyData = async (displayName, email, password) => {
   if (validPassword.errMsg) {
     return { codeErr: validPassword.codeErr, errMsg: validPassword.errMsg };
   }
+  return true;
 };
 
 const registerNewUser = async (displayName, email, password, image) => {
