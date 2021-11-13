@@ -1,9 +1,9 @@
-const { Categorie } = require('../models');
+const { Category } = require('../models');
 
-const getAllCategories = () => Categorie.findAll();
+const getAllCategories = () => Category.findAll();
 
 const createCategorie = async ({ name }) => {
-  const newCategorie = await Categorie.create({ name });
+  const newCategorie = await Category.create({ name });
   return newCategorie;
 };
 

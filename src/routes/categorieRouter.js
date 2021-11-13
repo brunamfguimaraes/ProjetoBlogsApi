@@ -6,9 +6,9 @@ const { validateName } = require('../validations/Categorie');
 
 const router = (app) => {
   app.route('/categories')
+  .get(authMiddleware(validateToken), rescue(categorieController.getAllCategories))
   .post(validateBody(validateName), authMiddleware(validateToken),
-    rescue(categorieController.createCategorie))
-  .get(authMiddleware(validateToken), rescue(categorieController.getAllCategories));
+    rescue(categorieController.createCategorie));
 };
 
 module.exports = router;
