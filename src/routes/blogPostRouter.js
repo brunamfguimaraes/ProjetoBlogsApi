@@ -11,7 +11,7 @@ const router = (app) => {
   app.route('/post/:id')
     .get(authMiddleware(validateToken), rescue(blogPostController.getBlogPostById))
     .put(validateBody(updateBlogBody), authMiddleware(validateToken),
-      rescue(blogPostController.update))
+      rescue(blogPostController.updateBlogPost))
     .delete(authMiddleware(validateToken), rescue(blogPostController.removeBlogPost));
 
   app.route('/post').post(validateBody(validateBlogBody),
