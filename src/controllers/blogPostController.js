@@ -41,7 +41,7 @@ module.exports = {
   getBlogPostById,
   removeBlogPost,
   getBlogPostBySearchTerm,
+  getAllBlogPost,
   updateBlogPost,
   createBlogPost,
-  getAllBlogPost,
 };
