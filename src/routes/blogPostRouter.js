@@ -14,8 +14,10 @@ const router = (app) => {
       rescue(blogPostController.updateBlogPost))
     .delete(authMiddleware(validateToken), rescue(blogPostController.removeBlogPost));
 
-  app.route('/post').post(validateBody(validateBlogBody),
-    authMiddleware(validateToken), rescue(blogPostController.createBlogPost));
+  app.route('/post')
+    .get(authMiddleware(validateToken), rescue(blogPostController.getAllBlogPost))
+    .post(validateBody(validateBlogBody),
+      authMiddleware(validateToken), rescue(blogPostController.createBlogPost));
 };
 
 module.exports = router;
