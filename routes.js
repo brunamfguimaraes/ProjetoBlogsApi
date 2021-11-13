@@ -8,6 +8,7 @@ const { getUserById } = require('./controllers/userController');
 const { checkNameValidation } = require('./controllers/categoryController');
 const { createCategory } = require('./controllers/categoryController');
 const { getAllCategories } = require('./controllers/categoryController');
+const { createBlogPost } = require('./controllers/blogPostController');
 
 module.exports = {
   getAllUsers,
@@ -20,5 +21,6 @@ module.exports = {
   checkNameValidation,
   getAllCategories,
   createCategory,
+  createBlogPost,
   
 };

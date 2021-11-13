@@ -8,12 +8,12 @@ const User = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  // user.associate = (models) => {
-  //   user.hasMany(models.BlogPost, {
-  //     foreignKey: 'userId',
-  //     as: 'BlogPosts',
-  //   });
-  // };
+  user.associate = (models) => {
+    user.hasMany(models.BlogPost, {
+      foreignKey: 'userId',
+      as: 'BlogPosts',
+    });
+  };
 
   return user;
 };
