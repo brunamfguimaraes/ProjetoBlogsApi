@@ -30,7 +30,23 @@ const findAllBlogPosts = async () => {
   return findAll;
 };
 
+const findById = async (id) => {
+  console.log(id);
+  const findBlogPost = await BlogPosts.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  
+  if (findBlogPost === [] || !findBlogPost) return { message: 'Post does not exist' };
+
+  return findBlogPost;
+};
+
 module.exports = {
   createBlogPost,
   findAllBlogPosts,
+  findById,
 };

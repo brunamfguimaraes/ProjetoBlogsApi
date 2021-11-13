@@ -26,6 +26,15 @@ router.post('/', validateToken, async (req, res) => {
   });
 });
 
+router.get('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  const findByid = await blogPost.findById(id);
+  // console.log(findByid);
+  if (typeof findByid.message === 'string') return res.status(404).json(findByid);
+
+  return res.status(200).json(findByid);
+});
+
 router.get('/', validateToken, async (_req, res) => {
   const findAll = await blogPost.findAllBlogPosts();
 
