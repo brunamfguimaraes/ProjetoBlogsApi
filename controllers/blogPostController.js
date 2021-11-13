@@ -1,27 +1,21 @@
  const { BlogPost, User, Category } = require('../models');
 
-  const validatePost = (title, content, categoryIds, res) => {
-  if (!title) { return res.status(400).json({ message: '"title" is required' }); }
-  if (!content) return res.status(400).json({ message: '"content" is required' });
-  if (!categoryIds || categoryIds.length === 0) {
-  return res.status(400).json({
-      message: '"categoryIds" is required',
-    }); 
-  }
-  return true;
+  const validatePost = (title, content, categoryIds) => {
+  if (!title) return { err: { status: 400, message: '"title" is required' } };
+  if (!content) return { err: { status: 400, message: '"content" is required' } };
+  if (!categoryIds || categoryIds.length === 0) { 
+    return { err: { status: 400, message: '"categoryIds" is required' } }; 
+}
+    return true;
 };
 
- const validateCategories = async (categoryIds, res) => {
-  try {
+ const validateCategories = async (categoryIds) => {
     const categories = await Category.findAll({ where: { id: categoryIds } });
     if (categories.length !== categoryIds.length) {
-      return res.status(400).json({ message: '"categoryIds" not found' }); 
+      return { err: { status: 400, message: '"categoryIds" not found' } }; 
 }
       return true;
-  } catch (error) {
-    return res.status(400).json({ message: 'error' });
-  }
-    };
+  }; 
 
     const createBlogPost = async (req, res) => {
     try {
@@ -30,11 +24,15 @@
         const { id: userId } = await User.findOne({ where: { email } });      
     
       const validate = validatePost(title, content, categoryIds);
-      
-      if (!validate) return false;
+      if (validate.err) {
+         return res.status(validate.err.status).json({ message: validate.err.message });
+         }
       const isValidCategories = await (validateCategories(categoryIds));
       
-      if (isValidCategories === true);       
+      if (isValidCategories !== true) { 
+        return res.status(isValidCategories.err.status)
+        .json({ message: isValidCategories.err.message });
+      }       
       const { id } = await BlogPost.create({ userId, title, content });
       return res.status(201).json({ id, userId, title, content });
     } catch (error) {
