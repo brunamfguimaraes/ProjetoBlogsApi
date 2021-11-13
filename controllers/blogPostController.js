@@ -29,7 +29,7 @@ router.post('/', validateToken, async (req, res) => {
 router.get('/:id', validateToken, async (req, res) => {
   const { id } = req.params;
   const findByid = await blogPost.findById(id);
-  // console.log(findByid);
+  
   if (typeof findByid.message === 'string') return res.status(404).json(findByid);
 
   return res.status(200).json(findByid);
@@ -39,6 +39,23 @@ router.get('/', validateToken, async (_req, res) => {
   const findAll = await blogPost.findAllBlogPosts();
 
   return res.status(200).json(findAll);
+});
+
+router.put('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const userId = req.user;
+  const updateBlogPost = await blogPost.updatePost(id, data, userId.id);
+
+  if (updateBlogPost.message === 'Unauthorized user') {
+    return res.status(401).json(updateBlogPost);
+  }
+
+  if (typeof updateBlogPost.message === 'string') {
+    return res.status(400).json(updateBlogPost);
+  }
+
+  return res.status(200).json(updateBlogPost);
 });
 
 module.exports = router;

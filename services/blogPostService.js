@@ -1,6 +1,6 @@
 const { BlogPosts, Categories, User } = require('../models');
 
-const { validateBlogPosts } = require('../validations/index');
+const { validateBlogPosts, validateUpdatePosts } = require('../validations/index');
 
 const createBlogPost = async (title, content, categoryId) => {
   const blogPostIsValid = validateBlogPosts(title, content, categoryId);
@@ -31,7 +31,6 @@ const findAllBlogPosts = async () => {
 };
 
 const findById = async (id) => {
-  console.log(id);
   const findBlogPost = await BlogPosts.findOne({
     where: { id },
     include: [
@@ -45,8 +44,31 @@ const findById = async (id) => {
   return findBlogPost;
 };
 
+const updatePost = async (id, data, userId) => {
+  const blogUpdateIsValid = validateUpdatePosts(data.title, data.content, data.categoryIds);
+  if (blogUpdateIsValid.message) return blogUpdateIsValid;
+  // console.log(userId);
+  const updateBlogPost = await BlogPosts.findOne({
+    where: { id },
+    include: [
+      { model: Categories, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  if (updateBlogPost.userId !== userId) return { message: 'Unauthorized user' };
+  
+  updateBlogPost.title = data.title;
+  updateBlogPost.content = data.content;
+  updateBlogPost.updated = new Date();
+
+  const updatedPost = await updateBlogPost.save();
+
+  return updatedPost;
+};
+
 module.exports = {
   createBlogPost,
   findAllBlogPosts,
   findById,
+  updatePost,
 };

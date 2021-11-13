@@ -106,6 +106,27 @@ const validateBlogPosts = (title, content, categoryIds) => {
   return {};
 };
 
+const validateUpdatePosts = (title, content, categoryIds) => {
+  if (categoryIds) {
+    return {
+      message: 'Categories cannot be edited',
+    };
+  }
+  if (!title) {
+    return {
+      message: '"title" is required',
+    };
+  }
+
+  if (!content) {
+    return {
+      message: '"content" is required',
+    };
+  }
+
+  return {};
+};
+
 module.exports = {
   validateName,
   isEmailValid,
@@ -114,4 +135,5 @@ module.exports = {
   passwordLoginIsValid,
   validateCategorieName,
   validateBlogPosts,
+  validateUpdatePosts,
 };
