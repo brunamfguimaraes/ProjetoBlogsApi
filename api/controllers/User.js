@@ -7,10 +7,7 @@ const registerNewUser = async (req, res, next) => {
 
   const token = await User.registerNewUser(displayName, email, password, image);
   if (token.errMsg) {
-    return next({
-      codeErr: token.codeErr,
-      errMsg: token.errMsg,
-    });
+    return next({ codeErr: token.codeErr, errMsg: token.errMsg });
   }
 
   res.status(StatusCodes.CREATED).json(token);

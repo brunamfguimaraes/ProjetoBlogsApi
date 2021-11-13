@@ -1,7 +1,9 @@
 const express = require('express');
 require('dotenv').config();
 
+const Login = require('./api/controllers/Login');
 const User = require('./api/controllers/User');
+
 const errorMiddleware = require('./api/middlewares/errorMiddleware');
 
 const app = express();
@@ -12,6 +14,8 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
+
+app.post('/login', Login.login);
 
 app.post('/user', User.registerNewUser);
 
