@@ -38,5 +38,6 @@ apiRoutes.get('/user/:id', authMiddleware, routes.getUserById);
 apiRoutes.post('/categories', authMiddleware, checkNameValidation, routes.createCategory);
 apiRoutes.get('/categories', authMiddleware, routes.getAllCategories);
 apiRoutes.post('/post', authMiddleware, routes.createBlogPost);
+apiRoutes.get('/post', authMiddleware, routes.getAllBlogPost);
 
 app.listen(3000, () => console.log('Ouvindo na porta 3000!'));
