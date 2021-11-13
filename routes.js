@@ -9,7 +9,8 @@ const { checkNameValidation } = require('./controllers/categoryController');
 const { createCategory } = require('./controllers/categoryController');
 const { getAllCategories } = require('./controllers/categoryController');
 const { createBlogPost } = require('./controllers/blogPostController');
-const { getAllBlogPost } = require('./controllers/getAllBlogPost');
+const { getAllBlogPost } = require('./controllers/getBlogPost');
+const { getPostById } = require('./controllers/getBlogPost');
 
 module.exports = {
   getAllUsers,
@@ -24,5 +25,6 @@ module.exports = {
   createCategory,
   createBlogPost,
   getAllBlogPost,
+  getPostById,
   
 };
