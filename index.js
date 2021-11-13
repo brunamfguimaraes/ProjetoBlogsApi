@@ -1,9 +1,9 @@
 const express = require('express');
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 
-require('dotenv').config();
 // app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
 const PORT = process.env.PORT || 3000;
