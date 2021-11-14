@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const userRouter = require('./src/routers/UserRouter');
+const UserRouter = require('./src/routers/UserRouter');
 const error = require('./src/middlewares/error');
 
 const app = express();
@@ -10,7 +10,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-userRouter(app);
+UserRouter(app);
 
 app.use(error);
 

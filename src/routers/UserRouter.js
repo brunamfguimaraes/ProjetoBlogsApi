@@ -3,7 +3,7 @@ const UserController = require('../controllers/UserController');
 const bodyValidator = require('../middlewares/bodyValidator');
 const { loginValidator, validateBody } = require('../validators/UserValidator');
 
-const router = (app) => {
+const UserRouter = (app) => {
   app.route('/user')
     .get(rescue(UserController.getUsers));
 
@@ -16,4 +16,4 @@ const router = (app) => {
     rescue(UserController.userLogin));
 };
 
-module.exports = router;
+module.exports = UserRouter;
