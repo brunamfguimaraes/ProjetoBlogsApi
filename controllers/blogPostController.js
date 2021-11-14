@@ -58,4 +58,20 @@ router.put('/:id', validateToken, async (req, res) => {
   return res.status(200).json(updateBlogPost);
 });
 
+router.delete('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user;
+  const deleteBP = await blogPost.deletePost(id, userId.id);
+  
+  if (deleteBP.message === 'Post does not exist') {
+    return res.status(404).json(deleteBP);
+  }
+
+  if (deleteBP.message === 'Unauthorized user') {
+    return res.status(401).json(deleteBP);
+  }
+
+  return res.status(204).json(deleteBP);
+});
+
 module.exports = router;

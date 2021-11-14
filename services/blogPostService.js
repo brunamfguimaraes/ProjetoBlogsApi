@@ -47,7 +47,7 @@ const findById = async (id) => {
 const updatePost = async (id, data, userId) => {
   const blogUpdateIsValid = validateUpdatePosts(data.title, data.content, data.categoryIds);
   if (blogUpdateIsValid.message) return blogUpdateIsValid;
-  // console.log(userId);
+  
   const updateBlogPost = await BlogPosts.findOne({
     where: { id },
     include: [
@@ -66,9 +66,21 @@ const updatePost = async (id, data, userId) => {
   return updatedPost;
 };
 
+const deletePost = async (id, userId) => {
+  const deleteBP = await BlogPosts.findOne({ where: { id } });
+
+  if (!deleteBP) return { message: 'Post does not exist' };
+  if (deleteBP.userId !== userId) return { message: 'Unauthorized user' };
+  
+  deleteBP.destroy();
+
+  return deleteBP;
+};
+
 module.exports = {
   createBlogPost,
   findAllBlogPosts,
   findById,
   updatePost,
+  deletePost,
 };
