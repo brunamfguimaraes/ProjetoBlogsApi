@@ -1,4 +1,4 @@
-const { user } = require('../models');
+const { user } = require('../../models');
 const helper = require('../helper');
 const validator = require('../validators/UserValidator');
 
