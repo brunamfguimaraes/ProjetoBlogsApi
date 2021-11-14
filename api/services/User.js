@@ -36,6 +36,13 @@ const registerNewUser = async (displayName, email, password, image) => {
   return { token };
 };
 
+const getAllUsers = async () => {
+  const allUsers = await User.findAll();
+
+  return allUsers;
+};
+
 module.exports = {
   registerNewUser,
+  getAllUsers,
 };

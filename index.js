@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const Login = require('./api/controllers/Login');
 const User = require('./api/controllers/User');
+const validateToken = require('./api/middlewares/validateToken');
 
 const errorMiddleware = require('./api/middlewares/errorMiddleware');
 
@@ -17,6 +18,7 @@ app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
 app.post('/login', Login.login);
 
+app.get('/user', validateToken, User.getAllUsers);
 app.post('/user', User.registerNewUser);
 
 // não remova esse endpoint, e para o avaliador funcionar
