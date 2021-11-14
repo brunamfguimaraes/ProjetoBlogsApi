@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const bodyValidator = (body) => {
+const validateBody = (body) => {
   const { error } = joi.object({
     displayName: joi.string().min(8).required(),
     email: joi.string().email().required(),
@@ -45,7 +45,7 @@ const emailValidator = async (email, model) => {
 };
 
 module.exports = {
-  bodyValidator,
+  validateBody,
   loginValidator,
   fieldsValidator,
   emailValidator,
