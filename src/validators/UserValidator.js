@@ -38,7 +38,7 @@ const emailValidator = async (email, model) => {
 
   if (user) {
     const err = new Error('User already registered');
-    err.statusCode = 409;
+    err.statusCode = 201;
 
     throw err;
   }
