@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const userRouter = require('./src/routers/UserRouter');
 const error = require('./src/middlewares/error');
 
