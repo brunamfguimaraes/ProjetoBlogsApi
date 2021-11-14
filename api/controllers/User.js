@@ -13,6 +13,13 @@ const registerNewUser = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json(token);
 };
 
+const getAllUsers = async (req, res, next) => {
+  const allUsers = await User.getAllUsers();
+  if (allUsers.errMsg) return next({ errMsg: allUsers.errMsg });
+  res.status(StatusCodes.OK).json(allUsers);
+};
+
 module.exports = {
   registerNewUser,
+  getAllUsers,
 };
