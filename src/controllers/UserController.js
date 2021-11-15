@@ -28,7 +28,7 @@ const getUsers = async (req, res) => {
   try {
     const response = await UserService.getUsers();
 
-    return res.status(200).json({ token: response });
+    return res.status(200).json(response);
   } catch (error) {
     console.error(error);
 
