@@ -9,8 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   }, { timestamps: false });
 
   Post.associate = (models) => {
-    Post.belongsTo(models.User, { foreingKey: 'userId', as: 'user' });
+    // Post.belongsTo(models.User, { foreingKey: 'userId', as: 'user' });
+    models.User.hasMany(Post, { as: 'user', foreingKey: 'userId' });
   };
+
+  // https://stackoverflow.com/questions/44070808/hasmany-called-with-something-thats-not-an-instance-of-sequelize-model
 
   return Post;
 };
