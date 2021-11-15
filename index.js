@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 
 const Login = require('./api/controllers/Login');
+const Categories = require('./api/controllers/Categories');
 const User = require('./api/controllers/User');
 const validateToken = require('./api/middlewares/validateToken');
 
@@ -17,6 +18,8 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
 app.post('/login', Login.login);
+
+app.post('/categories', validateToken, Categories.addNewCategory);
 
 app.get('/user', validateToken, User.getAllUsers);
 app.get('/user/:id', validateToken, User.getUserById);
