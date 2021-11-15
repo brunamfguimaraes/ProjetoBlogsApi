@@ -40,9 +40,8 @@ apiRoutes.post('/categories', authMiddleware, checkNameValidation, routes.create
 apiRoutes.get('/categories', authMiddleware, routes.getAllCategories);
 apiRoutes.post('/post', authMiddleware, routes.createBlogPost);
 apiRoutes.get('/post', authMiddleware, routes.getAllBlogPost);
+apiRoutes.put('/post/:id', authMiddleware, routes.editBlogPost);
 apiRoutes.get('/post/:id', authMiddleware, routes.getPostById);
 apiRoutes.delete('/post/:id', authMiddleware, routes.deleteBlogPost);
-
-// apiRoutes.put('/post/:id', authMiddleware, routes.editBlogPost);
 
 app.listen(3000, () => console.log('Ouvindo na porta 3000!'));
