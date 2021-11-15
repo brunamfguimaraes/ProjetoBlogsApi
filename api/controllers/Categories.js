@@ -13,6 +13,13 @@ const addNewCategory = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json(addedCategory);
 };
 
+const getAllCategories = async (req, res, next) => {
+  const allCategories = await Categories.getAllCategories();
+  if (allCategories.errMsg) return next({ errMsg: allCategories.errMsg });
+  res.status(StatusCodes.OK).json(allCategories);
+};
+
 module.exports = {
   addNewCategory,
+  getAllCategories,
 };

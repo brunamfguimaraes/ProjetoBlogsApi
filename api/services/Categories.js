@@ -16,6 +16,17 @@ const addNewCategory = async (name) => {
   }
 };
 
+const getAllCategories = async () => {
+  try {
+    const allCategories = await Category.findAll({ order: [['id', 'ASC']] });
+
+    return allCategories;
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+};
+
 module.exports = {
   addNewCategory,
+  getAllCategories,
 };

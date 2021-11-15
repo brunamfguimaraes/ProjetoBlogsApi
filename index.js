@@ -19,6 +19,7 @@ app.listen(PORT, () => console.log(`ouvindo porta ${PORT}!`));
 
 app.post('/login', Login.login);
 
+app.get('/categories', validateToken, Categories.getAllCategories);
 app.post('/categories', validateToken, Categories.addNewCategory);
 
 app.get('/user', validateToken, User.getAllUsers);
