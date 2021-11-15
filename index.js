@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { LoginRouter,
         UserRouter,
@@ -8,7 +9,9 @@ const { LoginRouter,
 const app = express();
 app.use(express.json());
 
-app.listen(3000, () => console.log('Online at port 3000'));
+const PORT = process.env.PORT || '3000';
+
+app.listen(PORT, () => console.log(`Online at port ${PORT}`));
 
 app.use('/user', UserRouter);
 app.use('/login', LoginRouter);
