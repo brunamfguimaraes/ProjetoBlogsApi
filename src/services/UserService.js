@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { User } = require('../../models');
-const { fieldsValidator, loginValidator } = require('../validators/UserValidator');
+const { fieldsValidator } = require('../validators/UserValidator');
 
 const secret = process.env.SECRET || 'naruto123';
 
@@ -32,24 +32,7 @@ const createUser = async (fieldsData) => {
 
 const getUsers = async () => User.findAll({ exclude: ['password'] });
 
-const userLogin = async (email, password) => {
-  const fields = loginValidator({ email, password });
-
-  if (fields.message) {
-    return fields;
-  }
-
-  const user = await User.findOne({ where: { email, password } });
-
-  if (!user) {
-    return { message: 'Invalid fields' };
-  }
-
-  return user;
-};
-
 module.exports = {
   createUser,
   getUsers,
-  userLogin,
 };
