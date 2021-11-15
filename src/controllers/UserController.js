@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
 
     return res.status(201).json({ token: response });
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     res.status(500).json({ message: error.message });
   }
@@ -30,7 +30,24 @@ const getUsers = async (req, res) => {
 
     return res.status(200).json({ token: response });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await UserService.getUser(id);
+
+    if (response.message) {
+      return res.status(404).json(response);
+    }
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
 
     res.status(500).json({ message: error.message });
   }
@@ -39,4 +56,5 @@ const getUsers = async (req, res) => {
 module.exports = {
   createUser,
   getUsers,
+  getUser,
 };
