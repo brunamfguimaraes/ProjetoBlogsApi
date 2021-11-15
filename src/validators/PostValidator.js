@@ -1,5 +1,5 @@
 const joi = require('joi');
-const { PostCategory } = require('../../models');
+const { Category } = require('../../models');
 
 const postValidator = (post) => {
   const { error } = joi.object({
@@ -20,7 +20,7 @@ const postValidator = (post) => {
 };
 
 const categoryValidator = async (categories) => {
-  const categoryCollection = categories.map(async (id) => PostCategory.findByPk(id));
+  const categoryCollection = categories.map(async (id) => Category.findByPk(id));
   const response = await Promise.all(categoryCollection);
 
   return response.some((category) => category === null);

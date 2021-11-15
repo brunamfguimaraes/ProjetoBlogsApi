@@ -1,9 +1,9 @@
-const PostCategoryService = require('../services/CategoryService');
+const CategoryService = require('../services/CategoryService');
 
 const newCategory = async (req, res) => {
   try {
     const { name } = req.body;
-    const response = await PostCategoryService.newCategory(name);
+    const response = await CategoryService.newCategory(name);
 
     if (response.message) {
       return res.status(400).json(response);
@@ -19,7 +19,7 @@ const newCategory = async (req, res) => {
 
 const getCategories = async (req, res) => {
   try {
-    const response = await PostCategoryService.getCategories();
+    const response = await CategoryService.getCategories();
 
     return res.status(200).json(response);
   } catch (error) {
