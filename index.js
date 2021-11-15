@@ -1,17 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const UserRouter = require('./src/routers/UserRouter');
-const error = require('./src/middlewares/error');
+const router = require('./src/routers/UserRouter');
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
+
+app.listen(3000, () => console.log('Online at port 3000'));
+
+app.use('/user', router);
+app.use('/login', router);
 
 app.get('/', (request, response) => {
   response.send();
 });
-
-UserRouter(app);
-
-app.use(error);
-
-app.listen(3000, () => console.log('listening at port 3000!'));

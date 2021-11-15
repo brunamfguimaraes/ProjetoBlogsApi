@@ -1,19 +1,11 @@
-const rescue = require('express-rescue');
-const UserController = require('../controllers/UserController');
-const bodyValidator = require('../middlewares/bodyValidator');
-const { loginValidator, validateBody } = require('../validators/UserValidator');
+const express = require('express');
+const { createUser, getUsers, userLogin } = require('../controllers/UserController');
 
-const UserRouter = (app) => {
-  app.route('/user')
-    .get(rescue(UserController.getUsers));
+const router = express.Router();
 
-  app.route('/user')
-    .post(bodyValidator(validateBody),
-    rescue(UserController.createUser));
-  
-  app.route('/login')
-    .post(bodyValidator(loginValidator),
-    rescue(UserController.userLogin));
-};
+router.route('/')
+  .post(createUser)
+  .get(getUsers)
+  .post(userLogin);
 
-module.exports = UserRouter;
+module.exports = router;

@@ -1,33 +1,55 @@
-const { User } = require('../../models/user');
-const helper = require('../helper');
-const UserValidator = require('../validators/UserValidator');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const { User } = require('../../models');
+const { fieldsValidator, loginValidator } = require('../validators/UserValidator');
 
-const getUsers = () => User.findAll({
-  attributes: {
-    exclude: ['password', 'createdAt', 'updatedAt'],
-  },
-});
+const secret = 'naruto123';
 
-const createUser = async ({ displayName, email, password, image }) => {
-  await UserValidator.emailValidator(email, User);
-  await User.create({ displayName, email, password, image });
-  const jwt = helper.generateJWT({ displayName, email });
-
-  return jwt;
+const jwtCfg = {
+  expiresIn: '2d',
+  algorithm: 'HS256',
 };
 
-const userLogin = async ({ email, password }) => {
-  const valid = await User.findOne({ where: { email, password } });
-  UserValidator.fieldsValidator(valid);
+const createUser = async (fieldsData) => {
+  const fields = fieldsValidator(fieldsData);
 
-  const { _password, ...payload } = valid;
-  const jwt = helper.generateJWT(payload);
+  if (fields.message) {
+    return fields;
+  }
 
-  return jwt;
+  const alreadyExists = await User.findOne({ where: { email: fieldsData.email } });
+
+  if (alreadyExists) {
+    return { message: 'User already registered', conflict: true };
+  }
+
+  const { id, displayName, email, image } = await User.create(fieldsData);
+  const payload = { id, displayName, email, image };
+  const token = jwt.sign(payload, secret, jwtCfg);
+
+  return token;
+};
+
+const getUsers = async () => User.findAll({ exclude: ['password'] });
+
+const userLogin = async (email, password) => {
+  const fields = loginValidator({ email, password });
+
+  if (fields.message) {
+    return fields;
+  }
+
+  const user = await User.findOne({ where: { email, password } });
+
+  if (!user) {
+    return { message: 'Invalid fields' };
+  }
+
+  return user;
 };
 
 module.exports = {
-  getUsers,
   createUser,
+  getUsers,
   userLogin,
 };

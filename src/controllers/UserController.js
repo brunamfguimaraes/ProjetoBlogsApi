@@ -1,25 +1,71 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const UserService = require('../services/UserService');
 
-const getUsers = async (req, res) => {
-  const result = await UserService.getUsers();
+const createUser = async (req, res) => {
+  try {
+    const { displayName, email, password, image } = req.body;
+    const fields = { displayName, email, password, image };
 
-  return res.status(200).json(result);
+    const response = await UserService.createUser(fields);
+
+    if (response.message && response.conflict) {
+      return res.status(409).json(response);
+    }
+
+    if (response.message) {
+      return res.status(400).json(response);
+    }
+
+    return res.status(201).json({ token: response });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const createUser = async (req, res) => {
-  const jwt = await UserService.createUser(req.body);
+const getUsers = async (req, res) => {
+  try {
+    const response = await UserService.getUsers();
 
-  return res.status(201).json({ jwt });
+    return res.status(200).json({ token: response });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const secret = 'naruto123';
+
+const jwtConfig = {
+  expiresIn: '2d',
+  algorithm: 'HS256',
 };
 
 const userLogin = async (req, res) => {
-  const jwt = await UserService.userLogin(req.body);
+  try {
+    const { email, password } = req.body;
+    const response = await UserService.userLogin(email, password);
 
-  return res.status(200).json({ jwt });
+    if (response.message) {
+      return res.status(400).json(response);
+    }
+
+    const { id, displayName, image } = response;
+    const payload = { id, displayName, email, image };
+    const token = jwt.sign(payload, secret, jwtConfig);
+
+    res.status(200).json({ token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 module.exports = {
-  getUsers,
   createUser,
+  getUsers,
   userLogin,
 };

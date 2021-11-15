@@ -1,52 +1,42 @@
-const joi = require('joi');
+const Joi = require('joi');
 
-const validateBody = (body) => {
-  const { error } = joi.object({
-    displayName: joi.string().min(8).required(),
-    email: joi.string().email().required(),
-    password: joi.string().length(6).required(),
-    image: joi.string(),
-  }).validate(body);
-
-  if (error) {
-    throw error;
-  }
-};
-
-const loginValidator = (body) => {
-  const { error } = joi.object({
-    email: joi.string().email().required(),
-    password: joi.string().length(6).required(),
-  }).validate(body);
+const fieldsValidator = (fields) => {
+  const { error } = Joi.object({
+    displayName: Joi.string().min(8).not().empty()
+    .required(),
+    email: Joi.string().email().not().empty()
+    .required(),
+    image: Joi.string(),
+    password: Joi.string().min(6).not().empty()
+    .required()
+    .messages({
+      'string.min': '"password" length must be 6 characters long',
+     }),
+    }).validate(fields);
 
   if (error) {
-    throw error;
+    return { message: error.details[0].message };
   }
+
+  return {};
 };
 
-const fieldsValidator = (user) => {
-  if (!user) {
-    const err = new Error('Invalid fields');
-    err.statusCode = 400;
+const loginValidator = (fields) => {
+  const { error } = Joi.object({
+    email: Joi.string().email().not().empty()
+    .required(),
+    password: Joi.string().min(6).not().empty()
+    .required(),
+    }).validate(fields);
 
-    throw err;
+  if (error) {
+    return { message: error.details[0].message };
   }
-};
 
-const emailValidator = async (email, model) => {
-  const user = await model.findOne({ where: { email } });
-
-  if (user) {
-    const err = new Error('User already registered');
-    err.statusCode = 201;
-
-    throw err;
-  }
+  return {};
 };
 
 module.exports = {
-  validateBody,
-  loginValidator,
   fieldsValidator,
-  emailValidator,
+  loginValidator,
 };

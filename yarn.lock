@@ -1081,7 +1081,7 @@
   "resolved" "https://registry.npmjs.org/bluebird/-/bluebird-3.7.2.tgz"
   "version" "3.7.2"
 
-"body-parser@^1.19.0", "body-parser@1.19.0":
+"body-parser@1.19.0":
   "integrity" "sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw=="
   "resolved" "https://registry.npmjs.org/body-parser/-/body-parser-1.19.0.tgz"
   "version" "1.19.0"
@@ -1789,7 +1789,7 @@
   dependencies:
     "is-obj" "^2.0.0"
 
-"dotenv@8.2.0":
+"dotenv@^8.2.0":
   "integrity" "sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-8.2.0.tgz"
   "version" "8.2.0"
@@ -2345,11 +2345,6 @@
     "jest-matcher-utils" "^26.6.2"
     "jest-message-util" "^26.6.2"
     "jest-regex-util" "^26.0.0"
-
-"express-rescue@^1.1.31":
-  "integrity" "sha512-nX/xfFoB0yjpNqEjI/4y8bafg/agtYFHetGb6/jENv4JEmPDR87d2AjlNsECxRKXsrPjXLQA6YXWluZ9j0QSOA=="
-  "resolved" "https://registry.npmjs.org/express-rescue/-/express-rescue-1.1.31.tgz"
-  "version" "1.1.31"
 
 "express@4.17.1":
   "integrity" "sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g=="
@@ -3809,7 +3804,7 @@
     "isemail" "3.x.x"
     "topo" "3.x.x"
 
-"joi@^17.4.2":
+"joi@^17.4.1":
   "integrity" "sha512-Lm56PP+n0+Z2A2rfRvsfWVDXGEWjXxatPopkQ8qQ5mxCEhwHG+Ettgg5o98FFaxilOxozoa14cFhrE/hOzh/Nw=="
   "resolved" "https://registry.npmjs.org/joi/-/joi-17.4.2.tgz"
   "version" "17.4.2"
