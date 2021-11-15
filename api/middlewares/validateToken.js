@@ -16,6 +16,8 @@ const validateToken = async (req, res, next) => {
     const user = await User.findOne({ where: { email } });
     if (!user) return next({ codeErr: UNAUTHORIZED, errMsg: 'Expired or invalid token' });
 
+    req.user = { id: user.id, email: user.email };
+
     next();
   } catch (error) {
     next({ codeErr: UNAUTHORIZED, errMsg: 'Expired or invalid token' });
