@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../../models');
 const { fieldsValidator, loginValidator } = require('../validators/UserValidator');
 
-const secret = 'naruto123';
+const secret = process.env.SECRET || 'naruto123';
 
 const jwtCfg = {
   expiresIn: '2d',

@@ -37,9 +37,9 @@ const getUsers = async (req, res) => {
   }
 };
 
-const secret = 'naruto123';
+const secret = process.env.SECRET || 'naruto123';
 
-const jwtConfig = {
+const jwtCfg = {
   expiresIn: '2d',
   algorithm: 'HS256',
 };
@@ -55,7 +55,7 @@ const userLogin = async (req, res) => {
 
     const { id, displayName, image } = response;
     const payload = { id, displayName, email, image };
-    const token = jwt.sign(payload, secret, jwtConfig);
+    const token = jwt.sign(payload, secret, jwtCfg);
 
     res.status(200).json({ token });
   } catch (error) {
