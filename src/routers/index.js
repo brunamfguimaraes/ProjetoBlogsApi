@@ -1,11 +1,11 @@
 const UserRouter = require('./UserRouter');
 const LoginRouter = require('./LoginRouter');
-const PostCategoryRouter = require('./PostCategoryRouter');
+const CategoryRouter = require('./CategoryRouter');
 const PostRouter = require('./PostRouter');
 
 module.exports = {
   UserRouter,
   LoginRouter,
-  PostCategoryRouter,
+  CategoryRouter,
   PostRouter,
 };

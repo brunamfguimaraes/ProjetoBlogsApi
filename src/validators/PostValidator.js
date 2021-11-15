@@ -26,7 +26,23 @@ const categoryValidator = async (categories) => {
   return response.some((category) => category === null);
 };
 
+const changeValidator = (updateEntries) => {
+  const { error } = joi.object({
+    title: joi.string().not().empty()
+    .required(),
+    content: joi.string().not().empty()
+    .required(),
+  }).validate(updateEntries);
+
+  if (error) {
+    return { message: error.details[0].message };
+  }
+
+  return {};
+};
+
 module.exports = {
   postValidator,
   categoryValidator,
+  changeValidator,
 };

@@ -1,4 +1,4 @@
-const PostCategoryService = require('../services/PostCategoryService');
+const PostCategoryService = require('../services/CategoryService');
 
 const newCategory = async (req, res) => {
   try {

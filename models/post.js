@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Post = sequelize.define('Post', {
+  const BlogPost = sequelize.define('BlogPost', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
@@ -8,12 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     updated: DataTypes.DATE,
   }, { timestamps: false });
 
-  Post.associate = (models) => {
-    // Post.belongsTo(models.User, { foreingKey: 'userId', as: 'user' });
-    models.User.hasMany(Post, { as: 'user', foreingKey: 'userId' });
+  BlogPost.associate = (models) => {
+    BlogPost.belongsTo(models.User, { foreingKey: 'userId', as: 'user' });
   };
 
-  // https://stackoverflow.com/questions/44070808/hasmany-called-with-something-thats-not-an-instance-of-sequelize-model
-
-  return Post;
+  return BlogPost;
 };
