@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const LoginService = require('../services/LoginService');
 
-const secret = process.env.SECRET || 'naruto123';
+const secret = process.env.JWT_SECRET || 'naruto123';
 
 const jwtCfg = {
   expiresIn: '2d',
