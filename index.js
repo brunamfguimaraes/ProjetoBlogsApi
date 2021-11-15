@@ -32,6 +32,7 @@ app.get('/', (request, response) => {
 });
 
 apiRoutes.get('/user', authMiddleware, routes.getAllUsers);
+apiRoutes.delete('/user/me', authMiddleware, routes.deleteUser);
 apiRoutes.post('/user', validateEmail, checkDisplayName, checkPassword, routes.createUser);
 apiRoutes.post('/login', validateEmail, checkPassword, routes.login);
 apiRoutes.get('/user/:id', authMiddleware, routes.getUserById);

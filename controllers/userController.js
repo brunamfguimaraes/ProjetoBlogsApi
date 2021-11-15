@@ -164,6 +164,28 @@ return res.status(200).json(user);
 }
 };
 
+const deleteUserFunction = async (req) => {
+  const email = req.user;
+  console.log(req);
+
+  const user = await User.destroy({ where: { email } });
+  return user;
+};
+
+const deleteUser = async (req, res) => {
+  try {
+   console.log('eu sou req', req.user);
+
+    const user = await deleteUserFunction(req);
+    if (user !== 1) {
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
 module.exports = {
   validateEmail,
   checkPassword,
@@ -179,4 +201,5 @@ module.exports = {
   loginFunction,
   login,
   getUserById,
+  deleteUser,
 };

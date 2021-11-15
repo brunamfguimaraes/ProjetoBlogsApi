@@ -13,6 +13,7 @@ const { getAllBlogPost } = require('./controllers/getBlogPost');
 const { getPostById } = require('./controllers/getBlogPost');
 const { editBlogPost } = require('./controllers/editPostController');
 const { deleteBlogPost } = require('./controllers/deletePost');
+const { deleteUser } = require('./controllers/userController');
 
 module.exports = {
   getAllUsers,
@@ -30,5 +31,6 @@ module.exports = {
   getPostById,
   editBlogPost,
   deleteBlogPost,
+  deleteUser,
   
 };
