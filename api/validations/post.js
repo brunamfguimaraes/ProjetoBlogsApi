@@ -1,6 +1,7 @@
-const { Category } = require('../../models/index');
+const { BlogPost, Category } = require('../../models/index');
 
 const BAD_REQUEST = 'bad_request';
+const UNAUTHORIZED = 'unauthorized';
 
 const titleIsValid = (title) => {
   if (!title) {
@@ -40,8 +41,28 @@ const categoryIdsAreValid = async (categoryIds) => {
   return true;
 };
 
+const categoryIdsDoesntExist = (categoryIds) => {
+  if (categoryIds) {
+    return { codeErr: BAD_REQUEST, errMsg: 'Categories cannot be edited' };
+  }
+
+  return true;
+};
+
+const userIsValid = async (postId, user) => {
+  const post = await BlogPost.findByPk(postId);
+
+  if (post.userId !== user.id) {
+    return { codeErr: UNAUTHORIZED, errMsg: 'Unauthorized user' };
+  }
+
+  return true;
+};
+
 module.exports = {
   titleIsValid,
   contentIsValid,
   categoryIdsAreValid,
+  categoryIdsDoesntExist,
+  userIsValid,
 };

@@ -31,8 +31,20 @@ const getPostById = async (req, res, next) => {
   res.status(StatusCodes.OK).json(post);
 };
 
+const editPost = async (req, res, next) => {
+  const postId = req.params.id;
+
+  const editedPost = await BlogPost.editPost(req.body, postId, req.user);
+  if (editedPost.errMsg) {
+    return next({ codeErr: editedPost.codeErr, errMsg: editedPost.errMsg });
+  }
+
+  res.status(StatusCodes.OK).json(editedPost);
+};
+
 module.exports = {
   addNewPost,
   getAllPosts,
   getPostById,
+  editPost,
 };

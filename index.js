@@ -26,6 +26,8 @@ app.post('/categories', validateToken, Categories.addNewCategory);
 app.get('/post', validateToken, BlogPost.getAllPosts);
 app.get('/post/:id', validateToken, BlogPost.getPostById);
 app.post('/post', validateToken, BlogPost.addNewPost);
+app.put('/post/:id', validateToken, BlogPost.editPost);
+
 app.get('/user', validateToken, User.getAllUsers);
 app.get('/user/:id', validateToken, User.getUserById);
 app.post('/user', User.registerNewUser);
