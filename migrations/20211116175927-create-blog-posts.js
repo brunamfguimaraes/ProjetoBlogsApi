@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         onUpdate: 'CASCADE',
