@@ -2,7 +2,7 @@ const express = require('express');
 
 const userController = require('./controllers/users');
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 const {
   validateDisplayName,
