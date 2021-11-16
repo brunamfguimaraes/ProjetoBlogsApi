@@ -136,9 +136,28 @@ const editPost = async (body, postId, user) => {
   }
 };
 
+const deletePost = async (postId, user) => {
+  const post = await BlogPost.findByPk(postId);
+  if (!post) return { codeErr: NOT_FOUND, errMsg: 'Post does not exist' };
+
+  const validUser = await userIsValid(postId, user);
+  if (validUser.errMsg) {
+    return { codeErr: validUser.codeErr, errMsg: validUser.errMsg };
+  }
+
+  try {
+    await BlogPost.destroy({ where: { id: postId } });
+
+    return true;
+  } catch (error) {
+    return { errMsg: error.message };
+  }
+};
+
 module.exports = {
   addNewPost,
   getAllPosts,
   getPostById,
   editPost,
+  deletePost,
 };
