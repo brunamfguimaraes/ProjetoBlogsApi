@@ -15,6 +15,7 @@ const validateToken = require('../middlewares/validateToken');
 const HTTP = {
   Ok: 200,
   Created: 201,
+  NotFound: 404,
   Conflict: 409,
 };
 
@@ -26,6 +27,16 @@ const router = express.Router();
 router.get('/', validateToken, async (_req, res) => {
   const users = await User.findAll();
   return res.status(200).json(users);
+});
+
+router.get('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findOne({ where: { id } });
+
+  if (!user) return res.status(HTTP.NotFound).json({ message: 'User does not exist' });
+
+  return res.status(HTTP.Ok).json(user);
 });
 
 router.post('/', validateDisplayName, validateEmail, validatePassword, async (req, res) => {
