@@ -1,0 +1,5 @@
+npx sequelize-cli init
+
+npx sequelize model:generate --name user --attributes displayName:STRING,email:STRING,password:STRING,image:STRING
+
+npx sequelize model:generate --name categorie --attributes name:STRING
