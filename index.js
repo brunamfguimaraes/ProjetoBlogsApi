@@ -6,12 +6,6 @@ const loginController = require('./controllers/login');
 const port = process.env.PORT || 3000;
 
 const {
-  validateDisplayName,
-  validateEmail,
-  validatePassword, 
-} = require('./middlewares/validateNewUser');
-
-const {
   validateWithout,
   validateEmpty, 
 } = require('./middlewares/validateLogin');
@@ -24,7 +18,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/user', validateDisplayName, validateEmail, validatePassword, userController);
+app.use('/user', userController);
 
 app.use('/login', validateWithout, validateEmpty, loginController);
 
