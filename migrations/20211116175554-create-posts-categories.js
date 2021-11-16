@@ -11,10 +11,12 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'category_id',
       },
       postId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'post_id',
       }
     });
   },

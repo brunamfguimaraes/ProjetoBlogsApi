@@ -1,5 +1,7 @@
 npx sequelize-cli init
 
+npx sequelize db:create
+
 npx sequelize model:generate --name User --attributes displayName:STRING,email:STRING,password:STRING,image:STRING
 
 npx sequelize model:generate --name Categorie --attributes name:STRING
