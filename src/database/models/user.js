@@ -6,7 +6,6 @@ const User = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
   }, {
     timestamps: false,
-    underscored: true,
   });
 
   user.associate = (models) => {

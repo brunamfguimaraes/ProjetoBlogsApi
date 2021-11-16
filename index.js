@@ -10,7 +10,7 @@ app.get('/', (request, response) => {
 });
 
 app.get('/user', async (request, response) => {
-    const user = await User.findOne({ id: 1 });
+    const user = await User.findOne({ where: { id: 1 } });
   
     response.status(200).send(user);
 });

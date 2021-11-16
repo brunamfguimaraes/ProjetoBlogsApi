@@ -4,7 +4,6 @@ const PostsCategories = (sequelize, DataTypes) => {
     postId: DataTypes.INTEGER,
   }, {
     timestamps: false,
-    underscored: true,
   });
   return postsCategories;
 };
