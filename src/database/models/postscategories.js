@@ -1,5 +1,5 @@
 const PostsCategories = (sequelize, DataTypes) => {
-  const postsCategories = sequelize.init({
+  const postsCategories = sequelize.define('PostsCategories', {
     categoryId: DataTypes.INTEGER,
     postId: DataTypes.INTEGER,
   }, {
