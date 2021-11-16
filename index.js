@@ -1,9 +1,16 @@
-import userController from './controllers/users';
-
 const express = require('express');
 
-const app = express();
+const userController = require('./controllers/users');
 
+const port = process.env.PORT || 3001;
+
+const {
+  validateDisplayName,
+  validateEmail,
+  validatePassword, 
+} = require('./middlewares/validateNewUser');
+
+const app = express();
 app.use(express.json());
 
 // não remova esse endpoint, e para o avaliador funcionar
@@ -11,6 +18,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/user', userController);
+app.use('/user', validateDisplayName, validateEmail, validatePassword, userController);
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+app.listen(port, () => console.log(`ouvindo porta ${port}`));
