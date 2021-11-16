@@ -5,3 +5,5 @@ npx sequelize model:generate --name User --attributes displayName:STRING,email:S
 npx sequelize model:generate --name Categorie --attributes name:STRING
 
 npx sequelize model:generate --name PostsCategories --attributes categoryId:INTEGER,postId:INTEGER
+
+npx sequelize model:generate --name BlogPosts --attributes title:STRING,content:STRING,userId:INTEGER,published:DATE,updated:DATE
