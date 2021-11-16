@@ -2,7 +2,7 @@ const express = require('express');
 const validateToken = require('../validations/validateJWT');
 
 const router = express.Router();
-// const { User } = require('../models');
+
 const NewUser = require('../services/userService');
 
 router.post('/', async (req, res) => {
@@ -41,6 +41,18 @@ router.get('/:id', validateToken, async (req, res) => {
     }
 
     return res.status(200).json(userById);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
+
+router.delete('/me', validateToken, async (req, res) => {
+  try {
+    const { id } = req.user;
+    const deleteUser = await NewUser.deleteUser(id);
+
+    return res.status(204).json(deleteUser);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: 'Something went wrong' });
