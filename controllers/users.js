@@ -10,10 +10,11 @@ const {
   validatePassword, 
 } = require('../middlewares/validateNewUser');
 
+const validateToken = require('../middlewares/validateToken');
+
 const HTTP = {
   Ok: 200,
   Created: 201,
-  Unauthorized: 401,
   Conflict: 409,
 };
 
@@ -22,24 +23,9 @@ const jwtConfig = { expiresIn: '1d', algorithm: 'HS256' };
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const { authorization } = req.headers; let user;
-
-  if (!authorization) return res.status(HTTP.Unauthorized).json({ message: 'Token not found' });
-  try {
-    const decoded = jwt.verify(authorization, secret);
-
-    if (decoded.data) {
-      user = await User.findOne({ where: { email: decoded.data } });
-    }
-
-    if (user) {
-      const users = await User.findAll();
-      return res.status(HTTP.Ok).json(users);
-    }
-  } catch (_e) {
-    return res.status(HTTP.Unauthorized).json({ message: 'Expired or invalid token' });
-  }
+router.get('/', validateToken, async (_req, res) => {
+  const users = await User.findAll();
+  return res.status(200).json(users);
 });
 
 router.post('/', validateDisplayName, validateEmail, validatePassword, async (req, res) => {
