@@ -32,8 +32,18 @@ const getUserById = async (req, res, next) => {
 };
 // GET user/:id
 
+const deleteMe = async ({ user }, res, next) => {
+  const deleted = await User.deleteMe(user);
+  if (deleted.errMsg) {
+    return next({ errMsg: deleted.errMsg });
+  }
+
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
 module.exports = {
   registerNewUser,
   getAllUsers,
   getUserById,
+  deleteMe,
 };
