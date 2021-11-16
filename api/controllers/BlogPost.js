@@ -20,7 +20,19 @@ const getAllPosts = async (req, res, next) => {
   res.status(StatusCodes.OK).json(allPosts);
 };
 
+const getPostById = async (req, res, next) => {
+  const { id } = req.params;
+
+  const post = await BlogPost.getPostById(id);
+  if (post.errMsg) {
+    return next({ codeErr: post.codeErr, errMsg: post.errMsg });
+  }
+
+  res.status(StatusCodes.OK).json(post);
+};
+
 module.exports = {
   addNewPost,
   getAllPosts,
+  getPostById,
 };
