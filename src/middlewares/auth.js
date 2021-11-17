@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ error: 'Token not found' });
+    return res.status(401).json({ message: 'Token not found' });
   }
 
   try {
@@ -12,6 +12,6 @@ module.exports = async (req, res, next) => {
 
     next();
   } catch (err) {
-    return res.status(401).json({ error: { message: err.message } });
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };

@@ -68,6 +68,8 @@ const findUserByEmail = async (email) => {
   return user;
 };
 
+const findAllUsers = async () => User.findAll();
+
 module.exports = {
   validName,
   validEmail,
@@ -75,4 +77,5 @@ module.exports = {
   emailAlreadyInUse,
   createNewUser,
   findUserByEmail,
+  findAllUsers,
 };
