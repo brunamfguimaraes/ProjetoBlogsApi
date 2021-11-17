@@ -5,7 +5,7 @@ const config = require('../database/config/config');
 const sequelize = new Sequelize(config.development);
 
 const validName = (name) => {
-  if (name.lenght < 8) {
+  if (name.length < 8) {
     return {
       message: '"displayName" length must be at least 8 characters long',
     };
