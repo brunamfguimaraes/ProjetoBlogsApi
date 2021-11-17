@@ -6,7 +6,8 @@ const BlogPost = (sequelize, DataTypes) => {
     published: DataTypes.DATE,
     updated: DataTypes.DATE,
   }, {
-    timestamps: false,
+    updatedAt: 'updated',
+    createdAt: 'published',
   });
 
   blogPosts.associate = (models) => {
