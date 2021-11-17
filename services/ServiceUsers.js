@@ -30,7 +30,7 @@ const login = async ({ email, password }) => {
     throw invalidData('Invalid fields', StatusCodes.BAD_REQUEST);
   }
 
-  const { password: passBD, ...userWithoutPassword } = findUserByEmail;
+  const { password: passBD, ...userWithoutPassword } = findUserByEmail.dataValues;
 
   const token = await createToken(userWithoutPassword);
 
@@ -43,8 +43,17 @@ const getAll = async () => {
   return getAllUsers;
 };
 
+const getUserById = async (id) => {
+  const user = await RepositoryUsers.getUserById(id);
+
+  if (!user) throw invalidData('User does not exist', StatusCodes.NOT_FOUND);
+
+  return user;
+};
+
 module.exports = {
   create,
   login,
   getAll,
+  getUserById,
 };
