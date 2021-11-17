@@ -1,7 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const Auth = require('../middlewares/auth');
-const { createNewPost, lookForNullPostParams, getAllPosts, getPostById } = require('../service/postService.js');
+const { createNewPost, lookForNullPostParams, 
+  getAllPosts, getPostById } = require('../service/postService.js');
 
 const PostController = express.Router();
 
