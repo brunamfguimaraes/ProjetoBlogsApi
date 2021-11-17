@@ -75,8 +75,19 @@ const getAllPosts = async () => BlogPost.findAll({
   ],
 });
 
+const getPostById = async (id) => BlogPost.findOne({
+  where: { id },
+  include: [
+    { model: User, as: 'user' },
+    // https://sequelize.org/master/manual/advanced-many-to-many.html
+    // Specifying attributes from the through table
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
+
 module.exports = {
   createNewPost,
   lookForNullPostParams,
   getAllPosts,
+  getPostById,
 };

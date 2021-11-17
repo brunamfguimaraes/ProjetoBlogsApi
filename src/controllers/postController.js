@@ -1,9 +1,22 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const Auth = require('../middlewares/auth');
-const { createNewPost, lookForNullPostParams, getAllPosts } = require('../service/postService.js');
+const { createNewPost, lookForNullPostParams, getAllPosts, getPostById } = require('../service/postService.js');
 
 const PostController = express.Router();
+
+PostController.get('/:id', Auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await getPostById(id);
+    if (!post) {
+      return res.status(404).send({ message: 'Post does not exist' });  
+    }
+    return res.status(200).send(post);
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+});
 
 PostController.get('/', Auth, async (_req, res) => {
   try {
