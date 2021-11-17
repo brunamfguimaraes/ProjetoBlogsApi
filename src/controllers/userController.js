@@ -12,7 +12,9 @@ UserRouter.post('/', async (req, res) => {
     const user = await createNewUser(displayName, email, password, image);
 
     if (user.errorMessage) {
-      return res.status(400).send(user.errorMessage);
+      const { errorMessage: { message, errorStatus } } = user;
+      const sendStatus = errorStatus || 400;
+      return res.status(sendStatus).send({ message });
     }
 
     const token = await generateJwtToken(user.dataValues);

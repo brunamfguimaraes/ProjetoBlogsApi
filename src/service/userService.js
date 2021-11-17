@@ -20,9 +20,10 @@ const validEmail = (email) => {
 };
 
 const emailAlreadyInUse = async (email) => {
+  if (!email) return { message: '"email" is required' };
   const user = await User.findOne({ where: { email } });
 
-  if (user) return { message: 'User already registered' };
+  if (user) return { message: 'User already registered', errorStatus: 409 };
 };
 
 const validPassword = (password) => {
@@ -36,9 +37,9 @@ const validPassword = (password) => {
 
 const isUserFieldsInvalid = async (displayName, email, password) => {
   const dataCheck = await Promise.all([
+    validEmail(email),
     emailAlreadyInUse(email),
     validName(displayName),
-    validEmail(email),
     validPassword(password),
   ]);
  
