@@ -70,6 +70,12 @@ const findUserByEmail = async (email) => {
 
 const findAllUsers = async () => User.findAll();
 
+const findUserById = async (id) => {
+  const user = User.findOne({ where: { id } });
+
+  return user;
+};
+
 module.exports = {
   validName,
   validEmail,
@@ -78,4 +84,5 @@ module.exports = {
   createNewUser,
   findUserByEmail,
   findAllUsers,
+  findUserById,
 };
