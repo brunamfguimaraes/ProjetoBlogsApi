@@ -7,7 +7,7 @@ const sequelize = new Sequelize(config.development);
 const validName = (name) => {
   if (name.lenght < 8) {
     return {
-      message: 'name must have at least 8 characters',
+      message: '"displayName" length must be at least 8 characters long',
     };
   }
 };
@@ -15,20 +15,21 @@ const validName = (name) => {
 const validEmail = (email) => {
   // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email) return { message: 'email must be filled' };
-  if (!re.test(email)) return { message: 'invalid email format' };
+  if (!email) return { message: '"email" is required' };
+  if (!re.test(email)) return { message: '"email" must be a valid email' };
 };
 
 const emailAlreadyInUse = async (email) => {
   const user = await User.findOne({ where: { email } });
 
-  if (user) return { message: 'email already in use' };
+  if (user) return { message: 'User already registered' };
 };
 
 const validPassword = (password) => {
-  if (password.toString().length < 6) {
+  if (!password) return { message: '"password" is required' };
+  if (password.toString().length !== 6) {
     return { 
-      message: 'Password must have at least 6 characters', 
+      message: '"password" length must be 6 characters long', 
     }; 
   }
 };
