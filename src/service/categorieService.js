@@ -1,21 +1,21 @@
 const Sequelize = require('sequelize');
-const { Categorie } = require('../database/models');
+const { Category } = require('../database/models');
 const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
 
 const createNewCategorie = async (name) => {
   const newCategory = await sequelize.transaction(async (t) => {
-    const categorie = await Categorie.create({ name }, 
+    const category = await Category.create({ name }, 
       { transaction: t });
 
-    return categorie;
+    return category;
   });
 
   return newCategory;
 };
 
-const findAllCategories = async () => Categorie.findAll();
+const findAllCategories = async () => Category.findAll();
 
 module.exports = {
   createNewCategorie,
