@@ -60,10 +60,17 @@ const createNewUser = async (displayName, email, password, image) => {
   return result;
 };
 
+const findUserByEmail = async (email) => {
+  const user = User.findOne({ where: { email } });
+
+  return user;
+};
+
 module.exports = {
   validName,
   validEmail,
   validPassword,
   emailAlreadyInUse,
   createNewUser,
+  findUserByEmail,
 };
