@@ -1,4 +1,5 @@
 const express = require('express');
+const { generateJwtToken } = require('../service/jwtService');
 
 const { createNewUser } = require('../service/userService');
 
@@ -8,13 +9,15 @@ UserRouter.post('/', async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
 
-    const { errorMessage } = await createNewUser(displayName, email, password, image);
+    const user = await createNewUser(displayName, email, password, image);
 
-    if (errorMessage) {
-      return res.status(400).send(errorMessage);
+    if (user.errorMessage) {
+      return res.status(400).send(user.errorMessage);
     }
+
+    const token = await generateJwtToken(user.dataValues);
     
-    return res.status(201).send({ message: 'Usuário criado com sucesso' });
+    return res.status(201).send({ token });
   } catch (e) {
     res.status(500).send({ message: e.message });
   }
