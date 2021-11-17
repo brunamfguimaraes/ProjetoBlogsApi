@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { BlogPost, Category, PostCategory } = require('../database/models');
+const { BlogPost, Category, PostCategory, User } = require('../database/models');
 const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
@@ -66,7 +66,17 @@ const lookForNullPostParams = (title, content, categoryIds) => {
   }
 };
 
+const getAllPosts = async () => BlogPost.findAll({
+  include: [
+    { model: User, as: 'user' },
+    // https://sequelize.org/master/manual/advanced-many-to-many.html
+    // Specifying attributes from the through table
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
+
 module.exports = {
   createNewPost,
   lookForNullPostParams,
+  getAllPosts,
 };

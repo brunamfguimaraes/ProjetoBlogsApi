@@ -1,9 +1,19 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const Auth = require('../middlewares/auth');
-const { createNewPost, lookForNullPostParams } = require('../service/postService.js');
+const { createNewPost, lookForNullPostParams, getAllPosts } = require('../service/postService.js');
 
 const PostController = express.Router();
+
+PostController.get('/', Auth, async (_req, res) => {
+  try {
+    const allPosts = await getAllPosts();
+
+    return res.status(200).send(allPosts);
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+});
 
 PostController.post('/', Auth, async (req, res) => {
   try {
