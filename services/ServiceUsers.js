@@ -23,6 +23,21 @@ const create = async ({ displayName, email, password, image }) => {
   return token;
 };
 
+const login = async ({ email, password }) => {
+  const findUserByEmail = await RepositoryUsers.getByEmail({ email });
+
+  if (!findUserByEmail || findUserByEmail.password !== password) {
+    throw invalidData('Invalid fields', StatusCodes.BAD_REQUEST);
+  }
+
+  const { password: passBD, ...userWithoutPassword } = findUserByEmail;
+
+  const token = await createToken(userWithoutPassword);
+
+  return { token };
+};
+
 module.exports = {
   create,
+  login,
 };
