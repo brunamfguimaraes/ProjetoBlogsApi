@@ -1,27 +1,30 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const Auth = require('../middlewares/auth');
-const { createNewPost } = require('../service/postService.js');
+const { createNewPost, lookForNullPostParams } = require('../service/postService.js');
 
 const PostController = express.Router();
 
 PostController.post('/', Auth, async (req, res) => {
   try {
     const { title, content, categoryIds } = req.body;
-    if (!title) {
-      return res.status(400).send({ message: '"title" is required' });
+    const token = req.headers.authorization;
+
+    const errorMessage = lookForNullPostParams(title, content, categoryIds);
+
+    if (errorMessage) {
+      return res.status(400).send(errorMessage);
     }
 
-    if (!content) {
-      return res.status(400).send({ message: '"content" is required' });
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const post = await createNewPost(user.data.id, title, content, categoryIds);
+
+    if (post.message) {
+      return res.status(400).send({ message: post.message });
     }
 
-    if (!categoryIds) {
-      return res.status(400).send({ message: '"categoryIds" not found' });
-    }
-
-    const categorie = await createNewPost(title, content, categoryIds);
-
-    return res.status(201).send(categorie);
+    return res.status(201).send(post);
   } catch (e) {
     res.status(500).send({ message: e.message });
   }

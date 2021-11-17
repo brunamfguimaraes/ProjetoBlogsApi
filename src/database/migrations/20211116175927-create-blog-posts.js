@@ -19,12 +19,14 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'published'
+        field: 'published',
+        defaultValue: Sequelize.fn('now'),        
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'updated'
+        field: 'updated',
+        defaultValue: Sequelize.fn('now'),
       },
       userId: {
         type: Sequelize.INTEGER,
