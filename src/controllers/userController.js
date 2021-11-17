@@ -1,7 +1,7 @@
 const express = require('express');
 const { generateJwtToken } = require('../service/jwtService');
 const Auth = require('../middlewares/auth');
-const { createNewUser, findAllUsers } = require('../service/userService');
+const { createNewUser, findAllUsers, findUserById } = require('../service/userService');
 
 const UserRouter = express.Router();
 
@@ -29,6 +29,18 @@ UserRouter.get('/', Auth, async (_req, res) => {
   const users = await findAllUsers();
   
   return res.status(200).json(users);
+});
+
+UserRouter.get('/:id', Auth, async (req, res) => {
+  const { id } = req.params;
+
+  const user = await findUserById(id);
+  
+  if (!user) {
+    return res.status(404).send({ message: 'User does not exist' });
+  }
+
+  return res.status(200).json(user);
 });
 
 module.exports = UserRouter;
