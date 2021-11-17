@@ -13,7 +13,7 @@ CategorieController.post('/', Auth, async (req, res) => {
 
     const categorie = await createNewCategorie(name);
 
-    return res.status(200).send({ categorie });
+    return res.status(201).send(categorie);
   } catch (e) {
     res.status(500).send({ message: e.message });
   }
