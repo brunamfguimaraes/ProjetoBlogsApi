@@ -1,9 +1,24 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const { generateJwtToken } = require('../service/jwtService');
 const Auth = require('../middlewares/auth');
-const { createNewUser, findAllUsers, findUserById } = require('../service/userService');
+const { createNewUser, findAllUsers, findUserById, deleteUser } = require('../service/userService');
 
 const UserRouter = express.Router();
+
+UserRouter.delete('/me', Auth, async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    await deleteUser(user.data.id);
+
+    return res.status(204).send();
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+});
 
 UserRouter.post('/', async (req, res) => {
   try {
