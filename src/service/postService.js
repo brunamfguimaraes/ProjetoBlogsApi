@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { BlogPost, Category } = require('../database/models');
+const { BlogPost, Category, PostCategory } = require('../database/models');
 const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
@@ -10,6 +10,22 @@ const verifyCategories = async (arrayOfCategoryIds) => {
     );
 
   if (allCategoriesExists.includes(null)) return { message: '"categoryIds" not found' };
+};
+
+const addIntoPostCategories = async (postId, categories) => {
+  const result = await Promise.all(categories.map(async (categoryId) => {
+    const insertedCategorie = await sequelize.transaction(async (t) => {
+      const newPostCategorie = await PostCategory.create({
+        postId, categoryId }, 
+        { transaction: t });
+  
+      return newPostCategorie;
+    });
+
+    return insertedCategorie;
+  }));
+
+  return result;
 };
 
 const createNewPost = async (userId, title, content, categoryIds) => {
@@ -23,11 +39,12 @@ const createNewPost = async (userId, title, content, categoryIds) => {
     }
 
     const newPost = await sequelize.transaction(async (t) => {
-      const post = await BlogPost.create({ title, content, userId }, 
-        { transaction: t });
-
+      const post = await BlogPost.create({
+        title, content, userId }, { transaction: t });
       return post;
     });
+
+    await addIntoPostCategories(newPost.dataValues.id, categoryIds);
 
     return newPost;
   } catch (e) {
