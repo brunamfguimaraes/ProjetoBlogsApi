@@ -2,9 +2,29 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const Auth = require('../middlewares/auth');
 const { createNewPost, lookForNullPostParams, 
-  getAllPosts, getPostById, editPost } = require('../service/postService.js');
+  getAllPosts, getPostById, editPost, deletePost } = require('../service/postService.js');
 
 const PostController = express.Router();
+
+PostController.delete('/:id', Auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const post = await deletePost(id, user.data.id);
+
+    if (post.message) {
+      const { status, message } = post;
+      return res.status(status).send({ message });  
+    }
+
+    return res.status(204).send();
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+});
 
 PostController.put('/:id', Auth, async (req, res) => {
   try {

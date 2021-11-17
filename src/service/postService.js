@@ -109,10 +109,29 @@ const editPost = async (userId, postId, title, content) => {
   return updatedPost;
 };
 
+const deletePost = async (postId, userId) => {
+  const currentPost = await getPostById(postId);
+
+  if (!currentPost) return { message: 'Post does not exist', status: 404 };
+
+  if (userId !== currentPost.userId) return { message: 'Unauthorized user', status: 401 };
+
+  const removedPost = await sequelize.transaction(async (t) => {
+    const post = await BlogPost.destroy(
+      { where: { id: postId } }, 
+      { transaction: t },
+    );
+    return post;
+  });
+    
+  return removedPost;
+};
+
 module.exports = {
   createNewPost,
   lookForNullPostParams,
   getAllPosts,
   getPostById,
   editPost,
+  deletePost,
 };
