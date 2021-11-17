@@ -85,9 +85,34 @@ const getPostById = async (id) => BlogPost.findOne({
   ],
 });
 
+const editPost = async (userId, postId, title, content) => {
+  if (!title) return { message: '"title" is required', status: 400 };
+  if (!content) return { message: '"content" is required', status: 400 };
+
+  const currentPost = await getPostById(postId);
+
+  if (userId !== currentPost.userId) return { message: 'Unauthorized user', status: 401 };
+
+  const updatedPost = await sequelize.transaction(async (t) => {
+    const post = await BlogPost.update(
+      { title, content },
+      { where: { id: postId } }, 
+      { transaction: t },
+    );
+    return post;
+  }).then(() => BlogPost.findOne({
+    where: { id: postId },
+    attributes: { exclude: ['id', 'published', 'updated'] },
+    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+    }));
+    
+  return updatedPost;
+};
+
 module.exports = {
   createNewPost,
   lookForNullPostParams,
   getAllPosts,
   getPostById,
+  editPost,
 };
