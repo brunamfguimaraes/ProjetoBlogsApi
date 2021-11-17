@@ -26,7 +26,18 @@ const login = async (req, res, next) => {
   }
 };
 
+const getAll = async (_req, res, next) => {
+  try {
+    const getAllUsers = await ServiceUsers.getAll();
+
+    return res.status(StatusCodes.OK).json(getAllUsers);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   login,
+  getAll,
 }; 

@@ -37,7 +37,14 @@ const login = async ({ email, password }) => {
   return { token };
 };
 
+const getAll = async () => {
+  const getAllUsers = await RepositoryUsers.getAll();
+
+  return getAllUsers;
+};
+
 module.exports = {
   create,
   login,
+  getAll,
 };
