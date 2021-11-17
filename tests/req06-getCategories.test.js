@@ -3,14 +3,14 @@ const shell = require('shelljs');
 
 const url = 'http://localhost:3000';
 
-describe('3 - Sua aplicação deve ter o endpoint GET `/user`', () => {
+describe('6 - Sua aplicação deve ter o endpoint GET `/categories`', () => {
   beforeEach(() => {
     shell.exec('npx sequelize-cli db:drop');
     shell.exec('npx sequelize-cli db:create && npx sequelize-cli db:migrate $');
     shell.exec('npx sequelize-cli db:seed:all $');
   });
 
-  it('Será validado que é possível listar todos os usuários', async () => {
+  it('Será validado que é possível listar todas as categorias com sucesso', async () => {
     let token;
     await frisby
       .post(`${url}/login`,
@@ -34,22 +34,19 @@ describe('3 - Sua aplicação deve ter o endpoint GET `/user`', () => {
           },
         },
       })
-      .get(`${url}/user`)
+      .get(`${url}/categories`)
       .expect('status', 200)
-      .then((responseSales) => {
-        const { json } = responseSales;
-        const firstUser = json[0];
-        const secondUser = json[1];
-        expect(firstUser.displayName).toBe('Lewis Hamilton');
-        expect(firstUser.email).toBe('lewishamilton@gmail.com');
-        expect(firstUser.image).toBe('https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg');
-        expect(secondUser.displayName).toBe('Michael Schumacher');
-        expect(secondUser.email).toBe('MichaelSchumacher@gmail.com');
-        expect(secondUser.image).toBe('https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg');
+      .then((response) => {
+        const { body } = response;
+        const result = JSON.parse(body);
+        expect(result[0].id).toBe(1);
+        expect(result[0].name).toBe('Inovação');
+        expect(result[1].id).toBe(2);
+        expect(result[1].name).toBe('Escola');
       });
   });
 
-  it('Será validado que não é possível listar usuários sem o token na requisição', async () => {
+  it('Será validado que não é possível listar as categorias sem o token', async () => {
     await frisby
       .setup({
         request: {
@@ -59,29 +56,30 @@ describe('3 - Sua aplicação deve ter o endpoint GET `/user`', () => {
           },
         },
       })
-      .get(`${url}/user`)
+      .get(`${url}/categories`)
       .expect('status', 401)
-      .then((responseSales) => {
-        const { json } = responseSales;
+      .then((response) => {
+        const { json } = response;
         expect(json.message).toBe('Token not found');
       });
   });
 
-  it('Será validado que não é possível listar usuários com o token inválido', async () => {
+  it('Será validado que não é possível listar as categorias com o token inválido', async () => {
     await frisby
       .setup({
         request: {
           headers: {
-            Authorization: 'mo3183bfbahaf',
+            Authorization: 'kwngu4425h2',
             'Content-Type': 'application/json',
           },
         },
       })
-      .get(`${url}/user`)
+      .get(`${url}/categories`)
       .expect('status', 401)
-      .then((responseSales) => {
-        const { json } = responseSales;
+      .then((response) => {
+        const { json } = response;
         expect(json.message).toBe('Expired or invalid token');
       });
   });
+
 });

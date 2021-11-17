@@ -15,6 +15,9 @@ const createNewCategorie = async (name) => {
   return newCategory;
 };
 
+const findAllCategories = async () => Categorie.findAll();
+
 module.exports = {
   createNewCategorie,
+  findAllCategories,
 };
