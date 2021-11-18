@@ -16,8 +16,7 @@ const createUser = async (req, res) => {
     await User.create({ displayName, email, password, image });
     const token = jwt.sign({ email }, SECRET, jwtConfig);
     res.status(201).json(token);
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
     res.status(500).json('Erro ao criar usuário');
   }
 };
