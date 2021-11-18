@@ -22,7 +22,16 @@ const getAll = async () => {
   return getAllBlogPost;
 };
 
+const getPostById = async (id) => {
+  const post = await RepositoryPosts.getPostById(id);
+
+  if (!post) throw invalidData('Post does not exist', StatusCodes.NOT_FOUND);
+
+  return post;
+};
+
 module.exports = {
   create,
   getAll,
+  getPostById,
 }; 
