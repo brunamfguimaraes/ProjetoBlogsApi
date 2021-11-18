@@ -19,6 +19,13 @@ const checkContent = (req, res, next) => {
     next();
 };
 
+const getOne = async (req, res) => {
+    const { id } = req.params;
+    const result = await postServices.getOne(id);
+    if (!result) return res.status(404).json({ message: 'Post does not exist' });
+    res.status(200).json(result);
+};
+
 const checkCategoryById = async (req, res, next) => {
     const { categoryIds } = req.body;
     if (!categoryIds || categoryIds.length === 0) {
@@ -43,4 +50,5 @@ module.exports = {
     checkTitle,
     createPost,
     getAll,
+    getOne,
 };
