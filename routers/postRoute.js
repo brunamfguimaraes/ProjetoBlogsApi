@@ -19,5 +19,9 @@ router.get('/',
 router.get('/:id',
     validateJWT,
     postController.getOne);
-    
+
+router.put('/:id',
+    validateJWT,
+    postController.updatePost);
+
 module.exports = router;

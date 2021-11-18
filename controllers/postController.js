@@ -44,6 +44,26 @@ const getAll = async (req, res) => {
     return res.status(200).json(result);
 };
 
+const updatePost = async (req, res) => {
+    try {
+        const { title, content, categoryIds } = req.body;
+        const { id: postId } = req.params;
+        const { userId } = req;
+  
+        const result = await postServices.updatePost(
+            { title, content, postId, userId, categoryIds },
+        );
+  
+        if (result.message && result.unauthorized) return res.status(401).json(result);
+        if (result.message) return res.status(400).json(result);
+  
+        return res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });  
+    }
+};
+
 module.exports = {
     checkContent,
     checkCategoryById,
@@ -51,4 +71,5 @@ module.exports = {
     createPost,
     getAll,
     getOne,
+    updatePost,
 };

@@ -1,6 +1,7 @@
 const { BlogPost } = require('../models');
 const { Category } = require('../models');
 const { User } = require('../models');
+const { checkUpdateEntries } = require('../middlewares/postValidations');
 
 const createPost = async (post, id) => {
     const postIn = {
@@ -34,9 +35,26 @@ const getOne = async (id) => {
     return result;
 };
 
+const updatePost = async ({ title, content, postId, userId, categoryIds }) => {
+    if (categoryIds) return { message: 'Categories cannot be edited' };
+  
+    const entries = checkUpdateEntries({ title, content });
+    if (entries.message) return entries;
+  
+    const post = await BlogPost.findByPk(postId);
+    if (post.userId !== userId) return { message: 'Unauthorized user', unauthorized: true };
+  
+     await BlogPost.update(
+      { title, content, updated: Date.now() }, { where: { id: postId, userId } },
+    );
+  
+    return getOne(postId);
+  };
+
 module.exports = {
     createPost,
     findCategory,
     getAll,
     getOne,
+    updatePost,
 };
