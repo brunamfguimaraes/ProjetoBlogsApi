@@ -10,7 +10,7 @@ const create = async (req, res, next) => {
 
     return res.status(StatusCodes.CREATED).json({ token });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
 
     return res.status(StatusCodes.OK).json(token);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -47,9 +47,21 @@ const getUserById = async (req, res, next) => {
   }
 };
 
+const deleteMe = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    await ServiceUsers.deleteMe(id);
+
+    return res.status(StatusCodes.NO_CONTENT).end();
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   login,
   getAll,
   getUserById,
+  deleteMe,
 }; 
