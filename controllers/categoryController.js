@@ -11,6 +11,17 @@ const createCategory = async (req, res) => {
     }
 };
 
+const getCategory = async (req, res) => {
+    try {
+        const result = await Category.findAll();
+
+        res.status(200).json(result);
+    } catch (e) {
+        res.status(500).json({ message: 'Erro ao pegar todas as categorias' });
+    }
+};
+
 module.exports = {
     createCategory,
+    getCategory,
 };
