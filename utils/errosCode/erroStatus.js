@@ -51,11 +51,16 @@ module.exports = {
 
   loginInvalid: {
     status: 400,
-    message: 'invalid fields',
+    message: 'Invalid fields',
   },
 
   userNotExist: {
     status: 404,
     message: 'User does not exist',
+  },
+
+  nameNotExist: {
+    status: 400,
+    message: '"name" is required',
   },
 };

@@ -46,10 +46,6 @@ const existById = (data) => {
   if (!data) throw err(erroMessage.USER_NOT_EXIST);
 };
 
-// const image = (imageUser) => {
-
-// };
-
 module.exports = {
   displayNameUser,
   userExist,
@@ -61,5 +57,4 @@ module.exports = {
   passwordIsValid,
   loginInvalid,
   existById,
-  // image,
 };
