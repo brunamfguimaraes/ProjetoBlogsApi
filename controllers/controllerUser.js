@@ -1,9 +1,7 @@
 const service = require('../services/serviceUser');
 
-const create = async (req, res) => {
-  const response = await service.create(req.body);
-  return res.status(200).json(response);
-};
+const create = async (req, res) => service.create(req.body)
+  .then(({ status, data }) => res.status(status).json(data));
 
 module.exports = {
   create,

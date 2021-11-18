@@ -1,13 +1,12 @@
+const httpStatus = require('http-status');
+
 const { User } = require('../models');
-const validateUser = require('../utils/validation/validationUser');
+const validateUser = require('../utils/validation');
 
 const create = async (user) => {
-  validateUser.displayNameUser(user);
-  validateUser.emailUser(user);
-  validateUser.passwordUser(user);
-  await validateUser.userExist(user);
-  const response = await User.create(user);
-  return response;
+  await validateUser(user);
+  const data = await User.create(user);
+  return ({ status: httpStatus.CREATED, data });
 };
 
 module.exports = {
