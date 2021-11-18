@@ -17,4 +17,8 @@ const login = async (email, password) => {
   await user.loginInvalid(email, password);
 };
 
-module.exports = { createUser, login };
+const userExistById = (data) => {
+  user.existById(data);
+};
+
+module.exports = { createUser, login, userExistById };

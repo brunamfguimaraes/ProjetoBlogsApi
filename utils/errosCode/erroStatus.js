@@ -53,4 +53,9 @@ module.exports = {
     status: 400,
     message: 'invalid fields',
   },
+
+  userNotExist: {
+    status: 404,
+    message: 'User does not exist',
+  },
 };

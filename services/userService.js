@@ -16,7 +16,17 @@ const getAll = async () => {
   return ({ status: httpStatus.OK, data });
 };
 
+const getById = async ({ id }) => {
+  const data = await User.findOne({
+    where: { id },
+    attributes: { exclude: ['name', 'password'] },
+  });
+  validate.userExistById(data);
+  return ({ status: httpStatus.OK, data });
+};
+
 module.exports = {
   createUser,
   getAll,
+  getById,
 };

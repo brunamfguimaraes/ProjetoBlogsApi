@@ -42,6 +42,10 @@ const loginInvalid = async (email, password) => {
   if (!response) throw err(erroMessage.LOGIN_INVALID);
 };
 
+const existById = (data) => {
+  if (!data) throw err(erroMessage.USER_NOT_EXIST);
+};
+
 // const image = (imageUser) => {
 
 // };
@@ -56,5 +60,6 @@ module.exports = {
   passwordNotEmpty,
   passwordIsValid,
   loginInvalid,
+  existById,
   // image,
 };

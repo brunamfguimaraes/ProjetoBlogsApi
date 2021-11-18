@@ -6,7 +6,11 @@ const createUser = async (req, res) => service.createUser(req.body)
 const getAll = async (_req, res) => service.getAll()
   .then(({ status, data }) => res.status(status).json(data));
 
+const getById = async (req, res) => service.getById(req.params)
+  .then(({ status, data }) => res.status(status).json(data));
+
 module.exports = {
   createUser,
   getAll,
+  getById,
 };

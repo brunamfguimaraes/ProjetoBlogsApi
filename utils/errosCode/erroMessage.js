@@ -10,4 +10,5 @@ module.exports = {
   EMAIL_EMPTY: 'emailEmpty',
   PASSWORD_EMPTY: 'passwordEmpty',
   LOGIN_INVALID: 'loginInvalid',
+  USER_NOT_EXIST: 'userNotExist',
 };
