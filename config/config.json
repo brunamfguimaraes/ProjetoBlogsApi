@@ -3,7 +3,7 @@
     "username": "root",
     "password": 1234,
     "database": "blogs_api",
-    "host": "blogs_api",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {

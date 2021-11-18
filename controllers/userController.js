@@ -9,6 +9,7 @@ const jwtConfig = {
 
 const checkDisplayName = async (req, res, next) => {
     const { displayName } = req.body;
+    console.log('entrei');
     const isValid = await userServices.checkDisplayName(displayName);
     if (!isValid) {
         return res.status(400).json(

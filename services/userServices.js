@@ -17,6 +17,7 @@ const checkUser = async (email) => {
 };
 
 const addUser = async (user) => {
+  console.log(`aqui: ${user}`);
   await User.create(user);
   return User;
 };

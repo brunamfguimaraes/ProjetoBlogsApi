@@ -1,6 +1,6 @@
 const User = (sequelize, DataTypes) => {
     const UserAtr = sequelize.define('User', {
-        DisplayName: DataTypes.STRING,
+        displayName: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
         image: DataTypes.STRING,

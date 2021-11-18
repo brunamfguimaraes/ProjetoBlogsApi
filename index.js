@@ -5,12 +5,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const user = require('./routers/userRoute');
-
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
+
+const user = require('./routers/userRoute');
 
 app.use('/user', user);
 
