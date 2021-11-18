@@ -31,12 +31,12 @@ module.exports = {
 
   missingToken: {
     status: 401,
-    message: 'missing auth token',
+    message: 'Token not found',
   },
 
   jwtMalformed: {
     status: 401,
-    message: 'jwt malformed',
+    message: 'Expired or invalid token',
   },
 
   emailEmpty: {
