@@ -5,4 +5,6 @@ module.exports = {
   PASSWORD_NOT_EXIST: 'passwordNotExist',
   PASSWORD_DIFFERENT_LENGTH: 'passwordDiferentLength',
   USER_EXIST: 'userExist',
+  MISSING_TOKEN: 'missingToken',
+  JWT_MALFORMED: 'jwtMalformed',
 };

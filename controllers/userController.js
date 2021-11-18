@@ -1,8 +1,8 @@
 const service = require('../services/userService');
 
-const create = async (req, res) => service.create(req.body)
-  .then(({ status, data }) => res.status(status).json(data));
+const createUser = async (req, res) => service.createUser(req.body)
+  .then(({ status, token }) => res.status(status).json({ token }));
 
 module.exports = {
-  create,
+  createUser,
 };

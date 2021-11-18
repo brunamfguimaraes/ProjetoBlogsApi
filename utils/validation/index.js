@@ -1,4 +1,4 @@
-const user = require('./validationUser');
+const user = require('./userValidation');
 
 const createUser = async ({ displayName, email, password }) => {
   user.displayNameUser(displayName);
