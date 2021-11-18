@@ -22,9 +22,15 @@ const addUser = async (user) => {
   return User;
 };
 
+const getAllUsers = async () => {
+  const result = await User.findAll();
+  return result;
+};
+
 module.exports = {
   checkDisplayName,
   checkEmail,
   checkUser,
   addUser,
+  getAllUsers,
 };
