@@ -19,5 +19,6 @@ router.put(
   Middlewares.validJWT,
   ControllerPosts.updatePost,
 );
+router.delete('/:id', Middlewares.validJWT, ControllerPosts.deletePost);
 
 module.exports = router;
