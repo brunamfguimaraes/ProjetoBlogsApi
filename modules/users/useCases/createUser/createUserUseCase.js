@@ -33,21 +33,21 @@ const emailExists = async (email) => {
 };
 
 const createUser = async (data) => {
-  const { displayName, email, password } = data
+  const { displayName, email } = data;
 
   validateUser(data);
 
   await emailExists(email);
 
-  const users = await create( data );
+  const users = await create(data);
 
-  const { id } = users 
+  const { id } = users; 
 
-  const userInformations = { id, displayName, email }
+  const userInformations = { id, displayName, email };
 
   const token = createAuth(userInformations);
 
-  console.log(token)
+  console.log(token);
 
   return { token };
 };
