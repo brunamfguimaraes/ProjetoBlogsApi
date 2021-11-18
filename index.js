@@ -11,7 +11,9 @@ app.get('/', (request, response) => {
 });
 
 const user = require('./routers/userRoute');
+const login = require('./routers/loginRoute');
 
 app.use('/user', user);
+app.use('/login', login);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
