@@ -12,6 +12,11 @@ router.post(
   ControllerPosts.create,
 );
 router.get('/', Middlewares.validJWT, ControllerPosts.getAll);
+router.get(
+  '/search',
+  Middlewares.validJWT,
+  ControllerPosts.getPostsWithSearchTerm,
+);
 router.get('/:id', Middlewares.validJWT, ControllerPosts.getPostById);
 router.put(
   '/:id',

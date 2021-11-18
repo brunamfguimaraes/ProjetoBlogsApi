@@ -64,10 +64,23 @@ const deletePost = async (req, res, next) => {
   }
 };
 
+const getPostsWithSearchTerm = async (req, res, next) => {
+  try {
+    const searchTerm = req.query.q;
+
+    const posts = await ServicePosts.getPostsWithSearchTerm(searchTerm);
+
+    return res.status(StatusCodes.OK).json(posts);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
   updatePost,
   deletePost,
+  getPostsWithSearchTerm,
 };

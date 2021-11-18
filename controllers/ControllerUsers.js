@@ -1,5 +1,4 @@
 const { StatusCodes } = require('http-status-codes');
-
 const ServiceUsers = require('../services/ServiceUsers');
 
 const create = async (req, res, next) => {
@@ -28,9 +27,9 @@ const login = async (req, res, next) => {
 
 const getAll = async (_req, res, next) => {
   try {
-    const user = await ServiceUsers.getAll();
+    const getAllUsers = await ServiceUsers.getAll();
 
-    return res.status(StatusCodes.OK).json(user);
+    return res.status(StatusCodes.OK).json(getAllUsers);
   } catch (error) {
     return next(error);
   }
@@ -39,9 +38,9 @@ const getAll = async (_req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const getAllUsers = await ServiceUsers.getUserById(id);
+    const user = await ServiceUsers.getUserById(id);
 
-    return res.status(StatusCodes.OK).json(getAllUsers);
+    return res.status(StatusCodes.OK).json(user);
   } catch (error) {
     return next(error);
   }
@@ -64,4 +63,4 @@ module.exports = {
   getAll,
   getUserById,
   deleteMe,
-}; 
+};

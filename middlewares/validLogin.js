@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
+
 const invalidData = require('../utils/invalidData');
 
 const validLogin = (req, _res, next) => {

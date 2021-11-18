@@ -1,6 +1,6 @@
+const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
 
-const Joi = require('joi');
 const invalidData = require('../utils/invalidData');
 
 const validCategory = (req, _res, next) => {

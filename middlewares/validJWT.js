@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+
 const invalidData = require('../utils/invalidData');
 const verifyToken = require('./verifyToken');
 
@@ -12,7 +13,6 @@ const validJWT = (req, _res, next) => {
   if (validVerifyToken.message) {
     throw invalidData(validVerifyToken.message, StatusCodes.UNAUTHORIZED);
   }
-
   const { id, displayName, email } = validVerifyToken;
 
   req.user = {

@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
+
 const invalidData = require('../utils/invalidData');
 
 const validUpdatePost = (req, _res, next) => {
@@ -16,4 +17,4 @@ const validUpdatePost = (req, _res, next) => {
   next();
 };
 
-module.exports = validUpdatePost; 
+module.exports = validUpdatePost;
