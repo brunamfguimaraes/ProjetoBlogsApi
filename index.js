@@ -1,6 +1,6 @@
 const express = require('express');
 const erro = require('./middlewares/erro');
-const user = require('./routes/routeUser');
+const route = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,7 +12,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/user', user);
+app.use('/user', route.user);
 
 app.use(erro);
 
