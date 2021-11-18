@@ -1,10 +1,22 @@
 const express = require('express');
 
-const app = express();
+require('dotenv').config();
 
-app.listen(3000, () => console.log('ouvindo porta 3000!'));
+const routes = require('./routes');
+const errorsMiddleware = require('./middlewares/errors');
+
+const app = express();
+app.use(express.json())
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use('/', routes);
+
+app.use(errorsMiddleware);
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`ouvindo porta ${port}!`));
