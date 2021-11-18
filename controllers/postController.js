@@ -32,9 +32,15 @@ const checkCategoryById = async (req, res, next) => {
     next();
 };
 
+const getAll = async (req, res) => {
+    const result = await postServices.getAll();
+    return res.status(200).json(result);
+};
+
 module.exports = {
     checkContent,
     checkCategoryById,
     checkTitle,
     createPost,
+    getAll,
 };
