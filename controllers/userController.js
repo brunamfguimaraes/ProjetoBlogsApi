@@ -91,6 +91,13 @@ const getAllUsers = async (req, res) => {
     return res.status(200).json(result);
 };
 
+const getUserById = async (req, res) => {
+    const { id } = req.params;
+    const result = await userServices.getUserById(id);
+    if (!result) return res.status(404).json({ message: 'User does not exist' });
+    res.status(200).json(result);
+  };
+
 module.exports = {
     checkDisplayName,
     checkEmail,
@@ -99,4 +106,5 @@ module.exports = {
     addUser,
     validToken,
     getAllUsers,
+    getUserById,
 };

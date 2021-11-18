@@ -27,10 +27,16 @@ const getAllUsers = async () => {
   return result;
 };
 
+const getUserById = async (id) => {
+  const result = await User.findOne({ where: { id } });
+  return result;
+};
+
 module.exports = {
   checkDisplayName,
   checkEmail,
   checkUser,
   addUser,
   getAllUsers,
+  getUserById,
 };
