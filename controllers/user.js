@@ -31,17 +31,17 @@ const getUsers = async (_req, res) => {
   }
 };
 
-const getUsersById = async(req, res) => {
+const getUsersById = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await User.findOne({ where: { id } });
 
-    if (!result) return response.status(404).json({ e: 'User does not exist' });
+    if (!result) return res.status(404).json({ e: 'User does not exist' });
     return res.status(200).json(result);
   } catch (e) {
     res.status(500).json({ e: 'Erro ao listar usuário pelo ID' });
   }
-}
+};
 
 module.exports = {
   createUser,
