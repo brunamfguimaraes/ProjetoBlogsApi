@@ -7,4 +7,7 @@ module.exports = {
   USER_EXIST: 'userExist',
   MISSING_TOKEN: 'missingToken',
   JWT_MALFORMED: 'jwtMalformed',
+  EMAIL_EMPTY: 'emailEmpty',
+  PASSWORD_EMPTY: 'passwordEmpty',
+  LOGIN_INVALID: 'loginInvalid',
 };

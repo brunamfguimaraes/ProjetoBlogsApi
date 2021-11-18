@@ -2,12 +2,12 @@ const httpStatus = require('http-status');
 
 const { User } = require('../models');
 const generateToken = require('../utils/token');
-const validateUser = require('../utils/validation');
+const validate = require('../utils/validation');
 
-const createUser = async (user) => {
-  await validateUser.createUser(user);
-  await User.create(user);
-  const token = generateToken(user);
+const createUser = async ({ displayName, email, password, image }) => {
+  await validate.createUser(displayName, email, password);
+  await User.create({ displayName, email, password, image });
+  const token = generateToken(email);
   return ({ status: httpStatus.CREATED, token });
 };
 

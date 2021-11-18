@@ -1,10 +1,20 @@
 const user = require('./userValidation');
 
-const createUser = async ({ displayName, email, password }) => {
+const createUser = async (displayName, email, password) => {
   user.displayNameUser(displayName);
-  user.passwordUser(password);
-  user.emailUser(email);
+  user.emailExist(email);
+  user.emailIsValid(email);
+  user.passwordExist(password);
+  user.passwordIsValid(password);
   await user.userExist(email);
 };
 
-module.exports = { createUser };
+const login = async (email, password) => {
+  user.emailExist(email);
+  user.emailNotEmpty(email);
+  user.passwordExist(password);
+  user.passwordNotEmpty(password);
+  await user.loginInvalid(email, password);
+};
+
+module.exports = { createUser, login };

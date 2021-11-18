@@ -38,4 +38,19 @@ module.exports = {
     status: 401,
     message: 'jwt malformed',
   },
+
+  emailEmpty: {
+    status: 400,
+    message: '"email" is not allowed to be empty',
+  },
+
+  passwordEmpty: {
+    status: 400,
+    message: '"password" is not allowed to be empty',
+  },
+
+  loginInvalid: {
+    status: 400,
+    message: 'invalid fields',
+  },
 };
