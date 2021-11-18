@@ -7,9 +7,12 @@ const displayNameUser = (displayName) => {
   if (!displayName || displayName.length < 8) throw err(erroMessage.DISPLAY_LEAST_CHARACTER);
 };
 
-const emailExistAndNotEmpty = (email) => {
+const emailExist = (email) => {
   if (!email) throw err(erroMessage.EMAIL_NOT_EXIST);
-  if (email.length === 0) throw err(erroMessage.EMAIL_EMPTY);
+};
+
+const emailNotEmpty = (email) => {
+  if (email === '') throw err(erroMessage.EMAIL_EMPTY);
 };
 
 const emailIsValid = (email) => {
@@ -17,9 +20,12 @@ const emailIsValid = (email) => {
   if (!validEmail) throw err(erroMessage.EMAIL_NOT_VALID);
 };
 
-const passwordExistAndNotEmpty = (password) => {
+const passwordExist = (password) => {
   if (!password) throw err(erroMessage.PASSWORD_NOT_EXIST);
-  if (password.length === 0) throw err(erroMessage.PASSWORD_EMPTY);
+};
+
+const passwordNotEmpty = (password) => {
+  if (password === '') throw err(erroMessage.PASSWORD_EMPTY);
 };
 
 const passwordIsValid = (password) => {
@@ -47,9 +53,11 @@ const existById = (data) => {
 module.exports = {
   displayNameUser,
   userExist,
-  emailExistAndNotEmpty,
+  emailExist,
+  emailNotEmpty,
   emailIsValid,
-  passwordExistAndNotEmpty,
+  passwordExist,
+  passwordNotEmpty,
   passwordIsValid,
   loginInvalid,
   existById,

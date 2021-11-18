@@ -10,8 +10,10 @@ const createUser = async (displayName, email, password) => {
 };
 
 const login = async (email, password) => {
-  user.emailExistAndNotEmpty(email);
-  user.passwordExistAndNotEmpty(password);
+  user.emailNotEmpty(email);
+  user.emailExist(email);
+  user.passwordNotEmpty(password);
+  user.passwordExist(password);
   await user.loginInvalid(email, password);
 };
 
