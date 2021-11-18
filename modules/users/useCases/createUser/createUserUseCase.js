@@ -19,27 +19,27 @@ const validateUser = (data) => {
   if (error) {
     const { message } = error.details[0];
     throw errorMessage('BAD_REQUEST', message);
-  };
+  }
 };
 
-const emailExists = async(email) => {
+const emailExists = async (email) => {
   const emailAlreadyExists = await findByEmail(email);
 
-  if(emailAlreadyExists) {
+  if (emailAlreadyExists) {
     throw errorMessage('BAD_REQUEST', 'User already registered');
-  };
+  }
 
   return emailAlreadyExists;
 };
 
-const createUser = async(data) => {
+const createUser = async (data) => {
   const { image, ...user } = data;
 
   validateUser(user);
 
   await emailExists(user.email);
 
-  const users = await create({...data});
+  const users = await create({ ...data });
   const {
     password,
     image: imageDataBase,
@@ -48,8 +48,7 @@ const createUser = async(data) => {
 
   const token = createAuth(userDataBase);
 
-  return { token }
+  return { token };
 };
-
 
 module.exports = createUser;

@@ -1,12 +1,12 @@
 const { User } = require('../../../models');
 
-const create = async(data) => {
+const create = async (data) => {
   const users = await User.create({ ...data });
   
   return users;
 };
 
-const listAllUsers = async() => {
+const listAllUsers = async () => {
   const users = await User.findAll({
     attributes: { exclude: ['password'] },
   });
@@ -14,23 +14,23 @@ const listAllUsers = async() => {
   return users;
 };
 
-const findByEmail = async(email) => {
-  const user = await User.findOne({ where: { email } })
+const findByEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
 
-  return user
-}
+  return user;
+};
 
 const listUserById = async (id) => {
   const user = await User.findOne({ 
-    where: { id }
+    where: { id },
   });
 
   return user;
 };
 
-const deleteUser = async({ email }) => {
+const deleteUser = async ({ email }) => {
   await User.destroy({
-    where: { email: email }
+    where: { email },
   });
 };
 
@@ -39,5 +39,5 @@ module.exports = {
   listAllUsers,
   listUserById,
   deleteUser,
-  findByEmail
-}
+  findByEmail,
+};

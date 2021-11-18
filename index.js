@@ -6,7 +6,7 @@ const routes = require('./routes');
 const errorsMiddleware = require('./middlewares/errors');
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

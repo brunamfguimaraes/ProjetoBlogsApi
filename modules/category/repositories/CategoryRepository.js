@@ -1,13 +1,12 @@
 const { Categories } = require('../../../models');
 
 const create = async (data) => {
-
   const categories = await Categories.create({ ...data });
 
   return categories;
 };
 
-const listAll = async() => {
+const listAll = async () => {
   const categories = await Categories.findAll();
 
   return categories;
@@ -15,5 +14,5 @@ const listAll = async() => {
 
 module.exports = {
   create,
-  listAll
-}
+  listAll,
+};

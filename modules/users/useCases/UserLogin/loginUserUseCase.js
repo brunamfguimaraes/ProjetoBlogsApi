@@ -12,21 +12,21 @@ const validateLogin = (data) => {
   const { message } = error.details[0];
 
   if (error) {
-    throw new Error({code: 'BAD_REQUEST', message});
-  };
+    throw new Error({ code: 'BAD_REQUEST', message });
+  }
 };
 
-const emailExists = async(email) => {
+const emailExists = async (email) => {
   const emailAlreadyExists = await findByEmail(email);
 
-  if(!emailAlreadyExists) {
-    throw new Error({code: 'BAD_REQUEST', message: 'Invalid fields'});
-  };
+  if (!emailAlreadyExists) {
+    throw new Error({ code: 'BAD_REQUEST', message: 'Invalid fields' });
+  }
 
   return emailAlreadyExists;
 };
 
-const loginUser = async(data) => {
+const loginUser = async (data) => {
   const { email } = data;
 
   validateLogin(data);

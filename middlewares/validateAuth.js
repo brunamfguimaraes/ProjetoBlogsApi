@@ -5,13 +5,12 @@ const { Users } = require('../models');
 
 const errorMessage = (code, message) => ({
   code,
-  message
-})
+  message,
+});
 
-module.exports = async(auth) => {
-
-  if(!auth) {
-    throw errorMessage("UNAUTHORIZED", "Token not found")
+module.exports = async (auth) => {
+  if (!auth) {
+    throw errorMessage('UNAUTHORIZED', 'Token not found');
   }
 
   try {
@@ -19,12 +18,12 @@ module.exports = async(auth) => {
 
     const users = await Users.findByPk(payload.id);
 
-    if(!users) {
-      throw errorMessage("UNAUTHORIZED", "Expired or invalid token");
+    if (!users) {
+      throw errorMessage('UNAUTHORIZED', 'Expired or invalid token');
     }
 
     return payload;
-  }catch(error) {
+  } catch (error) {
     throw errorMessage('UNAUTHORIZED', 'Expired or invalid token');
   }
-}
+};

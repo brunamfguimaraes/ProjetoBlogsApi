@@ -8,6 +8,6 @@ const loginRouter = require('./login');
 
 routes.use('/categories', categoryRouter);
 routes.use('/user', usersRouter);
-routes.use('/login', loginRouter)
+routes.use('/login', loginRouter);
 
 module.exports = routes;
