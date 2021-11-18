@@ -1,7 +1,7 @@
 const { User } = require('../../../models');
 
 const create = async (data) => {
-  const users = await User.create({ ...data });
+  const users = await User.create({ data });
   
   return users;
 };
