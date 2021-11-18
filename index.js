@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/user', routes.RoutesUsers);
 app.use('/login', routes.RouteLogin);
 app.use('/categories', routes.RoutesCategories);
+app.use('/post', routes.RoutesPosts);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Ouvindo na porta ${PORT}!`));
