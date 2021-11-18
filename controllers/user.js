@@ -3,7 +3,7 @@ const { User } = require('../models');
 
 require('dotenv').config();
 
-const SECRET = process.env.SECRET;
+const SECRET = 'batatinhafrita123';
 
 const jwtConfig = {
   expiresIn: '7d',
