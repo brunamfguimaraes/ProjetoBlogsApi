@@ -1,10 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-app.listen(3003, () => console.log('ouvindo porta 3003!'));
+app.use(bodyParser.json());
+
+const user = require('./routers/userRoute');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.use('/user', user);
+
+app.listen(3000, () => console.log('ouvindo porta 3000!'));
