@@ -3,7 +3,7 @@ const { User } = require('../models');
 
 require('dotenv').config();
 
-const { SECRET } = process.env.SECRET;
+const SECRET = process.env.SECRET;
 
 const jwtConfig = {
   expiresIn: '7d',
@@ -16,8 +16,9 @@ const createUser = async (req, res) => {
     await User.create({ displayName, email, password, image });
     const token = jwt.sign({ email }, SECRET, jwtConfig);
     res.status(201).json(token);
-  } catch (e) {
-    res.status(500).json({ e: 'Erro ao criar usuário' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('Erro ao criar usuário');
   }
 };
 
@@ -30,7 +31,20 @@ const getUsers = async (_req, res) => {
   }
 };
 
+const getUsersById = async(req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await User.findOne({ where: { id } });
+
+    if (!result) return response.status(404).json({ e: 'User does not exist' });
+    return res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao listar usuário pelo ID' });
+  }
+}
+
 module.exports = {
   createUser,
   getUsers,
+  getUsersById,
 }; 

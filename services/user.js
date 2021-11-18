@@ -63,7 +63,7 @@ const emailAlreadyExists = async (req, res, next) => {
   next();
 };
 
-const { SECRET } = process.env.SECRET;
+const SECRET = process.env.SECRET;
 
 const validateToken = (req, res, next) => {
   const token = req.headers.authorization;
