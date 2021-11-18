@@ -30,8 +30,21 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePost = async ({ title, content }, id, userId) => {
+  const verifyUserId = await RepositoryPosts.getPostById(id);
+
+  if (verifyUserId.userId !== userId) {
+    throw invalidData('Unauthorized user', StatusCodes.UNAUTHORIZED);
+  }
+
+  const upatedPost = await RepositoryPosts.updatePost({ title, content }, id);
+
+  return upatedPost;
+};
+
 module.exports = {
   create,
   getAll,
   getPostById,
+  updatePost,
 }; 
