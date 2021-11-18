@@ -11,7 +11,7 @@ const create = async (req, res, next) => {
 
     return res.status(StatusCodes.CREATED).json(newCategory);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -47,7 +47,7 @@ const updatePost = async (req, res, next) => {
 
     return res.status(StatusCodes.OK).json(upatedPost);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -60,7 +60,7 @@ const deletePost = async (req, res, next) => {
 
     return res.status(StatusCodes.NO_CONTENT).end();
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 

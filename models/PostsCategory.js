@@ -6,14 +6,12 @@ const PostsCategory = (sequelize, _DataTypes) => {
     models.Category.belongsToMany(models.BlogPost, {
       through: newPostsCategory,
       as: 'blogs',
-      foreignKey: 'postId',
-      otherKey: 'categoryId',
+      foreignKey: 'categoryId',
     });
     models.BlogPost.belongsToMany(models.Category, {
       as: 'categories',
       through: newPostsCategory,
-      foreignKey: 'categoryId',
-      otherKey: 'postId',
+      foreignKey: 'postId',
     });
   };
 

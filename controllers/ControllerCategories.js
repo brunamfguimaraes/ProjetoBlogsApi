@@ -10,7 +10,7 @@ const create = async (req, res, next) => {
 
     return res.status(StatusCodes.CREATED).json(newCategory);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
