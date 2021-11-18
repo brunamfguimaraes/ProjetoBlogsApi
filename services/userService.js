@@ -11,6 +11,12 @@ const createUser = async ({ displayName, email, password, image }) => {
   return ({ status: httpStatus.CREATED, token });
 };
 
+const getAll = async () => {
+  const data = await User.findAll();
+  return ({ status: httpStatus.OK, data });
+};
+
 module.exports = {
   createUser,
+  getAll,
 };
