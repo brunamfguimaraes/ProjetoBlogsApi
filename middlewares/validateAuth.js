@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const { Users } = require('../models');
+const { User } = require('../models');
 
 const errorMessage = (code, message) => ({
   code,
@@ -13,15 +13,18 @@ module.exports = async (auth) => {
     throw errorMessage('UNAUTHORIZED', 'Token not found');
   }
 
-  try {
-    const { payload } = jwt.verify(auth, process.env.JWT_SECRET);
+  const authToken = auth.split(' ');
+  const [, token] = authToken;
 
-    const users = await Users.findByPk(payload.id);
+  try {
+    const { payload } = jwt.verify(token, process.env.JWT_SECRET);
+
+    const users = await User.findByPk(payload.id);
 
     if (!users) {
       throw errorMessage('UNAUTHORIZED', 'Expired or invalid token');
     }
-
+    
     return payload;
   } catch (error) {
     throw errorMessage('UNAUTHORIZED', 'Expired or invalid token');
