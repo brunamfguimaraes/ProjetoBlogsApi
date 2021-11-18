@@ -9,4 +9,9 @@ const createCategorie = async ({ name }) => {
   return ({ status: httpStatus.CREATED, data });
 };
 
-module.exports = { createCategorie };
+const getAll = async () => {
+  const data = await Category.findAll();
+  return ({ status: httpStatus.OK, data });
+};
+
+module.exports = { createCategorie, getAll };
