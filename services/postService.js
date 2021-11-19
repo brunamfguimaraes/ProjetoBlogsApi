@@ -21,4 +21,12 @@ const getAll = async () => {
   return ({ status: httpStatus.OK, data });
 };
 
-module.exports = { createPost, getAll };
+const getById = async ({ id }) => {
+  const data = await BlogPost.findAll({ where: { id },
+    include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } }] });
+
+  return ({ status: httpStatus.OK, data });
+};
+
+module.exports = { createPost, getAll, getById };
