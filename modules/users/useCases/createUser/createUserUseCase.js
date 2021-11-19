@@ -35,7 +35,7 @@ const emailExists = async (email) => {
 const createUser = async (data) => {
   const { displayName, email, password } = data;
 
-  const validate = { displayName, email, password }
+  const validate = { displayName, email, password };
 
   validateUser(validate);
 
