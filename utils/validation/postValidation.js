@@ -30,7 +30,7 @@ const categoryIdsNotEdited = (categoryIds) => {
 
 const unauthorizedUser = async (id) => {
   const { dataValues: { userId } } = await BlogPost.findByPk(id);
-  if (id !== userId) throw err('Unauthorized user');
+  if (id !== userId) throw err(erroMessage.UNAUTHORIZED_USER);
 };
 
 module.exports = {
