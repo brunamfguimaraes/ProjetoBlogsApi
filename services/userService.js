@@ -6,8 +6,8 @@ const validate = require('../utils/validation');
 
 const createUser = async ({ displayName, email, password, image }) => {
   await validate.createUser(displayName, email, password);
-  await User.create({ displayName, email, password, image });
-  const token = generateToken(email);
+  const data = await User.create({ displayName, email, password, image });
+  const token = generateToken(data);
   return ({ status: httpStatus.CREATED, token });
 };
 

@@ -1,5 +1,6 @@
 const user = require('./userValidation');
-const categorie = require('./categorieValidation');
+const categorie = require('./categoriesValidation');
+const post = require('./postValidation');
 
 const createUser = async (displayName, email, password) => {
   user.displayNameUser(displayName);
@@ -15,7 +16,8 @@ const login = async (email, password) => {
   user.emailExist(email);
   user.passwordNotEmpty(password);
   user.passwordExist(password);
-  await user.loginInvalid(email, password);
+  const data = await user.loginInvalid(email, password);
+  return data;
 };
 
 const userExistById = (data) => {
@@ -26,4 +28,11 @@ const createCategorie = (name) => {
   categorie.nameNotExist(name);
 };
 
-module.exports = { createUser, login, userExistById, createCategorie };
+const createPost = async (title, content, categoryIds) => {
+  post.titleNotExist(title);
+  post.contentNotExist(content);
+  post.categoryIdNotExist(categoryIds);
+  await post.categoryIdNotFound(categoryIds);
+};
+
+module.exports = { createUser, login, userExistById, createCategorie, createPost };

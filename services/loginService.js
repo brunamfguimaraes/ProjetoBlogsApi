@@ -4,8 +4,8 @@ const generateToken = require('../utils/token');
 const validate = require('../utils/validation');
 
 const login = async ({ email, password }) => {
-  await validate.login(email, password);
-  const token = generateToken(email);
+  const data = await validate.login(email, password);
+  const token = generateToken(data);
   return ({ status: httpStatus.OK, token });
 };
 

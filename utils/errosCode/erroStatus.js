@@ -63,4 +63,24 @@ module.exports = {
     status: 400,
     message: '"name" is required',
   },
+
+  titleNotExist: {
+    status: 400,
+    message: '"title" is required',
+  },
+
+  contentNotExist: {
+    status: 400,
+    message: '"content" is required',
+  },
+
+  categoryIdNotExist: {
+    status: 400,
+    message: '"categoryId" is required',
+  },
+
+  categoryIdNotFound: {
+    status: 400,
+    message: '"categoryIds" not found',
+  },
 };
