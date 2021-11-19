@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { BlogPost, User } = require('../models');
+const { BlogPost, User, PostCategory, Category } = require('../models');
 
 const validatePost = require('../middlewares/validatePost');
 const validateToken = require('../middlewares/validateToken');
@@ -14,9 +14,18 @@ const HTTP = {
 
 const router = express.Router();
 
+const savePostCategories = (postId, categories) => {
+  categories.forEach(async (element) => {
+    await PostCategory.create({ postId, categoryId: element });
+  });
+};
+
 router.get('/', validateToken, async (_req, res) => {
   const posts = await BlogPost.findAll({
-    include: { model: User, as: 'user' },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
   });
 
   return res.status(HTTP.Ok).json(posts);
@@ -32,7 +41,9 @@ router.post('/', validateToken, validatePost, async (req, res) => {
     const newPost = await BlogPost.create(
       { title, content, categoryIds: JSON.stringify(categoryIds), userId: user.dataValues.id },
     );
-    
+
+    savePostCategories(newPost.id, categoryIds);
+
     return res.status(HTTP.Created).json(newPost);
   } catch (e) {
     console.log(e);
