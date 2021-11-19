@@ -37,11 +37,7 @@ const create = async (auth, data) => {
   const { title, content } = data;
   const { id } = payload;
 
-  console.log('DATA IDS', data.categoryIds);
-
   const groupContent = { title, content, id };
-
-  console.log('CONSOLE GROUP', groupContent);
 
   const post = await createPost(groupContent);
   const { published, updated, ...postDB } = post.dataValues;
