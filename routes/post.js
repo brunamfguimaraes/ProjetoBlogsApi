@@ -25,6 +25,6 @@ router.get(
     '/get/:id',
     validateToken.validateToken,
     postController.getPostsById,
-)
+);
 
 module.exports = router;

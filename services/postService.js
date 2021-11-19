@@ -43,7 +43,7 @@ const createPost = async (title, content, categoryIds, userId) => {
     const post = await BlogPost.create({ title, content, categoryIds, userId });
   
     return post;
-  }
+};
 
 const getPosts = async () => {
     const result = await BlogPost.findAll({ 

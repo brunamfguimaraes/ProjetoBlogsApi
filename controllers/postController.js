@@ -1,5 +1,4 @@
 const postService = require('../services/postService');
-const { User, BlogPost, PostsCategory } = require('../models');
 
 const createPost = async (req, res) => {
     const { userId } = req;
@@ -23,7 +22,7 @@ const getPostsById = async (req, res) => {
     }
 
     return res.status(200).json(result);
-}
+};
 
 module.exports = { 
     createPost,
