@@ -5,12 +5,14 @@ const { BlogPost, User, PostCategory, Category } = require('../models');
 const validateToken = require('../middlewares/validateToken');
 const validatePost = require('../middlewares/validatePost');
 const validateEdit = require('../middlewares/validateEdit');
+const validateProperty = require('../middlewares/ValidateProperty');
 
 require('dotenv/config');
 
 const HTTP = {
   Ok: 200,
   Created: 201,
+  NoContent: 204,
   NotFound: 404,
 };
 
@@ -83,9 +85,20 @@ router.put('/:id', validateToken, validateEdit, async (req, res) => {
       ],
     });
     
-    return res.status(200).json(updated);
+    return res.status(HTTP.Ok).json(updated);
   } catch (e) {
     console.log(e);
+  }
+});
+
+router.delete('/:id', validateToken, validateProperty, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await BlogPost.destroy({ where: { id } });
+
+    return res.send(HTTP.NoContent);
+  } catch (e) {
+    return res.status(HTTP.NotFound).json({ message: 'Post does not exist' });
   }
 });
 

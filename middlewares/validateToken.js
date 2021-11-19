@@ -7,12 +7,19 @@ const HTTP = {
   Unauthorized: 401,
 };
 
+const checkExistence = (token) => {
+  if (!token || token === '') return false;
+  return true;
+};
+
 const secret = process.env.JWT_SECRET;
 
 const validateToken = async (req, res, next) => {
   const { authorization } = req.headers; let user;
-
-  if (!authorization) return res.status(HTTP.Unauthorized).json({ message: 'Token not found' });
+  
+  if (!checkExistence(authorization)) {
+    return res.status(HTTP.Unauthorized).json({ message: 'Token not found' });
+  }
 
   try {
     const decoded = jwt.verify(authorization, secret);
