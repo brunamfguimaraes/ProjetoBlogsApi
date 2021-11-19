@@ -11,6 +11,6 @@ const editPostController = async (request, response, next) => {
   } catch (error) {
     return next(error);
   }
-}
+};
 
-module.exports = editPostController
+module.exports = editPostController;

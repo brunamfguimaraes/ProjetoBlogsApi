@@ -1,4 +1,4 @@
-const deletePostUseCase = require('./deletePostUseCase')
+const deletePostUseCase = require('./deletePostUseCase');
 
 const deletePostController = async (request, response, next) => {
   try {
@@ -13,4 +13,4 @@ const deletePostController = async (request, response, next) => {
   }
 };
 
-module.exports = deletePostController
+module.exports = deletePostController;

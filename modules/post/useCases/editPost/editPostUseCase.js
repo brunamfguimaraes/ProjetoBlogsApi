@@ -16,24 +16,24 @@ const validatePost = (data) => {
   }).validate(data);
 
   if (error) {
-    const { message } = error.details[0]
+    const { message } = error.details[0];
     throw errorMessage('BAD_REQUEST', message);
   }
-}
+};
 
-const validateUserActions = async(id, dataId) => {
-  const blogPost = await getOnlyId(id)
+const validateUserActions = async (id, dataId) => {
+  const blogPost = await getOnlyId(id);
 
-  if(blogPost.dataValues.uderId !== dataId) {
-    throw errorMessage('UNAUTHORIZED', 'Unauthorized user')
+  if (blogPost.dataValues.userId !== dataId) {
+    throw errorMessage('UNAUTHORIZED', 'Unauthorized user');
   }
-}
+};
 
 const categoriesIdExists = (categoriesId) => {
-  if(categoriesId) {
+  if (categoriesId) {
     throw errorMessage('BAD_REQUEST', 'Categories cannot be edited');
   }
-}
+};
 
 const editPostUseCase = async (auth, id, data) => {
   const payload = await validateAuth(auth);
@@ -42,11 +42,8 @@ const editPostUseCase = async (auth, id, data) => {
   categoriesIdExists(data.categoryIds);
   await validateUserActions(id, payload.id);
 
-  await editPost(data, id);
-
-  const postAlreadyEdited = editedPost(id);
-
-  return postAlreadyEdited
-}
+  const postAlreadyEdited = await editPost(data, id);
+  return postAlreadyEdited;
+};
 
 module.exports = editPostUseCase;

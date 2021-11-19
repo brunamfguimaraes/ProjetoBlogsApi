@@ -3,7 +3,7 @@ const listById = require('./listPostByIdUseCase');
 const list = async (request, response, next) => {
   try {
     const { authorization } = request.headers;
-    const { id } = request.params
+    const { id } = request.params;
 
     const posts = await listById(authorization, id);
 

@@ -11,11 +11,11 @@ const listById = async (auth, id) => {
 
   const post = await listPostById(id);
 
-  if(!post) {
+  if (!post) {
     throw errorMessage('NOT_FOUND', 'Post does not exist');
-  };
+  }
 
-  return post
-}
+  return post;
+};
 
 module.exports = listById;

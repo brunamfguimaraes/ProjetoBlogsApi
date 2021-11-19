@@ -9,14 +9,14 @@ const listAllController = require(
 );
 const listPostByIdController = require(
   '../modules/post/useCases/listPostById/listPostByIdController',
-)
+);
 const editPostController = require(
-  '../modules/post/useCases/editPost/editPostController'
-)
+  '../modules/post/useCases/editPost/editPostController',
+);
 
 const deletePostController = require(
-  '../modules/post/useCases/deletePost/deletePostController'
-)
+  '../modules/post/useCases/deletePost/deletePostController',
+);
 
 const postRouter = Router();
 

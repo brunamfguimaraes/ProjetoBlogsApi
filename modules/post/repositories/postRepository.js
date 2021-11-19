@@ -45,19 +45,16 @@ const listPostById = async (id) => {
   return post;
 };
 
-const getOnlyId = async(id) => {
+const getOnlyId = async (id) => {
   const blog = await BlogPost.findOne({
     where: { id },
   });
 
   return blog;
-}
-
-const editPost = async (id, data) => {
-  await BlogPost.update({ ...data }, { where: { id } });
 };
 
-const editedPost = async (id) => {
+const editPost = async (data, id) => {
+  await BlogPost.update({ ...data }, { where: { id } });
   const edited = await BlogPost.findOne({
     where: { id },
     attributes: { exclude: ['id', 'published', 'updated'] },
@@ -67,10 +64,8 @@ const editedPost = async (id) => {
         through: { attributes: [] },
       }],
   });
-
   return edited;
-
-}
+};
 
 const findPost = async (id) => {
   const post = await BlogPost.findOne({
@@ -93,5 +88,4 @@ module.exports = {
   excludePost,
   createPostCategory,
   getOnlyId,
-  editedPost
 };
