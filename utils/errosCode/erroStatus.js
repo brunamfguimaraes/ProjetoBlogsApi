@@ -76,7 +76,7 @@ module.exports = {
 
   categoryIdNotExist: {
     status: 400,
-    message: '"categoryId" is required',
+    message: '"categoryIds" is required',
   },
 
   categoryIdNotFound: {

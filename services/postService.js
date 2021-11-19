@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 
-const { BlogPost } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 const validate = require('../utils/validation');
 
 const createPost = async ({ title, content, categoryIds }, { id }) => {
@@ -13,4 +13,12 @@ const createPost = async ({ title, content, categoryIds }, { id }) => {
   return ({ status: httpStatus.CREATED, data });
 };
 
-module.exports = { createPost };
+const getAll = async () => {
+  const data = await BlogPost.findAll({ include: 
+    [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } }] });
+
+  return ({ status: httpStatus.OK, data });
+};
+
+module.exports = { createPost, getAll };
