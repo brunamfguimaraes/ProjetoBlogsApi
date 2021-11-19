@@ -3,6 +3,7 @@ const express = require('express');
 const userController = require('./controllers/users');
 const loginController = require('./controllers/login');
 const categoryController = require('./controllers/categories');
+const postsController = require('./controllers/blogPosts');
 
 const port = process.env.PORT || 3000;
 
@@ -26,5 +27,7 @@ app.use('/user', userController);
 app.use('/login', validateWithout, validateEmpty, loginController);
 
 app.use('/categories', validateToken, categoryController);
+
+app.use('/post', postsController);
 
 app.listen(port, () => console.log(`ouvindo porta ${port}`));
