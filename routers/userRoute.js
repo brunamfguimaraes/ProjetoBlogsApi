@@ -20,4 +20,7 @@ router.get('/:id',
     validateJWT,
     userController.getUserById);
 
+router.delete('/me', validateJWT,
+    userController.removeUser);
+
 module.exports = router; 

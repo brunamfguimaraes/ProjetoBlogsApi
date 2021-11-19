@@ -31,6 +31,10 @@ const getUserById = async (id) => {
   return result;
 };
 
+const removeUser = async ({ userId }) => { 
+  User.destroy({ where: { id: userId } }); 
+};
+
 module.exports = {
   checkDisplayName,
   checkEmail,
@@ -38,4 +42,5 @@ module.exports = {
   addUser,
   getAllUsers,
   getUserById,
+  removeUser,
 };

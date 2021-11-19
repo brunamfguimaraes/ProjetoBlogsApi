@@ -82,7 +82,18 @@ const getUserById = async (req, res) => {
     const result = await userServices.getUserById(id);
     if (!result) return res.status(404).json({ message: 'User does not exist' });
     res.status(200).json(result);
-  };
+};
+
+const removeUser = async (req, res) => {
+    try {
+        const { userId } = req;
+        await userServices.removeUser({ userId });
+
+        return res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 module.exports = {
     checkDisplayName,
@@ -92,4 +103,5 @@ module.exports = {
     addUser,
     getAllUsers,
     getUserById,
+    removeUser,
 };
