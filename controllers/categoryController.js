@@ -1,6 +1,7 @@
+const rescue = require('express-rescue');
 const { Category } = require('../models');
 
-const createCategory = async (req, res) => {
+const createCategory = rescue(async (req, res) => {
     try {
         const { name } = req.body;
         const result = await Category.create({ name });
@@ -9,7 +10,7 @@ const createCategory = async (req, res) => {
     } catch (e) {
         res.status(500).json({ message: 'Erro ao criar a categoria' });
     }
-};
+});
 
 const getCategory = async (req, res) => {
     try {

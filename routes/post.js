@@ -12,7 +12,7 @@ router.post(
   postService.validateContent,
   postService.validateCategoryId,
   postService.validateCategories,
-  postController.createPost,
+  postController.insertPost,
 );
 
 router.get(

@@ -27,4 +27,10 @@ router.get(
   userController.getUsersById,
 );
 
+router.delete(
+  '/post/:id',
+  userService.validateToken,
+  userController.deletePost,
+);
+
 module.exports = router; 

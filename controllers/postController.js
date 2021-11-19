@@ -1,11 +1,12 @@
+const rescue = require('express-rescue');
 const postService = require('../services/postService');
 
-const createPost = async (req, res) => {
-    const { userId } = req;
-    const { title, content, categoryIds } = req.body;
-    const post = await postService.createPost(title, content, categoryIds, userId);
-    return res.status(201).json(post);
-};
+const insertPost = rescue(async (request, response) => {
+  const newPost = request.body;
+//   const { id: userId } = request;
+  const post = await postService.insertPost(newPost, 1);
+  return response.status(201).json(post);
+});
 
 const getPosts = async (req, res) => {
     const result = await postService.getPosts();
@@ -25,7 +26,7 @@ const getPostsById = async (req, res) => {
 };
 
 module.exports = { 
-    createPost,
+    insertPost,
     getPosts,
     getPostsById,
 };

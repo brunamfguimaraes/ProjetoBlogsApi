@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
+const rescue = require('express-rescue');
 const { User } = require('../models');
+const userService = require('../services/userService');
 
 require('dotenv').config();
 
@@ -43,8 +45,21 @@ const getUsersById = async (req, res) => {
   }
 };
 
+const deletePost = rescue(async (request, response) => {
+  const { id } = request.params;
+  const { id: userId } = request.user;
+  const { error } = await userService.removePost(id, userId);
+ 
+  if (error) {
+    return response.status(error.status).json({ message: error.message });
+  }
+ 
+  response.status(204).json();
+ });
+
 module.exports = {
   createUser,
   getUsers,
   getUsersById,
+  deletePost,
 }; 
