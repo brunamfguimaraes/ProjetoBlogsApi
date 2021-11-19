@@ -32,15 +32,9 @@ router.put(
   validateToken.validateToken,
   postService.validateTitle,
   postService.validateContent,
-  postService.editCategories,
+  postService.editCategory,
   postService.validUser,
   postController.updatePost,
-);
-
-router.delete(
-  '/post/:id',
-  validateToken.validateToken,
-  postController.deletePost,
 );
 
 module.exports = router;

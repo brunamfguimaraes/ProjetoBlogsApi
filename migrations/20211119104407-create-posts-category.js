@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         references: {
-          model: 'BlogPosts',
+          model: 'BlogPosts', /* Tabela */
           key: 'id'
         },
         onDelete: 'CASCADE',
@@ -29,4 +29,4 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('PostsCategories');
   }
-}; 
+};

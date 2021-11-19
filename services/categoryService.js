@@ -1,3 +1,5 @@
+const { Category } = require('../models');
+
 const nameValidation = async (req, res, next) => {
     const { name } = req.body;
 
@@ -7,6 +9,12 @@ const nameValidation = async (req, res, next) => {
     next();
 };
 
+const getCategory = async () => {
+    const result = await Category.findAll();
+    return result;
+  };
+
 module.exports = {
     nameValidation,
+    getCategory,
 };

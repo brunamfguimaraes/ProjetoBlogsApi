@@ -1,57 +1,55 @@
-const rescue = require('express-rescue');
 const postService = require('../services/postService');
-const { BlogPost, User, Category } = require('../models');
 
-const creatPost = rescue(async (request, response) => {
-  const newPost = request.body;
-//   const { id: userId } = request;
-  const post = await postService.creatPost(newPost, 1);
-  return response.status(201).json(post);
-});
+const creatPost = async (req, res) => {
+  try {
+    const newPost = req.body;
+    const { id: userId } = req.user;
+    const post = await postService.creatPost(newPost, userId);
 
-const getPosts = async (req, res) => {
+    return res.status(201).json(post);
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao criar Post' });
+  }
+};
+
+const getPosts = async (_req, res) => {
+  try {
     const result = await postService.getPosts();
 
     return res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao pegar todos os posts' });
+  }
 };
 
 const getPostsById = async (req, res) => {
+  try {
     const { id } = req.params;
-    const result = await BlogPost.findOne({
-      where: { id },
-      include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' },
-    ],
-    });
-    if (!result) {
-        return res.status(404).json({ message: 'Post does not exist' });
-    }
+    const result = await postService.getPostsById(id);
+
+    if (!result) return res.status(404).json({ message: 'Post does not exist' });
 
     return res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao pegar post pelo ID' });
+  }
 };
 
-const updatePost = rescue(async (req, res) => {
-  const { title, content } = req.body;
-  const result = await postService.updatePost(1, title, content);
+const updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const result = await postService.updatePost(id, title, content);
 
-  res.status(200).json(result);
-});
-
-const deletePost = rescue(async (request, response) => {
-  const { id } = request.params;
-  const { id: userId } = request.params;
-  const { error } = await postService.deletePost(id, userId);
- 
-  if (error) {
-    return response.status(error.status).json({ message: error.message });
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao atualizar post' });
   }
- 
-  response.status(204).json();
- });
+};
 
-module.exports = { 
-    creatPost,
-    getPosts,
-    getPostsById,
-    updatePost,
-    deletePost,
+module.exports = {
+  creatPost,
+  getPosts,
+  getPostsById,
+  updatePost,
 };

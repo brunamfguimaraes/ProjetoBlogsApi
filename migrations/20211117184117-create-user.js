@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Users', { // migration sempre no plural
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -29,6 +29,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-     await queryInterface.dropTable('Users');
+     await queryInterface.dropTable('Users'); // migration sempre no plural
   }
 };

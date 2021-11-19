@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const rescue = require('express-rescue');
 const { User } = require('../models');
 const userService = require('../services/userService');
 
@@ -25,7 +24,7 @@ const createUser = async (req, res) => {
 
 const getUsers = async (_req, res) => {
   try {
-    const result = await User.findAll();
+    const result = await userService.getUsers();
 
     return res.status(200).json(result);
   } catch (e) {
@@ -35,26 +34,50 @@ const getUsers = async (_req, res) => {
 
 const getUsersById = async (req, res) => {
   try {
-    const id = 1;
-    const result = await User.findOne({ where: { id } });
+    const { id } = req.params;
+
+    const result = await userService.getUsersById(id);
 
     if (!result) return res.status(404).json({ message: 'User does not exist' });
+
     return res.status(200).json(result);
   } catch (e) {
     res.status(500).json({ message: 'Erro ao listar usuário pelo ID' });
   }
 };
 
-const deleteUser = rescue(async (req, res) => {
-  // const { id } = req;
-  await userService.deleteUser(1);
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { id: userId } = req.user;
+    const { error } = await userService.deletePost(id, userId);
 
-  return res.status(204).json();
-});
+    if (error) {
+      return res.status(error.status).json({ message: error.message });
+    }
+
+    res.status(204).json();
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao deletar Post' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+
+    await userService.deleteUser(id);
+
+    return res.status(204).json();
+  } catch (e) {
+    res.status(500).json({ e: 'Erro ao deletar User' });
+  }
+};
 
 module.exports = {
   createUser,
   getUsers,
   getUsersById,
+  deletePost,
   deleteUser,
-}; 
+};

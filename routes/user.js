@@ -28,6 +28,12 @@ router.get(
 );
 
 router.delete(
+  '/post/:id',
+  userService.validateToken,
+  userController.deletePost,
+);
+
+router.delete(
   '/user/me',
   userService.validateToken,
   userController.deleteUser,

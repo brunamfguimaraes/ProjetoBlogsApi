@@ -40,61 +40,56 @@ const validateCategories = async (request, response, next) => {
 const creatPost = async (post, userId) => {
   const { title, content, categoryIds } = post;
   const newPost = await BlogPost.create({ title, content, userId });
-  categoryIds.forEach(async (id) => { 
-    await PostsCategory.create({ postId: newPost.id, categoryId: id }); 
+  categoryIds.forEach(async (id) => {
+    await PostsCategory.create({ postId: newPost.id, categoryId: id });
   });
   return newPost;
 };
 
 const getPosts = async () => {
-    const result = await BlogPost.findAll({ 
-        include: [
-            { model: User, as: 'user' },
-            { model: Category, as: 'categories', through: { attributes: [] } },
-        ],
-    });
+  const result = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
 
-    return result;
+  return result;
 };
 
-const editCategories = (request, response, next) => {
-  const { categoryIds } = request.body;
+const getPostsById = async (id) => {
+  const result = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  return result;
+};
+
+const editCategory = (req, res) => {
+  const { categoryIds } = req.body;
   if (categoryIds) {
-    return response.status(400).json({ message: 'Categories cannot be edited' });
+    return res.status(400).json({ message: 'Categories cannot be edited' });
   }
-  next();
 };
 
-const validUser = async (request, response, next) => {
-  const { id } = request.params;
- 
-  // const { id: userId } = request.user;
-  const post = await BlogPost.findOne({ where: { id } });
-  if (post.userId !== id) return response.status(401).json({ message: 'Unauthorized user' });
+const validUser = async (req, res) => {
+  const { id } = req.params.id;
+  const { id: userId } = req.params;
 
-  next();
+  const post = await BlogPost.findOne({ where: { id } });
+  if (post.id !== userId) return res.status(401).json({ message: 'Unauthorized user' });
 };
 
 const updatePost = async (id, title, content) => {
   await BlogPost.update({ title, content }, { where: { id } });
-  const post = await BlogPost.findOne({ where: { id },
-  include: [{ model: Category, as: 'categories', through: { attributes: [] } }] });
-
-  return post;
-};
-
-const deletePost = async (id, userId) => {
-  const post = await BlogPost.findOne({ where: { id } });
-
-  if (!post) {
-    return { error: { status: 404, message: 'Post does not exist' } };
-  }
-
-  if (post.userId !== userId) {
-    return { error: { status: 401, message: 'Unauthorized user' } };
-  }
-
-  await BlogPost.destroy({ where: { userId: id } });
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+  });
 
   return post;
 };
@@ -106,8 +101,8 @@ module.exports = {
   validateCategories,
   creatPost,
   getPosts,
+  getPostsById,
   updatePost,
-  editCategories,
+  editCategory,
   validUser,
-  deletePost,
-}; 
+};
