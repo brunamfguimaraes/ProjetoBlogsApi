@@ -1,19 +1,27 @@
-const errorMiddlewares = require('./error');
-const validUser = require('./validUser');
-const createToken = require('./createToken');
-const validLogin = require('./validLogin');
-const validJWT = require('./validJWT');
-const validCategory = require('./validCategory');
-const validPost = require('./validPost');
-const validUpdatePost = require('./validUpdatePost');
+const checkDisplayName = require('./checkDisplayname');
+const checkEmail = require('./checkEmail');
+const checkIfUserEmailAlreadyExist = require('./checkIfUserEmailAlreadyExist');
+const checkPassword = require('./checkPassword');
+const tokenGenerator = require('./tokenGenerator');
+const tokenValidation = require('./tokenValidation');
+const checkLogin = require('./checkLogin');
+const checkCategoryId = require('./checkCategoryId');
+const checkTitleAndContent = require('./checkTitleAndContent');
+const checkCategoryIdNotUpdate = require('./checkCateroryIdNotUpdate');
+const checkPostUser = require('./checkPostUser');
+const checkIfPostAlreadyExist = require('./checkPostAlreadyExist.js');
 
-module.exports = {
-  errorMiddlewares,
-  validUser,
-  createToken,
-  validLogin,
-  validJWT,
-  validCategory,
-  validPost,
-  validUpdatePost,
-};
+module.exports = { 
+  checkDisplayName,
+  checkEmail,
+  checkIfUserEmailAlreadyExist,
+  checkPassword,
+  tokenGenerator,
+  tokenValidation,
+  checkLogin,
+  checkCategoryId,
+  checkTitleAndContent,
+  checkCategoryIdNotUpdate,
+  checkPostUser,
+  checkIfPostAlreadyExist,
+  };
