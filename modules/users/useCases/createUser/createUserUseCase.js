@@ -26,16 +26,18 @@ const emailExists = async (email) => {
   const emailAlreadyExists = await findByEmail(email);
 
   if (emailAlreadyExists) {
-    throw errorMessage('BAD_REQUEST', 'User already registered');
+    throw errorMessage('CONFLICT', 'User already registered');
   }
   console.log('RETORNEI');
   return emailAlreadyExists;
 };
 
 const createUser = async (data) => {
-  const { displayName, email } = data;
+  const { displayName, email, password } = data;
 
-  validateUser(data);
+  const validate = { displayName, email, password }
+
+  validateUser(validate);
 
   await emailExists(email);
 
