@@ -22,7 +22,7 @@ const getAll = async () => {
 };
 
 const getById = async ({ id }) => {
-  const data = await BlogPost.findAll({ where: { id },
+  const data = await BlogPost.findOne({ where: { id },
     include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } }] });
 
@@ -31,14 +31,21 @@ const getById = async ({ id }) => {
   return ({ status: httpStatus.OK, data });
 };
 
-const updateById = async ({ title, content, categoryIds }, { id }) => {
-  validate.updatePost(title, content, id, categoryIds);
+const updateById = async ({ id }, body, userInfo) => {
+  await validate.updatePost(id, body, userInfo);
 
-  await BlogPost.findAll({ title, content }, { where: { id } });
+  await BlogPost.update(body, { where: { id } });
 
-  const data = BlogPost.findOne({ id });
+  const data = await BlogPost.findOne({ where: { id },
+    include:
+    [{ model: Category, as: 'categories', through: { attributes: [] } }] });
 
   return ({ status: httpStatus.OK, data });
 };
 
-module.exports = { createPost, getAll, getById, updateById };
+module.exports = {
+  createPost,
+  getAll,
+  getById,
+  updateById,
+};

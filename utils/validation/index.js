@@ -39,11 +39,11 @@ const blogExistById = (data) => {
   post.existById(data);
 };
 
-const updatePost = (title, content, id, categoryIds) => {
+const updatePost = async (id, { title, content, categoryIds }, userInfo) => {
   post.titleNotExist(title);
   post.contentNotExist(content);
   post.categoryIdsNotEdited(categoryIds);
-  post.unauthorizedUser(id);
+  await post.unauthorizedUser(id, userInfo);
 };
 
 module.exports = {

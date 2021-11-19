@@ -21,16 +21,16 @@ const categoryIdNotFound = async (categoryIds) => {
 };
 
 const existById = (data) => {
-  if (data.length === 0) throw err(erroMessage.POST_NOT_EXIT);
+  if (!data) throw err(erroMessage.POST_NOT_EXIT);
 };
 
 const categoryIdsNotEdited = (categoryIds) => {
   if (categoryIds) throw err(erroMessage.CATEGORYID_NOT_EDITED);
 };
 
-const unauthorizedUser = async (id) => {
+const unauthorizedUser = async (id, userInfo) => {
   const { dataValues: { userId } } = await BlogPost.findByPk(id);
-  if (id !== userId) throw err(erroMessage.UNAUTHORIZED_USER);
+  if (userInfo.id !== userId) throw err(erroMessage.UNAUTHORIZED_USER);
 };
 
 module.exports = {
