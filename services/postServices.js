@@ -50,14 +50,14 @@ const updatePost = async ({ title, content, postId, userId, categoryIds }) => {
     );
   
     return getOne(postId);
+};
 
-    // const update = async (postId, { title, content }, userId) => {
-    //     const post = await getById(postId);
-    //     valid.checkPostUserProperty(post.userId, userId);
-    //     await BlogPost.update({ ...BlogPost, title, content }, { where: { id: postId } });
-    //     const updatedPost = await getById(postId);
-    //     return updatedPost;
-    //   };
+const removePost = async ({ userId, postId }) => {
+    const post = await BlogPost.findByPk(postId);
+    if (!post) return { message: 'Post does not exist' };
+    if (post.userId !== userId) return { message: 'Unauthorized user', unauthorized: true };
+  
+    return BlogPost.destroy({ where: { id: postId } });
   };
 
 module.exports = {
@@ -66,4 +66,5 @@ module.exports = {
     getAll,
     getOne,
     updatePost,
+    removePost,
 };

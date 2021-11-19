@@ -55,14 +55,28 @@ const updatePost = async (req, res) => {
         );
   
         if (result.message && result.unauthorized) {
-            console.log('entrou aqui');
             return res.status(401).json(result);
         }
         if (result.message) return res.status(400).json(result);
   
         return res.status(200).json(result);
     } catch (error) {
-        console.log(error);
+        res.status(500).json({ message: error.message });  
+    }
+};
+
+const removePost = async (req, res) => {
+    try {
+        const { id: postId } = req.params;
+        const { userId } = req;
+  
+        const result = await postServices.removePost({ postId, userId });
+  
+        if (result.message && result.unauthorized) return res.status(401).json(result);
+        if (result.message) return res.status(404).json(result);
+  
+        return res.status(204).send();
+    } catch (error) {
         res.status(500).json({ message: error.message });  
     }
 };
@@ -75,4 +89,5 @@ module.exports = {
     getAll,
     getOne,
     updatePost,
+    removePost,
 };
