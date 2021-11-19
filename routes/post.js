@@ -12,7 +12,7 @@ router.post(
   postService.validateContent,
   postService.validateCategoryId,
   postService.validateCategories,
-  postController.insertPost,
+  postController.creatPost,
 );
 
 router.get(
@@ -22,7 +22,7 @@ router.get(
 );
 
 router.get(
-    '/get/:id',
+    '/post/:id',
     validateToken.validateToken,
     postController.getPostsById,
 );

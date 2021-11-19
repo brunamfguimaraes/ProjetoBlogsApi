@@ -1,10 +1,11 @@
 const rescue = require('express-rescue');
 const postService = require('../services/postService');
+const { BlogPost, User, Category } = require('../models');
 
-const insertPost = rescue(async (request, response) => {
+const creatPost = rescue(async (request, response) => {
   const newPost = request.body;
 //   const { id: userId } = request;
-  const post = await postService.insertPost(newPost, 1);
+  const post = await postService.creatPost(newPost, 1);
   return response.status(201).json(post);
 });
 
@@ -16,8 +17,11 @@ const getPosts = async (req, res) => {
 
 const getPostsById = async (req, res) => {
     const { id } = req.params;
-    const result = await postService.getPostsById(id);
-
+    const result = await BlogPost.findOne({
+      where: { id },
+      include: [{ model: User, as: 'user' }, { model: Category, as: 'categories' },
+    ],
+    });
     if (!result) {
         return res.status(404).json({ message: 'Post does not exist' });
     }
@@ -26,7 +30,7 @@ const getPostsById = async (req, res) => {
 };
 
 module.exports = { 
-    insertPost,
+    creatPost,
     getPosts,
     getPostsById,
 };

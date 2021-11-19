@@ -37,7 +37,7 @@ const validateCategories = async (request, response, next) => {
   next();
 };
 
-const insertPost = async (post, userId) => {
+const creatPost = async (post, userId) => {
   const { title, content, categoryIds } = post;
   const newPost = await BlogPost.create({ title, content, userId });
   categoryIds.forEach(async (id) => { 
@@ -57,24 +57,11 @@ const getPosts = async () => {
     return result;
 };
 
-const getPostsById = async (id) => {
-    const result = await BlogPost.findOne({
-        where: { id },
-        include: [
-            { model: User, as: 'user' },
-            { model: Category, as: 'categories', through: { attributes: [] } },
-        ],
-    });
-
-    return result;
-};
-
 module.exports = {
   validateTitle,
   validateContent,
   validateCategoryId,
   validateCategories,
-  insertPost,
+  creatPost,
   getPosts,
-  getPostsById,
 }; 
