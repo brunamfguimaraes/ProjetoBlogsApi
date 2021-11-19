@@ -6,9 +6,9 @@ const createPost = async (data) => {
   return blog;
 };
 
-const createPostCategory = async ({postId, categoryId}) => {
+const createPostCategory = async ({ postId, categoryId }) => {
   const data = { postId, categoryId };
-  console.log("CONSOLE DATA",data)
+  console.log('CONSOLE DATA', data);
   const created = await PostCategory.create({ ...data });
   return created;
 };
