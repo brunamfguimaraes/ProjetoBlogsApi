@@ -7,10 +7,14 @@ const createController = require(
 const listAllController = require(
   '../modules/post/useCases/listPost/listAllPostController',
 );
+const listPostByIdController = require(
+  '../modules/post/useCases/listPostById/listPostByIdController',
+)
 
 const postRouter = Router();
 
 postRouter.post('/', createController);
 postRouter.get('/', listAllController);
+postRouter.get('/:id', listPostByIdController);
 
 module.exports = postRouter;
