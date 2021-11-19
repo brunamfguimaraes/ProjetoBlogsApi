@@ -50,13 +50,9 @@ const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { id: userId } = req.user;
-    const { error } = await userService.deletePost(id, userId);
+    const result = await userService.deletePost(id, userId);
 
-    if (error) {
-      return res.status(error.status).json({ message: error.message });
-    }
-
-    res.status(204).json();
+    return res.status(204).json(result);
   } catch (e) {
     res.status(500).json({ e: 'Erro ao deletar Post' });
   }
@@ -64,9 +60,9 @@ const deletePost = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.user;
+    // const { id } = req.params;
 
-    await userService.deleteUser(id);
+    await userService.deleteUser(1);
 
     return res.status(204).json();
   } catch (e) {

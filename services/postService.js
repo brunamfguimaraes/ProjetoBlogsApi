@@ -1,4 +1,4 @@
-const { Category, BlogPost, PostsCategory, User } = require('../models');
+const { Category, BlogPost, User } = require('../models');
 
 const validateTitle = async (request, response, next) => {
   const { title } = request.body;
@@ -37,13 +37,10 @@ const validateCategories = async (request, response, next) => {
   next();
 };
 
-const creatPost = async (post, userId) => {
-  const { title, content, categoryIds } = post;
-  const newPost = await BlogPost.create({ title, content, userId });
-  categoryIds.forEach(async (id) => {
-    await PostsCategory.create({ postId: newPost.id, categoryId: id });
-  });
-  return newPost;
+const creatPost = async (title, content, categoryIds, userId) => {
+  const post = await BlogPost.create({ title, content, categoryIds, userId });
+
+  return post;
 };
 
 const getPosts = async () => {

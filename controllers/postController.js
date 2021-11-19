@@ -1,15 +1,10 @@
 const postService = require('../services/postService');
 
 const creatPost = async (req, res) => {
-  try {
-    const newPost = req.body;
-    const { id: userId } = req.user;
-    const post = await postService.creatPost(newPost, userId);
-
-    return res.status(201).json(post);
-  } catch (e) {
-    res.status(500).json({ e: 'Erro ao criar Post' });
-  }
+  // const { id: userId } = req.params;
+  const { title, content, categoryIds } = req.body;
+  const post = await postService.creatPost(title, content, categoryIds, 1);
+  return res.status(201).json(post);
 };
 
 const getPosts = async (_req, res) => {

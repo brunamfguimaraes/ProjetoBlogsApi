@@ -91,8 +91,7 @@ const getUsersById = async (id) => {
 };
 
 const deletePost = async (id, userId) => {
-  const result = await BlogPost.findOne({ where: { id } });
-  
+  const result = await BlogPost.findByPk(id);
   if (!result) {
     return { error: { status: 404, message: 'Post does not exist' } };
   }
