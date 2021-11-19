@@ -1,15 +1,11 @@
 const postService = require('../services/postService');
+const { User, BlogPost, PostsCategory } = require('../models');
 
 const createPost = async (req, res) => {
-  try {
-    const { title, content, categoryIds } = req.body;
     const { userId } = req;
- 
-    const newPost = await postService.createPost(title, content, categoryIds, userId);
-    return res.status(201).json(newPost);
-  } catch (e) {
-    res.status(500).json({ message: 'Não foi possivel criar o post' });
-  }
+    const { title, content, categoryIds } = req.body;
+    const post = await postService.createPost(title, content, categoryIds, userId);
+    return res.status(201).json(post);
 };
 
 const getPosts = async (req, res) => {
@@ -18,7 +14,19 @@ const getPosts = async (req, res) => {
     return res.status(200).json(result);
 };
 
+const getPostsById = async (req, res) => {
+    const { id } = req.params;
+    const result = await postService.getPostsById(id);
+
+    if (!result) {
+        return res.status(404).json({ message: 'Post does not exist' });
+    }
+
+    return res.status(200).json(result);
+}
+
 module.exports = { 
     createPost,
     getPosts,
+    getPostsById,
 };
