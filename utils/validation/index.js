@@ -35,4 +35,8 @@ const createPost = async (title, content, categoryIds) => {
   await post.categoryIdNotFound(categoryIds);
 };
 
-module.exports = { createUser, login, userExistById, createCategorie, createPost };
+const blogExistById = (data) => {
+  post.existById(data);
+};
+
+module.exports = { createUser, login, userExistById, createCategorie, createPost, blogExistById };

@@ -20,4 +20,14 @@ const categoryIdNotFound = async (categoryIds) => {
   if (response.length !== categoryIds.length) throw err(erroMessage.CATEGORYID_NOT_FOUND);
 };
 
-module.exports = { titleNotExist, contentNotExist, categoryIdNotExist, categoryIdNotFound };
+const existById = (data) => {
+  if (data.length === 0) throw err(erroMessage.POST_NOT_EXIT);
+};
+
+module.exports = {
+  titleNotExist,
+  contentNotExist,
+  categoryIdNotExist,
+  categoryIdNotFound,
+  existById,
+};

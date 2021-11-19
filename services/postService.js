@@ -26,6 +26,8 @@ const getById = async ({ id }) => {
     include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } }] });
 
+  validate.blogExistById(data);
+
   return ({ status: httpStatus.OK, data });
 };
 

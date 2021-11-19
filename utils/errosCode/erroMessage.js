@@ -16,4 +16,5 @@ module.exports = {
   CONTENT_NOT_EXIST: 'contentNotExist',
   CATEGORYID_NOT_EXIST: 'categoryIdNotExist',
   CATEGORYID_NOT_FOUND: 'categoryIdNotFound',
+  POST_NOT_EXIT: 'postNotExist',
 };
