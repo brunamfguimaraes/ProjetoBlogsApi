@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "letycia",
+    "password": "leonardo226",
+    "database": "blogs_api",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "letycia",
+    "password": "leonardo226",
+    "database": "blogs_api",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "leonardo226",
+    "database": "blogs_api",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
