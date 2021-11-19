@@ -2,8 +2,9 @@ const express = require('express');
 
 const { BlogPost, User, PostCategory, Category } = require('../models');
 
-const validatePost = require('../middlewares/validatePost');
 const validateToken = require('../middlewares/validateToken');
+const validatePost = require('../middlewares/validatePost');
+const validateEdit = require('../middlewares/validateEdit');
 
 require('dotenv/config');
 
@@ -62,6 +63,27 @@ router.post('/', validateToken, validatePost, async (req, res) => {
     savePostCategories(newPost.id, categoryIds);
 
     return res.status(HTTP.Created).json(newPost);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.put('/:id', validateToken, validateEdit, async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  try {
+    await BlogPost.update({ title, content }, { where: { id } });
+
+    const updated = await BlogPost.findOne({
+      where: { id },
+      include: [
+        { model: User, as: 'user' },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    
+    return res.status(200).json(updated);
   } catch (e) {
     console.log(e);
   }
