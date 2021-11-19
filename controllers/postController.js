@@ -9,7 +9,7 @@ const getAll = async (_req, res) => service.getAll()
 const getById = async (req, res) => service.getById(req.params)
   .then(({ status, data }) => res.status(status).json(data));
 
-  const updateById = async (req, res) => service.updateById(req.body, req.userInfo)
+const updateById = async (req, res) => service.updateById(req.body, req.userInfo)
   .then(({ status, data }) => res.status(status).json(data));
 
 module.exports = { createPost, getAll, getById, updateById };
