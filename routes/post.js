@@ -27,4 +27,20 @@ router.get(
     postController.getPostsById,
 );
 
+router.put(
+  '/post/:id',
+  validateToken.validateToken,
+  postService.validateTitle,
+  postService.validateContent,
+  postService.editCategories,
+  postService.validUser,
+  postController.updatePost,
+);
+
+router.delete(
+  '/post/:id',
+  validateToken.validateToken,
+  postController.deletePost,
+);
+
 module.exports = router;

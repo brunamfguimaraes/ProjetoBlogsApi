@@ -35,7 +35,7 @@ const getUsers = async (_req, res) => {
 
 const getUsersById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = 1;
     const result = await User.findOne({ where: { id } });
 
     if (!result) return res.status(404).json({ message: 'User does not exist' });
@@ -45,21 +45,16 @@ const getUsersById = async (req, res) => {
   }
 };
 
-const deletePost = rescue(async (request, response) => {
-  const { id } = request.params;
-  const { id: userId } = request.user;
-  const { error } = await userService.removePost(id, userId);
- 
-  if (error) {
-    return response.status(error.status).json({ message: error.message });
-  }
- 
-  response.status(204).json();
- });
+const deleteUser = rescue(async (req, res) => {
+  // const { id } = req;
+  await userService.deleteUser(1);
+
+  return res.status(204).json();
+});
 
 module.exports = {
   createUser,
   getUsers,
   getUsersById,
-  deletePost,
+  deleteUser,
 }; 

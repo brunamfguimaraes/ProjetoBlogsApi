@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { User, BlogPost } = require('../models');
+const { User } = require('../models');
 
 require('dotenv').config();
 
@@ -78,20 +78,10 @@ const validateToken = (req, res, next) => {
   }
 };
 
-const deletePost = async (id, userId) => {
-  const result = await BlogPost.findOne({ where: { id } });
-
-  if (!result) {
-    return { error: { status: 404, message: 'Post does not exist' } };
-  }
-
-  if (result.userId !== userId) {
-    return { error: { status: 401, message: 'Unauthorized user' } };
-  }
-
-  await BlogPost.destroy({ where: { userId: id } });
-
-  return result;
+const deleteUser = async (id) => {
+  await User.destroy({ where: { id } });
+  const user = await User.findOne({ where: { id } });
+  return user;
 };
 
 module.exports = {
@@ -102,5 +92,5 @@ module.exports = {
   validatePasswordLength,
   emailAlreadyExists,
   validateToken,
-  deletePost,
+  deleteUser,
 }; 

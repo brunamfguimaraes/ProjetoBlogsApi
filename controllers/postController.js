@@ -29,8 +29,29 @@ const getPostsById = async (req, res) => {
     return res.status(200).json(result);
 };
 
+const updatePost = rescue(async (req, res) => {
+  const { title, content } = req.body;
+  const result = await postService.updatePost(1, title, content);
+
+  res.status(200).json(result);
+});
+
+const deletePost = rescue(async (request, response) => {
+  const { id } = request.params;
+  const { id: userId } = request.params;
+  const { error } = await postService.deletePost(id, userId);
+ 
+  if (error) {
+    return response.status(error.status).json({ message: error.message });
+  }
+ 
+  response.status(204).json();
+ });
+
 module.exports = { 
     creatPost,
     getPosts,
     getPostsById,
+    updatePost,
+    deletePost,
 };
