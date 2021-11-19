@@ -13,11 +13,8 @@ module.exports = async (auth) => {
     throw errorMessage('UNAUTHORIZED', 'Token not found');
   }
 
-  const authToken = auth.split(' ');
-  const [, token] = authToken;
-
   try {
-    const { payload } = jwt.verify(token, process.env.JWT_SECRET);
+    const { payload } = jwt.verify(auth, process.env.JWT_SECRET);
 
     const users = await User.findByPk(payload.id);
 

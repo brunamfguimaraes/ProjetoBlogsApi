@@ -8,8 +8,8 @@ const userById = require('../modules/users/useCases/listUserById/listUserByIdCon
 const userRouter = Router();
 
 userRouter.post('/', create);
-userRouter.get('/', list);
 userRouter.get('/:id', userById);
+userRouter.get('/', list);
 userRouter.delete('/me', remove);
 
 module.exports = userRouter;

@@ -28,7 +28,7 @@ const emailExists = async (email) => {
   if (emailAlreadyExists) {
     throw errorMessage('BAD_REQUEST', 'User already registered');
   }
-
+  console.log('RETORNEI');
   return emailAlreadyExists;
 };
 
@@ -46,8 +46,6 @@ const createUser = async (data) => {
   const userInformations = { id, displayName, email };
 
   const token = createAuth(userInformations);
-
-  console.log(token);
 
   return { token };
 };

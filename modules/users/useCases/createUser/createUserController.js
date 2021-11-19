@@ -6,7 +6,6 @@ const create = async (request, response, next) => {
 
     return response.status(201).json(users);
   } catch (error) {
-    // console.log(error)
     return next(error);
   }
 };

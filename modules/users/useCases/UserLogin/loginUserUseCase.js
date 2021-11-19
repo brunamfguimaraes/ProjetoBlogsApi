@@ -1,5 +1,10 @@
 const Joi = require('joi');
 
+const errorMessage = (code, message) => ({
+  code,
+  message,
+});
+
 const { findByEmail } = require('../../repositories/UserRepository');
 const createAuth = require('../../../../middlewares/createAuth');
 
@@ -9,10 +14,9 @@ const validateLogin = (data) => {
     password: Joi.string().min(6).required(),
   }).validate(data);
 
-  const { message } = error.details[0];
-
   if (error) {
-    throw new Error({ code: 'BAD_REQUEST', message });
+    const { message } = error.details[0];
+    throw errorMessage('BAD_REQUEST', message);
   }
 };
 
@@ -20,7 +24,7 @@ const emailExists = async (email) => {
   const emailAlreadyExists = await findByEmail(email);
 
   if (!emailAlreadyExists) {
-    throw new Error({ code: 'BAD_REQUEST', message: 'Invalid fields' });
+    throw errorMessage('BAD_REQUEST', 'Invalid fields');
   }
 
   return emailAlreadyExists;
@@ -32,6 +36,7 @@ const loginUser = async (data) => {
   validateLogin(data);
 
   const users = await emailExists(email);
+
   const { password, image, ...usersDB } = users.dataValues;
 
   const token = createAuth(usersDB);

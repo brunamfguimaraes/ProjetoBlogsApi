@@ -1,12 +1,13 @@
 const { User } = require('../../../models');
 
 const create = async (data) => {
-  const users = await User.create({ data });
+  const users = await User.create({ ...data });
   
   return users;
 };
 
 const listAllUsers = async () => {
+  console.log('Listando todos users');
   const users = await User.findAll({
     attributes: { exclude: ['password'] },
   });
@@ -21,6 +22,7 @@ const findByEmail = async (email) => {
 };
 
 const listUserById = async (id) => {
+  console.log('ID USUARIO', id);
   const user = await User.findOne({ 
     where: { id },
   });
