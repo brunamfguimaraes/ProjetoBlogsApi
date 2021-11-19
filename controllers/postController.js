@@ -49,12 +49,15 @@ const updatePost = async (req, res) => {
         const { title, content, categoryIds } = req.body;
         const { id: postId } = req.params;
         const { userId } = req;
-  
+        console.log(`passei aqui: ${userId}`);
         const result = await postServices.updatePost(
             { title, content, postId, userId, categoryIds },
         );
   
-        if (result.message && result.unauthorized) return res.status(401).json(result);
+        if (result.message && result.unauthorized) {
+            console.log('entrou aqui');
+            return res.status(401).json(result);
+        }
         if (result.message) return res.status(400).json(result);
   
         return res.status(200).json(result);

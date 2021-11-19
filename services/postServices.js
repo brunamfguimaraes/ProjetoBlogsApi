@@ -42,6 +42,7 @@ const updatePost = async ({ title, content, postId, userId, categoryIds }) => {
     if (entries.message) return entries;
   
     const post = await BlogPost.findByPk(postId);
+    console.log(`post.userId: ${post.userId} userId: ${userId}`);
     if (post.userId !== userId) return { message: 'Unauthorized user', unauthorized: true };
   
      await BlogPost.update(
@@ -49,6 +50,14 @@ const updatePost = async ({ title, content, postId, userId, categoryIds }) => {
     );
   
     return getOne(postId);
+
+    // const update = async (postId, { title, content }, userId) => {
+    //     const post = await getById(postId);
+    //     valid.checkPostUserProperty(post.userId, userId);
+    //     await BlogPost.update({ ...BlogPost, title, content }, { where: { id: postId } });
+    //     const updatedPost = await getById(postId);
+    //     return updatedPost;
+    //   };
   };
 
 module.exports = {
