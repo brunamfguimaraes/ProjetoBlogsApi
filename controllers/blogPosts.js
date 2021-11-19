@@ -10,6 +10,7 @@ require('dotenv/config');
 const HTTP = {
   Ok: 200,
   Created: 201,
+  NotFound: 404,
 };
 
 const router = express.Router();
@@ -29,6 +30,22 @@ router.get('/', validateToken, async (_req, res) => {
   });
 
   return res.status(HTTP.Ok).json(posts);
+});
+
+router.get('/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+
+  if (!post) return res.status(HTTP.NotFound).json({ message: 'Post does not exist' });
+
+  return res.status(HTTP.Ok).json(post);
 });
 
 router.post('/', validateToken, validatePost, async (req, res) => {
