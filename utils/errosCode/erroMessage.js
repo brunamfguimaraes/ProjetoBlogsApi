@@ -17,4 +17,6 @@ module.exports = {
   CATEGORYID_NOT_EXIST: 'categoryIdNotExist',
   CATEGORYID_NOT_FOUND: 'categoryIdNotFound',
   POST_NOT_EXIT: 'postNotExist',
+  CATEGORYID_NOT_EDITED: 'categoryIdNotEdited',
+  UNAUTHORIZED_USER: 'unauthorizedUser',
 };

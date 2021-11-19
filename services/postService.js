@@ -31,4 +31,14 @@ const getById = async ({ id }) => {
   return ({ status: httpStatus.OK, data });
 };
 
-module.exports = { createPost, getAll, getById };
+const updateById = async ({ title, content, categoryIds }, { id }) => {
+  validate.updatePost(title, content, id, categoryIds);
+
+  await BlogPost.findAll({ title, content }, { where: { id } });
+
+  const data = BlogPost.findOne({ id });
+
+  return ({ status: httpStatus.OK, data });
+};
+
+module.exports = { createPost, getAll, getById, updateById };

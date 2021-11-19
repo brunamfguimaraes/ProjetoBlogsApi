@@ -39,4 +39,19 @@ const blogExistById = (data) => {
   post.existById(data);
 };
 
-module.exports = { createUser, login, userExistById, createCategorie, createPost, blogExistById };
+const updatePost = (title, content, id, categoryIds) => {
+  post.titleNotExist(title);
+  post.contentNotExist(content);
+  post.categoryIdsNotEdited(categoryIds);
+  post.unauthorizedUser(id);
+};
+
+module.exports = {
+  createUser,
+  login,
+  userExistById,
+  createCategorie,
+  createPost,
+  blogExistById,
+  updatePost,
+};
