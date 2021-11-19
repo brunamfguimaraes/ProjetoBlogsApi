@@ -10,6 +10,12 @@ const HTTP = {
 
 const router = express.Router();
 
+router.get('/', async (_req, res) => {
+  const categories = await Category.findAll();
+  
+  return res.status(200).json(categories);
+});
+
 router.post('/', async (req, res) => {
   const { name } = req.body;
 

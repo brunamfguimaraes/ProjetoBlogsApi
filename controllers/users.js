@@ -26,6 +26,7 @@ const router = express.Router();
 
 router.get('/', validateToken, async (_req, res) => {
   const users = await User.findAll();
+  
   return res.status(200).json(users);
 });
 
