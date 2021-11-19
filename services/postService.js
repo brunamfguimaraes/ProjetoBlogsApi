@@ -43,9 +43,16 @@ const updateById = async ({ id }, body, userInfo) => {
   return ({ status: httpStatus.OK, data });
 };
 
+const deleteById = async ({ id }, userInfo) => {
+  await validate.deletePost(id, userInfo);
+  await BlogPost.destroy({ where: { id } });
+  return ({ status: httpStatus.NO_CONTENT });
+};
+
 module.exports = {
   createPost,
   getAll,
   getById,
   updateById,
+  deleteById,
 };

@@ -12,9 +12,13 @@ const getById = async (req, res) => service.getById(req.params)
 const updateById = async (req, res) => service.updateById(req.params, req.body, req.userInfo)
   .then(({ status, data }) => res.status(status).json(data));
 
+const deleteById = async (req, res) => service.deleteById(req.params, req.userInfo)
+  .then(({ status }) => res.status(status).json());
+
 module.exports = {
   createPost,
   getAll,
   getById,
   updateById,
+  deleteById,
 };

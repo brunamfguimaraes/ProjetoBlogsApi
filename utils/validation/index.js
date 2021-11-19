@@ -46,6 +46,10 @@ const updatePost = async (id, { title, content, categoryIds }, userInfo) => {
   await post.unauthorizedUser(id, userInfo);
 };
 
+const deletePost = async (id, userInfo) => {
+  await post.unauthorizedUser(id, userInfo);
+};
+
 module.exports = {
   createUser,
   login,
@@ -54,4 +58,5 @@ module.exports = {
   createPost,
   blogExistById,
   updatePost,
+  deletePost,
 };

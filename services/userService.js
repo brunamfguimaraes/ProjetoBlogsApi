@@ -25,8 +25,14 @@ const getById = async ({ id }) => {
   return ({ status: httpStatus.OK, data });
 };
 
+const deleteById = async ({ id }) => {
+  await User.destroy({ where: { id } });
+  return ({ status: httpStatus.NO_CONTENT });
+};
+
 module.exports = {
   createUser,
   getAll,
   getById,
+  deleteById,
 };
