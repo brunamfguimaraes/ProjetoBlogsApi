@@ -107,7 +107,7 @@ const deletePost = async (id, userId) => {
     return { error: { status: 401, message: 'Unauthorized user' } };
   }
  
-  await BlogPost.destroy({ where: { userId: id } });
+  await BlogPost.destroy({ where: { userd: id } });
 
   return result;
 };

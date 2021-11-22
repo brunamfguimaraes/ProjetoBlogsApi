@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User, BlogPost } = require('../models');
 const userService = require('../services/userService');
 
 require('dotenv').config();
@@ -47,15 +47,22 @@ const getUsersById = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  try {
-    const { id } = req.params;
-    // const { id: userId } = req.user;
-    const result = await userService.deletePost(id, 1);
+  const { id } = req.params;
+  const { email } = req.user;
+  const { id: userId } = await User.findOne({ where: { email } });
 
-    return res.status(204).json(result);
-  } catch (e) {
-    res.status(500).json({ e: 'Erro ao deletar Post' });
+  const post = await BlogPost.findOne({ where: { id } });
+
+  if (!post) {
+    return res.status(404).json({ message: 'Post does not exist' });
   }
+
+  if (post.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  const result = await BlogPost.destroy({ where: { id } });
+  return res.status(204).json(result);
 };
 
 const deleteUser = async (req, res) => {

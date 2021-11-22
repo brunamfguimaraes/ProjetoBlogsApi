@@ -37,4 +37,5 @@ router.put(
   postController.updatePost,
 );
 
+router.get('/search', validateToken, postService.searchPost);
 module.exports = router;
