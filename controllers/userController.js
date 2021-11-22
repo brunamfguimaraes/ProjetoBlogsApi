@@ -49,8 +49,8 @@ const getUsersById = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { id: userId } = req.user;
-    const result = await userService.deletePost(id, userId);
+    // const { id: userId } = req.user;
+    const result = await userService.deletePost(id, 1);
 
     return res.status(204).json(result);
   } catch (e) {

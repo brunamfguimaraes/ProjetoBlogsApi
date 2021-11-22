@@ -1,5 +1,5 @@
 const express = require('express');
-const validateToken = require('../services/userService');
+const { validateToken } = require('../services/userService');
 const postService = require('../services/postService');
 const postController = require('../controllers/postController');
 
@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post(
   '/post',
-  validateToken.validateToken,
+  validateToken,
   postService.validateTitle,
   postService.validateContent,
   postService.validateCategoryId,
@@ -17,19 +17,19 @@ router.post(
 
 router.get(
     '/post',
-    validateToken.validateToken,
+    validateToken,
     postController.getPosts,
 );
 
 router.get(
     '/post/:id',
-    validateToken.validateToken,
+    validateToken,
     postController.getPostsById,
 );
 
 router.put(
   '/post/:id',
-  validateToken.validateToken,
+  validateToken,
   postService.validateTitle,
   postService.validateContent,
   postService.editCategory,

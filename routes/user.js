@@ -30,6 +30,7 @@ router.get(
 router.delete(
   '/post/:id',
   userService.validateToken,
+  
   userController.deletePost,
 );
 

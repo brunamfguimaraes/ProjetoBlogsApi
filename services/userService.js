@@ -64,17 +64,24 @@ const emailAlreadyExists = async (req, res, next) => {
 };
 
 const SECRET = 'batatinhafrita123';
+const jwtConfig = {
+  expiresIn: '5d',
+  algorithm: 'HS256',
+};
 
-const validateToken = (req, res, next) => {
-  const token = req.headers.authorization;
-
-  if (!token) return res.status(401).json({ message: 'Token not found' });
+const validateToken = (request, response, next) => {
+  const token = request.headers.authorization;
+  if (!token) return response.status(401).json({ message: 'Token not found' });
 
   try {
-    jwt.verify(token, SECRET);
+    const decoded = jwt.verify(token, SECRET, jwtConfig);
+    request.user = decoded;
     next();
-  } catch (e) {
-    return res.status(401).json({ message: 'Expired or invalid token' });
+
+    return decoded;
+  } catch (error) {
+    console.log(error);
+    return response.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
@@ -91,7 +98,7 @@ const getUsersById = async (id) => {
 };
 
 const deletePost = async (id, userId) => {
-  const result = await BlogPost.findByPk(id);
+  const result = await BlogPost.findOne({ where: { id } });
   if (!result) {
     return { error: { status: 404, message: 'Post does not exist' } };
   }

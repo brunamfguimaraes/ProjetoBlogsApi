@@ -1,4 +1,4 @@
-const { Category, BlogPost, User } = require('../models');
+const { Category, BlogPost, User, PostsCategory } = require('../models');
 
 const validateTitle = async (request, response, next) => {
   const { title } = request.body;
@@ -37,10 +37,13 @@ const validateCategories = async (request, response, next) => {
   next();
 };
 
-const creatPost = async (title, content, categoryIds, userId) => {
-  const post = await BlogPost.create({ title, content, categoryIds, userId });
-
-  return post;
+const creatPost = async (post, userId) => {
+  const { title, content, categoryIds } = post;
+  const newPost = await BlogPost.create({ title, content, userId });
+  categoryIds.forEach(async (id) => { 
+    await PostsCategory.create({ postId: newPost.id, categoryId: id }); 
+  });
+  return newPost;
 };
 
 const getPosts = async () => {
@@ -66,28 +69,28 @@ const getPostsById = async (id) => {
   return result;
 };
 
-const editCategory = (req, res) => {
+const editCategory = (req, res, next) => {
   const { categoryIds } = req.body;
   if (categoryIds) {
     return res.status(400).json({ message: 'Categories cannot be edited' });
   }
+
+  next();
 };
 
-const validUser = async (req, res) => {
-  const { id } = req.params.id;
-  const { id: userId } = req.params;
-
+const validUser = async (req, res, next) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
   const post = await BlogPost.findOne({ where: { id } });
-  if (post.id !== userId) return res.status(401).json({ message: 'Unauthorized user' });
+  if (post.userId !== userId) return res.status(401).json({ message: 'Unauthorized user' });
+  next();
 };
 
 const updatePost = async (id, title, content) => {
   await BlogPost.update({ title, content }, { where: { id } });
-  const post = await BlogPost.findOne({
-    where: { id },
-    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
-  });
-
+  const post = await BlogPost.findOne({ where: { id },
+  include: [{ model: Category, as: 'categories', through: { attributes: [] } }] });
+  // console.log(post);
   return post;
 };
 
