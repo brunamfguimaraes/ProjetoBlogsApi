@@ -3,6 +3,7 @@ const { Category } = require('../models');
 
 require('dotenv/config');
 
+// HTTP status codes
 const HTTP = {
   Created: 201,
   BadRequest: 400,
@@ -10,12 +11,14 @@ const HTTP = {
 
 const router = express.Router();
 
+// Requisito 6
 router.get('/', async (_req, res) => {
   const categories = await Category.findAll();
   
   return res.status(200).json(categories);
 });
 
+// Requisito 5
 router.post('/', async (req, res) => {
   const { name } = req.body;
 

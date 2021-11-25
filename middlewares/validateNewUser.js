@@ -1,7 +1,9 @@
+// HTTP status codes
 const HTTP = {
   BadRequest: 400,
 };
 
+// Validação do nome
 const validateDisplayName = (req, res, next) => {
   const { displayName } = req.body;
 
@@ -14,6 +16,7 @@ const validateDisplayName = (req, res, next) => {
   return next();
 };
 
+// Validação do email
 const validateEmail = (req, res, next) => {
   const { email } = req.body;
 
@@ -28,6 +31,7 @@ const validateEmail = (req, res, next) => {
   return next();
 };
 
+// Validação da senha
 const validatePassword = (req, res, next) => {
   const { password } = req.body;
 

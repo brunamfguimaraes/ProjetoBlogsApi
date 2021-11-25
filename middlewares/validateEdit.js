@@ -5,6 +5,7 @@ const HTTP = {
   Unauthorized: 401,
 };
 
+// Valida se um usuário pode editar um post
 const validateEdit = async (req, res, next) => {
   const { id } = req.params;
   const { title, content, categoryIds } = req.body;
