@@ -1,16 +1,12 @@
-### Termos e acordos
+# Este projeto foi desenvolvido como objeto de estudo na Trybe:
 
-Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.
-
----
-
-# Boas vindas ao repositório do API de Blogs!
-
-Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por Slack! #vqv 🚀
-
-Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um Pull Request para colocar seus códigos.
-
----
+## Instruções para rodar o projeto em sua máquina:
+1. Clone o projeto em um diretório na sua máquina utilizando o seguinte comando no terminal:
+   git clone git@github.com:JonnesBezerra/MovieCardLibraryCrud.git
+2. Agora entre no diretório do projeto e instale as dependências com o seguinte comando:
+   cd MovieCardLibraryCrud/ && npm install
+3. Depois que a instalação terminar finalmente você pode rodar o projeto digitando o seguinte comando:
+   npm start
 
 # Sumário
 
